@@ -1,0 +1,68 @@
+/* ===================================
+   BADGE BASE
+=================================== */
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.5rem;
+    padding:8px 16px;
+    border-radius:999px;
+    font-size:.85rem;
+    font-weight:600;
+    line-height:1;
+}
+
+/* ===================================
+   BADGE VARIANTS
+=================================== */
+
+.badge-primary{
+    background:var(--primary);
+    color:#fff;
+}
+
+.badge-success{
+    background:var(--success);
+    color:#fff;
+}
+
+.badge-warning{
+    background:var(--accent);
+    color:#fff;
+}
+
+.badge-danger{
+    background:#EF4444;
+    color:#fff;
+}
+
+/* ===================================
+   TOPCARE BADGES
+=================================== */
+
+.badge-ai{
+    background:#2563EB;
+    color:#fff;
+}
+
+.badge-programming{
+    background:#7C3AED;
+    color:#fff;
+}
+
+.badge-personality{
+    background:#EC4899;
+    color:#fff;
+}
+
+.badge-premium{
+    background:#F59E0B;
+    color:#fff;
+}
+
+.badge-new{
+    background:#10B981;
+    color:#fff;
+}

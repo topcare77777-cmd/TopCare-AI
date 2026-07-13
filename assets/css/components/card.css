@@ -1,0 +1,143 @@
+/*======================================
+  TOPCARE CARD SYSTEM
+======================================*/
+
+.card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:20px;
+    overflow:hidden;
+    transition:var(--transition);
+    box-shadow:var(--shadow-sm);
+    display:flex;
+    flex-direction:column;
+    height:100%;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:var(--primary);
+    box-shadow:var(--shadow);
+}
+
+.card-image{
+    width:100%;
+    aspect-ratio:16/9;
+    overflow:hidden;
+}
+
+.card-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.card:hover img{
+    transform:scale(1.08);
+}
+
+.card-body{
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+.card-title{
+    font-size:1.25rem;
+    font-weight:700;
+    margin-bottom:12px;
+    color:var(--text);
+}
+
+.card-text{
+    color:var(--text-light);
+    line-height:1.7;
+    margin-bottom:20px;
+    flex:1;
+}
+
+.card-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:auto;
+}
+
+.card-price{
+    color:var(--primary);
+    font-size:1.2rem;
+    font-weight:700;
+}
+
+/* ===================================
+   IMAGE
+=================================== */
+
+.card-image{
+
+    overflow:hidden;
+}
+
+.card-image img{
+
+    width:100%;
+
+    display:block;
+
+    transition:.5s;
+}
+
+.card:hover img{
+
+    transform:scale(1.08);
+}
+
+/* ===================================
+   BODY
+=================================== */
+
+.card-body{
+
+    padding:24px;
+}
+
+.card-title{
+
+    font-size:1.3rem;
+
+    font-weight:700;
+
+    margin-bottom:14px;
+
+    color:var(--text);
+}
+
+.card-text{
+
+    color:var(--text-light);
+
+    line-height:1.8;
+
+    margin-bottom:20px;
+}
+
+/* ===================================
+   FOOTER
+=================================== */
+
+.card-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:auto;
+
+    padding:24px;
+
+    border-top:1px solid var(--border);
+}
