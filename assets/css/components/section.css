@@ -1,19 +1,52 @@
+/*==================================================
+  TOPCARE SECTION SYSTEM
+  File : section.css
+==================================================*/
+
+
+/*==================================================
+  SECTION
+==================================================*/
+
 .section{
-    padding:100px 0;
+
+    padding:var(--space-24) 0;
 }
 
+
+/*==================================================
+  SECTION HEADER
+==================================================*/
+
 .section-title{
+
     text-align:center;
-    margin-bottom:60px;
+
+    margin-bottom:var(--space-16);
 }
 
 .section-title h2{
-    font-size:2.5rem;
-    margin-bottom:16px;
+
+    font-size:var(--fs-4xl);
+
+    font-family:var(--font-heading);
+
+    font-weight:var(--fw-700);
+
+    color:var(--text);
+
+    margin-bottom:var(--space-4);
 }
 
 .section-title p{
-    color:var(--text-light);
+
     max-width:700px;
-    margin:auto;
+
+    margin-inline:auto;
+
+    color:var(--text-light);
+
+    font-size:var(--fs-lg);
+
+    line-height:var(--lh-relaxed);
 }

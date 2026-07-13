@@ -1,68 +1,84 @@
-/* ===================================
-   BADGE BASE
-=================================== */
+/*==================================================
+  TOPCARE BADGE SYSTEM
+  File : badge.css
+==================================================*/
+
+
+/*==================================================
+  BASE
+==================================================*/
 
 .badge{
+
     display:inline-flex;
+
     align-items:center;
+
     justify-content:center;
-    gap:.5rem;
-    padding:8px 16px;
-    border-radius:999px;
-    font-size:.85rem;
-    font-weight:600;
+
+    gap:var(--space-2);
+
+    padding:var(--space-2) var(--space-4);
+
+    border-radius:var(--radius-full);
+
+    font-family:var(--font-primary);
+
+    font-size:var(--fs-sm);
+
+    font-weight:var(--fw-600);
+
     line-height:1;
 }
 
-/* ===================================
-   BADGE VARIANTS
-=================================== */
+
+/*==================================================
+  VARIANTS
+==================================================*/
 
 .badge-primary{
+
     background:var(--primary);
-    color:#fff;
+
+    color:var(--white);
 }
+
+
+.badge-secondary{
+
+    background:var(--secondary);
+
+    color:var(--white);
+}
+
 
 .badge-success{
+
     background:var(--success);
-    color:#fff;
+
+    color:var(--white);
 }
+
 
 .badge-warning{
-    background:var(--accent);
-    color:#fff;
+
+    background:var(--warning);
+
+    color:var(--white);
 }
+
 
 .badge-danger{
-    background:#EF4444;
-    color:#fff;
+
+    background:var(--danger);
+
+    color:var(--white);
 }
 
-/* ===================================
-   TOPCARE BADGES
-=================================== */
 
-.badge-ai{
-    background:#2563EB;
-    color:#fff;
-}
+.badge-info{
 
-.badge-programming{
-    background:#7C3AED;
-    color:#fff;
-}
+    background:var(--info);
 
-.badge-personality{
-    background:#EC4899;
-    color:#fff;
-}
-
-.badge-premium{
-    background:#F59E0B;
-    color:#fff;
-}
-
-.badge-new{
-    background:#10B981;
-    color:#fff;
+    color:var(--white);
 }

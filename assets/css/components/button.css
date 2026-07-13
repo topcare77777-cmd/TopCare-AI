@@ -1,85 +1,152 @@
+/*==================================================
+  TOPCARE BUTTON SYSTEM
+  File : button.css
+==================================================*/
+
+
+/*==================================================
+  BASE
+==================================================*/
+
 .btn{
+
     display:inline-flex;
+
     align-items:center;
+
     justify-content:center;
-    gap:.7rem;
-    padding:15px 30px;
-    border-radius:14px;
-    font-weight:600;
-    transition:var(--transition);
+
+    gap:var(--space-2);
+
+    padding:var(--space-4) var(--space-8);
+
+    border:none;
+
+    border-radius:var(--radius-md);
+
+    font-family:var(--font-primary);
+
+    font-size:var(--fs-base);
+
+    font-weight:var(--fw-600);
+
+    line-height:1;
+
     cursor:pointer;
+
+    transition:var(--transition);
+
+    text-decoration:none;
 }
 
+
+/*==================================================
+  PRIMARY
+==================================================*/
+
 .btn-primary{
+
     background:var(--primary);
-    color:white;
+
+    color:var(--white);
 }
 
 .btn-primary:hover{
-    transform:translateY(-3px);
-    box-shadow:var(--shadow);
+
     background:var(--primary-hover);
+
+    transform:translateY(-3px);
+
+    box-shadow:var(--shadow-md);
 }
 
+
+/*==================================================
+  SECONDARY
+==================================================*/
+
 .btn-secondary{
+
     background:transparent;
+
+    color:var(--text);
+
     border:1px solid var(--border);
-    color:white;
 }
 
 .btn-secondary:hover{
-    background:var(--surface);
+
+    background:var(--surface-alt);
 }
 
-/* ===================================
-   BUTTON OUTLINE
-=================================== */
+
+/*==================================================
+  OUTLINE
+==================================================*/
 
 .btn-outline{
+
     background:transparent;
-    border:2px solid var(--primary);
+
     color:var(--primary);
+
+    border:2px solid var(--primary);
 }
 
 .btn-outline:hover{
+
     background:var(--primary);
-    color:#fff;
+
+    color:var(--white);
 }
 
-/* ===================================
-   BUTTON GHOST
-=================================== */
+
+/*==================================================
+  GHOST
+==================================================*/
 
 .btn-ghost{
+
     background:transparent;
+
     color:var(--text);
 }
 
 .btn-ghost:hover{
-    background:var(--surface);
+
+    background:var(--surface-alt);
 }
 
-/* ===================================
-   BUTTON SIZE
-=================================== */
+
+/*==================================================
+  SIZE
+==================================================*/
 
 .btn-sm{
-    padding:10px 20px;
-    font-size:.9rem;
+
+    padding:var(--space-2) var(--space-5);
+
+    font-size:var(--fs-sm);
 }
 
 .btn-lg{
-    padding:18px 36px;
-    font-size:1.05rem;
+
+    padding:var(--space-5) var(--space-10);
+
+    font-size:var(--fs-lg);
 }
 
-/* ===================================
-   BUTTON DISABLED
-=================================== */
+
+/*==================================================
+  STATE
+==================================================*/
 
 .btn:disabled,
 .btn.disabled{
+
     opacity:.6;
-    cursor:not-allowed;
+
     pointer-events:none;
+
+    cursor:not-allowed;
 }
