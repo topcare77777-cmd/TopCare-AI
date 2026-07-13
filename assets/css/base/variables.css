@@ -152,3 +152,47 @@ Info        = Information
 /* Neutral */
 --white:#FFFFFF;
 --black:#000000;
+
+/*======================================
+  FONT SYSTEM
+======================================*/
+
+--font-primary:'Inter',sans-serif;
+
+--font-heading:'Inter',sans-serif;
+
+--font-display:'Playfair Display',serif;
+
+/*======================================
+ TYPOGRAPHY SCALE
+======================================*/
+
+--fs-xs:.75rem;
+
+--fs-sm:.875rem;
+
+--fs-base:1rem;
+
+--fs-lg:1.125rem;
+
+--fs-xl:1.25rem;
+
+--fs-2xl:1.5rem;
+
+--fs-3xl:2rem;
+
+--fs-4xl:2.5rem;
+
+--fs-5xl:3rem;
+
+--fs-6xl:4rem;
+
+/*======================================
+  FONT SYSTEM
+======================================*/
+
+--font-primary:'Inter',sans-serif;
+
+--font-heading:'Inter',sans-serif;
+
+--font-display:'Playfair Display',serif;
