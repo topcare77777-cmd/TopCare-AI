@@ -1,60 +1,107 @@
-/* ===================================
-   HEADER
-=================================== */
+/*==================================================
+TOPCARE HEADER SYSTEM
+File : header.css
+==================================================*/
 
 .header{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(15,23,42,.85);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255,255,255,.08);
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    z-index:1000;
+
+    background:rgba(255,255,255,.92);
+
+    backdrop-filter:blur(18px);
+
+    border-bottom:1px solid var(--border);
+
+    transition:var(--transition);
+}
+
+.header.scrolled{
+
+    box-shadow:var(--shadow-md);
 }
 
 .navbar{
-    max-width: 1200px;
-    height: 80px;
-    margin: 0 auto;
-    padding: 0 24px;
 
     display:flex;
+
     align-items:center;
+
     justify-content:space-between;
+
+    min-height:80px;
 }
 
 .logo{
-    font-size:1.6rem;
+
+    font-family:var(--font-display);
+
+    font-size:1.8rem;
+
     font-weight:700;
-    color:var(--white);
+
+    color:var(--text);
+
+    text-decoration:none;
 }
 
 .logo span{
+
     color:var(--primary);
 }
 
 .nav-menu{
+
     display:flex;
+
     align-items:center;
-    gap:2rem;
+
+    gap:var(--space-8);
 
     list-style:none;
 }
 
 .nav-menu a{
+
     color:var(--text);
-    text-decoration:none;
+
     font-weight:500;
-    transition:.3s;
+
+    text-decoration:none;
+
+    transition:var(--transition);
 }
 
-.nav-menu a:hover{
+.nav-menu a:hover,
+.nav-menu a.active{
+
     color:var(--primary);
 }
 
-.nav-right{
+.nav-actions{
+
     display:flex;
-    align-items:center;
-    gap:1rem;
+
+    gap:var(--space-3);
+}
+
+.nav-toggle{
+
+    display:none;
+
+    background:none;
+
+    border:none;
+
+    font-size:2rem;
+
+    cursor:pointer;
 }
