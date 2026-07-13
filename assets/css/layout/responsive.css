@@ -8,10 +8,10 @@
   DESKTOP
 ==================================================*/
 
-@media (max-width:1200px){
+@media (max-width:1200px) {
 
-    .hero-title{
-        font-size:var(--fs-5xl);
+    .hero-title {
+        font-size: var(--fs-5xl);
     }
 
 }
@@ -21,35 +21,50 @@
   TABLET
 ==================================================*/
 
-@media (max-width:992px){
+@media (max-width:992px) {
 
-    .navbar{
-        height:75px;
+    .nav-menu {
+
+        display: none;
     }
 
-    .hero{
-        padding-top:var(--space-24);
+    .nav-actions {
+
+        display: none;
     }
 
-    .hero-container{
-        grid-template-columns:1fr;
-        text-align:center;
+    .nav-toggle {
+
+        display: block;
     }
 
-    .hero-content{
-        align-items:center;
+    .navbar {
+        height: 75px;
     }
 
-    .hero-buttons{
-        justify-content:center;
+    .hero {
+        padding-top: var(--space-24);
     }
 
-    .hero-image{
-        margin-top:var(--space-12);
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
     }
 
-    .footer-grid{
-        grid-template-columns:repeat(2,1fr);
+    .hero-content {
+        align-items: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image {
+        margin-top: var(--space-12);
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
 }
@@ -59,31 +74,31 @@
   TABLET PORTRAIT
 ==================================================*/
 
-@media (max-width:768px){
+@media (max-width:768px) {
 
-    .hero-title{
-        font-size:var(--fs-4xl);
+    .hero-title {
+        font-size: var(--fs-4xl);
     }
 
-    .section-title h2{
-        font-size:var(--fs-3xl);
+    .section-title h2 {
+        font-size: var(--fs-3xl);
     }
 
-    .footer-grid{
-        grid-template-columns:1fr;
+    .footer-grid {
+        grid-template-columns: 1fr;
     }
 
-    .footer-bottom{
-        flex-direction:column;
-        text-align:center;
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
     }
 
-    .cta-box{
-        padding:var(--space-16) var(--space-8);
+    .cta-box {
+        padding: var(--space-16) var(--space-8);
     }
 
-    .cta h2{
-        font-size:var(--fs-3xl);
+    .cta h2 {
+        font-size: var(--fs-3xl);
     }
 
 }
@@ -93,32 +108,32 @@
   MOBILE
 ==================================================*/
 
-@media (max-width:576px){
+@media (max-width:576px) {
 
-    .hero{
-        min-height:auto;
+    .hero {
+        min-height: auto;
     }
 
-    .hero-title{
-        font-size:var(--fs-3xl);
+    .hero-title {
+        font-size: var(--fs-3xl);
     }
 
-    .hero-text{
-        font-size:var(--fs-base);
+    .hero-text {
+        font-size: var(--fs-base);
     }
 
-    .section-title h2{
-        font-size:var(--fs-2xl);
+    .section-title h2 {
+        font-size: var(--fs-2xl);
     }
 
-    .btn{
-        width:100%;
+    .btn {
+        width: 100%;
     }
 
     .hero-buttons,
-    .cta-buttons{
-        flex-direction:column;
-        width:100%;
+    .cta-buttons {
+        flex-direction: column;
+        width: 100%;
     }
 
 }
@@ -128,18 +143,18 @@
   SMALL MOBILE
 ==================================================*/
 
-@media (max-width:360px){
+@media (max-width:360px) {
 
-    .hero-title{
-        font-size:var(--fs-2xl);
+    .hero-title {
+        font-size: var(--fs-2xl);
     }
 
-    .logo{
-        font-size:var(--fs-lg);
+    .logo {
+        font-size: var(--fs-lg);
     }
 
-    .hero-text{
-        font-size:var(--fs-sm);
+    .hero-text {
+        font-size: var(--fs-sm);
     }
 
 }

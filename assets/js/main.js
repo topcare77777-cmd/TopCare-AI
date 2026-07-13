@@ -18,3 +18,5 @@ if(judul){
     judul.classList.add("title-active");
 
 }
+
+import "./modules/navbar.js";
