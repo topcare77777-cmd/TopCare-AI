@@ -1,24 +1,34 @@
 /*======================================
-  TOPCARE CARD SYSTEM
+  TOPCARE CARD SYSTEM v1.0
 ======================================*/
 
 .card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:20px;
-    overflow:hidden;
-    transition:var(--transition);
-    box-shadow:var(--shadow-sm);
     display:flex;
     flex-direction:column;
     height:100%;
+
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:var(--transition);
 }
 
 .card:hover{
     transform:translateY(-8px);
+
     border-color:var(--primary);
+
     box-shadow:var(--shadow);
 }
+
+/*======================================
+  IMAGE
+======================================*/
 
 .card-image{
     width:100%;
@@ -29,106 +39,52 @@
 .card-image img{
     width:100%;
     height:100%;
+    display:block;
     object-fit:cover;
     transition:.5s;
 }
 
-.card:hover img{
+.card:hover .card-image img{
     transform:scale(1.08);
 }
 
+/*======================================
+  BODY
+======================================*/
+
 .card-body{
-    padding:24px;
     display:flex;
     flex-direction:column;
     flex:1;
+
+    padding:var(--space-6);
 }
 
 .card-title{
-    font-size:1.25rem;
+    font-size:var(--fs-xl);
+
     font-weight:700;
-    margin-bottom:12px;
+
     color:var(--text);
+
+    margin-bottom:var(--space-3);
 }
 
 .card-text{
-    color:var(--text-light);
-    line-height:1.7;
-    margin-bottom:20px;
     flex:1;
-}
-
-.card-footer{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:auto;
-}
-
-.card-price{
-    color:var(--primary);
-    font-size:1.2rem;
-    font-weight:700;
-}
-
-/* ===================================
-   IMAGE
-=================================== */
-
-.card-image{
-
-    overflow:hidden;
-}
-
-.card-image img{
-
-    width:100%;
-
-    display:block;
-
-    transition:.5s;
-}
-
-.card:hover img{
-
-    transform:scale(1.08);
-}
-
-/* ===================================
-   BODY
-=================================== */
-
-.card-body{
-
-    padding:24px;
-}
-
-.card-title{
-
-    font-size:1.3rem;
-
-    font-weight:700;
-
-    margin-bottom:14px;
-
-    color:var(--text);
-}
-
-.card-text{
 
     color:var(--text-light);
 
-    line-height:1.8;
+    line-height:1.7;
 
-    margin-bottom:20px;
+    margin-bottom:var(--space-5);
 }
 
-/* ===================================
-   FOOTER
-=================================== */
+/*======================================
+  FOOTER
+======================================*/
 
 .card-footer{
-
     display:flex;
 
     justify-content:space-between;
@@ -137,7 +93,19 @@
 
     margin-top:auto;
 
-    padding:24px;
+    padding-top:var(--space-5);
 
     border-top:1px solid var(--border);
+}
+
+/*======================================
+  PRICE
+======================================*/
+
+.card-price{
+    font-size:var(--fs-lg);
+
+    font-weight:700;
+
+    color:var(--primary);
 }

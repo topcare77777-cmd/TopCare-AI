@@ -3,33 +3,47 @@
    MASTER STYLESHEET
 ======================================= */
 
-/* ===== BASE ===== */
+/*==================================================
+BASE
+==================================================*/
 
 @import url("./base/variables.css");
 @import url("./base/reset.css");
 @import url("./base/typography.css");
 @import url("./base/utilities.css");
 
-/* ===== LAYOUT ===== */
+
+/*==================================================
+LAYOUT
+==================================================*/
 
 @import url("./layout/grid.css");
 @import url("./layout/header.css");
 @import url("./layout/hero.css");
 @import url("./layout/cta.css");
 @import url("./layout/footer.css");
-@import url("./layout/responsive.css");
 
-/* ===== COMPONENTS ===== */
+
+/*==================================================
+COMPONENTS
+==================================================*/
 
 @import url("./components/button.css");
 @import url("./components/badge.css");
 @import url("./components/card.css");
-@import url("components/section.css");
+@import url("./components/section.css");
 
-/* ===== PAGES ===== */
+
+/*==================================================
+PAGES
+==================================================*/
 
 @import url("./pages/home.css");
 
-/* Home */
-/* About */
-/* Blog */
+
+/*==================================================
+RESPONSIVE
+(Must Always Be Last)
+==================================================*/
+
+@import url("./layout/responsive.css");

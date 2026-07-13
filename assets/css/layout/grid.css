@@ -1,69 +1,75 @@
-/* ===================================
-   CONTAINER
-=================================== */
+/*==================================================
+  TOPCARE GRID SYSTEM
+  File : grid.css
+==================================================*/
+
+
+/*==================================================
+  CONTAINER
+==================================================*/
 
 .container{
-    width:min(1200px,90%);
+
+    width:min(100% - 2rem,var(--container-xl));
+
     margin-inline:auto;
 }
 
-/* ===================================
-   GRID
-=================================== */
+
+/*==================================================
+  GRID
+==================================================*/
 
 .grid{
+
     display:grid;
-    gap:2rem;
+
+    gap:var(--space-8);
 }
 
-/* ===================================
-   GRID COLUMNS
-=================================== */
+
+/*==================================================
+  GRID COLUMNS
+==================================================*/
 
 .grid-2{
+
     grid-template-columns:repeat(2,1fr);
 }
 
 .grid-3{
+
     grid-template-columns:repeat(3,1fr);
 }
 
 .grid-4{
+
     grid-template-columns:repeat(4,1fr);
 }
 
-.grid{
-    display:grid;
-    gap:30px;
-}
 
-.grid-2{
-    grid-template-columns:repeat(2,1fr);
-}
+/*==================================================
+  RESPONSIVE
+==================================================*/
 
-.grid-3{
-    grid-template-columns:repeat(3,1fr);
-}
+@media (max-width:992px){
 
-.grid-4{
-    grid-template-columns:repeat(4,1fr);
-}
+    .grid-3,
+    .grid-4{
 
-@media(max-width:992px){
-
-.grid-3,
-.grid-4{
-grid-template-columns:repeat(2,1fr);
-}
+        grid-template-columns:repeat(2,1fr);
+    }
 
 }
 
-@media(max-width:768px){
 
-.grid-2,
-.grid-3,
-.grid-4{
-grid-template-columns:1fr;
-}
+@media (max-width:768px){
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+
+        grid-template-columns:1fr;
+    }
 
 }
