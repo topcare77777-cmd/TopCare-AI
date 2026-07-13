@@ -1,0 +1,60 @@
+/* ===================================
+   HEADER
+=================================== */
+
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(15,23,42,.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.navbar{
+    max-width: 1200px;
+    height: 80px;
+    margin: 0 auto;
+    padding: 0 24px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--white);
+}
+
+.logo span{
+    color:var(--primary);
+}
+
+.nav-menu{
+    display:flex;
+    align-items:center;
+    gap:2rem;
+
+    list-style:none;
+}
+
+.nav-menu a{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:500;
+    transition:.3s;
+}
+
+.nav-menu a:hover{
+    color:var(--primary);
+}
+
+.nav-right{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+}

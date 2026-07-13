@@ -1,0 +1,85 @@
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.7rem;
+    padding:15px 30px;
+    border-radius:14px;
+    font-weight:600;
+    transition:var(--transition);
+    cursor:pointer;
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--shadow);
+    background:var(--primary-hover);
+}
+
+.btn-secondary{
+    background:transparent;
+    border:1px solid var(--border);
+    color:white;
+}
+
+.btn-secondary:hover{
+    background:var(--surface);
+}
+
+/* ===================================
+   BUTTON OUTLINE
+=================================== */
+
+.btn-outline{
+    background:transparent;
+    border:2px solid var(--primary);
+    color:var(--primary);
+}
+
+.btn-outline:hover{
+    background:var(--primary);
+    color:#fff;
+}
+
+/* ===================================
+   BUTTON GHOST
+=================================== */
+
+.btn-ghost{
+    background:transparent;
+    color:var(--text);
+}
+
+.btn-ghost:hover{
+    background:var(--surface);
+}
+
+/* ===================================
+   BUTTON SIZE
+=================================== */
+
+.btn-sm{
+    padding:10px 20px;
+    font-size:.9rem;
+}
+
+.btn-lg{
+    padding:18px 36px;
+    font-size:1.05rem;
+}
+
+/* ===================================
+   BUTTON DISABLED
+=================================== */
+
+.btn:disabled,
+.btn.disabled{
+    opacity:.6;
+    cursor:not-allowed;
+    pointer-events:none;
+}

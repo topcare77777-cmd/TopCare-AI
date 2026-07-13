@@ -1,0 +1,154 @@
+/*==================================
+TOPCARE AI DESIGN TOKENS
+v2.0
+==================================*/
+
+:root{
+
+/*====================
+BRAND
+====================*/
+
+--primary:#2563EB;
+--primary-hover:#1D4ED8;
+
+--secondary:#7C3AED;
+
+--success:#10B981;
+--warning:#F59E0B;
+--danger:#EF4444;
+
+
+/*====================
+SURFACE
+====================*/
+
+--background:#F8FAFC;
+--surface:#FFFFFF;
+--surface-dark:#0F172A;
+
+
+/*====================
+TEXT
+====================*/
+
+--text:#0F172A;
+--text-light:#64748B;
+--text-muted:#94A3B8;
+--text-white:#FFFFFF;
+
+
+/*====================
+BORDER
+====================*/
+
+--border:#E2E8F0;
+
+
+/*====================
+SHADOW
+====================*/
+
+--shadow-sm:0 2px 8px rgba(0,0,0,.05);
+
+--shadow-md:0 10px 30px rgba(0,0,0,.08);
+
+--shadow-lg:0 20px 60px rgba(0,0,0,.12);
+
+
+/*====================
+RADIUS
+====================*/
+
+--radius-sm:10px;
+
+--radius-md:18px;
+
+--radius-lg:28px;
+
+--radius-round:999px;
+
+
+/*====================
+SPACING
+====================*/
+
+--space-xs:8px;
+
+--space-sm:16px;
+
+--space-md:24px;
+
+--space-lg:40px;
+
+--space-xl:60px;
+
+--space-2xl:100px;
+
+
+/*====================
+TRANSITION
+====================*/
+
+--transition:.35s ease;
+
+
+/*====================
+MAX WIDTH
+====================*/
+
+--container:1200px;
+
+}
+/*======================================
+  COLOR USAGE
+
+Primary     = CTA
+Secondary   = Highlight
+Success     = Success Message
+Danger      = Error
+Warning     = Warning
+Info        = Information
+
+======================================*/
+/*======================================
+  TOPCARE COLOR SYSTEM
+======================================*/
+
+/* Primary */
+--primary:#2563EB;
+--primary-hover:#1D4ED8;
+--primary-light:#DBEAFE;
+
+/* Secondary */
+--secondary:#06B6D4;
+--secondary-hover:#0891B2;
+
+/* Success */
+--success:#22C55E;
+
+/* Warning */
+--warning:#F59E0B;
+
+/* Danger */
+--danger:#EF4444;
+
+/* Info */
+--info:#0EA5E9;
+
+/* Background */
+--background:#F8FAFC;
+--surface:#FFFFFF;
+--surface-alt:#F1F5F9;
+
+/* Text */
+--text:#0F172A;
+--text-light:#64748B;
+--text-muted:#94A3B8;
+
+/* Border */
+--border:#E2E8F0;
+
+/* Neutral */
+--white:#FFFFFF;
+--black:#000000;
