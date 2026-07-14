@@ -1,9 +1,38 @@
-import { renderCommunity } from "../renderers/community.renderer.js";
+import { getCommunityData } from "../services/community.service.js";
+import { communityRenderer } from "../renderers/community.renderer.js";
 
-export function initCommunity(){
+export async function initCommunity(){
 
-    console.log("Community Loaded");
+try{
 
-    renderCommunity();
+const target=document.querySelector("#community");
+
+if(!target) return;
+
+const [template,data]=await Promise.all([
+
+fetch("templates/components/community.html"),
+
+getCommunityData()
+
+]);
+
+target.innerHTML=communityRenderer(
+
+await template.text(),
+
+data
+
+);
+
+console.log("✅ Community Premium Loaded");
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
 
 }

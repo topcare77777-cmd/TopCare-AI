@@ -1,21 +1,21 @@
 {
-    "badge":"AI Assistant",
+    "title":"TopCare AI Assistant",
 
-    "title":"Belajar Bersama AI",
+    "subtitle":"Asisten cerdas yang siap membantu Anda memahami diri, belajar, dan berkembang.",
 
-    "subtitle":"Tanyakan apa saja kepada TopCare AI.",
+    "placeholder":"Tulis pertanyaan Anda...",
 
-    "chips":[
+    "button":"Kirim",
 
-        "HTML",
+    "suggestions":[
 
-        "AI Prompt",
+        "Apa tipe kepribadian saya?",
 
-        "Personality",
+        "Bagaimana menjadi lebih produktif?",
 
-        "Digital Business"
+        "Tips mengelola emosi",
 
-    ],
+        "Cara meningkatkan percaya diri"
 
-    "answer":"Halo, saya siap membantu perjalanan belajar AI Anda."
+    ]
 }

@@ -1,0 +1,27 @@
+{
+  "title": "Apa Kata Pengguna",
+  "subtitle": "Ribuan pengguna telah merasakan manfaat belajar bersama TopCare AI.",
+  "reviews": [
+    {
+      "name": "Andi Pratama",
+      "job": "Entrepreneur",
+      "rating": 5,
+      "avatar": "A",
+      "comment": "Tes kepribadian ini membantu saya memahami cara mengambil keputusan dan berkomunikasi dengan tim."
+    },
+    {
+      "name": "Sinta Rahma",
+      "job": "Mahasiswa",
+      "rating": 5,
+      "avatar": "S",
+      "comment": "Materi Self Growth sangat mudah dipahami dan AI Assistant memberikan jawaban yang relevan."
+    },
+    {
+      "name": "Reza Nugraha",
+      "job": "Content Creator",
+      "rating": 5,
+      "avatar": "R",
+      "comment": "Platform yang rapi, cepat, dan benar-benar membantu mengenali potensi diri."
+    }
+  ]
+}

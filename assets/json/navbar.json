@@ -1,0 +1,62 @@
+{
+    "brand":{
+
+        "name":"TopCare AI",
+
+        "logo":"🧠"
+
+    },
+
+    "menus":[
+
+        {
+
+            "title":"Home",
+
+            "link":"#hero"
+
+        },
+
+        {
+
+            "title":"Learning",
+
+            "link":"#learning"
+
+        },
+
+        {
+
+            "title":"AI Assistant",
+
+            "link":"#assistant"
+
+        },
+
+        {
+
+            "title":"Personality",
+
+            "link":"#personality"
+
+        },
+
+        {
+
+            "title":"Community",
+
+            "link":"#community"
+
+        }
+
+    ],
+
+    "buttons":{
+
+        "login":"Masuk",
+
+        "register":"Mulai Gratis"
+
+    }
+
+}

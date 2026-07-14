@@ -1,0 +1,44 @@
+/* =================================
+   TOPCARE AI TIMELINE
+================================= */
+
+
+.tc-timeline {
+
+    position:relative;
+
+    padding-left:30px;
+
+}
+
+
+
+.tc-timeline-item {
+
+    position:relative;
+
+    margin-bottom:30px;
+
+}
+
+
+
+.tc-timeline-item::before {
+
+    content:"";
+
+    position:absolute;
+
+    left:-30px;
+
+    top:5px;
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+}

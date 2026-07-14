@@ -1,18 +1,46 @@
-import { renderSection } from "./renderer.js";
-import { statisticsComponent } from "../components/statistics.component.js";
+export function statisticsRenderer(template, data) {
 
-export function renderStatistics() {
+    let cards = "";
 
-    renderSection({
+    data.items.forEach(item => {
 
-        selector: "#statistics",
+        cards += `
+        <div class="stat-card">
 
-        template: "templates/components/statistics.html",
+            <div class="stat-icon">
 
-        data: "assets/json/statistics.json",
+                ${item.icon}
 
-        component: statisticsComponent
+            </div>
+
+            <div
+                class="stat-value"
+                data-value="${item.value}"
+                data-suffix="${item.suffix}">
+
+                0
+
+            </div>
+
+            <div class="stat-label">
+
+                ${item.label}
+
+            </div>
+
+        </div>
+        `;
 
     });
+
+    let html = template;
+
+    html = html.replace("{{title}}", data.title);
+
+    html = html.replace("{{subtitle}}", data.subtitle);
+
+    html = html.replace("{{cards}}", cards);
+
+    return html;
 
 }

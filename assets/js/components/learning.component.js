@@ -1,24 +1,17 @@
-import { Card } from "../design/card.js";
+export function learningComponent(data = {}) {
 
-export function learningComponent(template, data) {
+    return `
+        <section class="learning-card">
 
-    const cards = data.courses.map(course =>
+            <h2>
+                ${data.title ?? ""}
+            </h2>
 
-        Card(`
+            <p>
+                ${data.description ?? ""}
+            </p>
 
-            <h3>${course.title}</h3>
-
-            <p>${course.lesson}</p>
-
-        `)
-
-    ).join("");
-
-    return template
-
-        .replace("{{badge}}", data.badge)
-        .replace("{{title}}", data.title)
-        .replace("{{subtitle}}", data.subtitle)
-        .replace("{{cards}}", cards);
+        </section>
+    `;
 
 }

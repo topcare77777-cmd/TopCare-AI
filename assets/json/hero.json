@@ -1,8 +1,68 @@
 {
-    "badge": "🚀 TopCare AI Platform",
-    "title": "Belajar. Berkarya. Bertumbuh.",
-    "subtitle": "Platform belajar AI, Programming, Personality, Digital Skill, dan Creator Economy.",
-    "buttonPrimary": "Mulai Belajar",
-    "buttonSecondary": "Lihat Marketplace",
-    "image": "assets/images/home/hero-main.webp"
+  "badge": {
+    "text": "🚀 AI Powered Personal Growth"
+  },
+
+  "title": "Kenali Dirimu Bersama TopCare AI",
+
+  "subtitle": "Platform AI modern untuk mengenali kepribadian, meningkatkan self growth, belajar lebih efektif, dan berkembang bersama komunitas yang positif.",
+
+  "buttons": [
+    {
+      "text": "Mulai Gratis",
+      "link": "#learning",
+      "style": "primary"
+    },
+    {
+      "text": "Lihat Demo",
+      "link": "#assistant",
+      "style": "secondary"
+    }
+  ],
+
+  "statistics": [
+    {
+      "value": "10K+",
+      "label": "Pengguna"
+    },
+    {
+      "value": "98%",
+      "label": "Kepuasan"
+    },
+    {
+      "value": "24/7",
+      "label": "AI Assistant"
+    }
+  ],
+
+  "dashboard": {
+
+    "title":"TopCare AI Dashboard",
+
+    "items":[
+
+      {
+        "icon":"🧠",
+        "title":"Personality",
+
+        "desc":"AI mengenali tipe kepribadian"
+      },
+
+      {
+        "icon":"📚",
+        "title":"Learning",
+
+        "desc":"Belajar sesuai gaya belajar"
+      },
+
+      {
+        "icon":"🤖",
+        "title":"Assistant",
+
+        "desc":"AI siap membantu kapan saja"
+      }
+
+    ]
+
+  }
 }

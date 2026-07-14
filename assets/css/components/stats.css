@@ -1,0 +1,41 @@
+/* =================================
+   TOPCARE AI STATISTICS
+================================= */
+
+
+.tc-stat {
+
+    padding:30px;
+
+    border-radius:20px;
+
+    background:white;
+
+    text-align:center;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+}
+
+
+
+.tc-stat-value {
+
+    font-size:40px;
+
+    font-weight:800;
+
+    color:#2563eb;
+
+}
+
+
+
+.tc-stat-label {
+
+    color:#64748b;
+
+    margin-top:10px;
+
+}

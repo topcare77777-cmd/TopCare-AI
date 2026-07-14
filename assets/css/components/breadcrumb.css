@@ -1,0 +1,32 @@
+/* =================================
+   TOPCARE AI BREADCRUMB
+================================= */
+
+
+.tc-breadcrumb {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:14px;
+
+}
+
+
+.tc-breadcrumb a {
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+}
+
+
+.tc-breadcrumb span {
+
+    color:#94a3b8;
+
+}

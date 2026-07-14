@@ -1,25 +1,17 @@
-export function trustedComponent(template,data){
+export function trustedComponent(data = {}) {
 
-    const cards=data.items.map(item=>`
+    return `
+        <section class="trusted-section">
 
-        <div class="card">
+            <h2>
+                ${data.title ?? ""}
+            </h2>
 
-            <h3>${item.title}</h3>
+            <p>
+                ${data.description ?? ""}
+            </p>
 
-            <p>${item.description}</p>
-
-        </div>
-
-    `).join("");
-
-    return template
-
-        .replace("{{badge}}",data.badge)
-
-        .replace("{{title}}",data.title)
-
-        .replace("{{subtitle}}",data.subtitle)
-
-        .replace("{{items}}",cards);
+        </section>
+    `;
 
 }

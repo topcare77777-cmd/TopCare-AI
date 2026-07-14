@@ -1,18 +1,64 @@
-import { renderSection } from "./renderer.js";
-import { learningComponent } from "../components/learning.component.js";
+export function learningRenderer(template,data){
 
-export function renderLearning() {
+let cards="";
 
-    renderSection({
+data.courses.forEach(course=>{
 
-        selector: "#learning",
+cards+=`
 
-        template: "templates/components/learning.html",
+<div
+class="card learning-card"
+data-animate="animate-fade-up">
 
-        data: "assets/json/learning.json",
+<div class="learning-level">
 
-        component: learningComponent
+${course.icon}
+${course.level}
 
-    });
+</div>
+
+<h3>
+
+${course.title}
+
+</h3>
+
+<p>
+
+${course.lesson}
+
+</p>
+
+<div class="learning-rating">
+
+⭐⭐⭐⭐⭐
+
+${course.rating}
+
+</div>
+
+<a
+href="#"
+class="btn btn-primary">
+
+${course.button}
+
+</a>
+
+</div>
+
+`;
+
+});
+
+let html=template;
+
+html=html.replace("{{title}}",data.title);
+
+html=html.replace("{{subtitle}}",data.subtitle);
+
+html=html.replace("{{courses}}",cards);
+
+return html;
 
 }

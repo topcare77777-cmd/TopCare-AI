@@ -1,0 +1,42 @@
+/* =================================
+   TOPCARE AI TOAST
+================================= */
+
+
+.tc-toast {
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    padding:16px 22px;
+
+    border-radius:14px;
+
+    background:#0f172a;
+
+    color:white;
+
+    box-shadow:
+
+    0 15px 40px rgba(0,0,0,.2);
+
+}
+
+
+
+.tc-toast-success {
+
+    background:#16a34a;
+
+}
+
+
+
+.tc-toast-error {
+
+    background:#dc2626;
+
+}

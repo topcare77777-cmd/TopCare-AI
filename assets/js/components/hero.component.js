@@ -1,37 +1,32 @@
-import { Button } from "../design/button.js";
-import { Badge } from "../design/badge.js";
+export function heroComponent(data = {}) {
 
-export function heroComponent(template,data){
+    return `
+        <section class="hero-content">
 
-    return template
+            <div class="hero-text">
 
-        .replace("{{badge}}",
+                <span class="hero-badge">
+                    TopCare AI Platform
+                </span>
 
-            Badge(data.badge)
-        )
+                <h1>
+                    ${data.title ?? ""}
+                </h1>
 
-        .replaceAll("{{title}}",
+                <p>
+                    ${data.subtitle ?? ""}
+                </p>
 
-            data.title
-        )
+                <a href="${data.buttonLink ?? "#"}"
+                   class="btn btn-primary">
 
-        .replaceAll("{{subtitle}}",
+                    ${data.buttonText ?? "Mulai"}
 
-            data.subtitle
-        )
+                </a>
 
-        .replace("{{button}}",
+            </div>
 
-            Button({
-
-                text:data.button,
-
-                href:"#learning",
-
-                type:"primary"
-
-            })
-
-        );
+        </section>
+    `;
 
 }

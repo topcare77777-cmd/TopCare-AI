@@ -1,0 +1,27 @@
+/* ==========================================
+   CONTAINER
+========================================== */
+
+.container{
+
+    width:min(1280px,92%);
+
+    margin:auto;
+
+}
+
+.container-sm{
+
+    width:min(980px,92%);
+
+    margin:auto;
+
+}
+
+.container-lg{
+
+    width:min(1440px,94%);
+
+    margin:auto;
+
+}

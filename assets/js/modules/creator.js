@@ -1,9 +1,38 @@
-import { renderCreator } from "../renderers/creator.renderer.js";
+import { getCreatorData } from "../services/creator.service.js";
+import { creatorRenderer } from "../renderers/creator.renderer.js";
 
-export function initCreator(){
+export async function initCreator(){
 
-    console.log("Creator Loaded");
+try{
 
-    renderCreator();
+const target=document.querySelector("#creator");
+
+if(!target) return;
+
+const [template,data]=await Promise.all([
+
+fetch("templates/components/creator.html"),
+
+getCreatorData()
+
+]);
+
+target.innerHTML=creatorRenderer(
+
+await template.text(),
+
+data
+
+);
+
+console.log("✅ Creator Marketplace Loaded");
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
 
 }

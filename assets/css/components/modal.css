@@ -1,0 +1,73 @@
+/* =================================
+   TOPCARE AI MODAL
+================================= */
+
+
+.tc-modal-overlay {
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.55);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:999;
+
+}
+
+
+
+.tc-modal {
+
+    width:min(500px,90%);
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:30px;
+
+    box-shadow:
+    0 30px 80px rgba(0,0,0,.25);
+
+}
+
+
+
+.tc-modal-header {
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+
+
+.tc-modal-title {
+
+    font-size:22px;
+
+    font-weight:800;
+
+}
+
+
+
+.tc-modal-close {
+
+    cursor:pointer;
+
+    font-size:24px;
+
+}

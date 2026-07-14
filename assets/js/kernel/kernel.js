@@ -1,29 +1,36 @@
-class Kernel {
+import { register } from "../framework/application.js";
 
-    constructor(){
+import { initHero } from "../modules/hero.js";
+import { initTrusted } from "../modules/trusted.js";
+import { initStatistics } from "../modules/statistics.js";
+import { initLearning } from "../modules/learning.js";
+import { initAssistant } from "../modules/assistant.js";
+import { initPersonality } from "../modules/personality.js";
+import { initCommunity } from "../modules/community.js";
+import { initCreator } from "../modules/creator.js";
+import { initFAQ } from "../modules/faq.js";
+import { initTestimonial } from "../modules/testimonial.js";
 
-        this.modules=[];
+export function loadKernel(){
 
-    }
+    register(initHero);
 
-    register(module){
+    register(initTrusted);
 
-        this.modules.push(module);
+    register(initStatistics);
 
-    }
+    register(initLearning);
 
-    start(){
+    register(initAssistant);
 
-        console.log("TopCare Kernel Started");
+    register(initPersonality);
 
-        this.modules.forEach(module=>{
+    register(initCommunity);
 
-            module();
+    register(initCreator);
 
-        });
+    register(initFAQ);
 
-    }
+    register(initTestimonial);
 
 }
-
-export default new Kernel();

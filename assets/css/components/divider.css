@@ -1,0 +1,55 @@
+/* =================================
+   TOPCARE AI DIVIDER
+================================= */
+
+
+.tc-divider {
+
+    width:100%;
+
+    height:1px;
+
+    background:#e2e8f0;
+
+    margin:30px 0;
+
+}
+
+
+
+.tc-divider-dashed {
+
+    border-top:1px dashed #cbd5e1;
+
+    height:0;
+
+}
+
+
+
+.tc-divider-text {
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    color:#64748b;
+
+}
+
+
+
+.tc-divider-text::before,
+.tc-divider-text::after {
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:#e2e8f0;
+
+}

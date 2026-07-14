@@ -1,19 +1,204 @@
 <section class="hero">
 
-    {{badge}}
+    <div class="hero__container">
 
-    <h1>
+        <!-- ==========================
+             LEFT CONTENT
+        =========================== -->
 
-        {{title}}
+        <div class="hero__content">
 
-    </h1>
+            <div class="hero__badge">
 
-    <p>
+                {{badge}}
 
-        {{subtitle}}
+            </div>
 
-    </p>
 
-    {{button}}
+            <h1 class="hero__title">
+
+                {{title}}
+
+            </h1>
+
+
+            <p class="hero__subtitle">
+
+                {{subtitle}}
+
+            </p>
+
+
+            <div class="hero__buttons">
+
+                <a
+                    href="{{button1Link}}"
+                    class="btn btn-primary">
+
+                    {{button1Text}}
+
+                </a>
+
+                <a
+                    href="{{button2Link}}"
+                    class="btn btn-secondary">
+
+                    {{button2Text}}
+
+                </a>
+
+            </div>
+
+
+            <div class="hero__stats">
+
+                <div class="hero-stat">
+
+                    <h2>{{stat1Value}}</h2>
+
+                    <span>{{stat1Label}}</span>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <h2>{{stat2Value}}</h2>
+
+                    <span>{{stat2Label}}</span>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <h2>{{stat3Value}}</h2>
+
+                    <span>{{stat3Label}}</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ==========================
+             RIGHT CONTENT
+        =========================== -->
+
+        <div class="hero__preview">
+
+            <div class="dashboard">
+
+                <div class="dashboard__header">
+
+                    <div class="dashboard__dot red"></div>
+
+                    <div class="dashboard__dot yellow"></div>
+
+                    <div class="dashboard__dot green"></div>
+
+                    <span>
+
+                        {{dashboardTitle}}
+
+                    </span>
+
+                </div>
+
+
+                <div class="dashboard__body">
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card__icon">
+
+                            {{card1Icon}}
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                {{card1Title}}
+
+                            </h3>
+
+                            <p>
+
+                                {{card1Desc}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card__icon">
+
+                            {{card2Icon}}
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                {{card2Title}}
+
+                            </h3>
+
+                            <p>
+
+                                {{card2Desc}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="dashboard-card">
+
+                        <div class="dashboard-card__icon">
+
+                            {{card3Icon}}
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                {{card3Title}}
+
+                            </h3>
+
+                            <p>
+
+                                {{card3Desc}}
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>

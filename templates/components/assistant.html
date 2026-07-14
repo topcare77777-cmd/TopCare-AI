@@ -1,37 +1,75 @@
-<section class="assistant">
+<section class="assistant section">
 
-    <div class="container">
+<div class="container">
 
-        <span class="section-badge">
+<div class="assistant-wrapper">
 
-            {{badge}}
+<div
+class="assistant-info"
+data-animate="animate-left">
 
-        </span>
+<h2 class="heading">
 
-        <h2>
+{{title}}
 
-            {{title}}
+</h2>
 
-        </h2>
+<p class="subtitle">
 
-        <p>
+{{subtitle}}
 
-            {{subtitle}}
+</p>
 
-        </p>
+<div class="assistant-suggestion">
 
-        <div class="assistant-chip-group">
+{{suggestions}}
 
-            {{chips}}
+</div>
 
-        </div>
+</div>
 
-        <div class="assistant-window">
+<div
+class="assistant-chat card"
+data-animate="animate-right">
 
-            {{answer}}
+<div class="chat-header">
 
-        </div>
+🤖 TopCare AI
 
-    </div>
+</div>
+
+<div class="chat-body">
+
+<div class="chat-message">
+
+Halo 👋
+
+Ada yang ingin Anda pelajari hari ini?
+
+</div>
+
+</div>
+
+<div class="chat-input">
+
+<input
+
+type="text"
+
+placeholder="{{placeholder}}">
+
+<button class="btn btn-primary">
+
+{{button}}
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
 
 </section>

@@ -1,54 +1,74 @@
-/*======================================
-TOPCARE AI
-MASTER STYLESHEET
-Version 3.0 Alpha
-======================================*/
+/* ==================================================
+   TOPCARE AI PLATFORM
+   MASTER STYLE
+================================================== */
 
-/*======================================
-BASE
-======================================*/
+
+/* ================= BASE ================= */
 
 @import url("./base/reset.css");
 @import url("./base/variables.css");
 @import url("./base/typography.css");
 @import url("./base/utilities.css");
 
+@import url("./tokens/color.css");
+@import url("./tokens/spacing.css");
+@import url("./tokens/radius.css");
+@import url("./tokens/shadow.css");
+@import url("./tokens/glass.css");
+@import url("./tokens/gradient.css");
+@import url("./tokens/animation.css");
+@import url("./tokens/zindex.css");
 
-@import url("./pages/home/hero.css");
-@import url("./pages/home/trusted.css");
-@import url("./pages/home/learning.css");
-@import url("./pages/home/assistant.css");
-@import url("./pages/home/ebook.css");
-@import url("./pages/home/prompt.css");
-@import url("./pages/home/article.css");
-@import url("./pages/home/personality.css");
-@import url("./pages/home/creator.css");
-@import url("./pages/home/marketplace.css");
-@import url("./pages/home/community.css");
-@import url("./pages/home/premium.css");
-@import url("./pages/home/faq.css");
-@import url("./pages/home/home.css");
-/*======================================
-LAYOUT
-======================================*/
+@import url("./foundation/container.css");
+@import url("./foundation/section.css");
+@import url("./foundation/grid.css");
+@import url("./foundation/card.css");
+@import url("./foundation/button.css");
+@import url("./foundation/typography.css");
+
+/* ================= COMPONENTS ================= */
+
+@import url("./components/alert.css");
+@import url("./components/avatar.css");
+@import url("./components/badge.css");
+@import url("./components/breadcrumb.css");
+@import url("./components/button.css");
+@import url("./components/card.css");
+@import url("./components/chip.css");
+@import url("./components/divider.css");
+@import url("./components/dropdown.css");
+@import url("./components/icon.css");
+@import url("./components/input.css");
+@import url("./components/modal.css");
+@import url("./components/navbar.css");
+@import url("./components/pagination.css");
+@import url("./components/progress.css");
+@import url("./components/rating.css");
+@import url("./components/search.css");
+@import url("./components/sidebar.css");
+@import url("./components/skeleton.css");
+@import url("./components/spinner.css");
+@import url("./components/stats.css");
+@import url("./components/table.css");
+@import url("./components/tabs.css");
+@import url("./components/tag.css");
+@import url("./components/timeline.css");
+@import url("./components/toast.css");
+@import url("./components/tooltip.css");
+
+
+/* ================= LAYOUT ================= */
 
 @import url("./layout/grid.css");
 @import url("./layout/header.css");
 @import url("./layout/footer.css");
+@import url("./layout/cta.css");
 @import url("./layout/responsive.css");
+@import url("./layout/section.css");
 
-/*======================================
-COMPONENTS
-======================================*/
 
-@import url("./components/button.css");
-@import url("./components/card.css");
-@import url("./components/badge.css");
-@import url("./components/section.css");
-
-/*======================================
-HOME
-======================================*/
+/* ================= HOME ================= */
 
 @import url("./pages/home/home.css");
 @import url("./pages/home/hero.css");
@@ -57,3 +77,39 @@ HOME
 @import url("./pages/home/learning.css");
 @import url("./pages/home/assistant.css");
 @import url("./pages/home/personality.css");
+@import url("./pages/home/community.css");
+@import url("./pages/home/creator.css");
+@import url("./pages/home/faq.css");
+@import url("./pages/home/testimonial.css");
+@import url("./pages/home/article.css");
+@import url("./pages/home/ebook.css");
+@import url("./pages/home/marketplace.css");
+@import url("./pages/home/premium.css");
+@import url("./pages/home/prompt.css");
+
+
+html{
+    scroll-behavior:smooth;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:#f8fafc;
+    color:#0f172a;
+}
+
+img{
+    max-width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}

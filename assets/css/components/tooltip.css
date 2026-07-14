@@ -1,0 +1,55 @@
+/* =================================
+   TOPCARE AI TOOLTIP
+================================= */
+
+
+.tc-tooltip {
+
+    position:relative;
+
+    cursor:pointer;
+
+}
+
+
+
+.tc-tooltip-text {
+
+    position:absolute;
+
+    bottom:130%;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    background:#0f172a;
+
+    color:white;
+
+    padding:8px 12px;
+
+    border-radius:8px;
+
+    font-size:13px;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.25s;
+
+    white-space:nowrap;
+
+}
+
+
+
+.tc-tooltip:hover 
+.tc-tooltip-text {
+
+    opacity:1;
+
+    visibility:visible;
+
+}
