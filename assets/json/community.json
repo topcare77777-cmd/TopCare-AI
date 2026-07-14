@@ -1,0 +1,19 @@
+{
+  "badge":"Community",
+  "title":"Belajar Bersama Ribuan Member",
+  "subtitle":"Diskusi, berbagi pengalaman, dan belajar bersama komunitas TopCare AI.",
+  "posts":[
+    {
+      "author":"Ahmad",
+      "title":"Bagaimana cara membuat Prompt AI?",
+      "likes":42,
+      "comments":18
+    },
+    {
+      "author":"Rina",
+      "title":"Apa bedanya Koleris dan Sanguinis?",
+      "likes":31,
+      "comments":9
+    }
+  ]
+}
