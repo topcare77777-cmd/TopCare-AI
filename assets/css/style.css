@@ -8,11 +8,26 @@ Version 3.0 Alpha
 BASE
 ======================================*/
 
-@import url("./base/variables.css");
 @import url("./base/reset.css");
+@import url("./base/variables.css");
 @import url("./base/typography.css");
 @import url("./base/utilities.css");
 
+
+@import url("./pages/home/hero.css");
+@import url("./pages/home/trusted.css");
+@import url("./pages/home/learning.css");
+@import url("./pages/home/assistant.css");
+@import url("./pages/home/ebook.css");
+@import url("./pages/home/prompt.css");
+@import url("./pages/home/article.css");
+@import url("./pages/home/personality.css");
+@import url("./pages/home/creator.css");
+@import url("./pages/home/marketplace.css");
+@import url("./pages/home/community.css");
+@import url("./pages/home/premium.css");
+@import url("./pages/home/faq.css");
+@import url("./pages/home/home.css");
 /*======================================
 LAYOUT
 ======================================*/
@@ -35,17 +50,10 @@ COMPONENTS
 HOME
 ======================================*/
 
+@import url("./pages/home/home.css");
 @import url("./pages/home/hero.css");
 @import url("./pages/home/trusted.css");
+@import url("./pages/home/statistics.css");
 @import url("./pages/home/learning.css");
 @import url("./pages/home/assistant.css");
-@import url("./pages/home/ebook.css");
-@import url("./pages/home/prompt.css");
-@import url("./pages/home/article.css");
 @import url("./pages/home/personality.css");
-@import url("./pages/home/creator.css");
-@import url("./pages/home/marketplace.css");
-@import url("./pages/home/community.css");
-@import url("./pages/home/premium.css");
-@import url("./pages/home/faq.css");
-@import url("./pages/home/home.css");
