@@ -1,84 +1,19 @@
-/*==================================================
-  TOPCARE BADGE SYSTEM
-  File : badge.css
-==================================================*/
+.section-badge{
 
+    display:inline-block;
 
-/*==================================================
-  BASE
-==================================================*/
+    padding:8px 18px;
 
-.badge{
+    border-radius:999px;
 
-    display:inline-flex;
+    background:#DBEAFE;
 
-    align-items:center;
+    color:#2563EB;
 
-    justify-content:center;
+    font-size:.85rem;
 
-    gap:var(--space-2);
+    font-weight:700;
 
-    padding:var(--space-2) var(--space-4);
+    margin-bottom:18px;
 
-    border-radius:var(--radius-full);
-
-    font-family:var(--font-primary);
-
-    font-size:var(--fs-sm);
-
-    font-weight:var(--fw-600);
-
-    line-height:1;
-}
-
-
-/*==================================================
-  VARIANTS
-==================================================*/
-
-.badge-primary{
-
-    background:var(--primary);
-
-    color:var(--white);
-}
-
-
-.badge-secondary{
-
-    background:var(--secondary);
-
-    color:var(--white);
-}
-
-
-.badge-success{
-
-    background:var(--success);
-
-    color:var(--white);
-}
-
-
-.badge-warning{
-
-    background:var(--warning);
-
-    color:var(--white);
-}
-
-
-.badge-danger{
-
-    background:var(--danger);
-
-    color:var(--white);
-}
-
-
-.badge-info{
-
-    background:var(--info);
-
-    color:var(--white);
 }

@@ -1,13 +1,3 @@
-/*==================================================
-  TOPCARE BUTTON SYSTEM
-  File : button.css
-==================================================*/
-
-
-/*==================================================
-  BASE
-==================================================*/
-
 .btn{
 
     display:inline-flex;
@@ -16,137 +6,30 @@
 
     justify-content:center;
 
-    gap:var(--space-2);
+    padding:14px 28px;
 
-    padding:var(--space-4) var(--space-8);
+    border-radius:999px;
 
-    border:none;
-
-    border-radius:var(--radius-md);
-
-    font-family:var(--font-primary);
-
-    font-size:var(--fs-base);
-
-    font-weight:var(--fw-600);
-
-    line-height:1;
+    font-weight:600;
 
     cursor:pointer;
 
-    transition:var(--transition);
+    transition:.3s;
 
-    text-decoration:none;
+    border:none;
+
 }
-
-
-/*==================================================
-  PRIMARY
-==================================================*/
 
 .btn-primary{
 
-    background:var(--primary);
+    background:#2563EB;
 
-    color:var(--white);
+    color:#fff;
+
 }
 
 .btn-primary:hover{
 
-    background:var(--primary-hover);
+    transform:translateY(-2px);
 
-    transform:translateY(-3px);
-
-    box-shadow:var(--shadow-md);
-}
-
-
-/*==================================================
-  SECONDARY
-==================================================*/
-
-.btn-secondary{
-
-    background:transparent;
-
-    color:var(--text);
-
-    border:1px solid var(--border);
-}
-
-.btn-secondary:hover{
-
-    background:var(--surface-alt);
-}
-
-
-/*==================================================
-  OUTLINE
-==================================================*/
-
-.btn-outline{
-
-    background:transparent;
-
-    color:var(--primary);
-
-    border:2px solid var(--primary);
-}
-
-.btn-outline:hover{
-
-    background:var(--primary);
-
-    color:var(--white);
-}
-
-
-/*==================================================
-  GHOST
-==================================================*/
-
-.btn-ghost{
-
-    background:transparent;
-
-    color:var(--text);
-}
-
-.btn-ghost:hover{
-
-    background:var(--surface-alt);
-}
-
-
-/*==================================================
-  SIZE
-==================================================*/
-
-.btn-sm{
-
-    padding:var(--space-2) var(--space-5);
-
-    font-size:var(--fs-sm);
-}
-
-.btn-lg{
-
-    padding:var(--space-5) var(--space-10);
-
-    font-size:var(--fs-lg);
-}
-
-
-/*==================================================
-  STATE
-==================================================*/
-
-.btn:disabled,
-.btn.disabled{
-
-    opacity:.6;
-
-    pointer-events:none;
-
-    cursor:not-allowed;
 }

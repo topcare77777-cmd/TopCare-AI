@@ -1,0 +1,27 @@
+{
+  "badge": "Personality Explorer",
+  "title": "Kenali Potensi Terbaikmu",
+  "subtitle": "Pelajari empat tipe kepribadian dan temukan gaya belajar yang paling sesuai.",
+  "types": [
+    {
+      "name": "Koleris",
+      "role": "Pemimpin",
+      "color": "#EF4444"
+    },
+    {
+      "name": "Sanguinis",
+      "role": "Komunikator",
+      "color": "#F59E0B"
+    },
+    {
+      "name": "Melankolis",
+      "role": "Analitis",
+      "color": "#3B82F6"
+    },
+    {
+      "name": "Plegmatis",
+      "role": "Pendamai",
+      "color": "#10B981"
+    }
+  ]
+}
