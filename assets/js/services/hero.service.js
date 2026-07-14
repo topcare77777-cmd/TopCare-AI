@@ -1,7 +1,23 @@
 export async function getHeroData() {
 
-    const response = await fetch("assets/json/hero.json");
+    try {
 
-    return await response.json();
+        const response = await fetch("assets/json/hero.json");
+
+        if (!response.ok) {
+
+            throw new Error("Hero JSON tidak ditemukan.");
+
+        }
+
+        return await response.json();
+
+    } catch (error) {
+
+        console.error("Hero Service Error :", error);
+
+        return null;
+
+    }
 
 }

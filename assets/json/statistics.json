@@ -1,24 +1,57 @@
 {
-  "items": [
-    {
-      "number": "50.000+",
-      "title": "Member"
-    },
-    {
-      "number": "1.200+",
-      "title": "AI Prompt"
-    },
-    {
-      "number": "250+",
-      "title": "Ebook"
-    },
-    {
-      "number": "120+",
-      "title": "Video Course"
-    },
-    {
-      "number": "95%",
-      "title": "Positive Rating"
-    }
-  ]
+    "title":"TopCare AI dalam Angka",
+
+    "subtitle":"Kami membantu ribuan orang mengenali diri, belajar lebih efektif, dan berkembang bersama AI.",
+
+    "items":[
+
+        {
+
+            "icon":"👥",
+
+            "value":"10000",
+
+            "suffix":"+",
+
+            "label":"Pengguna Aktif"
+
+        },
+
+        {
+
+            "icon":"🧠",
+
+            "value":"25000",
+
+            "suffix":"+",
+
+            "label":"Tes Kepribadian"
+
+        },
+
+        {
+
+            "icon":"📚",
+
+            "value":"350",
+
+            "suffix":"+",
+
+            "label":"Materi Belajar"
+
+        },
+
+        {
+
+            "icon":"⭐",
+
+            "value":"98",
+
+            "suffix":"%",
+
+            "label":"Kepuasan"
+
+        }
+
+    ]
 }

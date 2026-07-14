@@ -1,34 +1,38 @@
 {
-    "badge":"Dipercaya",
+    "title":"Dipercaya oleh ribuan pengguna",
 
-    "title":"Belajar AI dari Platform yang Terus Berkembang",
+    "subtitle":"Platform modern untuk belajar, mengenali kepribadian dan berkembang bersama AI.",
 
-    "subtitle":"TopCare AI membangun ekosistem belajar modern untuk AI, Programming, Creator Economy, Personality, dan Digital Business.",
-
-    "items":[
+    "brands":[
 
         {
-
-            "title":"AI Learning",
-
-            "description":"Belajar AI dari dasar hingga praktik."
-
+            "name":"Google",
+            "logo":"G"
         },
 
         {
-
-            "title":"Programming",
-
-            "description":"HTML, CSS, JavaScript dan teknologi modern."
-
+            "name":"Microsoft",
+            "logo":"M"
         },
 
         {
+            "name":"OpenAI",
+            "logo":"AI"
+        },
 
-            "title":"Creator Economy",
+        {
+            "name":"GitHub",
+            "logo":"GH"
+        },
 
-            "description":"Bangun bisnis digital menggunakan AI."
+        {
+            "name":"Amazon",
+            "logo":"A"
+        },
 
+        {
+            "name":"Meta",
+            "logo":"∞"
         }
 
     ]

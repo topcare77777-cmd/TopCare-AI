@@ -1,0 +1,63 @@
+/* ==========================================
+   ANIMATION UTILITY
+========================================== */
+
+.animate-fade-up{
+
+animation:fadeUp .8s ease both;
+
+}
+
+.animate-fade-down{
+
+animation:fadeDown .8s ease both;
+
+}
+
+.animate-left{
+
+animation:fadeLeft .8s ease both;
+
+}
+
+.animate-right{
+
+animation:fadeRight .8s ease both;
+
+}
+
+.animate-zoom{
+
+animation:zoomIn .8s ease both;
+
+}
+
+.animate-float{
+
+animation:float 4s ease-in-out infinite;
+
+}
+
+.delay-1{
+
+animation-delay:.15s;
+
+}
+
+.delay-2{
+
+animation-delay:.30s;
+
+}
+
+.delay-3{
+
+animation-delay:.45s;
+
+}
+
+.delay-4{
+
+animation-delay:.60s;
+
+}

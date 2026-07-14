@@ -1,18 +1,73 @@
-import { renderSection } from "./renderer.js";
-import { creatorComponent } from "../components/creator.component.js";
+export function creatorRenderer(template,data){
 
-export function renderCreator(){
+let cards="";
 
-    renderSection({
+data.products.forEach(product=>{
 
-        selector:"#creator",
+cards+=`
 
-        template:"templates/components/creator.html",
+<div
+class="card creator-card"
+data-animate="animate-fade-up">
 
-        data:"assets/json/creator.json",
+<div class="creator-cover">
 
-        component:creatorComponent
+${product.cover}
 
-    });
+</div>
+
+<span class="creator-category">
+
+${product.category}
+
+</span>
+
+<h3>
+
+${product.title}
+
+</h3>
+
+<div class="creator-meta">
+
+<span>
+
+⭐ ${product.rating}
+
+</span>
+
+<strong>
+
+${product.price}
+
+</strong>
+
+</div>
+
+<a
+href="#"
+class="btn btn-primary">
+
+Lihat Detail
+
+</a>
+
+</div>
+
+`;
+
+});
+
+let html=template;
+
+html=html.replace("{{title}}",data.title);
+
+html=html.replace("{{subtitle}}",data.subtitle);
+
+html=html.replace("{{products}}",cards);
+
+html=html.replace("{{button}}",data.button);
+
+return html;
 
 }

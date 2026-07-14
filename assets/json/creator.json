@@ -1,35 +1,47 @@
 {
-    "badge":"Creator Marketplace",
+  "title":"Creator Marketplace",
 
-    "title":"Jual Prompt, Ebook dan Template AI",
+  "subtitle":"Temukan eBook, prompt AI, template, dan materi digital pilihan untuk mendukung proses belajar Anda.",
 
-    "subtitle":"Bangun penghasilan dari karya digital terbaikmu.",
+  "button":"Lihat Semua",
 
-    "products":[
+  "products":[
 
-        {
+    {
+      "title":"Personality Plus",
 
-            "name":"Ebook AI",
+      "category":"eBook",
 
-            "price":"Rp99.000"
+      "price":"Rp79.000",
 
-        },
+      "rating":"4.9",
 
-        {
+      "cover":"📘"
+    },
 
-            "name":"Prompt Bundle",
+    {
+      "title":"AI Prompt Collection",
 
-            "price":"Rp149.000"
+      "category":"Prompt",
 
-        },
+      "price":"Rp49.000",
 
-        {
+      "rating":"5.0",
 
-            "name":"Video Template",
+      "cover":"🤖"
+    },
 
-            "price":"Rp79.000"
+    {
+      "title":"Canva Social Kit",
 
-        }
+      "category":"Template",
 
-    ]
+      "price":"Rp39.000",
+
+      "rating":"4.8",
+
+      "cover":"🎨"
+    }
+
+  ]
 }

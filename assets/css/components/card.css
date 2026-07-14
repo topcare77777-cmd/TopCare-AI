@@ -1,16 +1,64 @@
-.card{
-    background:#ffffff;
-    border:1px solid #E5E7EB;
+/* =================================
+   TOPCARE AI CARD
+================================= */
+
+
+.tc-card {
+
+    background:white;
+
     border-radius:20px;
-    padding:32px;
-    transition:.35s;
-    box-shadow:0 10px 35px rgba(15,23,42,.05);
+
+    padding:28px;
+
+    box-shadow:
+    0 10px 30px rgba(15,23,42,.08);
+
+    transition:.3s ease;
+
 }
 
-.card:hover{
 
-    transform:translateY(-8px);
+.tc-card:hover {
 
-    box-shadow:0 25px 60px rgba(15,23,42,.12);
+    transform:translateY(-5px);
+
+}
+
+
+
+.tc-card-header {
+
+    margin-bottom:20px;
+
+}
+
+
+
+.tc-card-title {
+
+    font-size:20px;
+
+    font-weight:800;
+
+    color:#0f172a;
+
+}
+
+
+
+.tc-card-body {
+
+    color:#64748b;
+
+    line-height:1.7;
+
+}
+
+
+
+.tc-card-footer {
+
+    margin-top:20px;
 
 }

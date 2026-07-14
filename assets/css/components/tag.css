@@ -1,0 +1,31 @@
+/* =================================
+   TOPCARE AI TAG
+================================= */
+
+
+.tc-tag {
+
+    display:inline-flex;
+
+    padding:5px 12px;
+
+    border-radius:8px;
+
+    background:#f1f5f9;
+
+    color:#334155;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+
+.tc-tag-primary {
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+}

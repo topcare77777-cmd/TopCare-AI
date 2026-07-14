@@ -1,19 +1,32 @@
 {
-  "badge": "Learning Center",
-  "title": "Upgrade Skill AI Bersama TopCare AI",
-  "subtitle": "Belajar AI, Programming, Digital Business dan Personality dalam satu platform.",
+  "title": "Belajar Bersama AI",
+
+  "subtitle": "Kurikulum yang dirancang bertahap untuk mengenali diri, meningkatkan kemampuan, dan berkembang bersama AI.",
+
   "courses": [
     {
-      "title": "HTML & CSS",
-      "lesson": "42 Lesson"
+      "level": "Beginner",
+      "title": "Pengenalan Kepribadian",
+      "lesson": "15 Materi",
+      "rating": "5.0",
+      "icon": "🟢",
+      "button": "Mulai Belajar"
     },
     {
-      "title": "AI Prompt Engineering",
-      "lesson": "120 Prompt"
+      "level": "Intermediate",
+      "title": "Self Growth",
+      "lesson": "28 Materi",
+      "rating": "5.0",
+      "icon": "🟡",
+      "button": "Mulai Belajar"
     },
     {
-      "title": "Personality Mastery",
-      "lesson": "4 Personality Types"
+      "level": "Advanced",
+      "title": "Leadership AI",
+      "lesson": "42 Materi",
+      "rating": "5.0",
+      "icon": "🔵",
+      "button": "Mulai Belajar"
     }
   ]
 }

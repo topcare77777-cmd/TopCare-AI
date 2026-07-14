@@ -1,9 +1,19 @@
-import { renderTrusted } from "../renderers/trusted.renderer.js";
+import { render } from "../renderers/renderer.js";
+import { trustedComponent } from "../components/trusted.component.js";
+
 
 export function initTrusted(){
 
-    console.log("Trusted Loaded");
+    render({
 
-    renderTrusted();
+        selector:"#trusted",
+
+        template:"trusted",
+
+        data:"trusted",
+
+        component:trustedComponent
+
+    });
 
 }

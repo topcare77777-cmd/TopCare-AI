@@ -1,17 +1,17 @@
-export function statisticsComponent(template, data) {
+export function statisticsComponent(data = {}) {
 
-    const cards = data.items.map(item => `
-
+    return `
         <div class="statistics-card">
 
-            <h2>${item.number}</h2>
+            <h2>
+                ${data.value ?? "0"}
+            </h2>
 
-            <p>${item.title}</p>
+            <span>
+                ${data.label ?? ""}
+            </span>
 
         </div>
-
-    `).join("");
-
-    return template.replace("{{cards}}", cards);
+    `;
 
 }

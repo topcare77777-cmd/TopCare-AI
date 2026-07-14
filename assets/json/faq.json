@@ -1,0 +1,43 @@
+{
+  "title":"Pertanyaan yang Sering Ditanyakan",
+
+  "subtitle":"Temukan jawaban cepat mengenai layanan TopCare AI.",
+
+  "search":"Cari pertanyaan...",
+
+  "items":[
+
+    {
+
+      "question":"Apa itu TopCare AI?",
+
+      "answer":"TopCare AI adalah platform pembelajaran dan pengembangan diri berbasis Artificial Intelligence."
+
+    },
+
+    {
+
+      "question":"Bagaimana tes kepribadian bekerja?",
+
+      "answer":"Tes menggunakan serangkaian pertanyaan yang dianalisis untuk memberikan gambaran kecenderungan kepribadian."
+
+    },
+
+    {
+
+      "question":"Apakah hasil tes gratis?",
+
+      "answer":"Ya. Versi dasar tersedia gratis, sedangkan analisis lanjutan tersedia pada paket Premium."
+
+    },
+
+    {
+
+      "question":"Apa keuntungan Premium?",
+
+      "answer":"Mendapat laporan lengkap, AI Coach, materi eksklusif, serta akses ke seluruh course."
+
+    }
+
+  ]
+}

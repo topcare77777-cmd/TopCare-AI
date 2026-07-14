@@ -1,0 +1,44 @@
+/* =================================
+   TOPCARE AI TABLE
+================================= */
+
+
+.tc-table {
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+
+
+.tc-table th {
+
+    text-align:left;
+
+    padding:15px;
+
+    background:#f8fafc;
+
+    color:#334155;
+
+}
+
+
+
+.tc-table td {
+
+    padding:15px;
+
+    border-bottom:1px solid #e2e8f0;
+
+}
+
+
+
+.tc-table tr:hover {
+
+    background:#f8fafc;
+
+}

@@ -1,27 +1,31 @@
 {
-  "badge": "Personality Explorer",
-  "title": "Kenali Potensi Terbaikmu",
-  "subtitle": "Pelajari empat tipe kepribadian dan temukan gaya belajar yang paling sesuai.",
+  "title": "Jelajahi 4 Tipe Kepribadian",
+  "subtitle": "Pelajari kekuatan, tantangan, gaya komunikasi, dan potensi terbaik dari setiap tipe kepribadian.",
+  "button": "Pelajari Lebih Lanjut",
   "types": [
     {
       "name": "Koleris",
-      "role": "Pemimpin",
-      "color": "#EF4444"
+      "tagline": "Pemimpin yang berorientasi pada hasil.",
+      "color": "#ef4444",
+      "icon": "K"
     },
     {
       "name": "Sanguinis",
-      "role": "Komunikator",
-      "color": "#F59E0B"
+      "tagline": "Penuh semangat dan mudah bergaul.",
+      "color": "#f59e0b",
+      "icon": "S"
     },
     {
       "name": "Melankolis",
-      "role": "Analitis",
-      "color": "#3B82F6"
+      "tagline": "Analitis dan menyukai ketelitian.",
+      "color": "#3b82f6",
+      "icon": "M"
     },
     {
       "name": "Plegmatis",
-      "role": "Pendamai",
-      "color": "#10B981"
+      "tagline": "Tenang, stabil, dan penengah.",
+      "color": "#22c55e",
+      "icon": "P"
     }
   ]
 }

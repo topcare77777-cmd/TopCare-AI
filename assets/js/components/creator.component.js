@@ -1,23 +1,13 @@
-import { Card } from "../design/card.js";
+export function creatorComponent(data = {}) {
 
-export function creatorComponent(template,data){
+    return `
+        <section class="creator-card">
 
-    const products = data.products.map(product=>Card(`
+            <h2>${data.title ?? ""}</h2>
 
-        <h3>${product.name}</h3>
+            <p>${data.description ?? ""}</p>
 
-        <p>${product.price}</p>
-
-    `)).join("");
-
-    return template
-
-        .replace("{{badge}}",data.badge)
-
-        .replace("{{title}}",data.title)
-
-        .replace("{{subtitle}}",data.subtitle)
-
-        .replace("{{products}}",products);
+        </section>
+    `;
 
 }

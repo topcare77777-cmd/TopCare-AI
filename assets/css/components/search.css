@@ -1,0 +1,44 @@
+/* =================================
+   TOPCARE AI SEARCH
+================================= */
+
+
+.tc-search {
+
+    position:relative;
+
+    width:100%;
+
+}
+
+
+
+.tc-search-input {
+
+    width:100%;
+
+    padding:14px 45px 14px 18px;
+
+    border-radius:14px;
+
+    border:1px solid #cbd5e1;
+
+    outline:none;
+
+}
+
+
+
+.tc-search-icon {
+
+    position:absolute;
+
+    right:16px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#64748b;
+
+}

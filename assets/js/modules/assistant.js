@@ -1,9 +1,38 @@
-import { renderAssistant } from "../renderers/assistant.renderer.js";
+import { getAssistantData } from "../services/assistant.service.js";
+import { assistantRenderer } from "../renderers/assistant.renderer.js";
 
-export function initAssistant(){
+export async function initAssistant(){
 
-    console.log("Assistant Loaded");
+try{
 
-    renderAssistant();
+const target=document.querySelector("#assistant");
+
+if(!target) return;
+
+const [template,data]=await Promise.all([
+
+fetch("templates/components/assistant.html"),
+
+getAssistantData()
+
+]);
+
+target.innerHTML=assistantRenderer(
+
+await template.text(),
+
+data
+
+);
+
+console.log("✅ Assistant Premium Loaded");
+
+}
+
+catch(error){
+
+console.error(error);
+
+}
 
 }

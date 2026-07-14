@@ -1,25 +1,17 @@
-export function assistantComponent(template,data){
+export function assistantComponent(data = {}) {
 
-    const chips=data.chips.map(chip=>`
+    return `
+        <section class="assistant-card">
 
-        <button class="chip">
+            <h2>
+                ${data.title ?? ""}
+            </h2>
 
-            ${chip}
+            <p>
+                ${data.description ?? ""}
+            </p>
 
-        </button>
-
-    `).join("");
-
-    return template
-
-    .replace("{{badge}}",data.badge)
-
-    .replace("{{title}}",data.title)
-
-    .replace("{{subtitle}}",data.subtitle)
-
-    .replace("{{chips}}",chips)
-
-    .replace("{{answer}}",data.answer);
+        </section>
+    `;
 
 }

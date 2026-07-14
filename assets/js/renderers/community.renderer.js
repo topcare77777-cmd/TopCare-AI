@@ -1,18 +1,47 @@
-import { renderSection } from "./renderer.js";
-import { communityComponent } from "../components/community.component.js";
+export function communityRenderer(template,data){
 
-export function renderCommunity(){
+let activities="";
 
-    renderSection({
+data.activities.forEach(item=>{
 
-        selector:"#community",
+activities+=`
 
-        template:"templates/components/community.html",
+<div
+class="community-item card"
+data-animate="animate-fade-up">
 
-        data:"assets/json/community.json",
+<div class="community-avatar">
 
-        component:communityComponent
+${item.avatar}
 
-    });
+</div>
+
+<div class="community-content">
+
+<h4>${item.name}</h4>
+
+<p>${item.action}</p>
+
+<span>${item.time}</span>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+let html=template;
+
+html=html.replace("{{title}}",data.title);
+
+html=html.replace("{{subtitle}}",data.subtitle);
+
+html=html.replace("{{activities}}",activities);
+
+html=html.replace("{{button}}",data.button);
+
+return html;
 
 }

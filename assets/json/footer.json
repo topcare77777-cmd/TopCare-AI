@@ -1,0 +1,41 @@
+{
+  "brand": "TopCare AI",
+  "tagline": "Belajar • Bertumbuh • Berkembang bersama AI",
+  "newsletter": {
+    "title": "Berlangganan Newsletter",
+    "placeholder": "Masukkan email Anda",
+    "button": "Subscribe"
+  },
+  "columns": [
+    {
+      "title": "Platform",
+      "links": [
+        { "label": "Home", "url": "#" },
+        { "label": "Personality", "url": "#personality" },
+        { "label": "Learning", "url": "#learning" },
+        { "label": "Marketplace", "url": "#creator" },
+        { "label": "Community", "url": "#community" }
+      ]
+    },
+    {
+      "title": "Support",
+      "links": [
+        { "label": "FAQ", "url": "#faq" },
+        { "label": "Contact", "url": "contact.html" },
+        { "label": "Privacy", "url": "#" },
+        { "label": "Terms", "url": "#" }
+      ]
+    },
+    {
+      "title": "Social",
+      "links": [
+        { "label": "TikTok", "url": "#" },
+        { "label": "YouTube", "url": "#" },
+        { "label": "Instagram", "url": "#" },
+        { "label": "Facebook", "url": "#" }
+      ]
+    }
+  ],
+  "copyright": "© 2026 TopCare AI Platform",
+  "version": "Version 2.0.0 Alpha"
+}

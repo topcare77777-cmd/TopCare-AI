@@ -1,23 +1,22 @@
-import "./event.js";
-import "./router.js";
-import "./animation.js";
+const modules = [];
 
-class Application {
+export function register(module){
 
-    constructor(){
-
-        this.version = "2.0.0-alpha";
-
-        this.name = "TopCare AI";
-
-    }
-
-    start(){
-
-        console.log(`${this.name} ${this.version}`);
-
-    }
+    modules.push(module);
 
 }
 
-export default new Application();
+export function start(){
+
+    console.log("================================");
+    console.log("TopCare AI Platform");
+    console.log("Starting Application...");
+    console.log("================================");
+
+    modules.forEach(module=>{
+
+        module();
+
+    });
+
+}

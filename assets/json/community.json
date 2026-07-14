@@ -1,19 +1,25 @@
 {
-  "badge":"Community",
-  "title":"Belajar Bersama Ribuan Member",
-  "subtitle":"Diskusi, berbagi pengalaman, dan belajar bersama komunitas TopCare AI.",
-  "posts":[
+  "title": "Komunitas TopCare AI",
+  "subtitle": "Ikuti aktivitas terbaru dari para pengguna yang sedang belajar dan berkembang bersama.",
+  "button": "Gabung Komunitas",
+  "activities": [
     {
-      "author":"Ahmad",
-      "title":"Bagaimana cara membuat Prompt AI?",
-      "likes":42,
-      "comments":18
+      "avatar": "A",
+      "name": "Andi",
+      "action": "Baru menyelesaikan Tes Kepribadian",
+      "time": "2 menit lalu"
     },
     {
-      "author":"Rina",
-      "title":"Apa bedanya Koleris dan Sanguinis?",
-      "likes":31,
-      "comments":9
+      "avatar": "S",
+      "name": "Sinta",
+      "action": "Menyelesaikan Self Growth Level 1",
+      "time": "10 menit lalu"
+    },
+    {
+      "avatar": "R",
+      "name": "Reza",
+      "action": "Mengunduh eBook Personality Plus",
+      "time": "25 menit lalu"
     }
   ]
 }
