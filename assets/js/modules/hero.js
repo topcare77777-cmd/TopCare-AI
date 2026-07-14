@@ -1,5 +1,9 @@
-export function initHero(){
+import heroData from "../../json/hero.json" assert { type: "json" };
 
-    console.log("Hero Loaded");
+import { renderHero } from "../renderers/hero.renderer.js";
+
+export function initHero() {
+
+    renderHero(heroData);
 
 }
