@@ -3,20 +3,10 @@
 // Main JavaScript
 // =========================
 
-console.log("TopCare AI Loaded");
+import { bootstrap } from "./core/app.js";
 
-let nama = "Syaiful";
-let umur = 52;
+document.addEventListener("DOMContentLoaded",()=>{
 
-console.log("Nama :", nama);
-console.log("Umur :", umur);
+    bootstrap();
 
-const judul = document.querySelector("h1");
-
-if(judul){
-
-    judul.classList.add("title-active");
-
-}
-
-import "./modules/navbar.js";
+});
