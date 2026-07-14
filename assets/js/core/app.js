@@ -1,3 +1,5 @@
+import kernel from "../kernel/kernel.js";
+
 import { initHero } from "../modules/hero.js";
 import { initTrusted } from "../modules/trusted.js";
 import { initStatistics } from "../modules/statistics.js";
@@ -11,17 +13,19 @@ import { initTestimonial } from "../modules/testimonial.js";
 
 export function bootstrap(){
 
-    console.log("TopCare AI Platform");
+    console.log("Bootstrapping TopCare AI");
 
-    initHero();
-    initTrusted();
-    initStatistics();
-    initLearning();
-    initAssistant();
-    initPersonality();
-    initCommunity();
-    initCreator();
-    initFAQ();
-    initTestimonial();
+    kernel.register(initHero);
+    kernel.register(initTrusted);
+    kernel.register(initStatistics);
+    kernel.register(initLearning);
+    kernel.register(initAssistant);
+    kernel.register(initPersonality);
+    kernel.register(initCommunity);
+    kernel.register(initCreator);
+    kernel.register(initFAQ);
+    kernel.register(initTestimonial);
+
+    kernel.start();
 
 }

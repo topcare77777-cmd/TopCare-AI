@@ -1,29 +1,18 @@
-import { render } from "./renderer.js";
+import { renderSection } from "./renderer.js";
+import { heroComponent } from "../components/hero.component.js";
 
-export function renderHero(data) {
+export function renderHero() {
 
-    const html = `
+    renderSection({
 
-        <section class="hero">
+        selector: "#hero",
 
-            <div class="container">
+        template: "templates/components/hero.html",
 
-                <h1>${data.title}</h1>
+        data: "assets/json/hero.json",
 
-                <p>${data.subtitle}</p>
+        component: heroComponent
 
-                <a class="btn btn-primary">
-
-                    ${data.buttonPrimary}
-
-                </a>
-
-            </div>
-
-        </section>
-
-    `;
-
-    render("#hero", html);
+    });
 
 }
