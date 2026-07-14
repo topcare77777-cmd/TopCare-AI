@@ -1,3 +1,7 @@
+import "./event.js";
+import "./router.js";
+import "./animation.js";
+
 class Application {
 
     constructor(){

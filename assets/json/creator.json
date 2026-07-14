@@ -1,0 +1,35 @@
+{
+    "badge":"Creator Marketplace",
+
+    "title":"Jual Prompt, Ebook dan Template AI",
+
+    "subtitle":"Bangun penghasilan dari karya digital terbaikmu.",
+
+    "products":[
+
+        {
+
+            "name":"Ebook AI",
+
+            "price":"Rp99.000"
+
+        },
+
+        {
+
+            "name":"Prompt Bundle",
+
+            "price":"Rp149.000"
+
+        },
+
+        {
+
+            "name":"Video Template",
+
+            "price":"Rp79.000"
+
+        }
+
+    ]
+}
