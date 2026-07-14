@@ -1,0 +1,35 @@
+{
+    "badge":"Dipercaya",
+
+    "title":"Belajar AI dari Platform yang Terus Berkembang",
+
+    "subtitle":"TopCare AI membangun ekosistem belajar modern untuk AI, Programming, Creator Economy, Personality, dan Digital Business.",
+
+    "items":[
+
+        {
+
+            "title":"AI Learning",
+
+            "description":"Belajar AI dari dasar hingga praktik."
+
+        },
+
+        {
+
+            "title":"Programming",
+
+            "description":"HTML, CSS, JavaScript dan teknologi modern."
+
+        },
+
+        {
+
+            "title":"Creator Economy",
+
+            "description":"Bangun bisnis digital menggunakan AI."
+
+        }
+
+    ]
+}

@@ -1,11 +1,8 @@
-// =========================
-// TopCare AI
-// Main JavaScript
-// =========================
-
 import { bootstrap } from "./core/app.js";
 
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
+
+    console.log("DOM Ready");
 
     bootstrap();
 

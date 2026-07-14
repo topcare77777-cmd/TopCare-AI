@@ -1,10 +1,8 @@
 {
-    "title":"Knowledge About AI, Programming & Personality",
-
-    "subtitle":"Belajar AI modern dalam bahasa Indonesia.",
-
-    "buttonPrimary":"Mulai Belajar",
-
-    "buttonSecondary":"Explore"
-
+    "badge": "🚀 TopCare AI Platform",
+    "title": "Belajar. Berkarya. Bertumbuh.",
+    "subtitle": "Platform belajar AI, Programming, Personality, Digital Skill, dan Creator Economy.",
+    "buttonPrimary": "Mulai Belajar",
+    "buttonSecondary": "Lihat Marketplace",
+    "image": "assets/images/home/hero-main.webp"
 }
