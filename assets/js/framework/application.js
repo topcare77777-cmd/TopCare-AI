@@ -1,22 +1,13 @@
-const modules = [];
+import Router from "./router.js";
 
-export function register(module){
+class Application {
 
-    modules.push(module);
+    async start() {
 
-}
+        Router.start();
 
-export function start(){
-
-    console.log("================================");
-    console.log("TopCare AI Platform");
-    console.log("Starting Application...");
-    console.log("================================");
-
-    modules.forEach(module=>{
-
-        module();
-
-    });
+    }
 
 }
+
+export default new Application();

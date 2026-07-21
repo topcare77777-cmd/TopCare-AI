@@ -1,18 +1,56 @@
-import { renderSection } from "./renderer.js";
-import { trustedComponent } from "../components/trusted.component.js";
+import Renderer from "./renderer.js";
 
-export function renderTrusted(){
 
-    renderSection({
+class TrustedRenderer{
 
-        selector:"#trusted",
 
-        template:"templates/components/trusted.html",
+async init(){
 
-        data:"assets/json/trusted.json",
 
-        component:trustedComponent
+const response =
+await fetch(
+"/assets/json/trusted.json"
+);
 
-    });
+
+const data =
+await response.json();
+
+
+
+const html =
+data.map(item=>
+
+
+`
+
+<img
+
+src="${item.logo}"
+
+alt="${item.name}"
+
+loading="lazy"
+
+/>
+
+
+`
+
+).join("");
+
+
+
+Renderer.render(
+"#trusted",
+html
+);
+
 
 }
+
+
+}
+
+
+export default new TrustedRenderer();

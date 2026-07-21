@@ -1,8 +1,13 @@
-export class Service{
+export default class Service {
 
-    async get(){
+    async json(url) {
 
-        return [];
+        const response = await fetch(url);
+
+        if (!response.ok)
+            throw new Error(url);
+
+        return response.json();
 
     }
 

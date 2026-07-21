@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Deep Enterprise SaaS Background Gradient -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16" />
+      <stop offset="50%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Glowing Blue Node Gradient -->
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Synaptic Connection Line Gradient -->
+    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.6" />
+      <stop offset="50%" stop-color="#60A5FA" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#93C5FD" stop-opacity="0.3" />
+    </linearGradient>
+
+    <!-- Neon Glow Filter for Core Nodes -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur1" />
+      <feGaussianBlur stdDeviation="12" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur2" />
+        <feMergeNode in="blur1" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Subtle Container Shadow -->
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#020617" flood-opacity="0.7"/>
+    </filter>
+  </defs>
+
+  <!-- Background SaaS Badge Container -->
+  <circle cx="256" cy="256" r="230" fill="url(#bgGradient)" stroke="rgba(59, 130, 246, 0.2)" stroke-width="4" filter="url(#shadow)" />
+
+  <!-- Abstract Neural Network Connections (Synapses) -->
+  <g fill="none" stroke="url(#lineGrad)" stroke-width="1.5" stroke-linecap="round">
+    <!-- Input Layer to Hidden Layer 1 -->
+    <path d="M 120 160 L 200 120 M 120 160 L 200 220 M 120 256 L 200 220 M 120 256 L 200 300 M 120 352 L 200 300 M 120 352 L 200 392" />
+    
+    <!-- Hidden Layer 1 to Core Processing Hub -->
+    <path d="M 200 120 L 256 190 M 200 220 L 256 190 M 200 220 L 256 320 M 200 300 L 256 320 M 200 300 L 256 190 M 200 392 L 256 320" />
+    
+    <!-- Core Processing Hub to Hidden Layer 2 -->
+    <path d="M 256 190 L 312 120 M 256 190 L 312 256 M 256 320 L 312 256 M 256 320 L 312 392" />
+
+    <!-- Hidden Layer 2 to Output Layer -->
+    <path d="M 312 120 L 392 180 M 312 256 L 392 180 M 312 256 L 392 332 M 312 392 L 392 332" />
+
+    <!-- Cross-Connects for Complex AI Web Aesthetic -->
+    <path d="M 200 120 L 200 220 M 200 220 L 200 300 M 200 300 L 200 392" stroke-dasharray="3 6" opacity="0.4" />
+    <path d="M 312 120 L 312 256 M 312 256 L 312 392" stroke-dasharray="3 6" opacity="0.4" />
+    <path d="M 256 190 L 256 320" stroke-width="2.5" opacity="0.7" />
+  </g>
+
+  <!-- Glowing Neural Nodes / Synapse Terminals -->
+  <g filter="url(#glow)">
+    <!-- Input Layer Nodes -->
+    <circle cx="120" cy="160" r="4.5" fill="#93C5FD" />
+    <circle cx="120" cy="256" r="6" fill="url(#nodeGrad)" />
+    <circle cx="120" cy="352" r="4.5" fill="#93C5FD" />
+
+    <!-- Hidden Layer 1 Nodes -->
+    <circle cx="200" cy="120" r="5" fill="#60A5FA" />
+    <circle cx="200" cy="220" r="7" fill="url(#nodeGrad)" />
+    <circle cx="200" cy="300" r="6" fill="url(#nodeGrad)" />
+    <circle cx="200" cy="392" r="5" fill="#60A5FA" />
+
+    <!-- Central Neural AI Core Nucleus -->
+    <circle cx="256" cy="190" r="8" fill="#93C5FD" />
+    <circle cx="256" cy="320" r="8" fill="#93C5FD" />
+    <circle cx="256" cy="255" r="14" fill="url(#nodeGrad)" />
+    <circle cx="256" cy="255" r="6" fill="#FFFFFF" />
+
+    <!-- Hidden Layer 2 Nodes -->
+    <circle cx="312" cy="120" r="5" fill="#60A5FA" />
+    <circle cx="312" cy="256" r="7.5" fill="url(#nodeGrad)" />
+    <circle cx="312" cy="392" r="5" fill="#60A5FA" />
+
+    <!-- Output Layer Nodes -->
+    <circle cx="392" cy="180" r="5.5" fill="#93C5FD" />
+    <circle cx="392" cy="332" r="6.5" fill="url(#nodeGrad)" />
+  </g>
+
+  <!-- Clean Minimalist Outer Data Ring -->
+  <circle cx="256" cy="256" r="190" fill="none" stroke="#3B82F6" stroke-width="1" stroke-dasharray="8 16" opacity="0.3" />
+</svg>

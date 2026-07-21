@@ -1,25 +1,17 @@
-export async function getStatisticsData(){
+import BaseService from "./base.service.js";
 
-    try{
 
-        const response=await fetch("assets/json/statistics.json");
+class StatisticsService extends BaseService {
 
-        if(!response.ok){
 
-            throw new Error("statistics.json tidak ditemukan.");
+    constructor(){
 
-        }
-
-        return await response.json();
+        super("homepage/statistics");
 
     }
 
-    catch(error){
-
-        console.error(error);
-
-        return null;
-
-    }
 
 }
+
+
+export default new StatisticsService();

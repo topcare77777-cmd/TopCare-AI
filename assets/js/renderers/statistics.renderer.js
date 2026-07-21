@@ -1,46 +1,60 @@
-export function statisticsRenderer(template, data) {
+import Renderer from "./renderer.js";
+import StatisticsService from "../services/statistics.service.js";
 
-    let cards = "";
 
-    data.items.forEach(item => {
+class StatisticsRenderer{
 
-        cards += `
-        <div class="stat-card">
 
-            <div class="stat-icon">
+async init(){
 
-                ${item.icon}
 
-            </div>
+const data =
+await StatisticsService.all();
 
-            <div
-                class="stat-value"
-                data-value="${item.value}"
-                data-suffix="${item.suffix}">
 
-                0
 
-            </div>
+const html =
+data.map(stat=>
 
-            <div class="stat-label">
 
-                ${item.label}
+`
 
-            </div>
+<div class="stat-card">
 
-        </div>
-        `;
 
-    });
+<strong>
 
-    let html = template;
+${stat.value}
 
-    html = html.replace("{{title}}", data.title);
+</strong>
 
-    html = html.replace("{{subtitle}}", data.subtitle);
 
-    html = html.replace("{{cards}}", cards);
+<span>
 
-    return html;
+${stat.label}
+
+</span>
+
+
+</div>
+
+
+`
+
+).join("");
+
+
+
+Renderer.render(
+"#statistics",
+html
+);
+
 
 }
+
+
+}
+
+
+export default new StatisticsRenderer();

@@ -1,13 +1,34 @@
-export function personalityComponent(data = {}) {
+import BaseComponent from "./base.component.js";
 
-    return `
-        <section class="personality-card">
+class PersonalityComponent extends BaseComponent {
+  constructor() {
+    super("#personality");
+  }
 
-            <h2>${data.title ?? ""}</h2>
+  async mount() {
+    // Resolve service via CMS Facade
+    const personalityService = this.cms.resolve("personality");
+    
+    // Use verified service method
+    const data = await personalityService.loadConfig();
 
-            <p>${data.description ?? ""}</p>
+    if (!data) {
+      return;
+    }
 
-        </section>
-    `;
+    let html = "";
 
+    data.forEach((item) => {
+      html += `
+        <div class="personality-card">
+          <h3>${item.name}</h3>
+          <p>${item.description}</p>
+        </div>
+      `;
+    });
+
+    this.render(html);
+  }
 }
+
+export default new PersonalityComponent();

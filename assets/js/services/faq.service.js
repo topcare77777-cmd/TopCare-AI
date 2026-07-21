@@ -1,13 +1,17 @@
-export async function getFAQData(){
+import BaseService from "./base.service.js";
 
-const response=await fetch("assets/json/faq.json");
 
-if(!response.ok){
+class FAQService extends BaseService {
 
-throw new Error("faq.json tidak ditemukan");
+
+    constructor(){
+
+        super("homepage/faq");
+
+    }
+
 
 }
 
-return await response.json();
 
-}
+export default new FAQService();

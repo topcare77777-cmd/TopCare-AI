@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Enterprise SaaS Blue to Cyan Gradient -->
+    <linearGradient id="chartBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Glowing Trend Line & Highlight Gradient -->
+    <linearGradient id="chartHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="50%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Area Fill Gradient Under Trend Line -->
+    <linearGradient id="chartAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#1D4ED8" stop-opacity="0.0" />
+    </linearGradient>
+
+    <!-- Glowing Atmosphere Filter -->
+    <filter id="chartGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Soft Ambient Backlight Glow -->
+    <filter id="chartAmbient" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="35" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Blue Analytics Aura Behind Chart -->
+  <circle cx="256" cy="256" r="160" fill="#2563EB" opacity="0.2" filter="url(#chartAmbient)" />
+
+  <!-- Premium Analytics Chart Icon (Upward Trend AI SaaS Style) -->
+  <g transform="translate(64, 64) scale(12)" filter="url(#chartGlow)">
+    
+    <!-- Chart Background Grid Lines (Subtle) -->
+    <g stroke="url(#chartBlueGrad)" stroke-width="1" stroke-dasharray="2 2" opacity="0.25">
+      <line x1="4" y1="8" x2="28" y2="8" />
+      <line x1="4" y1="16" x2="28" y2="16" />
+      <line x1="4" y1="24" x2="28" y2="24" />
+      <line x1="10" y1="4" x2="10" y2="28" />
+      <line x1="18" y1="4" x2="18" y2="28" />
+      <line x1="26" y1="4" x2="26" y2="28" />
+    </g>
+
+    <!-- Chart Axes (X and Y) -->
+    <path d="M 4 28 L 28 28" stroke="url(#chartBlueGrad)" stroke-width="2.2" stroke-linecap="round" />
+    <path d="M 4 4 L 4 28" stroke="url(#chartBlueGrad)" stroke-width="2.2" stroke-linecap="round" />
+
+    <!-- Area Fill Under Upward Trend Curve -->
+    <path d="M 4 24 L 4 28 L 28 28 L 28 12 C 22 20, 16 14, 10 20 C 7 23, 5 25, 4 24 Z" 
+          fill="url(#chartAreaGrad)" />
+
+    <!-- Upward Trend Neural Curve / Data Line -->
+    <path d="M 4 24 C 7 25, 10 23, 13 20 C 16 14, 22 20, 28 12" 
+          fill="none" stroke="url(#chartHighlight)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- AI Data Points / Nodes on the Growth Curve -->
+    <circle cx="4" cy="24" r="2" fill="#38BDF8" />
+    <circle cx="13" cy="20" r="2" fill="#38BDF8" />
+    <circle cx="21" cy="16" r="2" fill="#2DD4BF" />
+    
+    <!-- Peak Growth Milestone Node (Glowing) -->
+    <circle cx="28" cy="12" r="3.5" fill="url(#chartHighlight)" />
+    <circle cx="28" cy="12" r="1.5" fill="#FFFFFF" />
+
+    <!-- Floating Arrowhead / Growth Indicator -->
+    <path d="M 23 12 L 28 12 L 28 17" fill="none" stroke="url(#chartHighlight)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+  </g>
+</svg>

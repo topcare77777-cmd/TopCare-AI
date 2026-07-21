@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="bgGrad48" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Square Background -->
+  <rect x="3" y="3" width="42" height="42" rx="10" fill="url(#bgGrad48)" />
+  
+  <!-- Centered White 'TC' -->
+  <text x="24" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.8">TC</text>
+  
+  <!-- Small Sparkle in Top-Right Corner -->
+  <path d="M39 10 L39.5 12.2 L41.7 12.7 L39.5 13.2 L39 15.4 L38.5 13.2 L36.3 12.7 L38.5 12.2 Z" fill="#FFFFFF" />
+  
+  <!-- Minimal AI Circuit Detail at Bottom Edge -->
+  <path d="M15 40 H27 M27 40 V36 M27 40 H33" stroke="#FFFFFF" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" fill="none" />
+</svg>

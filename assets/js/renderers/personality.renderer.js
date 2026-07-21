@@ -1,57 +1,44 @@
-export function personalityRenderer(template,data){
+/**
+ * ==========================================================
+ * TopCare AI CMS Framework
+ * Personality Renderer Component
+ * ----------------------------------------------------------
+ * Layer     : Presentation (Pure)
+ * Status    : MIGRATED (Refined)
+ * ==========================================================
+ */
 
-let cards="";
-
-data.types.forEach(item=>{
-
-cards+=`
-
-<div
-class="card personality-card"
-data-animate="animate-fade-up">
-
-<div
-class="personality-icon"
-style="background:${item.color};">
-
-${item.icon}
-
-</div>
-
-<h3>
-
-${item.name}
-
-</h3>
-
-<p>
-
-${item.tagline}
-
-</p>
-
-<a
-href="#"
-class="btn btn-primary">
-
-${data.button}
-
-</a>
-
-</div>
-
+const TEMPLATE = `
+  <div class="personality-result">
+    <h3 class="type"></h3>
+    <div class="score"></div>
+  </div>
 `;
 
-});
+export default class PersonalityRenderer {
+  /**
+   * Pure presentation layer: tidak ada state internal, tidak ada akses global.
+   */
+  render(container, data) {
+    // Input Validation
+    if (!(container instanceof HTMLElement)) {
+      console.warn('PersonalityRenderer: Invalid container element');
+      return;
+    }
+    if (!data || typeof data.type === 'undefined' || typeof data.score === 'undefined') {
+      console.error('PersonalityRenderer: Invalid data contract');
+      return;
+    }
+    
+    // Idempotent Render: Mengganti konten container (Full Replace)
+    container.innerHTML = TEMPLATE;
+    container.querySelector('.type').textContent = data.type;
+    container.querySelector('.score').textContent = `Score: ${data.score}`;
+  }
 
-let html=template;
-
-html=html.replace("{{title}}",data.title);
-
-html=html.replace("{{subtitle}}",data.subtitle);
-
-html=html.replace("{{cards}}",cards);
-
-return html;
-
+  clear(container) {
+    if (container instanceof HTMLElement) {
+      container.innerHTML = '';
+    }
+  }
 }

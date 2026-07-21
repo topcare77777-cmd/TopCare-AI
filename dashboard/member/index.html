@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>
+Member Dashboard
+</title>
+
+</head>
+
+
+<body>
+
+
+<h1>
+TopCare AI Member Dashboard
+</h1>
+
+
+<div id="user"></div>
+
+
+<script type="module">
+
+import Session
+from "../../assets/js/auth/user.session.js";
+
+
+document
+.getElementById("user")
+.innerHTML=
+
+JSON.stringify(
+Session.get(),
+null,
+2
+);
+
+
+</script>
+
+
+</body>
+
+</html>

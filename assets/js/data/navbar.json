@@ -1,0 +1,64 @@
+{
+"brand": {
+"name": "TopCare AI",
+"logo": "🧠"
+},
+"menus": [
+{
+"title": "Home",
+"link": "#hero"
+},
+{
+"title": "Learning",
+"link": "#learning"
+},
+{
+"title": "AI Assistant",
+"link": "#assistant"
+},
+{
+"title": "Personality",
+"link": "#personality"
+},
+{
+"title": "Community",
+"link": "#community"
+},
+{
+"title": "Article",
+"link": "#"
+},
+{
+"title": "Ebook",
+"link": "#"
+},
+{
+"title": "Marketplace",
+"link": "#"
+},
+{
+"title": "Creator",
+"link": "#"
+},
+{
+"title": "Premium",
+"link": "#"
+},
+{
+"title": "Personality Test",
+"link": "#"
+},
+{
+"title": "About",
+"link": "#"
+},
+{
+"title": "Contact",
+"link": "#"
+}
+],
+"buttons": {
+"login": "Masuk",
+"register": "Mulai Gratis"
+}
+}

@@ -1,21 +1,17 @@
-const listeners = {};
+class EventSystem {
 
-export function on(event, callback){
+    on(selector, event, callback) {
 
-    if(!listeners[event]){
+        document.addEventListener(event, e => {
 
-        listeners[event] = [];
+            if (e.target.matches(selector))
+
+                callback(e);
+
+        });
 
     }
 
-    listeners[event].push(callback);
-
 }
 
-export function emit(event, payload){
-
-    if(!listeners[event]) return;
-
-    listeners[event].forEach(callback=>callback(payload));
-
-}
+export default new EventSystem();

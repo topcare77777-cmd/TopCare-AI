@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <linearGradient id="appleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Apple Touch Icon Rounded Square (iOS standard smooth corner radius) -->
+  <rect x="10" y="10" width="160" height="160" rx="36" fill="url(#appleGrad)" />
+  
+  <!-- Centered White 'TC' -->
+  <text x="90" y="118" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="76" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-3">TC</text>
+  
+  <!-- Elegant Sparkle in Top-Right Corner -->
+  <path d="M142 38 L144 46 L152 48 L144 50 L142 58 L140 50 L132 48 L140 46 Z" fill="#FFFFFF" />
+  
+  <!-- Elegant Integrated AI Circuit Pattern at the Bottom -->
+  <path d="M55 148 H100 M100 148 V132 M100 148 H125" stroke="#FFFFFF" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85" fill="none" />
+  <circle cx="125" cy="148" r="4.5" fill="#FFFFFF" opacity="0.9" />
+</svg>

@@ -1,0 +1,38 @@
+/* ==================================================
+ABOUT PAGE STYLES
+================================================== */
+
+.about-page {
+padding: 5rem 2rem;
+max-width: var(--container-width);
+margin: 0 auto;
+}
+
+.about-header {
+text-align: center;
+margin-bottom: 4rem;
+}
+
+.about-content {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 4rem;
+align-items: center;
+}
+
+.about-text h3 {
+font-size: 1.75rem;
+margin-bottom: 1rem;
+}
+
+.about-text p {
+margin-bottom: 1.5rem;
+line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+.about-content {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+}

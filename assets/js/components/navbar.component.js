@@ -1,0 +1,125 @@
+import languageEngine from "../core/language.js";
+import navbarService from "../services/navbar.service.js";
+
+class NavbarComponent {
+constructor() {
+this.containerId = null;
+}
+
+async mount(containerId) {
+    this.containerId = containerId;
+    await this.render();
+    this.bindEvents();
+}
+
+async render() {
+    const container = document.getElementById(this.containerId);
+    if (!container) return;
+
+    const navData = await navbarService.getAll();
+    const brand = navData?.brand || { name: "TopCare AI", logo: "🧠" };
+    const buttons = navData?.buttons || { login: "Masuk", register: "Mulai Gratis" };
+
+    container.className = "header";
+    container.innerHTML = `
+        <nav class="tc-navbar">
+            <div class="tc-navbar-brand">
+                <a href="#hero">${brand.logo} ${brand.name}</a>
+            </div>
+            <div class="tc-navbar-links">
+                <a href="#hero" class="tc-navbar-link">Beranda</a>
+                
+                <div class="tc-dropdown">
+                    <a href="#trusted" class="tc-navbar-link">Tentang Kami ▾</a>
+                    <div class="tc-dropdown-content">
+                        <a href="#trusted">Profil</a>
+                        <a href="#trusted">Visi & Misi</a>
+                        <a href="#trusted">Roadmap</a>
+                    </div>
+                </div>
+
+                <a href="#features" class="tc-navbar-link">Personality</a>
+                <a href="#features" class="tc-navbar-link">Belajar AI</a>
+                <a href="#features" class="tc-navbar-link">Ebook</a>
+                <a href="#article" class="tc-navbar-link">Artikel</a>
+                
+                <div class="tc-dropdown">
+                    <a href="#features" class="tc-navbar-link">AI ▾</a>
+                    <div class="tc-dropdown-content">
+                        <a href="#features">AI Assistant</a>
+                        <a href="#features">Prompt AI</a>
+                        <a href="#features">AI Academy</a>
+                    </div>
+                </div>
+
+                <a href="#features" class="tc-navbar-link">Community</a>
+                
+                <div class="tc-dropdown">
+                    <a href="#features" class="tc-navbar-link">Creator ▾</a>
+                    <div class="tc-dropdown-content">
+                        <a href="#features">Creator Hub</a>
+                        <a href="#features">Event</a>
+                        <a href="#features">Forum</a>
+                    </div>
+                </div>
+
+                <a href="#features" class="tc-navbar-link">Marketplace</a>
+                <a href="#premium" class="tc-navbar-link">Premium</a>
+                <a href="#features" class="tc-navbar-link">FAQ</a>
+                <a href="#features" class="tc-navbar-link">Kontak</a>
+
+                <div class="tc-dropdown">
+                    <a href="#" class="tc-navbar-link">Bahasa ▾</a>
+                    <div class="tc-dropdown-content">
+                        <a href="#" onclick="window.setLang('id')">Indonesia</a>
+                        <a href="#" onclick="window.setLang('en')">English</a>
+                        <a href="#" onclick="window.setLang('mandarin')">中文</a>
+                        <a href="#" onclick="window.setLang('japanese')">日本語</a>
+                        <a href="#" onclick="window.setLang('korean')">한국어</a>
+                    </div>
+                </div>
+            </div>
+            <div class="tc-navbar-actions">
+                <select id="lang-switch" class="tc-language-select">
+                    <option value="id" ${languageEngine.currentLang === 'id' ? 'selected' : ''}>ID</option>
+                    <option value="en" ${languageEngine.currentLang === 'en' ? 'selected' : ''}>EN</option>
+                    <option value="asia" ${languageEngine.currentLang === 'asia' ? 'selected' : ''}>Asia</option>
+                    <option value="mandarin" ${languageEngine.currentLang === 'mandarin' ? 'selected' : ''}>中文</option>
+                    <option value="japanese" ${languageEngine.currentLang === 'japanese' ? 'selected' : ''}>日本語</option>
+                    <option value="korean" ${languageEngine.currentLang === 'korean' ? 'selected' : ''}>한국어</option>
+                </select>
+                <button class="tc-btn tc-btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" id="nav-login">${buttons.login}</button>
+                <button class="tc-btn tc-btn-primary" style="padding: 0.5rem 1rem; font-size: 0.85rem;" id="nav-reg">${buttons.register}</button>
+            </div>
+        </nav>
+    `;
+
+    window.setLang = (lang) => {
+        languageEngine.setLanguage(lang);
+    };
+}
+
+bindEvents() {
+    const select = document.getElementById("lang-switch");
+    if (select) {
+        select.addEventListener("change", (e) => {
+            languageEngine.setLanguage(e.target.value);
+        });
+    }
+    const navLogin = document.getElementById("nav-login");
+    const navReg = document.getElementById("nav-reg");
+    if (navLogin) {
+        navLogin.addEventListener("click", () => alert("Masuk - TopCare AI V2.0.0"));
+    }
+    if (navReg) {
+        navReg.addEventListener("click", () => alert("Mulai Gratis - TopCare AI V2.0.0"));
+    }
+}
+
+destroy() {
+    const container = document.getElementById(this.containerId);
+    if (container) container.innerHTML = "";
+}
+}
+
+export default new NavbarComponent();

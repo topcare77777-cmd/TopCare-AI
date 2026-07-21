@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Modern Futuristic Blue SaaS Gradient -->
+    <linearGradient id="rocketBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Bright White-Cyan Core Highlight Gradient -->
+    <linearGradient id="rocketHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Rocket Thruster Plasma Flame Gradient -->
+    <linearGradient id="plasmaFlame" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#2DD4BF" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#3B82F6" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Glowing Atmosphere Filter -->
+    <filter id="rocketGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Soft Ambient Backlight Glow -->
+    <filter id="rocketAmbient" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="35" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Blue Backlight Glow -->
+  <circle cx="256" cy="240" r="150" fill="#2563EB" opacity="0.22" filter="url(#rocketAmbient)" />
+
+  <!-- Modern Futuristic Prompt Hub Rocket Icon -->
+  <g transform="translate(96, 60) scale(10)" filter="url(#rocketGlow)">
+    
+    <!-- Thruster Exhaust Plasma Flame (Prompt Hub Launch Energy) -->
+    <path d="M13 32 L16 41 L19 32 Z" fill="url(#plasmaFlame)" opacity="0.9" />
+    <circle cx="16" cy="36" r="2" fill="#38BDF8" filter="url(#rocketGlow)" />
+
+    <!-- Main Rocket Body (Sleek Geometric Vector Profile) -->
+    <path d="M16 3 C20 9 22 17 22 25 L22 31 C22 32.1 21.1 33 20 33 L12 33 C10.9 33 10 32.1 10 31 L10 25 C10 17 12 9 16 3 Z" 
+          fill="none" stroke="url(#rocketBlueGrad)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Left Wing Fin -->
+    <path d="M10 23 L4 29 C4 30.1 5.1 31 6.2 31 L10 29 Z" 
+          fill="none" stroke="url(#rocketBlueGrad)" stroke-width="2" stroke-linejoin="round" />
+
+    <!-- Right Wing Fin -->
+    <path d="M22 23 L28 29 C28 30.1 26.9 31 25.8 31 L22 29 Z" 
+          fill="none" stroke="url(#rocketBlueGrad)" stroke-width="2" stroke-linejoin="round" />
+
+    <!-- Circular Cockpit Window / AI Core Hub -->
+    <circle cx="16" cy="14" r="3.5" fill="none" stroke="url(#rocketBlueGrad)" stroke-width="1.8" />
+    <circle cx="16" cy="14" r="1.5" fill="url(#rocketHighlight)" />
+
+    <!-- Center Data Prompt Line (Prompt Hub Symbolism) -->
+    <line x1="16" y1="20" x2="16" y2="26" stroke="url(#rocketBlueGrad)" stroke-width="1.8" stroke-linecap="round" />
+
+    <!-- Floating Data Particles / Sparks -->
+    <circle cx="8" cy="12" r="1" fill="#38BDF8" />
+    <circle cx="24" cy="15" r="1" fill="#2DD4BF" />
+    <circle cx="11" cy="4" r="0.8" fill="#FFFFFF" />
+
+  </g>
+</svg>

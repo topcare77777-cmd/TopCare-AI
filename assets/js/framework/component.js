@@ -1,8 +1,24 @@
-export class Component{
+export default class Component {
 
-    render(html){
+    constructor(props = {}) {
 
-        return html;
+        this.props = props;
+
+    }
+
+    render() {
+
+        return "";
+
+    }
+
+    mount(selector) {
+
+        const target = document.querySelector(selector);
+
+        if (!target) return;
+
+        target.innerHTML = this.render();
 
     }
 

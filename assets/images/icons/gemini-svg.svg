@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="180" height="180">
+  <defs>
+    <!-- Master Dark Navy Background Gradient (#08111F to #0F172A) -->
+    <linearGradient id="masterBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A" />
+      <stop offset="50%" stop-color="#090D16" />
+      <stop offset="100%" stop-color="#08111F" />
+    </linearGradient>
+
+    <!-- Premium Glassmorphism Card Surface Gradient -->
+    <linearGradient id="masterGlassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(30, 41, 59, 0.82)" />
+      <stop offset="100%" stop-color="rgba(15, 23, 42, 0.94)" />
+    </linearGradient>
+
+    <!-- Vibrant AI Brain & Neural Network Gradient (White, Sky Blue, Royal Blue) -->
+    <linearGradient id="masterAiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="30%" stop-color="#60A5FA" />
+      <stop offset="70%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+
+    <!-- Soft Cyan/Blue Atmospheric Outer Glow -->
+    <filter id="masterAtmosphericGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Master High-End Drop Shadow for App Icon / PWA Spec -->
+    <filter id="masterDropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <!-- 180x180 Scaled Canvas Base (iOS Touch Icon Corner Radius) -->
+  <rect width="180" height="180" rx="40" fill="url(#masterBgGrad)" />
+
+  <!-- Glassmorphic Container with Shadow -->
+  <g filter="url(#masterDropShadow)">
+    <rect x="20" y="20" width="140" height="140" rx="33.6" fill="url(#masterGlassGrad)" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.2" />
+    <!-- Inner Precision Highlight Border -->
+    <rect x="21" y="21" width="138" height="138" rx="32.6" fill="none" stroke="rgba(255, 255, 255, 0.09)" stroke-width="0.6" />
+  </g>
+
+  <!-- Atmospheric Soft Blue Glow Behind Core Icon -->
+  <circle cx="90" cy="90" r="46" fill="#2563EB" opacity="0.35" filter="url(#masterAtmosphericGlow)" />
+
+  <!-- Symmetrical Stylized AI Brain & Neural Network Vector (Scaled perfectly for 180x180) -->
+  <g transform="translate(45, 45) scale(2.8125)">
+    <!-- Symmetric Background Circuit Traces / Neural Connections -->
+    <path d="M16 8V24 M8 16H24" stroke="url(#masterAiGrad)" stroke-width="2" stroke-linecap="round" opacity="0.85" />
+    
+    <!-- Left Brain Hemisphere -->
+    <path d="M10 6C7 6 5 7.8 5 10.5C5 12.2 6 13.6 7.5 14.5C6 15.4 5 16.8 5 18.5C5 21.2 7 23 10 23C11.5 23 12.8 22.3 13.8 21.2" stroke="url(#masterAiGrad)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    
+    <!-- Right Brain Hemisphere (Symmetric) -->
+    <path d="M22 6C25 6 27 7.8 27 10.5C27 12.2 26 13.6 24.5 14.5C26 15.4 27 16.8 27 18.5C27 21.2 25 23 22 23C20.5 23 19.2 22.3 18.2 21.2" stroke="url(#masterAiGrad)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+    <!-- Central Neural Core Nodes -->
+    <circle cx="16" cy="16" r="3.5" fill="#38BDF8" />
+    <circle cx="16" cy="16" r="1.5" fill="#FFFFFF" />
+    
+    <!-- Outer Symmetric Circuit Nodes -->
+    <circle cx="9" cy="10" r="1.5" fill="#60A5FA" />
+    <circle cx="23" cy="10" r="1.5" fill="#60A5FA" />
+    <circle cx="9" cy="22" r="1.5" fill="#60A5FA" />
+    <circle cx="23" cy="22" r="1.5" fill="#60A5FA" />
+  </g>
+</svg>

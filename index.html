@@ -1,180 +1,293 @@
-<!DOCTYPE html>
-
-<html lang="id">
-
-
-<head>
-
-
-    <meta charset="UTF-8">
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title>
-        TopCare AI Platform
-    </title>
-
-
-    <meta name="description" content="
-TopCare AI Platform - Personal Growth, Personality Learning, AI Assistant
-">
-
-
-    <link rel="icon" href="assets/images/favicon.png">
-
-
-    <!-- MASTER CSS -->
-
-    <link rel="stylesheet" href="assets/css/style.css">
-
-
-
-</head>
-
-
-
-<body>
-
-<div id="navbar"></div>
-
-<section id="hero"></section>
-
-<section id="trusted"></section>
-
-<section id="statistics"></section>
-
-<section id="learning"></section>
-
-<section id="assistant"></section>
-
-<section id="personality"></section>
-
-<section id="community"></section>
-
-<section id="creator"></section>
-
-<section id="faq"></section>
-
-<section id="testimonial"></section>
-
-    <!-- ===========================
-NAVBAR
-=========================== -->
-
-    <header id="navbar" class="header">
-    
-    </header>
-
-
-
-
-    <!-- ===========================
-MAIN CONTENT
-=========================== -->
-
-
-    <main>
-
-
-
-        <section id="hero" class="tc-section">
-
-        </section>
-
-
-
-
-        <section id="trusted" class="tc-section tc-section-light">
-
-        </section>
-
-
-
-
-        <section id="statistics" class="tc-section">
-
-        </section>
-
-
-
-
-        <section id="learning" class="tc-section tc-section-light">
-
-        </section>
-
-
-
-
-        <section id="assistant" class="tc-section">
-
-        </section>
-
-
-
-
-        <section id="personality" class="tc-section tc-section-light">
-
-        </section>
-
-
-
-
-        <section id="community" class="tc-section">
-
-        </section>
-
-
-
-
-        <section id="creator" class="tc-section tc-section-light">
-
-        </section>
-
-
-
-
-        <section id="faq" class="tc-section">
-
-        </section>
-
-
-
-
-        <section id="testimonial" class="tc-section tc-section-light">
-
-        </section>
-
-
-
-    </main>
-
-
-
-
-
-    <!-- ===========================
-FOOTER
-=========================== -->
-
-
-    <footer id="footer">
-
-    </footer>
-
-
-
-
-    <!-- ===========================
-APPLICATION
-=========================== -->
-
-
-    <script type="module" src="assets/js/main.js">
-    </script>
-
-</body>
-
-
-</html>
+<!-- Local Stylesheets Only -->
+<link rel="stylesheet" href="assets/css/layout/header.css">
+<link rel="stylesheet" href="assets/css/pages/home.css">
+<link rel="stylesheet" href="assets/css/components/card/card.css">
+<link rel="stylesheet" href="assets/css/components/button/button.css">
+<link rel="stylesheet" href="assets/css/layout/footer.css">
+<!-- Header / Navbar -->
+<header class="site-header">
+    <div class="header-container">
+        <div class="brand-wrapper">
+            <div class="brand-logo">TC</div>
+            <span class="brand-title">TopCare AI</span>
+        </div>
+
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#statistics">Performance</a>
+            <a href="#articles">Resources</a>
+            <a href="#premium">Pricing</a>
+        </nav>
+
+        <div class="auth-actions">
+            <a href="#login" class="nav-link-signin">Sign In</a>
+            <a href="#cta" class="btn btn-primary">Get Started Free</a>
+        </div>
+    </div>
+</header>
+
+<main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                TopCare AI Platform V2.0.0 Released
+            </div>
+
+            <h1 class="hero-heading">
+                Enterprise Intelligence <br>
+                <span class="gradient-text">Amplified by Advanced AI</span>
+            </h1>
+
+            <p class="hero-subtext">
+                Scale operations, automate workflows, and empower your enterprise teams with next-generation neural capabilities and seamless multimodal analytics.
+            </p>
+
+            <div class="hero-cta-group">
+                <a href="#cta" class="btn btn-primary btn-large">Start Free Trial &rarr;</a>
+                <a href="#features" class="btn btn-secondary btn-large">Explore Architecture</a>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="social-proof-wrapper">
+                <p class="social-proof-title">Trusted by industry leaders worldwide</p>
+                <div class="company-logos">
+                    <span class="company-logo">VECORP</span>
+                    <span class="company-logo">NEXUS AI</span>
+                    <span class="company-logo">STRATCOM</span>
+                    <span class="company-logo">SYNAPSE</span>
+                </div>
+            </div>
+
+            <!-- Hero Visual Floating Card Mockup -->
+            <div class="hero-mockup-wrapper">
+                <div class="hero-mockup-screen">
+                    <div class="mockup-placeholder-banner">
+                        <span class="status-dot"></span>
+                        <span>Neural Engine v2.0 Active & Optimal</span>
+                        <span class="status-sla">99.98% Latency SLA</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Enterprise Core Features</span>
+                <h2 class="section-title">Engineered for High-Performance Workflows</h2>
+            </div>
+            
+            <div class="features-grid">
+                <div class="card feature-card">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Multimodal AI Engine</h3>
+                    <p class="card-desc">Process comprehensive text, visual data streams, and document analytics instantly with high precision.</p>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-icon">🔒</div>
+                    <h3 class="card-title">Enterprise Security</h3>
+                    <p class="card-desc">Bank-grade encryption, role-based governance, and compliance readiness built natively for scale.</p>
+                </div>
+                <div class="card feature-card">
+                    <div class="card-icon">⚙️</div>
+                    <h3 class="card-title">AI Coding Assistant</h3>
+                    <p class="card-desc">Refactor, optimize, and diagnose repository components automatically with advanced LLM agents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section id="statistics" class="statistics-section">
+        <div class="section-container stats-grid">
+            <div class="stat-item">
+                <div class="stat-number counter" data-target="99.9">99.9%</div>
+                <div class="stat-label">Uptime Guarantee</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number counter" data-target="150">150M+</div>
+                <div class="stat-label">Requests Processed</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number counter" data-target="45">45ms</div>
+                <div class="stat-label">Avg Response Latency</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number counter" data-target="1000">1000+</div>
+                <div class="stat-label">Enterprise Clients</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles / Resources Section -->
+    <section id="articles" class="articles-section">
+        <div class="section-container">
+            <div class="section-header-flex">
+                <div>
+                    <span class="section-tag">Resources & Insights</span>
+                    <h2 class="section-title">Latest from the AI Frontier</h2>
+                </div>
+                <a href="#all" class="section-link">View all articles &rarr;</a>
+            </div>
+
+            <div class="articles-grid">
+                <article class="card article-card">
+                    <div class="article-meta">
+                        <span class="article-date">July 22, 2026</span>
+                        <span>•</span>
+                        <span class="article-readtime">5 min read</span>
+                    </div>
+                    <h3 class="article-title">Scaling Multimodal Models in Enterprise Infrastructures</h3>
+                    <p class="article-desc">Explore architectural patterns for merging text, image, and tabular pipelines under strict SLAs.</p>
+                    <a href="#read" class="article-btn">Read Article &rarr;</a>
+                </article>
+                <article class="card article-card">
+                    <div class="article-meta">
+                        <span class="article-date">July 20, 2026</span>
+                        <span>•</span>
+                        <span class="article-readtime">4 min read</span>
+                    </div>
+                    <h3 class="article-title">Automated Governance and Compliance in LLM Workflows</h3>
+                    <p class="article-desc">How modern enterprises maintain security compliance while accelerating deployment cycles.</p>
+                    <a href="#read" class="article-btn">Read Article &rarr;</a>
+                </article>
+                <article class="card article-card">
+                    <div class="article-meta">
+                        <span class="article-date">July 18, 2026</span>
+                        <span>•</span>
+                        <span class="article-readtime">6 min read</span>
+                    </div>
+                    <h3 class="article-title">Advanced Prompt Optimization Strategies for Enterprise Agents</h3>
+                    <p class="article-desc">Master context weighting and logic flowchart loops for highly deterministic outputs.</p>
+                    <a href="#read" class="article-btn">Read Article &rarr;</a>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Pricing Section -->
+    <section id="premium" class="pricing-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Transparent Pricing</span>
+                <h2 class="section-title">Invest in Scalable Intelligence</h2>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="card pricing-card">
+                    <h3 class="pricing-plan-title">Developer</h3>
+                    <p class="pricing-plan-desc">For individual innovators and experimental prototyping.</p>
+                    <div class="pricing-amount">$49<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ 10,000 API Requests/mo</li>
+                        <li>✓ Standard Multimodal Access</li>
+                        <li>✓ Community Support Hub</li>
+                    </ul>
+                    <a href="#cta" class="btn btn-secondary pricing-btn">Choose Developer</a>
+                </div>
+                <div class="card pricing-card pricing-card-featured">
+                    <span class="pricing-badge">Most Popular</span>
+                    <h3 class="pricing-plan-title">Enterprise</h3>
+                    <p class="pricing-plan-desc">For high-growth teams scaling production workflows.</p>
+                    <div class="pricing-amount">$199<span>/mo</span></div>
+                    <ul class="pricing-features">
+                        <li>✓ Unlimited API Requests</li>
+                        <li>✓ Advanced Neural Agent Suite</li>
+                        <li>✓ 24/7 Dedicated Support SLA</li>
+                    </ul>
+                    <a href="#cta" class="btn btn-primary pricing-btn">Get Started Enterprise</a>
+                </div>
+                <div class="card pricing-card">
+                    <h3 class="pricing-plan-title">Custom Scale</h3>
+                    <p class="pricing-plan-desc">Tailored infrastructure for multinational enterprises.</p>
+                    <div class="pricing-amount">Custom</div>
+                    <ul class="pricing-features">
+                        <li>✓ On-Premise Deployment</li>
+                        <li>✓ Custom Model Fine-Tuning</li>
+                        <li>✓ Dedicated Solution Architect</li>
+                    </ul>
+                    <a href="#cta" class="btn btn-secondary pricing-btn">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="cta-box">
+            <h2 class="cta-title">Ready to Transform Your Enterprise?</h2>
+            <p class="cta-desc">Join forward-thinking organizations scaling operational efficiency with TopCare AI Platform V2.0.0.</p>
+            <div class="cta-actions">
+                <a href="#signup" class="btn btn-primary btn-large">Deploy Now Free</a>
+                <a href="#contact" class="btn btn-secondary btn-large">Schedule Demo</a>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-col-brand">
+            <div class="footer-brand-header">
+                <div class="footer-logo">TC</div>
+                <span class="footer-title">TopCare AI</span>
+            </div>
+            <p class="footer-desc">Enterprise intelligence platform designed for world-class teams and scalable workflows.</p>
+            <div class="footer-meta">
+                <span>Version 2.0.0</span>
+                <span>•</span>
+                <span>ID / EN</span>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Company</h4>
+            <ul class="footer-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#careers">Careers</a></li>
+                <li><a href="#press">Press</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Product</h4>
+            <ul class="footer-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#enterprise">Enterprise</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Resources</h4>
+            <ul class="footer-links">
+                <li><a href="#docs">Documentation</a></li>
+                <li><a href="#api">API Reference</a></li>
+                <li><a href="#guides">Guides</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-heading">Legal</h4>
+            <ul class="footer-links">
+                <li><a href="#privacy">Privacy</a></li>
+                <li><a href="#terms">Terms</a></li>
+                <li><a href="#compliance">Compliance</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 TopCare AI Platform. All rights reserved.</p>
+        <div class="footer-socials">
+            <a href="#twitter">Twitter / X</a>
+            <a href="#github">GitHub</a>
+            <a href="#linkedin">LinkedIn</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Core Modular Scripts -->
+<script type="module" src="assets/js/core/app.js"></script>
+<script type="module" src="assets/js/components/hero.component.js"></script>
+<script type="module" src="assets/js/components/card.component.js"></script>

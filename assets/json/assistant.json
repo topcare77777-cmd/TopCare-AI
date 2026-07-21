@@ -1,21 +1,16 @@
 {
-    "title":"TopCare AI Assistant",
-
-    "subtitle":"Asisten cerdas yang siap membantu Anda memahami diri, belajar, dan berkembang.",
-
-    "placeholder":"Tulis pertanyaan Anda...",
-
-    "button":"Kirim",
-
-    "suggestions":[
-
-        "Apa tipe kepribadian saya?",
-
-        "Bagaimana menjadi lebih produktif?",
-
-        "Tips mengelola emosi",
-
-        "Cara meningkatkan percaya diri"
-
-    ]
+  "eyebrow": "Personal Growth Coach",
+  "title": "TopCare AI Assistant",
+  "subtitle": "Asisten pendamping untuk membantu Anda mengenali diri, belajar, dan membangun langkah kecil yang konsisten.",
+  "note": "Percakapan disimpan di perangkat ini. TopCare AI bukan pengganti bantuan profesional.",
+  "status": "Siap membantu",
+  "welcome": "Halo! Saya TopCare AI. Ceritakan tujuan Anda, atau pilih salah satu pertanyaan di samping.",
+  "placeholder": "Tulis pertanyaan Anda...",
+  "button": "Kirim",
+  "suggestions": [
+    "Apa hasil tes kepribadian saya?",
+    "Bagaimana menjadi lebih produktif?",
+    "Tips mengelola emosi",
+    "Cara meningkatkan percaya diri"
+  ]
 }

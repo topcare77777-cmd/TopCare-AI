@@ -1,32 +1,10 @@
-export function heroComponent(data = {}) {
-
-    return `
-        <section class="hero-content">
-
-            <div class="hero-text">
-
-                <span class="hero-badge">
-                    TopCare AI Platform
-                </span>
-
-                <h1>
-                    ${data.title ?? ""}
-                </h1>
-
-                <p>
-                    ${data.subtitle ?? ""}
-                </p>
-
-                <a href="${data.buttonLink ?? "#"}"
-                   class="btn btn-primary">
-
-                    ${data.buttonText ?? "Mulai"}
-
-                </a>
-
-            </div>
-
-        </section>
-    `;
-
-}
+document.addEventListener('DOMContentLoaded', () => {
+    const heroVisual = document.querySelector('.animate-float');
+    if (heroVisual) {
+        window.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 50;
+            const y = (window.innerHeight / 2 - e.clientY) / 50;
+            heroVisual.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    }
+});

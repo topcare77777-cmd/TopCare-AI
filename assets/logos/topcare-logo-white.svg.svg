@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 120" width="440" height="120">
+  <defs>
+    <!-- Pure White Gradient for Icon & Text -->
+    <linearGradient id="whiteLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+
+    <!-- Subtle Soft Glow for Dark Backgrounds -->
+    <filter id="whiteLogoGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow Behind Icon -->
+  <circle cx="60" cy="60" r="42" fill="#FFFFFF" opacity="0.1" filter="url(#whiteLogoGlow)" />
+
+  <!-- Left: Minimalist AI Brain & Circuit Icon (Monochrome White) -->
+  <g transform="translate(20, 20) scale(2.5)">
+    <!-- Outer Digital Circuit Traces -->
+    <path d="M16 4V28" stroke="url(#whiteLogoGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+    <path d="M4 16H28" stroke="url(#whiteLogoGrad)" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+    <path d="M7 7L25 25" stroke="url(#whiteLogoGrad)" stroke-width="1" stroke-linecap="round" opacity="0.35" />
+    <path d="M25 7L7 25" stroke="url(#whiteLogoGrad)" stroke-width="1" stroke-linecap="round" opacity="0.35" />
+
+    <!-- Left Geometric Brain Hemisphere -->
+    <path d="M13 7C9.5 7 7 9.5 7 13C7 15.2 8.2 17.1 10 18.2C8.2 19.3 7 21.2 7 23.5C7 27 9.5 29.5 13 29.5C14.8 29.5 16.4 28.8 17.5 27.6" stroke="url(#whiteLogoGrad)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    
+    <!-- Right Geometric Brain Hemisphere -->
+    <path d="M19 7C22.5 7 25 9.5 25 13C25 15.2 23.8 17.1 22 18.2C23.8 19.3 25 21.2 25 23.5C25 27 22.5 29.5 19 29.5C17.2 29.5 15.6 28.8 14.5 27.6" stroke="url(#whiteLogoGrad)" stroke-width="2.5" stroke-linecap="round" fill="none" />
+
+    <!-- Central Neural Core Nodes & Highlights -->
+    <circle cx="16" cy="16" r="4.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="16" cy="16" r="2" fill="#0F172A" />
+
+    <!-- Peripheral Circuit Connection Points -->
+    <circle cx="7" cy="13" r="1.5" fill="#FFFFFF" opacity="0.8" />
+    <circle cx="7" cy="23.5" r="1.5" fill="#FFFFFF" opacity="0.8" />
+    <circle cx="25" cy="13" r="1.5" fill="#FFFFFF" opacity="0.8" />
+    <circle cx="25" cy="23.5" r="1.5" fill="#FFFFFF" opacity="0.8" />
+    <circle cx="16" cy="7" r="1.5" fill="#FFFFFF" opacity="0.9" />
+    <circle cx="16" cy="29.5" r="1.5" fill="#FFFFFF" opacity="0.9" />
+  </g>
+
+  <!-- Right: "TopCare AI" Typography (Pure White) -->
+  <text x="135" y="73" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="38" font-weight="800" fill="#FFFFFF" letter-spacing="-1">TopCare</text>
+  
+  <!-- AI Pill Badge (Transparent with White Outline) -->
+  <g transform="translate(352, 45)">
+    <rect width="58" height="34" rx="17" fill="#FFFFFF" opacity="0.12" />
+    <rect width="58" height="34" rx="17" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.8" />
+    <text x="29" y="22" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">AI</text>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+[
+ {
+  "id":1,
+  "name":"Administrator",
+  "email":"admin@topcare.ai",
+  "password":"admin123",
+  "role":"admin"
+ },
+ {
+  "id":2,
+  "name":"Demo Member",
+  "email":"member@topcare.ai",
+  "password":"member123",
+  "role":"member"
+ },
+ {
+  "id":3,
+  "name":"Demo Creator",
+  "email":"creator@topcare.ai",
+  "password":"creator123",
+  "role":"creator"
+ }
+]

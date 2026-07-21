@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="heroBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="50%" stop-color="#080F22" />
+      <stop offset="100%" stop-color="#040814" />
+    </linearGradient>
+
+    <!-- Holographic Blue & Cyan Glow Gradients -->
+    <linearGradient id="holoBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <linearGradient id="holoCyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2DD4BF" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+
+    <!-- Glassmorphism Card Fill -->
+    <linearGradient id="glassCard" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(30, 41, 59, 0.65)" />
+      <stop offset="100%" stop-color="rgba(15, 23, 42, 0.85)" />
+    </linearGradient>
+
+    <!-- Glowing Blur Filters -->
+    <filter id="coreGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="40" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Deep Background -->
+  <rect width="1920" height="1080" fill="url(#heroBg)" />
+
+  <!-- Ambient Holographic Backlight Glows -->
+  <circle cx="960" cy="540" r="450" fill="#2563EB" opacity="0.18" filter="url(#coreGlow)" />
+  <circle cx="960" cy="500" r="200" fill="#38BDF8" opacity="0.22" filter="url(#coreGlow)" />
+  <circle cx="500" cy="300" r="250" fill="#1D4ED8" opacity="0.12" filter="url(#coreGlow)" />
+  <circle cx="1420" cy="780" r="300" fill="#0EA5E9" opacity="0.12" filter="url(#coreGlow)" />
+
+  <!-- Futuristic Perspective Grid Floor -->
+  <g opacity="0.15">
+    <path d="M0 800 L1920 800 M0 860 L1920 860 M0 920 L1920 920 M0 980 L1920 980 M0 1040 L1920 1040" stroke="#38BDF8" stroke-width="1" />
+    <path d="M960 800 L300 1080 M960 800 L500 1080 M960 800 L750 1080 M960 800 L960 1080 M960 800 L1170 1080 M960 800 L1420 1080 M960 800 L1620 1080" stroke="#38BDF8" stroke-width="1" />
+  </g>
+
+  <!-- Floating Holographic Particles (Blue Glowing Stars/Nodes) -->
+  <g opacity="0.75">
+    <circle cx="350" cy="200" r="3" fill="#38BDF8" filter="url(#softGlow)" />
+    <circle cx="480" cy="150" r="2" fill="#FFFFFF" />
+    <circle cx="280" cy="450" r="2.5" fill="#3B82F6" filter="url(#softGlow)" />
+    <circle cx="180" cy="700" r="3.5" fill="#38BDF8" filter="url(#softGlow)" />
+    <circle cx="450" cy="850" r="2" fill="#FFFFFF" />
+    
+    <circle cx="1570" cy="220" r="3" fill="#38BDF8" filter="url(#softGlow)" />
+    <circle cx="1700" cy="380" r="2" fill="#FFFFFF" />
+    <circle cx="1450" cy="620" r="4" fill="#2DD4BF" filter="url(#softGlow)" />
+    <circle cx="1750" cy="750" r="2.5" fill="#3B82F6" filter="url(#softGlow)" />
+    <circle cx="1600" cy="920" r="2" fill="#FFFFFF" />
+
+    <circle cx="700" cy="120" r="2" fill="#38BDF8" />
+    <circle cx="1200" cy="140" r="3" fill="#2DD4BF" filter="url(#softGlow)" />
+    <circle cx="850" cy="980" r="2.5" fill="#3B82F6" />
+    <circle cx="1150" cy="950" r="2" fill="#FFFFFF" />
+  </g>
+
+  <!-- Abstract Enterprise SaaS Floating Dashboard Panels (Left & Right) -->
+  <g filter="url(#softGlow)" opacity="0.9">
+    <!-- Left Dashboard Card: Neural Activity Monitor -->
+    <g transform="translate(180, 280)">
+      <rect width="360" height="240" rx="20" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5" />
+      <path d="M20 60 H340" stroke="rgba(255, 255, 255, 0.08)" stroke-width="1" />
+      <!-- Card Header -->
+      <circle cx="40" cy="35" r="8" fill="#38BDF8" />
+      <text x="60" y="41" font-family="-apple-system, sans-serif" font-size="14" font-weight="600" fill="#E2E8F0" letter-spacing="1">AI NEURAL PULSE</text>
+      <circle cx="325" cy="35" r="4" fill="#2DD4BF" />
+      <!-- Live Waveform Chart -->
+      <path d="M35 150 Q80 100 120 130 T200 90 T280 140 T325 110" fill="none" stroke="url(#holoCyan)" stroke-width="3" stroke-linecap="round" />
+      <path d="M35 150 Q80 100 120 130 T200 90 T280 140 T325 110 V190 H35 Z" fill="url(#holoBlue)" opacity="0.1" />
+      <!-- Data stats -->
+      <text x="35" y="195" font-family="-apple-system, sans-serif" font-size="12" fill="#94A3B8">Latency: <tspan fill="#38BDF8" font-weight="bold">1.2ms</tspan></text>
+      <text x="230" y="195" font-family="-apple-system, sans-serif" font-size="12" fill="#94A3B8">Accuracy: <tspan fill="#2DD4BF" font-weight="bold">99.8%</tspan></text>
+    </g>
+
+    <!-- Left Lower Card: Token Flow Analytics -->
+    <g transform="translate(240, 560)">
+      <rect width="300" height="180" rx="16" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.5" />
+      <text x="30" y="40" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#E2E8F0" letter-spacing="0.5">SYNAPSE CLUSTER LOAD</text>
+      <!-- Bar chart bars -->
+      <rect x="35" y="120" width="30" height="40" rx="6" fill="#3B82F6" opacity="0.6" />
+      <rect x="75" y="90" width="30" height="70" rx="6" fill="#38BDF8" opacity="0.8" />
+      <rect x="115" y="70" width="30" height="90" rx="6" fill="url(#holoBlue)" />
+      <rect x="155" y="105" width="30" height="55" rx="6" fill="#3B82F6" opacity="0.6" />
+      <rect x="195" y="80" width="30" height="80" rx="6" fill="#2DD4BF" opacity="0.85" />
+      <rect x="235" y="60" width="30" height="100" rx="6" fill="url(#holoCyan)" />
+    </g>
+
+    <!-- Right Dashboard Card: System Core Status -->
+    <g transform="translate(1380, 260)">
+      <rect width="360" height="220" rx="20" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.3)" stroke-width="1.5" />
+      <text x="35" y="45" font-family="-apple-system, sans-serif" font-size="14" font-weight="600" fill="#E2E8F0" letter-spacing="1">COGNITIVE ENGINE</text>
+      <!-- Circular Progress / Matrix Icon -->
+      <circle cx="85" cy="130" r="35" fill="none" stroke="#1E293B" stroke-width="8" />
+      <circle cx="85" cy="130" r="35" fill="none" stroke="url(#holoCyan)" stroke-width="8" stroke-dasharray="160 60" stroke-linecap="round" />
+      <text x="85" y="135" font-family="-apple-system, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF" text-anchor="middle">94%</text>
+      
+      <!-- Metrics text -->
+      <text x="145" y="105" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Active Nodes</text>
+      <text x="145" y="125" font-family="-apple-system, sans-serif" font-size="12" fill="#94A3B8">24,580 Processing</text>
+      <text x="145" y="155" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF">Bandwidth</text>
+      <text x="145" y="175" font-family="-apple-system, sans-serif" font-size="12" fill="#94A3B8">1.8 TB/s Real-time</text>
+    </g>
+
+    <!-- Right Lower Card: Holographic Vector Node Map -->
+    <g transform="translate(1320, 520)">
+      <rect width="340" height="220" rx="16" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.25)" stroke-width="1.5" />
+      <text x="30" y="40" font-family="-apple-system, sans-serif" font-size="13" font-weight="600" fill="#E2E8F0" letter-spacing="0.5">MULTI-AGENT TOPOLOGY</text>
+      <!-- Connected Node Graph Mini Preview -->
+      <circle cx="80" cy="110" r="6" fill="#38BDF8" />
+      <circle cx="160" cy="90" r="8" fill="#2DD4BF" />
+      <circle cx="230" cy="140" r="6" fill="#3B82F6" />
+      <circle cx="270" cy="90" r="5" fill="#FFFFFF" />
+      <path d="M80 110 L160 90 L230 140 L270 90 M160 90 L270 90" stroke="#38BDF8" stroke-width="1.5" opacity="0.6" fill="none" />
+      <line x1="80" y1="110" x2="230" y2="140" stroke="#1D4ED8" stroke-width="1" opacity="0.4" />
+    </g>
+  </g>
+
+  <!-- Central Hero Element: Abstract Digital AI Neural Brain & Holographic Core -->
+  <g transform="translate(960, 520)">
+    <!-- Outer Orbital Holographic Rings -->
+    <ellipse cx="0" cy="0" rx="340" ry="120" fill="none" stroke="url(#holoBlue)" stroke-width="1.5" stroke-dasharray="12 8" opacity="0.4" transform="rotate(-15)" />
+    <ellipse cx="0" cy="0" rx="280" ry="100" fill="none" stroke="url(#holoCyan)" stroke-width="2" stroke-dasharray="6 14" opacity="0.6" transform="rotate(25)" />
+    <ellipse cx="0" cy="0" rx="200" ry="70" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.3" transform="rotate(-45)" />
+
+    <!-- Connection Lines radiating to core -->
+    <g stroke="url(#holoBlue)" stroke-width="1.5" opacity="0.5">
+      <line x1="-220" y1="-80" x2="-80" y2="-30" />
+      <line x1="220" y1="-80" x2="80" y2="-30" />
+      <line x1="-180" y1="100" x2="-60" y2="40" />
+      <line x1="180" y1="100" x2="60" y2="40" />
+      <line x1="0" y1="-210" x2="0" y2="-90" />
+      <line x1="0" y1="210" x2="0" y2="90" />
+    </g>
+
+    <!-- Abstract Stylized Geometric AI Neural Brain Silhouette -->
+    <g transform="scale(3.5)" stroke="url(#holoBlue)" stroke-width="1.8" fill="none" stroke-linecap="round">
+      <!-- Left Brain Hemisphere -->
+      <path d="M-10 -35 C-25 -35 -40 -20 -40 -2 C-40 15 -25 30 -5 32 C-2 32 0 30 0 25 C0 20 -5 18 -10 10 C-15 2 -12 -15 -5 -25 Z" fill="rgba(37, 99, 235, 0.15)" />
+      <!-- Right Brain Hemisphere (Symmetric) -->
+      <path d="M10 -35 C25 -35 40 -20 40 -2 C40 15 25 30 5 32 C2 32 0 30 0 25 C0 20 5 18 10 10 C15 2 12 -15 5 -25 Z" fill="rgba(37, 99, 235, 0.15)" />
+      
+      <!-- Internal Synaptic Circuit Traces inside Brain -->
+      <path d="M-25 -10 L-10 0 L-20 15" stroke="#38BDF8" stroke-width="1.2" opacity="0.8" />
+      <path d="M25 -10 L10 0 L20 15" stroke="#38BDF8" stroke-width="1.2" opacity="0.8" />
+      <path d="M0 -25 V15" stroke="#FFFFFF" stroke-width="1.5" opacity="0.9" />
+    </g>
+
+    <!-- Glowing Core Spheres / Nodes -->
+    <circle cx="0" cy="0" r="32" fill="#38BDF8" filter="url(#coreGlow)" opacity="0.8" />
+    <circle cx="0" cy="0" r="16" fill="url(#holoCyan)" />
+    <circle cx="0" cy="0" r="6" fill="#FFFFFF" />
+
+    <!-- Orbiting Energy Nodes -->
+    <circle cx="-160" cy="-60" r="5" fill="#38BDF8" filter="url(#softGlow)" />
+    <circle cx="180" cy="-70" r="7" fill="#2DD4BF" filter="url(#softGlow)" />
+    <circle cx="-130" cy="80" r="6" fill="#3B82F6" filter="url(#softGlow)" />
+    <circle cx="150" cy="90" r="5" fill="#FFFFFF" filter="url(#softGlow)" />
+  </g>
+
+  <!-- Floating Holographic Data Floating Pills / Badges -->
+  <g filter="url(#softGlow)">
+    <!-- Pill 1: Enterprise Ready -->
+    <g transform="translate(760, 210)">
+      <rect width="180" height="40" rx="20" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
+      <circle cx="25" cy="20" r="5" fill="#2DD4BF" />
+      <text x="42" y="25" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#E2E8F0">ENTERPRISE SECURE</text>
+    </g>
+
+    <!-- Pill 2: Autonomous AI Agents -->
+    <g transform="translate(980, 210)">
+      <rect width="180" height="40" rx="20" fill="url(#glassCard)" stroke="rgba(56, 189, 248, 0.4)" stroke-width="1.5" />
+      <circle cx="25" cy="20" r="5" fill="#38BDF8" />
+      <text x="42" y="25" font-family="-apple-system, sans-serif" font-size="12" font-weight="600" fill="#E2E8F0">AUTONOMOUS AGENTS</text>
+    </g>
+  </g>
+
+  <!-- Vignette / Atmospheric Edge Shadows -->
+  <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+    <stop offset="60%" stop-color="rgba(4, 8, 20, 0)" />
+    <stop offset="100%" stop-color="rgba(4, 8, 20, 0.85)" />
+  </radialGradient>
+  <rect width="1920" height="1080" fill="url(#vignette)" pointer-events="none" />
+</svg>

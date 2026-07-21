@@ -1,0 +1,17 @@
+{
+  "badge": "Tentang TopCare AI",
+  "title": "Satu Platform untuk Personal Growth dan Pembelajaran AI",
+  "description": "TopCare AI menyatukan pembelajaran kepribadian, kecerdasan buatan, komunitas, ekonomi kreator, dan marketplace dalam satu ekosistem.",
+  "button": "Mulai Belajar",
+  "buttonLink": "#learning",
+  "vision": {
+    "title": "Visi Kami",
+    "content": "Menjadi platform AI Personal Growth terbesar di Asia Tenggara."
+  },
+  "missions": [
+    "Membantu setiap orang mengenal dirinya.",
+    "Menyediakan AI Assistant yang bermanfaat.",
+    "Membangun komunitas belajar.",
+    "Menghubungkan kreator dengan pengguna."
+  ]
+}

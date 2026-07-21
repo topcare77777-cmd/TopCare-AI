@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Deep Enterprise SaaS Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090D16" />
+      <stop offset="50%" stop-color="#0F172A" />
+      <stop offset="100%" stop-color="#020617" />
+    </linearGradient>
+
+    <!-- Precise Minimal Blue Grid Pattern Definition -->
+    <pattern id="minimalGrid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M 32 0 L 0 0 0 32" fill="none" stroke="#3B82F6" stroke-width="0.75" stroke-opacity="0.2" />
+      <!-- Subtle Intersection Dot for High-Tech AI Aesthetic -->
+      <circle cx="0" cy="0" r="1" fill="#60A5FA" fill-opacity="0.35" />
+    </pattern>
+
+    <!-- Glowing Ambient Radial Lighting -->
+    <radialGradient id="ambientGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1D4ED8" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#1E3A8A" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#0F172A" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <!-- Base Dark SaaS Background -->
+  <rect width="512" height="512" fill="url(#bgGrad)" />
+
+  <!-- Ambient Light Spotlight -->
+  <circle cx="256" cy="256" r="256" fill="url(#ambientGlow)" />
+
+  <!-- Applied Minimal Blue Grid Pattern Layer -->
+  <rect width="512" height="512" fill="url(#minimalGrid)" />
+
+  <!-- Subtle Vignette / Edge Shadow Layer -->
+  <rect width="512" height="512" fill="none" stroke="#000000" stroke-width="16" opacity="0.4" />
+</svg>

@@ -1,13 +1,81 @@
-export function faqComponent(data = {}) {
+import BaseComponent
+from "./base.component.js";
 
-    return `
-        <section class="faq-item">
 
-            <h3>${data.question ?? ""}</h3>
+import DataLoader
+from "../core/data-loader.js";
 
-            <p>${data.answer ?? ""}</p>
 
-        </section>
-    `;
+
+class FAQComponent
+extends BaseComponent{
+
+
+constructor(){
+
+super(
+"#faq"
+);
 
 }
+
+
+
+
+async mount(){
+
+
+const data =
+await DataLoader.load(
+"homepage/faq"
+);
+
+
+
+let html="";
+
+
+
+data.forEach(item=>{
+
+
+html += `
+
+
+<div class="faq-item">
+
+
+<h4>
+${item.question}
+</h4>
+
+
+<p>
+${item.answer}
+</p>
+
+
+</div>
+
+
+`;
+
+
+
+});
+
+
+
+this.render(html);
+
+
+
+}
+
+
+
+}
+
+
+
+export default new FAQComponent();

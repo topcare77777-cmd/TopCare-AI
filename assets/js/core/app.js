@@ -1,79 +1,33 @@
-import { initHero } from "../modules/hero.js";
-import { initTrusted } from "../modules/trusted.js";
-import { initStatistics } from "../modules/statistics.js";
-import { initLearning } from "../modules/learning.js";
-import { initAssistant } from "../modules/assistant.js";
-import { initPersonality } from "../modules/personality.js";
-import { initCommunity } from "../modules/community.js";
-import { initCreator } from "../modules/creator.js";
-import { initFAQ } from "../modules/faq.js";
-import { initTestimonial } from "../modules/testimonial.js";
-import { initNavbar } from "../modules/navbar.js";
+document.addEventListener('DOMContentLoaded', () => {
+    // Intersection Observer for Statistics Counter Animation
+    const counters = document.querySelectorAll('.counter');
+    const speed = 200;
 
+    const animateCounters = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const targetStr = counter.getAttribute('data-target');
+                const target = parseFloat(targetStr);
+                const isDecimal = targetStr.includes('.');
+                let count = 0;
+                
+                const updateCount = () => {
+                    const inc = target / speed;
+                    count += inc;
+                    if (count < target) {
+                        counter.innerText = isDecimal ? count.toFixed(1) + '%' : Math.floor(count) + (targetStr.includes('+') ? '+' : (targetStr.includes('ms') ? 'ms' : ''));
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = targetStr + (targetStr.includes('+') || targetStr.includes('%') || targetStr.includes('ms') ? '' : '');
+                    }
+                };
+                updateCount();
+                observer.unobserve(counter);
+            }
+        });
+    };
 
-
-export function bootstrap(){
-
-
-    console.log(
-        "================================"
-    );
-
-
-    console.log(
-        "TopCare AI Platform v2.0.0 Alpha"
-    );
-
-
-    console.log(
-        "Application Starting..."
-    );
-
-
-    console.log(
-        "================================"
-    );
-
-
-
-    initNavbar();
-
-
-    initHero();
-
-
-    initTrusted();
-
-
-    initStatistics();
-
-
-    initLearning();
-
-
-    initAssistant();
-
-
-    initPersonality();
-
-
-    initCommunity();
-
-
-    initCreator();
-
-
-    initFAQ();
-
-
-    initTestimonial();
-
-
-
-    console.log(
-        "All Modules Loaded Successfully"
-    );
-
-
-}
-import { revealOnScroll } from "../framework/animation.js";
+    const observer = new IntersectionObserver(animateCounters, { threshold: 0.5 });
+    counters.forEach(counter => observer.observe(counter));
+});

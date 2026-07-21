@@ -1,0 +1,25 @@
+/* ==================================================
+LANGUAGE SELECTOR COMPONENT STYLES
+================================================== */
+
+.tc-language-wrapper {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+}
+
+.tc-language-select {
+background: var(--surface);
+color: var(--text-main);
+border: 1px solid var(--border);
+padding: 0.5rem 1rem;
+border-radius: var(--radius-sm);
+font-size: 0.9rem;
+cursor: pointer;
+outline: none;
+transition: var(--transition);
+}
+
+.tc-language-select:hover {
+border-color: var(--accent);
+}

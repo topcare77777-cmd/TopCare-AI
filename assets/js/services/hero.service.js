@@ -1,23 +1,24 @@
-export async function getHeroData() {
+import DataLoader
+from "../core/data-loader.js";
 
-    try {
 
-        const response = await fetch("assets/json/hero.json");
 
-        if (!response.ok) {
+class HeroService{
 
-            throw new Error("Hero JSON tidak ditemukan.");
 
-        }
+async get(){
 
-        return await response.json();
 
-    } catch (error) {
+return await DataLoader.load(
+"homepage/hero"
+);
 
-        console.error("Hero Service Error :", error);
-
-        return null;
-
-    }
 
 }
+
+
+}
+
+
+
+export default new HeroService();

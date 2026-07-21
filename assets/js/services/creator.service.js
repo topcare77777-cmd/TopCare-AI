@@ -1,25 +1,17 @@
-export async function getCreatorData(){
+import BaseService from "./base.service.js";
 
-try{
 
-const response=await fetch("assets/json/creator.json");
+class CreatorService extends BaseService {
 
-if(!response.ok){
 
-throw new Error("creator.json tidak ditemukan.");
+    constructor(){
 
-}
+        super("creator");
 
-return await response.json();
+    }
 
-}
-
-catch(error){
-
-console.error(error);
-
-return null;
 
 }
 
-}
+
+export default new CreatorService();

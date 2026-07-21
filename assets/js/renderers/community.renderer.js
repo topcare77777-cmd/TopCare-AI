@@ -1,47 +1,60 @@
-export function communityRenderer(template,data){
+import Renderer from "./renderer.js";
+import CommunityService from "../services/community.service.js";
 
-let activities="";
 
-data.activities.forEach(item=>{
+class CommunityRenderer{
 
-activities+=`
 
-<div
-class="community-item card"
-data-animate="animate-fade-up">
+async init(){
 
-<div class="community-avatar">
 
-${item.avatar}
+const data =
+await CommunityService.all();
+
+
+
+const html =
+data.map(item=>
+
+
+`
+
+<div class="community-card">
+
+
+<h3>
+
+${item.title}
+
+</h3>
+
+
+<p>
+
+${item.description}
+
+</p>
+
 
 </div>
 
-<div class="community-content">
 
-<h4>${item.name}</h4>
+`
 
-<p>${item.action}</p>
+).join("");
 
-<span>${item.time}</span>
 
-</div>
 
-</div>
+Renderer.render(
+"#community",
+html
+);
 
-`;
-
-});
-
-let html=template;
-
-html=html.replace("{{title}}",data.title);
-
-html=html.replace("{{subtitle}}",data.subtitle);
-
-html=html.replace("{{activities}}",activities);
-
-html=html.replace("{{button}}",data.button);
-
-return html;
 
 }
+
+
+}
+
+
+export default new CommunityRenderer();

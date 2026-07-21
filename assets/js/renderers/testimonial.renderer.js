@@ -1,53 +1,65 @@
-export function testimonialRenderer(template,data){
+import Renderer from "./renderer.js";
 
-let reviews="";
 
-data.reviews.forEach((item,index)=>{
+class TestimonialRenderer{
 
-reviews+=`
 
-<div
-class="testimonial-card ${index===0?'active':''}">
+async init(){
 
-<div class="testimonial-stars">
 
-${"⭐".repeat(item.rating)}
+const response =
+await fetch(
+"/assets/json/homepage/testimonial.json"
+);
 
-</div>
 
-<p class="testimonial-comment">
+const data =
+await response.json();
 
-"${item.comment}"
+
+
+const html =
+data.map(item=>
+
+
+`
+
+<div class="testimonial">
+
+
+<p>
+
+"${item.message}"
 
 </p>
 
-<div class="testimonial-user">
 
-<div class="testimonial-avatar">
+<strong>
 
-${item.avatar}
+${item.name}
 
-</div>
+</strong>
 
-<div>
-
-<h4>${item.name}</h4>
-
-<span>${item.job}</span>
 
 </div>
 
-</div>
 
-</div>
+`
 
-`;
+).join("");
 
-});
 
-return template
-.replace("{{title}}",data.title)
-.replace("{{subtitle}}",data.subtitle)
-.replace("{{reviews}}",reviews);
+
+Renderer.render(
+"#testimonial",
+html
+);
+
 
 }
+
+
+}
+
+
+export default new TestimonialRenderer();

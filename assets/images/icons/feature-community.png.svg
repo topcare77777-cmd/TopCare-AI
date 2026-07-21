@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Enterprise SaaS Blue to Cyan Gradient -->
+    <linearGradient id="communityBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Bright Core Highlight Gradient -->
+    <linearGradient id="communityHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Glowing Atmosphere Filter -->
+    <filter id="communityGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Soft Ambient Backlight Glow -->
+    <filter id="communityAmbient" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="35" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Blue Community Aura -->
+  <circle cx="256" cy="256" r="160" fill="#2563EB" opacity="0.2" filter="url(#communityAmbient)" />
+
+  <!-- Modern Community Icon (Connected People Nodes / AI Network) -->
+  <g transform="translate(64, 64) scale(12)" filter="url(#communityGlow)">
+    
+    <!-- Connecting Neural / Social Network Lines -->
+    <g stroke="url(#communityBlueGrad)" stroke-width="1.8" stroke-linecap="round" opacity="0.65">
+      <line x1="16" y1="16" x2="16" y2="8" />
+      <line x1="16" y1="16" x2="8" y2="24" />
+      <line x1="16" y1="16" x2="24" y2="24" />
+      <line x1="8" y1="24" x2="24" y2="24" opacity="0.4" />
+      <line x1="16" y1="8" x2="6" y2="10" opacity="0.4" />
+      <line x1="16" y1="8" x2="26" y2="10" opacity="0.4" />
+    </g>
+
+    <!-- Central Lead Node / Hub Person -->
+    <g transform="translate(16, 8)">
+      <circle cx="0" cy="-3" r="3" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.8" />
+      <path d="M -5 5 C -5 2, -2 1, 0 1 C 2 1, 5 2, 5 5" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.8" stroke-linecap="round" />
+      <circle cx="0" cy="-3" r="1" fill="url(#communityHighlight)" />
+    </g>
+
+    <!-- Bottom-Left Node Person -->
+    <g transform="translate(8, 24)">
+      <circle cx="0" cy="-3" r="2.5" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.6" />
+      <path d="M -4 4 C -4 1.5, -2 1, 0 1 C 2 1, 4 1.5, 4 4" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.6" stroke-linecap="round" />
+    </g>
+
+    <!-- Bottom-Right Node Person -->
+    <g transform="translate(24, 24)">
+      <circle cx="0" cy="-3" r="2.5" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.6" />
+      <path d="M -4 4 C -4 1.5, -2 1, 0 1 C 2 1, 4 1.5, 4 4" fill="none" stroke="url(#communityBlueGrad)" stroke-width="1.6" stroke-linecap="round" />
+    </g>
+
+    <!-- Outer Peripheral Satellite Nodes -->
+    <circle cx="6" cy="10" r="1.5" fill="#38BDF8" />
+    <circle cx="26" cy="10" r="1.5" fill="#38BDF8" />
+    <circle cx="16" cy="16" r="2" fill="url(#communityHighlight)" />
+
+  </g>
+</svg>

@@ -1,13 +1,79 @@
-export function articleComponent(data = {}) {
+import BaseComponent
+from "./base.component.js";
 
-    return `
-        <article class="article-card">
 
-            <h2>${data.title ?? ""}</h2>
+import ArticleService
+from "../services/article.service.js";
 
-            <p>${data.description ?? ""}</p>
 
-        </article>
-    `;
+
+class ArticleComponent
+extends BaseComponent{
+
+
+constructor(){
+
+super(
+"#articles"
+);
 
 }
+
+
+
+
+
+async mount(){
+
+
+const articles =
+await ArticleService.getLatest();
+
+
+
+let html="";
+
+
+
+articles.forEach(article=>{
+
+
+html += `
+
+
+<article class="article-card">
+
+
+<h3>
+${article.title}
+</h3>
+
+
+<p>
+${article.excerpt}
+</p>
+
+
+</article>
+
+
+`;
+
+
+
+});
+
+
+
+this.render(html);
+
+
+
+}
+
+
+}
+
+
+
+export default new ArticleComponent();

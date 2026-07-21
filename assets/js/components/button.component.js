@@ -1,65 +1,32 @@
-/**
- * TopCare AI Button Component
- * Global UI Button System
- */
+class Button {
 
 
-export function buttonComponent(data = {}) {
+create(text,link="#",type="primary"){
 
 
-    const {
-
-        text = "Button",
-
-        link = "#",
-
-        type = "primary",
-
-        size = "medium",
-
-        icon = ""
-
-    } = data;
+return `
 
 
+<a 
 
-    return `
+href="${link}"
 
-        <a
-
-            href="${link}"
-
-            class="
-                tc-btn
-                tc-btn-${type}
-                tc-btn-${size}
-            "
-
-        >
+class="btn btn-${type}">
 
 
-            ${
-                icon
-                ?
-                `<span class="tc-btn-icon">
-                    ${icon}
-                </span>`
-                :
-                ""
-            }
+${text}
 
 
-
-            <span class="tc-btn-text">
-
-                ${text}
-
-            </span>
+</a>
 
 
-        </a>
-
-    `;
+`;
 
 
 }
+
+
+}
+
+
+export default new Button();

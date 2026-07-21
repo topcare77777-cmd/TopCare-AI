@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="brainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <linearGradient id="circuitGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded Square Dark Navy Base with Blue Glowing Border -->
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="#08111F" stroke="#3B82F6" stroke-width="2.5" />
+  
+  <!-- AI Circuit Connection Nodes & Traces -->
+  <path d="M12 24H18 M30 24H36 M24 12V18" stroke="url(#circuitGrad)" stroke-width="2" stroke-linecap="round" fill="none" />
+  <circle cx="12" cy="24" r="2" fill="#38BDF8" />
+  <circle cx="36" cy="24" r="2" fill="#38BDF8" />
+  <circle cx="24" cy="12" r="2" fill="#38BDF8" />
+
+  <!-- Simplified Human Brain Combined with AI Neural Network -->
+  <path d="M16 20C14 17 15 13 19 12C21 11.5 23 13 24 15C25 13 27 11.5 29 12C33 13 34 17 32 20C34 23 33 27 29 29C27 30 25 28 24 26C23 28 21 30 19 29C15 27 14 23 16 20Z" fill="url(#brainGrad)" opacity="0.95" />
+  
+  <!-- Central Neural Core / Sparkle -->
+  <circle cx="24" cy="21" r="3" fill="#08111F" />
+  <circle cx="24" cy="21" r="1.5" stop-color="#38BDF8" fill="#38BDF8" />
+</svg>

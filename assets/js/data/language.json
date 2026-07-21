@@ -1,0 +1,38 @@
+{
+"id": {
+"title": "TopCare AI",
+"menu_home": "Beranda",
+"menu_learning": "Pembelajaran",
+"menu_personality": "Tes Kepribadian"
+},
+"en": {
+"title": "TopCare AI",
+"menu_home": "Home",
+"menu_learning": "Learning",
+"menu_personality": "Personality"
+},
+"asia": {
+"title": "TopCare AI",
+"menu_home": "Beranda Asia",
+"menu_learning": "Pembelajaran",
+"menu_personality": "Tes Kepribadian"
+},
+"mandarin": {
+"title": "TopCare AI",
+"menu_home": "主页",
+"menu_learning": "学习",
+"menu_personality": "个性"
+},
+"japanese": {
+"title": "TopCare AI",
+"menu_home": "ホーム",
+"menu_learning": "学習",
+"menu_personality": "パーソナリティ"
+},
+"korean": {
+"title": "TopCare AI",
+"menu_home": "홈",
+"menu_learning": "학습",
+"menu_personality": "성격"
+}
+}

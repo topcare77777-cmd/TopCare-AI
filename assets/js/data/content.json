@@ -1,0 +1,48 @@
+{
+"learning": [
+{
+"title": "AI Learning",
+"description": "Pahami dasar kecerdasan buatan dan implementasi praktisnya untuk produktivitas harian."
+},
+{
+"title": "Personality Learning",
+"description": "Kembangkan potensi diri melalui pemahaman temperamen dan manajemen emosi berbasis psikologi modern."
+},
+{
+"title": "Digital Skill",
+"description": "Kuasai keterampilan digital esensial mulai dari kreator konten hingga pemasaran digital."
+},
+{
+"title": "Creator Learning",
+"description": "Pelajari strategi dan teknik modern untuk membangun personal brand serta karya digital kreatif."
+}
+],
+"assistant": [
+{
+"title": "AI Study Buddy",
+"description": "Pendamping belajar interaktif untuk membantu Anda memahami materi rumit dengan penjelasan sederhana."
+},
+{
+"title": "Smart Prompt Generator",
+"description": "Alat cerdas untuk menyusun instruksi atau prompt AI yang presisi guna hasil yang maksimal."
+}
+],
+"personality": [
+{
+"title": "Koleris",
+"description": "Pemimpin alami yang tegas, mandiri, visioner, dan sangat berorientasi pada pencapaian target."
+},
+{
+"title": "Sanguinis",
+"description": "Pribadi yang ramah, penuh antusiasme, ekspresif, ceria, dan sangat menyukai interaksi sosial."
+},
+{
+"title": "Melankolis",
+"description": "Pemikir yang analitis, mendalam, perfeksionis, terstruktur, serta memiliki kepekaan seni tinggi."
+},
+{
+"title": "Plegmatis",
+"description": "Sosok yang tenang, cinta damai, sabar, setia kawan, serta sangat handal dalam meredakan konflik."
+}
+]
+}

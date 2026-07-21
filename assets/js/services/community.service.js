@@ -1,25 +1,17 @@
-export async function getCommunityData(){
+import BaseService from "./base.service.js";
 
-try{
 
-const response=await fetch("assets/json/community.json");
+class CommunityService extends BaseService {
 
-if(!response.ok){
 
-throw new Error("community.json tidak ditemukan.");
+    constructor(){
 
-}
+        super("community");
 
-return await response.json();
+    }
 
-}
-
-catch(error){
-
-console.error(error);
-
-return null;
 
 }
 
-}
+
+export default new CommunityService();

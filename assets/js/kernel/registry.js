@@ -1,19 +1,31 @@
-const registry = new Map();
+class Registry {
 
-export function register(name,module){
+    constructor(){
+        this.items=new Map();
+    }
 
-    registry.set(name,module);
+    add(name,value){
+        this.items.set(name,value);
+    }
+
+    get(name){
+        return this.items.get(name);
+    }
+
+    remove(name){
+        this.items.delete(name);
+    }
+
+    has(name){
+        return this.items.has(name);
+    }
+
+    all(){
+
+        return [...this.items.values()];
+
+    }
 
 }
 
-export function resolve(name){
-
-    return registry.get(name);
-
-}
-
-export function getModules(){
-
-    return registry;
-
-}
+export default new Registry();

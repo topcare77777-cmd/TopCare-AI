@@ -1,13 +1,35 @@
-export class Renderer{
+class Renderer {
 
-    mount(selector,html){
+    html(selector, html) {
 
-        const element=document.querySelector(selector);
+        const el = document.querySelector(selector);
 
-        if(!element) return;
+        if (el)
 
-        element.innerHTML=html;
+            el.innerHTML = html;
+
+    }
+
+    append(selector, html) {
+
+        const el = document.querySelector(selector);
+
+        if (el)
+
+            el.insertAdjacentHTML("beforeend", html);
+
+    }
+
+    clear(selector) {
+
+        const el = document.querySelector(selector);
+
+        if (el)
+
+            el.innerHTML = "";
 
     }
 
 }
+
+export default new Renderer();

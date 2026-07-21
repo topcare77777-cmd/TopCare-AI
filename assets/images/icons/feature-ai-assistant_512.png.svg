@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Modern Enterprise Blue Gradient -->
+    <linearGradient id="robotBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3B82F6" />
+      <stop offset="100%" stop-color="#1D4ED8" />
+    </linearGradient>
+
+    <!-- Bright White-Cyan Highlight Gradient -->
+    <linearGradient id="robotHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Glowing Atmosphere Filter -->
+    <filter id="robotGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Soft Ambient Light Behind Head -->
+    <filter id="ambientLight" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="35" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Blue Backlight Glow -->
+  <circle cx="256" cy="256" r="140" fill="#2563EB" opacity="0.25" filter="url(#ambientLight)" />
+
+  <!-- AI Assistant Robot Face (Enterprise Minimal SaaS Style) -->
+  <g transform="translate(96, 96) scale(10)" filter="url(#robotGlow)">
+    
+    <!-- Outer Floating Antenna / Signal Node -->
+    <path d="M16 3V7" stroke="url(#robotBlueGrad)" stroke-width="2" stroke-linecap="round" />
+    <circle cx="16" cy="2" r="1.5" fill="#38BDF8" />
+
+    <!-- Robot Head / Helmet Base (Rounded Minimalist Shield) -->
+    <path d="M7 10 C7 7 10 5 16 5 C22 5 25 7 25 10 L25 21 C25 25.5 21.5 29 16 29 C10.5 29 7 25.5 7 21 Z" 
+          fill="none" stroke="url(#robotBlueGrad)" stroke-width="2.2" stroke-linejoin="round" />
+
+    <!-- Sleek Ear Pods / Sensors (Left & Right) -->
+    <rect x="4.5" y="14" width="2" height="6" rx="1" fill="url(#robotBlueGrad)" />
+    <rect x="25.5" y="14" width="2" height="6" rx="1" fill="url(#robotBlueGrad)" />
+
+    <!-- Glowing Visor / Eyes Row -->
+    <rect x="10" y="13" width="12" height="5" rx="2.5" fill="none" stroke="url(#robotBlueGrad)" stroke-width="1.8" />
+    
+    <!-- Left & Right Glowing AI Eyes / Core Nodes -->
+    <circle cx="13" cy="15.5" r="1.5" fill="url(#robotHighlight)" />
+    <circle cx="19" cy="15.5" r="1.5" fill="url(#robotHighlight)" />
+
+    <!-- Central Neural Processing Connection Line -->
+    <line x1="16" y1="18" x2="16" y2="21" stroke="url(#robotBlueGrad)" stroke-width="1.5" stroke-linecap="round" />
+
+    <!-- Minimalist Data Smile / Voice Indicator -->
+    <path d="M12.5 23.5 C14 25 18 25 19.5 23.5" fill="none" stroke="url(#robotBlueGrad)" stroke-width="1.6" stroke-linecap="round" />
+
+  </g>
+</svg>

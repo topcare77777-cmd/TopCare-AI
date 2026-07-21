@@ -1,35 +1,41 @@
-export function revealOnScroll(){
+class Animation {
 
-    const items=document.querySelectorAll("[data-animate]");
+    fadeIn(element) {
 
-    const observer=new IntersectionObserver(entries=>{
+        element.animate([
 
-        entries.forEach(entry=>{
+            { opacity: 0 },
 
-            if(!entry.isIntersecting){
+            { opacity: 1 }
 
-                return;
+        ], {
 
-            }
+            duration: 300,
 
-            const animation=entry.target.dataset.animate;
-
-            entry.target.classList.add(animation);
-
-            observer.unobserve(entry.target);
+            fill: "forwards"
 
         });
 
-    },{
+    }
 
-        threshold:.20
+    fadeOut(element) {
 
-    });
+        element.animate([
 
-    items.forEach(item=>{
+            { opacity: 1 },
 
-        observer.observe(item);
+            { opacity: 0 }
 
-    });
+        ], {
+
+            duration: 300,
+
+            fill: "forwards"
+
+        });
+
+    }
 
 }
+
+export default new Animation();

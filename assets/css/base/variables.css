@@ -1,178 +1,35 @@
-/*==================================================
-  TOPCARE AI DESIGN SYSTEM
-  File      : variables.css
-  Version   : 3.0
-  Purpose   : Global Design Tokens
-==================================================*/
+/* ==================================================
+CSS DESIGN TOKENS & VARIABLES - TOPCARE AI V2.0.0
+================================================== */
 
-:root{
+:root {
+--primary: #2563eb;
+--primary-hover: #1d4ed8;
+--primary-light: rgba(37, 99, 235, 0.15);
+--secondary: #0f172a;
+--accent: #38bdf8;
+--accent-glow: rgba(56, 189, 248, 0.4);
+--background: #090d16;
+--surface: #131c31;
+--surface-hover: #1a2642;
+--surface-glass: rgba(19, 28, 49, 0.75);
+--surface-glass-border: rgba(255, 255, 255, 0.08);
+--text-main: #f8fafc;
+--text-muted: #94a3b8;
+--border: rgba(255, 255, 255, 0.1);
 
-/*==================================================
-  COLOR SYSTEM
-==================================================*/
+--radius-sm: 8px;
+--radius-md: 12px;
+--radius-lg: 20px;
+--radius-xl: 28px;
+--radius-full: 9999px;
 
-/* Brand */
+--shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+--shadow-md: 0 10px 30px rgba(0, 0, 0, 0.4);
+--shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.6);
+--glow-primary: 0 0 30px rgba(37, 99, 235, 0.5);
+--glow-accent: 0 0 30px rgba(56, 189, 248, 0.3);
 
---primary:#2563EB;
---primary-hover:#1D4ED8;
---primary-light:#DBEAFE;
-
---secondary:#06B6D4;
---secondary-hover:#0891B2;
-
-/* Semantic */
-
---success:#22C55E;
---warning:#F59E0B;
---danger:#EF4444;
---info:#0EA5E9;
-
-/* Background */
-
---background:#F8FAFC;
---surface:#FFFFFF;
---surface-alt:#F1F5F9;
-
-/* Text */
-
---text:#0F172A;
---text-light:#64748B;
---text-muted:#94A3B8;
-
-/* Neutral */
-
---white:#FFFFFF;
---black:#000000;
-
-/* Border */
-
---border:#E2E8F0;
-
-
-/*==================================================
-  TYPOGRAPHY
-==================================================*/
-
-/* Font Family */
-
---font-primary:'Inter',sans-serif;
-
---font-heading:'Inter',sans-serif;
-
---font-display:'Playfair Display',serif;
-
-
-/* Font Size */
-
---fs-xs:.75rem;
---fs-sm:.875rem;
---fs-base:1rem;
---fs-lg:1.125rem;
---fs-xl:1.25rem;
---fs-2xl:1.5rem;
---fs-3xl:2rem;
---fs-4xl:2.5rem;
---fs-5xl:3rem;
---fs-6xl:4rem;
-
-
-/* Font Weight */
-
---fw-400:400;
---fw-500:500;
---fw-600:600;
---fw-700:700;
---fw-800:800;
-
-
-/* Line Height */
-
---lh-tight:1.2;
---lh-normal:1.5;
---lh-relaxed:1.7;
-
-
-/*==================================================
-  SPACING SYSTEM
-==================================================*/
-
---space-0:0;
-
---space-1:.25rem;      /* 4px  */
---space-2:.5rem;       /* 8px  */
---space-3:.75rem;      /*12px  */
---space-4:1rem;        /*16px  */
---space-5:1.25rem;     /*20px  */
---space-6:1.5rem;      /*24px  */
---space-8:2rem;        /*32px  */
---space-10:2.5rem;     /*40px  */
---space-12:3rem;       /*48px  */
---space-16:4rem;       /*64px  */
---space-20:5rem;       /*80px  */
---space-24:6rem;       /*96px  */
---space-32:8rem;       /*128px */
-
-
-/*==================================================
-  BORDER RADIUS
-==================================================*/
-
---radius-sm:.5rem;
---radius-md:.75rem;
---radius-lg:1rem;
---radius-xl:1.5rem;
---radius-full:9999px;
-
-
-/*==================================================
-  SHADOW SYSTEM
-==================================================*/
-
---shadow-sm:0 2px 8px rgba(15,23,42,.05);
-
---shadow-md:0 8px 24px rgba(15,23,42,.08);
-
---shadow-lg:0 20px 50px rgba(15,23,42,.12);
-
---shadow-xl:0 30px 80px rgba(15,23,42,.18);
-
-
-/*==================================================
-  CONTAINER
-==================================================*/
-
---container-sm:640px;
-
---container-md:768px;
-
---container-lg:1024px;
-
---container-xl:1200px;
-
-
-/*==================================================
-  TRANSITION
-==================================================*/
-
---transition-fast:.2s ease;
-
---transition:.35s ease;
-
---transition-slow:.5s ease;
-
-
-/*==================================================
-  Z-INDEX
-==================================================*/
-
---z-dropdown:100;
-
---z-sticky:200;
-
---z-fixed:300;
-
---z-modal:400;
-
---z-toast:500;
-
+--transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+--container-width: 1200px;
 }

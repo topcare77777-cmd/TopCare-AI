@@ -1,47 +1,38 @@
-export function faqRenderer(template,data){
+/**
+ * FAQ Renderer
+ */
 
-let htmlItems="";
 
-data.items.forEach(item=>{
+export default function(items){
 
-htmlItems+=`
 
-<div class="faq-item">
+return items.map(item=>{
 
-<button class="faq-question">
 
-<span>${item.question}</span>
+return `
 
-<span>+</span>
 
-</button>
+<div class="faq-card">
 
-<div class="faq-answer">
+
+<h4>
+${item.question}
+</h4>
+
 
 <p>
-
 ${item.answer}
-
 </p>
 
-</div>
 
 </div>
+
 
 `;
 
-});
 
-let html=template;
+}).join("");
 
-html=html.replace("{{title}}",data.title);
 
-html=html.replace("{{subtitle}}",data.subtitle);
-
-html=html.replace("{{search}}",data.search);
-
-html=html.replace("{{items}}",htmlItems);
-
-return html;
 
 }

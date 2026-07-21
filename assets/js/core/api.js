@@ -1,15 +1,67 @@
-import { initNavbar } from "../modules/navbar.js";
-import { initHero } from "../modules/hero.js";
+import {CSRF}
+from "../security/index.js";
 
-export function initApp() {
 
-    console.log("==================================");
-    console.log("TopCare AI v2.0.0 Alpha");
-    console.log("Application Started");
-    console.log("==================================");
+class API {
 
-    initNavbar();
 
-    initHero();
+
+async request(url,options={}){
+
+
+options.headers={
+
+"Content-Type":
+"application/json",
+
+"X-CSRF-TOKEN":
+CSRF.get(),
+
+...options.headers
+
+};
+
+
+
+try{
+
+
+const response =
+await fetch(
+url,
+options
+);
+
+
+
+return await response.json();
+
+
 
 }
+
+catch(error){
+
+
+console.error(
+"API ERROR",
+error
+);
+
+
+return null;
+
+
+}
+
+
+
+}
+
+
+
+}
+
+
+
+export default new API();

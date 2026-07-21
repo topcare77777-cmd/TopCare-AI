@@ -1,0 +1,41 @@
+/* ==================================================
+MODAL COMPONENT - TOPCARE AI V2.0.0
+================================================== */
+
+.tc-modal-backdrop {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: rgba(9, 13, 22, 0.85);
+backdrop-filter: blur(12px);
+display: flex;
+align-items: center;
+justify-content: center;
+z-index: 2000;
+opacity: 0;
+visibility: hidden;
+transition: var(--transition);
+}
+
+.tc-modal-backdrop.active {
+opacity: 1;
+visibility: visible;
+}
+
+.tc-modal {
+background-color: var(--surface);
+border-radius: var(--radius-lg);
+border: 1px solid var(--border);
+width: 90%;
+max-width: 500px;
+padding: 2.5rem;
+box-shadow: var(--shadow-lg);
+transform: scale(0.95);
+transition: var(--transition);
+}
+
+.tc-modal-backdrop.active .tc-modal {
+transform: scale(1);
+}

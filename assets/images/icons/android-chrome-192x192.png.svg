@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+  <defs>
+    <linearGradient id="androidGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E40AF" />
+      <stop offset="50%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#38BDF8" />
+    </linearGradient>
+    <filter id="subtleGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#1D4ED8" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  
+  <!-- Android Adaptive Rounded Square Base -->
+  <rect x="12" y="12" width="168" height="168" rx="44" fill="url(#androidGrad)" filter="url(#subtleGlow)" />
+  
+  <!-- Centered White 'TC' -->
+  <text x="96" y="124" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="80" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-3">TC</text>
+  
+  <!-- Dynamic Sparkle at Upper-Right -->
+  <path d="M150 44 L152.5 53.5 L162 56 L152.5 58.5 L150 68 L147.5 58.5 L138 56 L147.5 53.5 Z" fill="#FFFFFF" />
+  
+  <!-- Futuristic AI Circuit Line at the Bottom -->
+  <path d="M58 156 H104 M104 156 V136 M104 156 H134" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.88" fill="none" />
+  <circle cx="134" cy="156" r="5" fill="#FFFFFF" opacity="0.95" />
+  <circle cx="58" cy="156" r="4" fill="#FFFFFF" opacity="0.8" />
+</svg>
