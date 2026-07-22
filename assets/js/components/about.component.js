@@ -1,14 +1,19 @@
-import { getAboutData } from "../services/about.service.js";
-import { renderAbout } from "../renderers/about.renderer.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * About Component
+ * Path: assets/js/components/about.component.js
+ */
 
-export async function AboutComponent() {
+const AboutComponent = {
+    mount(containerId, html) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = html;
+            console.log("[AboutComponent] Mounted Successfully");
+        } else {
+            console.warn(`[About Component] Container with ID "${containerId}" not found.`);
+        }
+    }
+};
 
-    const data = await getAboutData();
-
-    const target = document.querySelector("#about");
-
-    if (!target) return;
-
-    target.innerHTML = renderAbout(data);
-
-}
+export default AboutComponent;

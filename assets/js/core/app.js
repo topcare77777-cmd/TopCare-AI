@@ -1,33 +1,41 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Intersection Observer for Statistics Counter Animation
-    const counters = document.querySelectorAll('.counter');
-    const speed = 200;
+/**
+ * TopCare AI Platform V2.0.0
+ * Core Application Entry Point
+ * Path: assets/js/core/app.js
+ */
 
-    const animateCounters = (entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const targetStr = counter.getAttribute('data-target');
-                const target = parseFloat(targetStr);
-                const isDecimal = targetStr.includes('.');
-                let count = 0;
-                
-                const updateCount = () => {
-                    const inc = target / speed;
-                    count += inc;
-                    if (count < target) {
-                        counter.innerText = isDecimal ? count.toFixed(1) + '%' : Math.floor(count) + (targetStr.includes('+') ? '+' : (targetStr.includes('ms') ? 'ms' : ''));
-                        setTimeout(updateCount, 15);
-                    } else {
-                        counter.innerText = targetStr + (targetStr.includes('+') || targetStr.includes('%') || targetStr.includes('ms') ? '' : '');
-                    }
-                };
-                updateCount();
-                observer.unobserve(counter);
+import Kernel from '../kernel/kernel.js';
+
+class Application {
+    constructor() {
+        this.version = '2.0.0';
+        this.isReady = false;
+    }
+
+    async init() {
+        try {
+            console.log(`[TopCare AI V${this.version}] Initializing Application...`);
+            
+            if (typeof Kernel !== 'undefined') {
+                if (typeof Kernel.init === 'function') {
+                    await Kernel.init();
+                } else if (typeof Kernel.bootstrap === 'function') {
+                    await Kernel.bootstrap();
+                }
             }
-        });
-    };
 
-    const observer = new IntersectionObserver(animateCounters, { threshold: 0.5 });
-    counters.forEach(counter => observer.observe(counter));
+            this.isReady = true;
+            console.log(`[TopCare AI V${this.version}] Application Ready.`);
+        } catch (error) {
+            console.error(`[TopCare AI V${this.version}] Application Initialization Error:`, error);
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const app = new Application();
+    window.TopCareApp = app;
+    await app.init();
 });
+
+export default Application;

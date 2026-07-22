@@ -1,46 +1,30 @@
-import Hero from "./hero.js";
-import Personality from "./personality.js";
-import Article from "./article.js";
-import FAQ from "./faq.js";
-import Statistics from "./statistics.js";
-import Community from "./community.js";
-import Testimonial from "./testimonial.js";
-import Trusted from "./trusted.js";
-import Assistant from "./assistant.js";
-import Marketplace from "./marketplace.js";
-import Dashboard from "./dashboard.js";
-import Premium from "./premium.js";
-import Creator from "./creator.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * Module Registry
+ * Path: assets/js/modules/module.registry.js
+ */
 
+import ModuleLoader from '../core/module-loader.js';
+import HeroModule from './hero.module.js';
+import AboutModule from './about.module.js';
 
-export default {
+const ModuleRegistry = {
+    modules: {
+        hero: HeroModule,
+        about: AboutModule
+    },
 
+    async init() {
+        console.log('[ModuleRegistry] Initializing modules...');
+        
+        if (this.modules.hero) {
+            await ModuleLoader.load('hero', this.modules.hero);
+        }
 
-hero: Hero,
-
-personality: Personality,
-
-article: Article,
-
-faq: FAQ,
-
-statistics: Statistics,
-
-community: Community,
-
-testimonial: Testimonial,
-
-trusted: Trusted,
-
-assistant: Assistant,
-
-marketplace: Marketplace,
-
-dashboard: Dashboard,
-
-premium: Premium,
-
-creator: Creator
-
-
+        if (this.modules.about) {
+            await ModuleLoader.load('about', this.modules.about);
+        }
+    }
 };
+
+export default ModuleRegistry;

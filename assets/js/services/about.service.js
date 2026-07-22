@@ -1,7 +1,18 @@
-export async function getAbout() {
+/**
+ * TopCare AI Platform V2.0.0
+ * About Service
+ * Path: assets/js/services/about.service.js
+ */
 
-    const response = await fetch("assets/json/about.json");
+import AboutRepository from '../repository/about.repository.js';
 
-    return await response.json();
+const AboutService = {
+    async load() {
+        console.log('[About Service] Connected');
+        const data = await AboutRepository.get();
+        console.log("[AboutService] Data received");
+        return data;
+    }
+};
 
-}
+export default AboutService;
