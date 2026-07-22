@@ -1,72 +1,45 @@
-import {getFAQData} from "../services/faq.service.js";
-import {faqRenderer} from "../renderers/faq.renderer.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * FAQ Module
+ * Path: assets/js/modules/faq.module.js
+ */
+import BaseModule from '../core/base.module.js';
+import FaqService from '../services/faq.service.js';
+import FaqRenderer from '../renderers/faq.renderer.js';
+import FaqComponent from '../components/faq.component.js';
+import MotionEngine from '../core/motion.engine.js';
+import GlowEffect from '../core/glow.effect.js';
 
-export async function initFAQ(){
+class FaqModuleClass extends BaseModule {
+    constructor() {
+        super('Faq', 'faq-wrapper');
+        this.service = FaqService;
+        this.renderer = FaqRenderer;
+        this.component = FaqComponent;
+    }
 
-const target=document.querySelector("#faq");
+    afterMount() {
+        MotionEngine.init();
+        GlowEffect.attach(document.getElementById(this.containerId));
 
-if(!target) return;
+        const questions = document.querySelectorAll('.faq__question');
+        questions.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const item = e.currentTarget.closest('.faq__item');
+                const isActive = item.classList.contains('active');
+                
+                document.querySelectorAll('.faq__item').forEach(el => {
+                    el.classList.remove('active');
+                    el.querySelector('.faq__question').setAttribute('aria-expanded', 'false');
+                });
 
-const [template,data]=await Promise.all([
-
-fetch("templates/components/faq.html"),
-
-getFAQData()
-
-]);
-
-target.innerHTML=faqRenderer(
-
-await template.text(),
-
-data
-
-);
-
-initAccordion();
-
-initSearch();
-
-console.log("✅ FAQ Premium Loaded");
-
+                if (!isActive) {
+                    item.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+    }
 }
 
-function initAccordion(){
-
-document.querySelectorAll(".faq-question")
-
-.forEach(button=>{
-
-button.onclick=()=>{
-
-button.parentElement.classList.toggle("open");
-
-};
-
-});
-
-}
-
-function initSearch(){
-
-const input=document.querySelector("#faqSearch");
-
-if(!input) return;
-
-input.addEventListener("input",()=>{
-
-const keyword=input.value.toLowerCase();
-
-document.querySelectorAll(".faq-item")
-
-.forEach(item=>{
-
-const text=item.innerText.toLowerCase();
-
-item.style.display=text.includes(keyword)?"block":"none";
-
-});
-
-});
-
-}
+export default new FaqModuleClass();

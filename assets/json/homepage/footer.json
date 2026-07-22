@@ -1,0 +1,51 @@
+{
+  "brand": {
+    "logoText": "TC",
+    "name": "TopCare AI",
+    "description": "Enterprise-grade artificial intelligence platform designed for advanced personal growth, analytics, and workflow automation.",
+    "version": "Version 2.0.0"
+  },
+  "menus": [
+    {
+      "category": "Product",
+      "items": [
+        { "text": "Features", "link": "#features" },
+        { "text": "AI Assistant", "link": "#assistant" },
+        { "text": "Learning Center", "link": "#learning" },
+        { "text": "Marketplace", "link": "#marketplace" }
+      ]
+    },
+    {
+      "category": "Solutions",
+      "items": [
+        { "text": "Personality Profile", "link": "#personality" },
+        { "text": "Community Hub", "link": "#community" },
+        { "text": "Creator Suite", "link": "#creator" },
+        { "text": "Enterprise", "link": "#enterprise" }
+      ]
+    },
+    {
+      "category": "Resources",
+      "items": [
+        { "text": "Documentation", "link": "#docs" },
+        { "text": "Guides & Tutorials", "link": "#guides" },
+        { "text": "API Status", "link": "#api" },
+        { "text": "Support Center", "link": "#support" }
+      ]
+    },
+    {
+      "category": "Legal",
+      "items": [
+        { "text": "Privacy Policy", "link": "#privacy" },
+        { "text": "Terms of Service", "link": "#terms" },
+        { "text": "Security Governance", "link": "#security" }
+      ]
+    }
+  ],
+  "socials": [
+    { "name": "Twitter / X", "link": "#twitter" },
+    { "name": "GitHub", "link": "#github" },
+    { "name": "LinkedIn", "link": "#linkedin" }
+  ],
+  "copyright": "&copy; 2026 TopCare AI Platform. All rights reserved."
+}

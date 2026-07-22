@@ -1,0 +1,10 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Home Index Entry CSS
+ * Path: assets/css/pages/home/index.css
+ */
+@import url("./hero.css");
+@import url("./trusted.css");
+@import url("./statistics.css");
+@import url("./cta.css");
+@import url("./footer.css");

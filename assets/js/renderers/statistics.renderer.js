@@ -1,60 +1,31 @@
-import Renderer from "./renderer.js";
-import StatisticsService from "../services/statistics.service.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * Statistics Renderer (Null-Safe & Sanitized)
+ * Path: assets/js/renderers/statistics.renderer.js
+ */
 
+import BaseRenderer from '../core/base.renderer.js';
 
-class StatisticsRenderer{
+const StatisticsRenderer = {
+    render(data) {
+        if (!data) return '';
+        console.log("[StatisticsRenderer] HTML generated");
 
+        const cardsHtml = (data.cards || []).map(card => `
+            <div class="statistics__card glass-card" data-animate="fade-up">
+                <span class="statistics__value" data-target="${BaseRenderer.sanitize(card.value || '0')}">0</span>
+                <span class="statistics__label">${BaseRenderer.sanitize(card.label || '')}</span>
+            </div>
+        `).join('');
 
-async init(){
+        return `
+            <section class="statistics">
+                <div class="statistics__container">
+                    ${cardsHtml}
+                </div>
+            </section>
+        `;
+    }
+};
 
-
-const data =
-await StatisticsService.all();
-
-
-
-const html =
-data.map(stat=>
-
-
-`
-
-<div class="stat-card">
-
-
-<strong>
-
-${stat.value}
-
-</strong>
-
-
-<span>
-
-${stat.label}
-
-</span>
-
-
-</div>
-
-
-`
-
-).join("");
-
-
-
-Renderer.render(
-"#statistics",
-html
-);
-
-
-}
-
-
-}
-
-
-export default new StatisticsRenderer();
+export default StatisticsRenderer;

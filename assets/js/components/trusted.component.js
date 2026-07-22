@@ -1,17 +1,18 @@
-export function trustedComponent(data = {}) {
+/**
+ * TopCare AI Platform V2.0.0
+ * Trusted Component
+ * Path: assets/js/components/trusted.component.js
+ */
 
-    return `
-        <section class="trusted-section">
+import BaseComponent from '../core/base.component.js';
 
-            <h2>
-                ${data.title ?? ""}
-            </h2>
+const TrustedComponent = {
+    mount(containerId, html) {
+        BaseComponent.mount(containerId, html);
+    },
+    destroy(containerId) {
+        BaseComponent.destroy(containerId);
+    }
+};
 
-            <p>
-                ${data.description ?? ""}
-            </p>
-
-        </section>
-    `;
-
-}
+export default TrustedComponent;

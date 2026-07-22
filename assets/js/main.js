@@ -1,11 +1,17 @@
-import app from "./core/app.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * Main Application Entry Point (V2.0.0 Lifecycle Migration)
+ * Path: assets/js/main.js
+ */
+
+import Bootstrap from './kernel/bootstrap.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
-try {
-console.log("TopCare AI Platform V2.0.0 booting...");
-await app.start();
-console.log("TopCare AI Platform V2.0.0 Aplikasi berhasil dimuat tanpa error.");
-} catch (error) {
-console.error("Critical error during application bootstrap:", error);
-}
+    try {
+        console.log("TopCare AI Platform V2.0.0 booting...");
+        await Bootstrap.init();
+        console.log("TopCare AI Platform V2.0.0 Aplikasi berhasil dimuat tanpa error.");
+    } catch (error) {
+        console.error("Critical error during application bootstrap:", error);
+    }
 });

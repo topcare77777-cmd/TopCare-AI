@@ -1,0 +1,8 @@
+{
+  "title": "Ready to Transform Your Workflow with AI?",
+  "subtitle": "Join forward-thinking professionals and enterprises scaling personal growth and operational intelligence today.",
+  "buttons": [
+    { "text": "Get Started Free", "link": "#signup", "style": "primary" },
+    { "text": "Schedule Demo", "link": "#demo", "style": "secondary" }
+  ]
+}

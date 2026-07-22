@@ -1,0 +1,123 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Pricing Layout CSS
+ * Path: assets/css/pages/home/pricing.css
+ */
+.pricing {
+    padding: 7rem 2rem;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    content-visibility: auto;
+}
+
+.pricing__container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.pricing__header {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+.pricing__tag {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-primary);
+    padding: 0.375rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.pricing__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text-main);
+}
+
+.pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    align-items: stretch;
+}
+
+.pricing__card {
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.pricing__card--featured {
+    border-color: rgba(99, 102, 241, 0.6);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(168, 85, 247, 0.08)), var(--color-bg-card);
+    box-shadow: var(--shadow-float), var(--shadow-glow);
+}
+
+.pricing__badge {
+    position: absolute;
+    top: -12px;
+    right: 2rem;
+    background: var(--gradient-primary);
+    color: white;
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.375rem 1rem;
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-sm);
+}
+
+.pricing__plan-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text-main);
+}
+
+.pricing__plan-desc {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.pricing__amount {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-text-main);
+    letter-spacing: -0.03em;
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+}
+
+.pricing__amount span {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.pricing__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+    margin: 1rem 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.pricing__btn {
+    margin-top: auto;
+    width: 100%;
+}

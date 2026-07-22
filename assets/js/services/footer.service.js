@@ -1,13 +1,18 @@
-export async function getFooterData(){
+/**
+ * TopCare AI Platform V2.0.0
+ * Footer Service
+ * Path: assets/js/services/footer.service.js
+ */
 
-const response=await fetch("assets/json/footer.json");
+import FooterRepository from '../repository/footer.repository.js';
 
-if(!response.ok){
+const FooterService = {
+    async load() {
+        console.log('[Footer Service] Connected');
+        const data = await FooterRepository.get();
+        console.log("[FooterService] Data received");
+        return data;
+    }
+};
 
-throw new Error("footer.json tidak ditemukan.");
-
-}
-
-return await response.json();
-
-}
+export default FooterService;

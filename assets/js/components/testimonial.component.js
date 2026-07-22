@@ -1,13 +1,19 @@
-export function testimonialComponent(data = {}) {
+/**
+ * TopCare AI Platform V2.0.0
+ * Testimonials Component
+ * Path: assets/js/components/testimonials.component.js
+ */
+import BaseComponent from '../core/base.component.js';
+import Logger from '../core/logger.js';
 
-    return `
-        <section class="testimonial-card">
+const TestimonialsComponent = {
+    mount(containerId, html) {
+        BaseComponent.mount(containerId, html);
+        Logger.info("[TestimonialsComponent] Mounted successfully");
+    },
+    destroy(containerId) {
+        BaseComponent.destroy(containerId);
+    }
+};
 
-            <h3>${data.name ?? ""}</h3>
-
-            <p>${data.message ?? ""}</p>
-
-        </section>
-    `;
-
-}
+export default TestimonialsComponent;

@@ -1,0 +1,48 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * CTA Premium Section CSS
+ * Path: assets/css/pages/home/cta.css
+ */
+.cta {
+    padding: 6rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.cta__box {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1)), var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-lg);
+    padding: 4rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    box-shadow: var(--shadow-float);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta__title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    max-width: 700px;
+}
+
+.cta__desc {
+    font-size: 1.125rem;
+    color: var(--text-muted);
+    max-width: 580px;
+    line-height: 1.6;
+}
+
+.cta__actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}

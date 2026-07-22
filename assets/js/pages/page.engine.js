@@ -17,23 +17,20 @@ const PageEngine = {
 
         const WRAPPERS = [
             'hero-wrapper',
-            'about-wrapper',
-            'personality-wrapper',
-            'article-wrapper',
-            'learning-wrapper',
-            'community-wrapper',
-            'faq-wrapper',
-            'creator-wrapper',
             'trusted-wrapper',
             'statistics-wrapper',
-            'testimonial-wrapper',
-            'marketplace-wrapper',
+            'about-wrapper',
+            'personality-wrapper',
+            'learning-wrapper',
+            'community-wrapper',
             'assistant-wrapper',
-            'premium-wrapper',
+            'cta-wrapper',
             'footer-wrapper'
         ];
 
-        WRAPPERS.forEach(id => {
+        const uniqueWrappers = [...new Set(WRAPPERS)];
+
+        uniqueWrappers.forEach(id => {
             if (!document.getElementById(id)) {
                 const section = document.createElement('section');
                 section.id = id;

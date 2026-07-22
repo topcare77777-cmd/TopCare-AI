@@ -1,38 +1,61 @@
 /**
  * TopCare AI Platform V2.0.0
- * Bootstrap Module
+ * Kernel Bootstrap (Complete Tracing Pipeline)
  * Path: assets/js/kernel/bootstrap.js
  */
 
-import PageEngine from '../pages/page.engine.js';
 import ModuleRegistry from '../modules/module.registry.js';
-import Router from '../framework/router.js';
+import PageEngine from '../pages/page.engine.js';
+import MotionEngine from '../core/motion.engine.js';
+import GlowEffect from '../core/glow.effect.js';
+import Parallax from '../core/parallax.js';
+import EnterpriseUXEngine from '../core/enterprise-ux.engine.js';
+import AccessibilityEngine from '../core/accessibility.engine.js';
+import PerformanceEngine from '../core/performance.engine.js';
+import StateEngine from '../core/state.engine.js';
+import CommandPalette from '../core/command.palette.js';
+import ThemeEngine from '../core/theme.engine.js';
+import ErrorBoundary from '../core/error.boundary.js';
+import DevTools from '../core/devtools.js';
 
-export const Bootstrap = {
-    async run() {
-        console.log('[Bootstrap] Running platform boot sequence...');
+import AssetsRegistry from '../config/assets.registry.js';
+import AssetValidator from '../core/asset.validator.js';
+import Logger from '../core/logger.js';
 
-        // 1. Initialize Page Engine to create Homepage Layout before modules run
-        if (typeof PageEngine !== 'undefined' && typeof PageEngine.createHomepageLayout === 'function') {
+const Bootstrap = {
+    async init() {
+        console.log("[BOOT]");
+        Logger.info("[Bootstrap] Initializing TopCare AI Platform V2.0.0...");
+        
+        try {
+            AssetsRegistry.init();
+            await AssetValidator.run();
+
+            ErrorBoundary.init();
+            AccessibilityEngine.init();
+            PerformanceEngine.init();
+            StateEngine.init({ user: null, preferences: {} });
+            ThemeEngine.init();
+            CommandPalette.init();
+
+            console.log("[PAGE ENGINE]");
             PageEngine.createHomepageLayout();
-        }
 
-        // 2. Loading Module Registry
-        console.log('[Bootstrap] Loading Module Registry...');
-        if (typeof ModuleRegistry !== 'undefined' && typeof ModuleRegistry.init === 'function') {
+            console.log("[MODULE REGISTRY]");
             await ModuleRegistry.init();
-        }
 
-        // 3. Initialize Router safely
-        if (typeof Router !== 'undefined') {
-            if (typeof Router.start === 'function') {
-                Router.start();
-            } else if (typeof Router.init === 'function') {
-                Router.init();
-            }
-        }
+            MotionEngine.init();
+            GlowEffect.attach(document);
+            Parallax.init();
+            EnterpriseUXEngine.init();
+            DevTools.init();
 
-        console.log('[Bootstrap] Boot sequence completed.');
+            console.log("[IMAGE LOAD]");
+            Logger.info("[Bootstrap] Platform initialization complete.");
+        } catch (error) {
+            Logger.error("[Bootstrap] Critical initialization error:", error);
+            console.error("[BOOTSTRAP ERROR]", error);
+        }
     }
 };
 

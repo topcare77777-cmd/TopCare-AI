@@ -1,55 +1,38 @@
-import CacheConfig from "../../config/cache.config.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * Cache Engine
+ * Path: assets/js/core/cache.engine.js
+ */
+import Logger from './logger.js';
 
-class CacheEngine{
+const CacheEngine = {
+    cache: new Map(),
+    maxSize: 100,
 
-constructor(){
+    set(key, value, ttl = 300000) {
+        if (this.cache.size >= this.maxSize) {
+            const oldestKey = this.cache.keys().next().value;
+            this.cache.delete(oldestKey);
+        }
+        const expiry = Date.now() + ttl;
+        this.cache.set(key, { value, expiry });
+        Logger.info(`[CacheEngine] Cached key: ${key}`);
+    },
 
-this.cache=new Map();
+    get(key) {
+        const item = this.cache.get(key);
+        if (!item) return null;
+        if (Date.now() > item.expiry) {
+            this.cache.delete(key);
+            return null;
+        }
+        return item.value;
+    },
 
-}
+    clear() {
+        this.cache.clear();
+        Logger.info("[CacheEngine] Cache cleared.");
+    }
+};
 
-set(key,value){
-
-this.cache.set(key,{
-
-value,
-
-time:Date.now()
-
-});
-
-}
-
-get(key){
-
-const item=this.cache.get(key);
-
-if(!item)return null;
-
-if(Date.now()-item.time>CacheConfig.ttl){
-
-this.cache.delete(key);
-
-return null;
-
-}
-
-return item.value;
-
-}
-
-clear(){
-
-this.cache.clear();
-
-}
-
-size(){
-
-return this.cache.size;
-
-}
-
-}
-
-export default new CacheEngine();
+export default CacheEngine;

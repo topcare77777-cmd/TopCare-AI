@@ -1,0 +1,73 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Animations & Motion Engine Styles
+ * Path: assets/css/core/animation.css
+ */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+@keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-gradient {
+    background-size: 200% 200%;
+    animation: gradientShift 8s ease infinite;
+}
+
+.motion-safe [data-animate] {
+    opacity: 0;
+    will-change: transform, opacity;
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.motion-safe [data-animate].is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+}
+
+[data-animate="fade-up"] { transform: translate3d(0, 30px, 0); }
+[data-animate="fade-down"] { transform: translate3d(0, -30px, 0); }
+[data-animate="fade-left"] { transform: translate3d(-30px, 0, 0); }
+[data-animate="fade-right"] { transform: translate3d(30px, 0, 0); }
+[data-animate="scale"] { transform: scale(0.92); }
+[data-animate="blur"] { filter: blur(10px); }
+
+@media (prefers-reduced-motion: reduce) {
+    [data-animate] {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        transition: none !important;
+    }
+    .animate-float, .animate-pulse-glow, .animate-gradient {
+        animation: none !important;
+    }
+}

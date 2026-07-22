@@ -1,71 +1,84 @@
 /**
  * TopCare AI Platform V2.0.0
- * Hero Renderer
+ * Hero Renderer (BUILD 025 Enterprise Visual Restoration)
  * Path: assets/js/renderers/hero.renderer.js
  */
 
-import AssetsConfig from '../config/assets.config.js';
+import AssetsRegistry from '../config/assets.registry.js';
+import ImageHelper from '../helpers/image.helper.js';
+import BaseRenderer from '../core/base.renderer.js';
+import Logger from '../core/logger.js';
 
 const HeroRenderer = {
     render(data) {
-        console.log("[Hero Renderer] Mounted");
-        console.log("[HeroRenderer] HTML generated");
+        if (!data) return '';
+        Logger.info("[HeroRenderer] Rendered with BUILD 025 full visual specifications");
 
-        const badgeText = data.badge?.text || 'AI Powered Personal Growth';
-        const titleText = data.title || 'Kenali Dirimu Bersama TopCare AI';
-        const subtitleText = data.subtitle || '';
-        
-        const buttonsHtml = (data.buttons || []).map(btn => `
-            <a href="${btn.link}" class="btn btn-${btn.style || 'primary'}" aria-label="${btn.text}">${btn.text}</a>
-        `).join('');
+        ImageHelper.preloadHeroImage(AssetsRegistry.hero.main);
 
-        const statsHtml = (data.statistics || []).map(stat => `
-            <div class="hero__stat">
-                <h2 class="hero__stat-value">${stat.value}</h2>
-                <span class="hero__stat-label">${stat.label}</span>
-            </div>
-        `).join('');
-
-        const dashboardItemsHtml = (data.dashboard?.items || []).map(item => `
-            <div class="dashboard__card">
-                <div class="dashboard__card-icon" aria-hidden="true">${item.icon}</div>
-                <div class="dashboard__card-content">
-                    <h3 class="dashboard__card-title">${item.title}</h3>
-                    <p class="dashboard__card-desc">${item.desc}</p>
-                </div>
-            </div>
-        `).join('');
+        const badgeText = BaseRenderer.sanitize(data.badge?.text || 'Platform AI #1 untuk Belajar & Berkembang');
+        const titleText = BaseRenderer.sanitize(data.title || 'Bangun Potensi Dirimu Bersama TopCare AI');
+        const subtitleText = BaseRenderer.sanitize(data.subtitle || 'Platform AI untuk belajar, mengenal diri, dan membangun masa depan yang lebih baik bersama komunitas global.');
 
         return `
-            <section class="hero">
-                <img src="${AssetsConfig.images.heroGlow}" alt="" class="hero__glow" loading="lazy" decoding="async" width="600" height="600" />
+            <section id="hero" class="hero" style="background-image: url('${AssetsRegistry.hero.mesh}'); background-size: cover; background-position: center; position: relative;">
+                <div class="hero__aurora-bg" aria-hidden="true">
+                    <img src="${AssetsRegistry.hero.glow}" alt="" class="hero__glow" />
+                </div>
+                
                 <div class="hero__container">
-                    <div class="hero__content">
-                        <div class="hero__badge">
-                            <img src="${AssetsConfig.images.brandMark}" alt="" class="hero__brand-icon" loading="lazy" decoding="async" width="20" height="20" />
+                    <div class="hero__content" data-animate="fade-right">
+                        <div class="hero__badge glass-card">
                             <span class="badge-dot" aria-hidden="true"></span>
                             <span>${badgeText}</span>
                         </div>
+                        
                         <h1 class="hero__title">${titleText}</h1>
                         <p class="hero__subtitle">${subtitleText}</p>
+                        
                         <div class="hero__buttons">
-                            ${buttonsHtml}
+                            <a href="#cta" class="btn btn-primary" style="padding: 0.75rem 1.5rem; background: var(--gradient-primary); border-radius: 50px; color: white; font-weight: 600;">Mulai Gratis Sekarang →</a>
+                            <a href="#features" class="btn btn-secondary" style="padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; color: white; font-weight: 600;">Pelajari Lebih Lanjut</a>
                         </div>
-                        <div class="hero__stats">
-                            ${statsHtml}
+                        
+                        <div class="hero__social-proof" style="display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;">
+                            <div style="display: flex;">
+                                <img src="${AssetsRegistry.creator.image1}" alt="" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #030712;" />
+                                <img src="${AssetsRegistry.creator.image2}" alt="" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #030712; margin-left: -10px;" />
+                                <img src="${AssetsRegistry.profile.founder}" alt="" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #030712; margin-left: -10px;" />
+                            </div>
+                            <div>
+                                <strong style="color: white; font-size: 0.875rem;">10.000+ Member Aktif</strong>
+                                <p style="font-size: 0.75rem; color: var(--text-muted); margin: 0;">Bergabung dan mulai perjalananmu hari ini</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="hero__preview">
-                        <img src="${AssetsConfig.images.heroMain}" alt="Hero Main Illustration" class="hero__image" loading="lazy" decoding="async" width="600" height="400" />
+
+                    <div class="hero__preview" data-animate="fade-left">
+                        <img src="${AssetsRegistry.hero.main}" alt="TopCare AI Neural Core" class="hero__image" fetchpriority="high" loading="eager" decoding="async" />
+                        
                         <div class="dashboard">
                             <div class="dashboard__header">
-                                <div class="dashboard__dot dashboard__dot--red" aria-hidden="true"></div>
-                                <div class="dashboard__dot dashboard__dot--yellow" aria-hidden="true"></div>
-                                <div class="dashboard__dot dashboard__dot--green" aria-hidden="true"></div>
-                                <span class="dashboard__title">${data.dashboard?.title || 'TopCare AI Dashboard'}</span>
+                                <span class="dashboard__dot dashboard__dot--red"></span>
+                                <span class="dashboard__dot dashboard__dot--yellow"></span>
+                                <span class="dashboard__dot dashboard__dot--green"></span>
+                                <span style="margin-left: 0.5rem; font-family: monospace; font-size: 0.75rem;">platform.topcare.ai/secure/workspace</span>
                             </div>
                             <div class="dashboard__body">
-                                ${dashboardItemsHtml}
+                                <div class="dashboard__card">
+                                    <div class="dashboard__card-icon">⚡</div>
+                                    <div>
+                                        <div class="dashboard__card-title">AI Assistant 24/7</div>
+                                        <div class="dashboard__card-desc">Zero Latency Neural Inference</div>
+                                    </div>
+                                </div>
+                                <div class="dashboard__card">
+                                    <div class="dashboard__card-icon">🧠</div>
+                                    <div>
+                                        <div class="dashboard__card-title">Personality Test</div>
+                                        <div class="dashboard__card-desc">4 Temperaments Analyzed</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

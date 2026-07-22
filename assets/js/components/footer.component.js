@@ -1,72 +1,18 @@
-class Footer {
+/**
+ * TopCare AI Platform V2.0.0
+ * Footer Component
+ * Path: assets/js/components/footer.component.js
+ */
 
+import BaseComponent from '../core/base.component.js';
 
-render(){
+const FooterComponent = {
+    mount(containerId, html) {
+        BaseComponent.mount(containerId, html);
+    },
+    destroy(containerId) {
+        BaseComponent.destroy(containerId);
+    }
+};
 
-
-return `
-
-
-<footer class="footer">
-
-
-<div>
-
-
-<h3>
-TopCare AI
-</h3>
-
-
-<p>
-AI Platform untuk belajar,
-berkarya dan berkembang.
-</p>
-
-
-</div>
-
-
-
-<div>
-
-
-<p>
-© ${new Date().getFullYear()}
-TopCare AI
-</p>
-
-
-</div>
-
-
-</footer>
-
-
-`;
-
-
-}
-
-
-mount(selector="#footer"){
-
-
-const el =
-document.querySelector(selector);
-
-
-if(el)
-
-el.innerHTML =
-this.render();
-
-
-}
-
-
-
-}
-
-
-export default new Footer();
+export default FooterComponent;

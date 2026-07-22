@@ -1,57 +1,8 @@
 {
-    "title":"TopCare AI dalam Angka",
-
-    "subtitle":"Kami membantu ribuan orang mengenali diri, belajar lebih efektif, dan berkembang bersama AI.",
-
-    "items":[
-
-        {
-
-            "icon":"👥",
-
-            "value":"10000",
-
-            "suffix":"+",
-
-            "label":"Pengguna Aktif"
-
-        },
-
-        {
-
-            "icon":"🧠",
-
-            "value":"25000",
-
-            "suffix":"+",
-
-            "label":"Tes Kepribadian"
-
-        },
-
-        {
-
-            "icon":"📚",
-
-            "value":"350",
-
-            "suffix":"+",
-
-            "label":"Materi Belajar"
-
-        },
-
-        {
-
-            "icon":"⭐",
-
-            "value":"98",
-
-            "suffix":"%",
-
-            "label":"Kepuasan"
-
-        }
-
-    ]
+  "cards": [
+    { "value": "150K+", "label": "Active Users" },
+    { "value": "500+", "label": "AI Courses & Modules" },
+    { "value": "50K+", "label": "Community Members" },
+    { "value": "99.8%", "label": "AI Response Accuracy" }
+  ]
 }

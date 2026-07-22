@@ -1,25 +1,18 @@
 {
-  "title": "Komunitas TopCare AI",
-  "subtitle": "Ikuti aktivitas terbaru dari para pengguna yang sedang belajar dan berkembang bersama.",
-  "button": "Gabung Komunitas",
-  "activities": [
+  "title": "TopCare Community",
+  "subtitle": "Bergabunglah dengan ribuan profesional dan kreator AI dalam ekosistem kolaboratif kami.",
+  "items": [
     {
-      "avatar": "A",
-      "name": "Andi",
-      "action": "Baru menyelesaikan Tes Kepribadian",
-      "time": "2 menit lalu"
+      "title": "Diskusi & Kolaborasi",
+      "description": "Bagikan prompt, ide, dan strategi bersama ribuan anggota aktif."
     },
     {
-      "avatar": "S",
-      "name": "Sinta",
-      "action": "Menyelesaikan Self Growth Level 1",
-      "time": "10 menit lalu"
+      "title": "Event & Workshop Eksklusif",
+      "description": "Ikuti webinar langsung bersama pakar industri AI terkemuka."
     },
     {
-      "avatar": "R",
-      "name": "Reza",
-      "action": "Mengunduh eBook Personality Plus",
-      "time": "25 menit lalu"
+      "title": "Networking Global",
+      "description": "Perluas koneksi profesional dan temukan kolaborator untuk proyek Anda."
     }
   ]
 }

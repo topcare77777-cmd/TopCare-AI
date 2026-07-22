@@ -1,17 +1,19 @@
 /**
  * TopCare AI Platform V2.0.0
- * Hero Component
+ * Hero Component (RC-4 Enterprise AAA Polish)
+ * Path: assets/js/components/hero.component.js
  */
+
+import BaseComponent from '../core/base.component.js';
+import Logger from '../core/logger.js';
 
 const HeroComponent = {
     mount(containerId, html) {
-        const container = document.getElementById(containerId);
-        if (container) {
-            container.innerHTML = html;
-            console.log("[HeroComponent] Mounted Successfully");
-        } else {
-            console.warn(`[Hero Component] Container with ID "${containerId}" not found.`);
-        }
+        BaseComponent.mount(containerId, html);
+        Logger.info("[HeroComponent] Mounted successfully with RC-4 optimizations");
+    },
+    destroy(containerId) {
+        BaseComponent.destroy(containerId);
     }
 };
 

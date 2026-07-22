@@ -1,17 +1,18 @@
-export function statisticsComponent(data = {}) {
+/**
+ * TopCare AI Platform V2.0.0
+ * Statistics Component
+ * Path: assets/js/components/statistics.component.js
+ */
 
-    return `
-        <div class="statistics-card">
+import BaseComponent from '../core/base.component.js';
 
-            <h2>
-                ${data.value ?? "0"}
-            </h2>
+const StatisticsComponent = {
+    mount(containerId, html) {
+        BaseComponent.mount(containerId, html);
+    },
+    destroy(containerId) {
+        BaseComponent.destroy(containerId);
+    }
+};
 
-            <span>
-                ${data.label ?? ""}
-            </span>
-
-        </div>
-    `;
-
-}
+export default StatisticsComponent;
