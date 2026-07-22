@@ -1,7 +1,6 @@
 /**
  * TopCare AI Platform V2.0.0
  * Hero Component
- * Path: assets/js/components/hero.component.js
  */
 
 const HeroComponent = {
@@ -9,8 +8,7 @@ const HeroComponent = {
         const container = document.getElementById(containerId);
         if (container) {
             container.innerHTML = html;
-            console.log("[HeroComponent] Mounted to DOM");
-            console.log('[HeroComponent] Rendered Successfully');
+            console.log("[HeroComponent] Mounted Successfully");
         } else {
             console.warn(`[Hero Component] Container with ID "${containerId}" not found.`);
         }

@@ -1,25 +1,18 @@
-export async function getLearningData(){
+/**
+ * TopCare AI Platform V2.0.0
+ * Learning Service
+ * Path: assets/js/services/learning.service.js
+ */
 
-try{
+import LearningRepository from '../repository/learning.repository.js';
 
-const response=await fetch("assets/json/learning.json");
+const LearningService = {
+    async load() {
+        console.log("[Learning Service] Connected");
+        const data = await LearningRepository.get();
+        console.log("[LearningService] Data received");
+        return data;
+    }
+};
 
-if(!response.ok){
-
-throw new Error("learning.json tidak ditemukan.");
-
-}
-
-return await response.json();
-
-}
-
-catch(error){
-
-console.error(error);
-
-return null;
-
-}
-
-}
+export default LearningService;

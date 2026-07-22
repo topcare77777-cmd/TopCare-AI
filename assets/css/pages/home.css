@@ -1,32 +1,260 @@
-@layer base {
-  :root {
-    --bg-navy-950: #030712;
-  }
+/**
+ * TopCare AI Platform V2.0.0
+ * Homepage Consolidated Stylesheet (BEM & Design System)
+ * Path: assets/css/pages/home.css
+ */
+
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 6rem 2rem 4rem;
+    background: radial-gradient(circle at top right, rgba(168, 85, 247, 0.1), transparent 50%),
+                radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 50%),
+                var(--bg-primary);
 }
 
-.bg-navy-950 { background-color: #030712; }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+.hero__glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+    object-fit: cover;
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+.hero__container {
+    max-width: 1280px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin: 0 auto;
 }
 
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+.hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-.animate-fade-up {
-  animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--bg-glass, rgba(17, 24, 39, 0.7));
+    border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+    backdrop-filter: blur(12px);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--accent-cyan, #06b6d4);
+    width: fit-content;
 }
 
-/* Glassmorphism utilities */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.1);
+.hero__brand-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.badge-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-cyan, #06b6d4);
+    border-radius: 50%;
+}
+
+.hero__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero__subtitle {
+    font-size: 1.125rem;
+    color: var(--text-muted, #9ca3af);
+    max-width: 540px;
+}
+
+.hero__buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.hero__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+}
+
+.hero__stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.hero__stat-label {
+    font-size: 0.875rem;
+    color: var(--text-muted, #9ca3af);
+}
+
+.hero__preview {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hero__image {
+    width: 100%;
+    border-radius: 24px;
+    object-fit: cover;
+}
+
+.dashboard {
+    background: var(--bg-glass, rgba(17, 24, 39, 0.7));
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+    border-radius: 16px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 480px;
+    margin-top: -3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.dashboard__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--text-muted, #9ca3af);
+}
+
+.dashboard__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.dashboard__dot--red { background-color: #ef4444; }
+.dashboard__dot--yellow { background-color: #f59e0b; }
+.dashboard__dot--green { background-color: #10b981; }
+
+.dashboard__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dashboard__card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.dashboard__card-icon {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 8px;
+}
+
+.dashboard__card-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.dashboard__card-desc {
+    font-size: 0.813rem;
+    color: var(--text-muted, #9ca3af);
+}
+
+.about,
+.personality,
+.learning,
+.community,
+.assistant {
+    padding: 6rem 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.about__container,
+.personality__container,
+.learning__container,
+.community__container,
+.assistant__container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.about__image,
+.personality__image,
+.learning__image,
+.community__image,
+.assistant__image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.about__feature-card,
+.personality__card,
+.learning__card {
+    background: var(--bg-glass, rgba(17, 24, 39, 0.7));
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass, rgba(255, 255, 255, 0.1));
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.personality__grid,
+.learning__grid,
+.about__features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+    .hero__container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero__content {
+        align-items: center;
+    }
+    .hero__subtitle {
+        margin: 0 auto;
+    }
+    .hero__stats {
+        justify-content: center;
+    }
 }

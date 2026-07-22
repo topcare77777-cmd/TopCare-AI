@@ -1,17 +1,44 @@
-export function learningRenderer(template, data) {
-    const courses = data.courses.map((course) => `
-        <article class="learning-card learning-card-${course.accent}" data-course-id="${course.id}" data-level="${course.level}" data-search="${course.title} ${course.description} ${course.level}">
-            <div class="course-topline"><span class="course-icon">${course.icon}</span><span class="course-level">${course.level}</span></div>
-            <h3>${course.title}</h3>
-            <p>${course.description}</p>
-            <div class="course-meta"><span>${course.lesson}</span><span>${course.duration}</span></div>
-            <div class="course-footer"><span class="course-rating">★ ${course.rating} <small>· ${course.students}</small></span><button type="button" class="btn btn-primary" data-open-course="${course.id}">${course.button}</button></div>
-        </article>`).join("");
+/**
+ * TopCare AI Platform V2.0.0
+ * Learning Renderer
+ * Path: assets/js/renderers/learning.renderer.js
+ */
 
-    return template
-        .replace("{{title}}", data.title)
-        .replace("{{subtitle}}", data.subtitle)
-        .replace("{{courseCount}}", data.courses.length)
-        .replace("{{searchPlaceholder}}", data.searchPlaceholder)
-        .replace("{{courses}}", courses);
-}
+import AssetsConfig from '../config/assets.config.js';
+
+const LearningRenderer = {
+    render(data) {
+        console.log("[Learning Renderer] Mounted");
+        console.log("[LearningRenderer] HTML generated");
+        
+        const titleText = data.title || 'Learning Center';
+        const subtitleText = data.subtitle || '';
+        
+        const coursesHtml = (data.courses || []).map(course => `
+            <div class="learning__card">
+                <img src="${AssetsConfig.images.featureLearning}" alt="" class="learning__card-icon" width="28" height="28" loading="lazy" decoding="async" />
+                <h3 class="learning__card-title">${course.title || ''}</h3>
+                <p class="learning__card-desc">${course.description || ''}</p>
+            </div>
+        `).join('');
+
+        return `
+            <section class="learning">
+                <div class="learning__container">
+                    <div class="learning__visual">
+                        <img src="${AssetsConfig.images.learningCenter}" alt="Learning Center Banner" class="learning__image" width="600" height="400" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="learning__content">
+                        <h2 class="learning__title">${titleText}</h2>
+                        <p class="learning__subtitle">${subtitleText}</p>
+                        <div class="learning__grid">
+                            ${coursesHtml}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
+    }
+};
+
+export default LearningRenderer;

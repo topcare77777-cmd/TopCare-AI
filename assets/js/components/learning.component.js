@@ -1,17 +1,19 @@
-export function learningComponent(data = {}) {
+/**
+ * TopCare AI Platform V2.0.0
+ * Learning Component
+ * Path: assets/js/components/learning.component.js
+ */
 
-    return `
-        <section class="learning-card">
+const LearningComponent = {
+    mount(containerId, html) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = html;
+            console.log("[LearningComponent] Mounted Successfully");
+        } else {
+            console.warn(`[Learning Component] Container with ID "${containerId}" not found.`);
+        }
+    }
+};
 
-            <h2>
-                ${data.title ?? ""}
-            </h2>
-
-            <p>
-                ${data.description ?? ""}
-            </p>
-
-        </section>
-    `;
-
-}
+export default LearningComponent;

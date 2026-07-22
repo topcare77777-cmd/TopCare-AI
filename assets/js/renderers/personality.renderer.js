@@ -1,44 +1,44 @@
 /**
- * ==========================================================
- * TopCare AI CMS Framework
- * Personality Renderer Component
- * ----------------------------------------------------------
- * Layer     : Presentation (Pure)
- * Status    : MIGRATED (Refined)
- * ==========================================================
+ * TopCare AI Platform V2.0.0
+ * Personality Renderer
+ * Path: assets/js/renderers/personality.renderer.js
  */
 
-const TEMPLATE = `
-  <div class="personality-result">
-    <h3 class="type"></h3>
-    <div class="score"></div>
-  </div>
-`;
+import AssetsConfig from '../config/assets.config.js';
 
-export default class PersonalityRenderer {
-  /**
-   * Pure presentation layer: tidak ada state internal, tidak ada akses global.
-   */
-  render(container, data) {
-    // Input Validation
-    if (!(container instanceof HTMLElement)) {
-      console.warn('PersonalityRenderer: Invalid container element');
-      return;
-    }
-    if (!data || typeof data.type === 'undefined' || typeof data.score === 'undefined') {
-      console.error('PersonalityRenderer: Invalid data contract');
-      return;
-    }
-    
-    // Idempotent Render: Mengganti konten container (Full Replace)
-    container.innerHTML = TEMPLATE;
-    container.querySelector('.type').textContent = data.type;
-    container.querySelector('.score').textContent = `Score: ${data.score}`;
-  }
+const PersonalityRenderer = {
+    render(data) {
+        console.log('[Personality Renderer] Mounted');
+        console.log("[PersonalityRenderer] HTML generated");
+        
+        const titleText = data.title || 'Personality Assessment';
+        const subtitleText = data.subtitle || '';
+        
+        const itemsHtml = (data.items || []).map(item => `
+            <div class="personality__card">
+                <img src="${AssetsConfig.images.featurePersonality}" alt="" class="personality__card-icon" width="32" height="32" loading="lazy" decoding="async" />
+                <h3 class="personality__card-title">${item.title || ''}</h3>
+                <p class="personality__card-desc">${item.description || ''}</p>
+            </div>
+        `).join('');
 
-  clear(container) {
-    if (container instanceof HTMLElement) {
-      container.innerHTML = '';
+        return `
+            <section class="personality">
+                <div class="personality__container">
+                    <div class="personality__visual">
+                        <img src="${AssetsConfig.images.personalityTest}" alt="Personality Test Preview" class="personality__image" width="600" height="400" loading="lazy" decoding="async" />
+                    </div>
+                    <div class="personality__content">
+                        <h2 class="personality__title">${titleText}</h2>
+                        <p class="personality__subtitle">${subtitleText}</p>
+                        <div class="personality__grid">
+                            ${itemsHtml}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        `;
     }
-  }
-}
+};
+
+export default PersonalityRenderer;

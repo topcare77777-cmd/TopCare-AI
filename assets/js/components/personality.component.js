@@ -1,34 +1,19 @@
-import BaseComponent from "./base.component.js";
+/**
+ * TopCare AI Platform V2.0.0
+ * Personality Component
+ * Path: assets/js/components/personality.component.js
+ */
 
-class PersonalityComponent extends BaseComponent {
-  constructor() {
-    super("#personality");
-  }
-
-  async mount() {
-    // Resolve service via CMS Facade
-    const personalityService = this.cms.resolve("personality");
-    
-    // Use verified service method
-    const data = await personalityService.loadConfig();
-
-    if (!data) {
-      return;
+const PersonalityComponent = {
+    mount(containerId, html) {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = html;
+            console.log("[PersonalityComponent] Mounted Successfully");
+        } else {
+            console.warn(`[Personality Component] Container with ID "${containerId}" not found.`);
+        }
     }
+};
 
-    let html = "";
-
-    data.forEach((item) => {
-      html += `
-        <div class="personality-card">
-          <h3>${item.name}</h3>
-          <p>${item.description}</p>
-        </div>
-      `;
-    });
-
-    this.render(html);
-  }
-}
-
-export default new PersonalityComponent();
+export default PersonalityComponent;

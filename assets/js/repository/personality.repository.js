@@ -1,34 +1,25 @@
 /**
- * ==========================================================
- * TopCare AI CMS Framework
+ * TopCare AI Platform V2.0.0
  * Personality Repository
- * ----------------------------------------------------------
- * Layer     : Data Access
- * Status    : MIGRATED
- * ==========================================================
+ * Path: assets/js/repository/personality.repository.js
  */
 
-export default class PersonalityRepository {
-  /**
-   * @param {Object} cms - CMS Facade
-   */
-  constructor(cms) {
-    // Service resolution melalui Facade v2.0.0
-    this.api = cms.service('api');
-  }
+const PersonalityRepository = {
+    async get() {
+        try {
+            console.log("[PersonalityRepository] Loading personality.json");
+            const response = await fetch('assets/json/homepage/personality.json');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+            console.log("[PersonalityRepository] Data fetched");
+            return data;
+        } catch (error) {
+            console.error('[Personality Repository] Error fetching personality data:', error);
+            return null;
+        }
+    }
+};
 
-  /**
-   * Fetch data kepribadian dari API
-   * Kontrak API tetap sama sesuai Sprint 31B2
-   */
-  async fetchById(id) {
-    return await this.api.get(`/personality/${id}`);
-  }
-
-  /**
-   * Save data hasil tes
-   */
-  async save(data) {
-    return await this.api.post('/personality/save', data);
-  }
-}
+export default PersonalityRepository;

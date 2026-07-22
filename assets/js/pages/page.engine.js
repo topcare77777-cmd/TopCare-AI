@@ -8,7 +8,6 @@ const PageEngine = {
     createHomepageLayout() {
         const root = document.getElementById('app') || document.body;
         
-        // Cek apakah #app-container sudah ada agar tidak duplikat
         let appContainer = document.getElementById('app-container');
         if (!appContainer) {
             appContainer = document.createElement('div');
@@ -16,12 +15,31 @@ const PageEngine = {
             root.appendChild(appContainer);
         }
 
-        // Buat section hero-wrapper di dalam app-container
-        if (!document.getElementById('hero-wrapper')) {
-            const heroSection = document.createElement('section');
-            heroSection.id = 'hero-wrapper';
-            appContainer.appendChild(heroSection);
-        }
+        const WRAPPERS = [
+            'hero-wrapper',
+            'about-wrapper',
+            'personality-wrapper',
+            'article-wrapper',
+            'learning-wrapper',
+            'community-wrapper',
+            'faq-wrapper',
+            'creator-wrapper',
+            'trusted-wrapper',
+            'statistics-wrapper',
+            'testimonial-wrapper',
+            'marketplace-wrapper',
+            'assistant-wrapper',
+            'premium-wrapper',
+            'footer-wrapper'
+        ];
+
+        WRAPPERS.forEach(id => {
+            if (!document.getElementById(id)) {
+                const section = document.createElement('section');
+                section.id = id;
+                appContainer.appendChild(section);
+            }
+        });
 
         console.log('[PageEngine] Homepage Created');
     }

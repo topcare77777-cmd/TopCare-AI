@@ -5,24 +5,27 @@
  */
 
 import ModuleLoader from '../core/module-loader.js';
+
 import HeroModule from './hero.module.js';
 import AboutModule from './about.module.js';
+import PersonalityModule from './personality.module.js';
+import LearningModule from './learning.module.js';
+
+const HOMEPAGE_MODULES = [
+    { name: 'hero', module: HeroModule },
+    { name: 'about', module: AboutModule },
+    { name: 'personality', module: PersonalityModule },
+    { name: 'learning', module: LearningModule }
+];
 
 const ModuleRegistry = {
-    modules: {
-        hero: HeroModule,
-        about: AboutModule
-    },
-
     async init() {
         console.log('[ModuleRegistry] Initializing modules...');
-        
-        if (this.modules.hero) {
-            await ModuleLoader.load('hero', this.modules.hero);
-        }
 
-        if (this.modules.about) {
-            await ModuleLoader.load('about', this.modules.about);
+        for (const item of HOMEPAGE_MODULES) {
+            if (item.module) {
+                await ModuleLoader.load(item.name, item.module);
+            }
         }
     }
 };

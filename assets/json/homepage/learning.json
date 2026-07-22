@@ -1,64 +1,18 @@
 {
-  "title": "Belajar Bersama AI",
-  "subtitle": "Pilih jalur belajar yang sesuai, pelajari materi secara bertahap, lalu pantau progres Anda.",
-  "searchPlaceholder": "Cari topik atau kursus...",
+  "title": "Learning Center",
+  "subtitle": "Belajar AI, Digital Skill, dan Personality Development.",
   "courses": [
     {
-      "id": "personality-foundation",
-      "level": "Beginner",
-      "title": "Pengenalan Kepribadian",
-      "description": "Kenali pola diri, kekuatan, dan cara berkomunikasi melalui empat kecenderungan kepribadian.",
-      "lesson": "15 Materi",
-      "duration": "2 jam 20 menit",
-      "rating": "5.0",
-      "students": "1.240 peserta",
-      "icon": "🧩",
-      "accent": "blue",
-      "button": "Lihat Kurikulum",
-      "lessons": [
-        {"title": "Memulai perjalanan mengenal diri", "duration": "12 menit"},
-        {"title": "Mengenal empat kecenderungan kepribadian", "duration": "24 menit"},
-        {"title": "Kekuatan dan tantangan personal", "duration": "18 menit"},
-        {"title": "Gaya komunikasi yang sehat", "duration": "20 menit"}
-      ]
+      "title": "AI Fundamental",
+      "description": "Pelajari dasar Artificial Intelligence."
     },
     {
-      "id": "self-growth",
-      "level": "Intermediate",
-      "title": "Self Growth yang Konsisten",
-      "description": "Bangun kebiasaan, fokus, dan refleksi diri dengan sistem kecil yang realistis setiap hari.",
-      "lesson": "28 Materi",
-      "duration": "4 jam 10 menit",
-      "rating": "5.0",
-      "students": "980 peserta",
-      "icon": "🌱",
-      "accent": "green",
-      "button": "Lihat Kurikulum",
-      "lessons": [
-        {"title": "Menentukan arah pertumbuhan", "duration": "16 menit"},
-        {"title": "Membentuk kebiasaan kecil", "duration": "22 menit"},
-        {"title": "Mengelola energi dan fokus", "duration": "26 menit"},
-        {"title": "Refleksi mingguan yang sederhana", "duration": "18 menit"}
-      ]
+      "title": "Digital Marketing",
+      "description": "Strategi pemasaran digital modern."
     },
     {
-      "id": "leadership-ai",
-      "level": "Advanced",
-      "title": "Leadership di Era AI",
-      "description": "Gunakan pola pikir kepemimpinan dan AI secara bertanggung jawab untuk menghasilkan dampak.",
-      "lesson": "42 Materi",
-      "duration": "6 jam 30 menit",
-      "rating": "4.9",
-      "students": "760 peserta",
-      "icon": "🚀",
-      "accent": "violet",
-      "button": "Lihat Kurikulum",
-      "lessons": [
-        {"title": "Fondasi kepemimpinan modern", "duration": "20 menit"},
-        {"title": "Menyusun keputusan berbasis data", "duration": "28 menit"},
-        {"title": "Kolaborasi manusia dan AI", "duration": "30 menit"},
-        {"title": "Etika dan dampak penggunaan AI", "duration": "24 menit"}
-      ]
+      "title": "Leadership",
+      "description": "Mengembangkan kepemimpinan dan komunikasi."
     }
   ]
 }
