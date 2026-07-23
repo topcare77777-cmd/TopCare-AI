@@ -1,11 +1,12 @@
 /**
  * TopCare AI Platform V2.0.0
- * Kernel Bootstrap (Complete Tracing Pipeline)
+ * Kernel Bootstrap (BUILD 029 Single Routing Pipeline)
  * Path: assets/js/kernel/bootstrap.js
  */
 
 import ModuleRegistry from '../modules/module.registry.js';
-import PageEngine from '../pages/page.engine.js';
+import RouterEngine from '../core/router.engine.js';
+import NavigationEngine from '../core/navigation.engine.js';
 import MotionEngine from '../core/motion.engine.js';
 import GlowEffect from '../core/glow.effect.js';
 import Parallax from '../core/parallax.js';
@@ -25,7 +26,7 @@ import Logger from '../core/logger.js';
 const Bootstrap = {
     async init() {
         console.log("[BOOT]");
-        Logger.info("[Bootstrap] Initializing TopCare AI Platform V2.0.0...");
+        Logger.info("[Bootstrap] Initializing TopCare AI Platform V2.0.0 (BUILD 029 Architecture Consolidation)...");
         
         try {
             AssetsRegistry.init();
@@ -38,8 +39,11 @@ const Bootstrap = {
             ThemeEngine.init();
             CommandPalette.init();
 
-            console.log("[PAGE ENGINE]");
-            PageEngine.createHomepageLayout();
+            console.log("[ROUTER ENGINE]");
+            RouterEngine.init(); // Single Source of Truth for Routing
+
+            console.log("[NAVIGATION ENGINE]");
+            NavigationEngine.init(); // Click & Event Handler only
 
             console.log("[MODULE REGISTRY]");
             await ModuleRegistry.init();
@@ -50,8 +54,8 @@ const Bootstrap = {
             EnterpriseUXEngine.init();
             DevTools.init();
 
-            console.log("[IMAGE LOAD]");
-            Logger.info("[Bootstrap] Platform initialization complete.");
+            console.log("[INITIAL ARCHITECTURE RENDER COMPLETE]");
+            Logger.info("[Bootstrap] BUILD 029 Architecture Consolidation complete.");
         } catch (error) {
             Logger.error("[Bootstrap] Critical initialization error:", error);
             console.error("[BOOTSTRAP ERROR]", error);

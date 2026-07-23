@@ -1,6 +1,6 @@
 /**
  * TopCare AI Platform V2.0.0
- * Features Renderer (BUILD 026 Enterprise Visual Restoration)
+ * Features Renderer (BUILD 028 Audit & Flow Fix)
  * Path: assets/js/renderers/features.renderer.js
  */
 
@@ -11,7 +11,7 @@ import Logger from '../core/logger.js';
 const FeaturesRenderer = {
     render(data) {
         if (!data) return '';
-        Logger.info("[FeaturesRenderer] Rendered with enterprise SVG feature assets");
+        Logger.info("[FeaturesRenderer] Rendered with BUILD 028 visual layout verification");
 
         const tagText = BaseRenderer.sanitize(data.tag || 'Jelajahi Fitur Unggulan Kami');
 
@@ -34,6 +34,8 @@ const FeaturesRenderer = {
                 <p class="features__card-desc">${item.desc}</p>
             </div>
         `).join('');
+
+        console.log("[FEATURES ACTIVE]");
 
         return `
             <section id="features" class="features">

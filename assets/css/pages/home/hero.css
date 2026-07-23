@@ -1,6 +1,6 @@
 /**
  * TopCare AI Platform V2.0.0
- * Hero Section Stylesheet (BUILD 027 Pixel-Perfect Finalization)
+ * Hero Section Stylesheet (BUILD 028 Audit & Flow Fix)
  * Path: assets/css/pages/home/hero.css
  */
 
@@ -11,8 +11,8 @@
     justify-content: center;
     position: relative;
     padding: 10rem 2rem 6rem;
-    background: radial-gradient(circle at 70% 20%, rgba(37, 99, 235, 0.12), transparent 45%),
-                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.12), transparent 45%),
+    background: radial-gradient(circle at 70% 20%, rgba(37, 99, 235, 0.15), transparent 45%),
+                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.15), transparent 45%),
                 #030712;
     overflow: hidden;
 }
@@ -32,7 +32,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    opacity: 0.35;
+    opacity: 0.4;
     object-fit: cover;
     filter: blur(60px);
 }
@@ -60,8 +60,8 @@
     align-items: center;
     gap: 0.625rem;
     padding: 0.5rem 1.25rem;
-    background: rgba(17, 24, 39, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 50px;
@@ -78,12 +78,6 @@
     background: #06b6d4;
     border-radius: 50%;
     box-shadow: 0 0 10px #06b6d4;
-    animation: pulseGlow 2s infinite;
-}
-
-@keyframes pulseGlow {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.15); }
 }
 
 .hero__title {
@@ -117,7 +111,7 @@
     font-weight: 600;
     font-size: 0.938rem;
     box-shadow: 0 12px 35px rgba(37, 99, 235, 0.45);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero__buttons .btn-primary:hover {
@@ -194,18 +188,13 @@
     box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.1);
     object-fit: cover;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.hero__image:hover {
-    transform: scale(1.015);
 }
 
 .dashboard {
-    background: rgba(11, 15, 25, 0.85);
+    background: rgba(11, 15, 25, 0.9);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 26px;
     padding: 1.35rem;
     width: 100%;
@@ -256,12 +245,6 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 16px;
-    transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.dashboard__card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    transform: translateX(4px);
 }
 
 .dashboard__card-icon {

@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="assets/css/layout/footer.css">
     <link rel="stylesheet" href="assets/css/pages/home.css">
     <link rel="stylesheet" href="assets/css/pages/home/hero.css">
-    <link rel="stylesheet" href="assets/css/pages/home/trusted.css">
     <link rel="stylesheet" href="assets/css/pages/home/features.css">
+    <link rel="stylesheet" href="assets/css/pages/home/trusted.css">
     <link rel="stylesheet" href="assets/css/pages/home/statistics.css">
     <link rel="stylesheet" href="assets/css/pages/home/articles.css">
     <link rel="stylesheet" href="assets/css/pages/home/cta.css">
@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="assets/css/core/enterprise-polish.css">
 </head>
 <body>
-    <!-- Transparent Glass Sticky Enterprise Navbar -->
+    <!-- Transparent Glass Sticky Enterprise Navbar (BUILD 031 data-route Unified) -->
     <header class="site-header">
         <div class="header-container">
             <div class="brand-wrapper">
@@ -37,40 +37,31 @@
             </div>
 
             <nav class="nav-links">
-                <a href="#hero">Beranda</a>
-                <a href="#about">Tentang Kami</a>
-                <a href="#learning">Belajar AI</a>
-                <a href="#personality">Personality</a>
-                <a href="#ebook">Ebook</a>
-                <a href="#articles">Artikel</a>
-                <a href="#prompt">Prompt AI</a>
-                <a href="#community">Community</a>
-                <a href="#creator">Creator</a>
-                <a href="#marketplace">Marketplace</a>
-                <a href="#pricing">Premium</a>
-                <a href="#faq">FAQ</a>
-                <a href="#contact">Kontak</a>
+                <a href="#" data-route="/home">Beranda</a>
+                <a href="#" data-route="/about">Tentang Kami</a>
+                <a href="#" data-route="/learning">Belajar AI</a>
+                <a href="#" data-route="/personality">Personality</a>
+                <a href="#" data-route="/ebook">Ebook</a>
+                <a href="#" data-route="/articles">Artikel</a>
+                <a href="#" data-route="/prompt">Prompt AI</a>
+                <a href="#" data-route="/community">Community</a>
+                <a href="#" data-route="/creator">Creator</a>
+                <a href="#" data-route="/marketplace">Marketplace</a>
+                <a href="#" data-route="/premium">Premium</a>
+                <a href="#" data-route="/faq">FAQ</a>
+                <a href="#" data-route="/contact">Kontak</a>
             </nav>
 
             <div class="auth-actions">
-                <a href="#login" class="nav-link-signin">Masuk</a>
-                <a href="#cta" class="btn btn-primary">Mulai Gratis</a>
+                <a href="#" data-route="/login" class="nav-link-signin">Masuk</a>
+                <a href="#" data-route="/premium" class="btn btn-primary">Mulai Gratis</a>
             </div>
         </div>
     </header>
 
-    <!-- Dynamic Application Root & Module Wrappers -->
+    <!-- Single Page Application Dynamic Container Root -->
     <main id="main-content" class="main-content">
-        <div id="hero-wrapper"></div>
-        <div id="trusted-wrapper"></div>
-        <div id="features-wrapper"></div>
-        <div id="statistics-wrapper"></div>
-        <div id="workflow-wrapper"></div>
-        <div id="showcase-wrapper"></div>
-        <div id="testimonials-wrapper"></div>
-        <div id="pricing-wrapper"></div>
-        <div id="faq-wrapper"></div>
-        <div id="cta-wrapper"></div>
+        <!-- Dynamic Page Injector Root -->
     </main>
 
     <!-- Footer Container -->
@@ -78,8 +69,5 @@
 
     <!-- Core Modular Bootstrapper -->
     <script type="module" src="assets/js/main.js"></script>
-    <script>
-        console.log("[BUILD 026] Enterprise Visual Restoration Active");
-    </script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /**
  * TopCare AI Platform V2.0.0
- * Main Application Entry Point (V2.0.0 Lifecycle Migration)
+ * Main Application Entry Point
  * Path: assets/js/main.js
  */
 
