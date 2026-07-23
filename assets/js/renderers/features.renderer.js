@@ -5,7 +5,7 @@
  */
 
 import AssetsRegistry from '../config/assets.registry.js';
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 import Logger from '../core/logger.js';
 
 const FeaturesRenderer = {

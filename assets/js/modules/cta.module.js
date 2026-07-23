@@ -8,8 +8,8 @@ import BaseModule from '../core/base.module.js';
 import CtaService from '../services/cta.service.js';
 import CtaRenderer from '../renderers/cta.renderer.js';
 import CtaComponent from '../components/cta.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import GlowEffect from '../core/glow.effect.js';
+import MotionEngine from '../engine/motion.engine.js';
+import GlowEffect from '../performance/glow.effect.js';
 import Logger from '../core/logger.js';
 
 class CtaModuleClass extends BaseModule {

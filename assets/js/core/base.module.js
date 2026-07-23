@@ -4,7 +4,7 @@
  * Path: assets/js/core/base.module.js
  */
 
-import PerformanceMonitor from './performance.monitor.js';
+import PerformanceMonitor from '../performance/performance.monitor.js';
 
 export default class BaseModule {
     constructor(name, containerId) {

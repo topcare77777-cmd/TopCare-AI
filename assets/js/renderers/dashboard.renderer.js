@@ -4,7 +4,7 @@
  * Path: assets/js/renderers/dashboard.renderer.js
  */
 
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 import Logger from '../core/logger.js';
 
 const DashboardRenderer = {

@@ -8,8 +8,8 @@ import BaseModule from '../core/base.module.js';
 import FeaturesService from '../services/features.service.js';
 import FeaturesRenderer from '../renderers/features.renderer.js';
 import FeaturesComponent from '../components/features.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import GlowEffect from '../core/glow.effect.js';
+import MotionEngine from '../engine/motion.engine.js';
+import GlowEffect from '../performance/glow.effect.js';
 import Logger from '../core/logger.js';
 
 class FeaturesModuleClass extends BaseModule {

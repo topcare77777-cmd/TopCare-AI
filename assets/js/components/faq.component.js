@@ -3,7 +3,7 @@ from "./base.component.js";
 
 
 import DataLoader
-from "../core/data-loader.js";
+from "../data/data-loader.js";
 
 
 

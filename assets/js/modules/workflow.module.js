@@ -7,8 +7,7 @@ import BaseModule from '../core/base.module.js';
 import WorkflowService from '../services/workflow.service.js';
 import WorkflowRenderer from '../renderers/workflow.renderer.js';
 import WorkflowComponent from '../components/workflow.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import GlowEffect from '../core/glow.effect.js';
+import Logger from '../core/logger.js';
 
 class WorkflowModuleClass extends BaseModule {
     constructor() {
@@ -19,8 +18,7 @@ class WorkflowModuleClass extends BaseModule {
     }
 
     afterMount() {
-        MotionEngine.init();
-        GlowEffect.attach(document.getElementById(this.containerId));
+        Logger.info("[WorkflowModule] Mounted successfully.");
     }
 }
 

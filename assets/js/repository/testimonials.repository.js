@@ -3,7 +3,7 @@
  * Testimonials Repository
  * Path: assets/js/repository/testimonials.repository.js
  */
-import DataEngine from '../core/data.engine.js';
+import DataEngine from '../data/data.engine.js';
 import Logger from '../core/logger.js';
 
 const TestimonialsRepository = {

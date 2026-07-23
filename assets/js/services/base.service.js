@@ -1,4 +1,4 @@
-import DataEngine from "../core/data.engine.js";
+import DataEngine from "../data/data.engine.js";
 
 export default class BaseService {
 

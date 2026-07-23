@@ -1,4 +1,4 @@
-import languageEngine from "../core/language.js";
+import languageEngine from "../config/language.js";
 import navbarService from "../services/navbar.service.js";
 
 class NavbarComponent {

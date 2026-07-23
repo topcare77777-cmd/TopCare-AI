@@ -8,7 +8,7 @@ import BaseModule from '../core/base.module.js';
 import FooterService from '../services/footer.service.js';
 import FooterRenderer from '../renderers/footer.renderer.js';
 import FooterComponent from '../components/footer.component.js';
-import MotionEngine from '../core/motion.engine.js';
+import MotionEngine from '../engine/motion.engine.js';
 
 class FooterModuleClass extends BaseModule {
     constructor() {

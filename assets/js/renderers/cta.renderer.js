@@ -4,7 +4,7 @@
  * Path: assets/js/renderers/cta.renderer.js
  */
 
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 
 const CtaRenderer = {
     render(data) {

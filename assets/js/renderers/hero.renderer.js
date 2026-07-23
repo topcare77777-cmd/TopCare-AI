@@ -6,7 +6,7 @@
 
 import AssetsRegistry from '../config/assets.registry.js';
 import ImageHelper from '../helpers/image.helper.js';
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 import Logger from '../core/logger.js';
 
 const HeroRenderer = {

@@ -3,7 +3,7 @@
  * FAQ Renderer (Section 8)
  * Path: assets/js/renderers/faq.renderer.js
  */
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 import Logger from '../core/logger.js';
 
 const FaqRenderer = {

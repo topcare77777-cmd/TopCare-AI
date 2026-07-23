@@ -8,9 +8,9 @@ import BaseModule from '../core/base.module.js';
 import StatisticsService from '../services/statistics.service.js';
 import StatisticsRenderer from '../renderers/statistics.renderer.js';
 import StatisticsComponent from '../components/statistics.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import CountUp from '../core/countUp.js';
-import Observer from '../core/observer.js';
+import MotionEngine from '../engine/motion.engine.js';
+import CountUp from '../performance/countUp.js';
+import Observer from '../performance/observer.js';
 
 class StatisticsModuleClass extends BaseModule {
     constructor() {

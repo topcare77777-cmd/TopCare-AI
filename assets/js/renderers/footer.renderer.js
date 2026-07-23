@@ -4,7 +4,7 @@
  * Path: assets/js/renderers/footer.renderer.js
  */
 
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 
 const FooterRenderer = {
     render(data) {

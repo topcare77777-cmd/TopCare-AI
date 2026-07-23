@@ -4,7 +4,7 @@
  * Path: assets/js/kernel/kernel.js
  */
 
-import Bootstrap from './bootstrap.js';
+import Bootstrap from '../app/bootstrap.js';
 
 export const Kernel = {
     version: '2.0.0',

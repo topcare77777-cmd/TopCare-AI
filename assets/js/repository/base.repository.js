@@ -5,7 +5,7 @@
  */
 
 
-import DataLoader from "../core/data-loader.js";
+import DataLoader from "../data/data-loader.js";
 
 
 class BaseRepository {

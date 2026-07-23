@@ -7,8 +7,8 @@ import BaseModule from '../core/base.module.js';
 import TestimonialsService from '../services/testimonials.service.js';
 import TestimonialsRenderer from '../renderers/testimonials.renderer.js';
 import TestimonialsComponent from '../components/testimonials.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import GlowEffect from '../core/glow.effect.js';
+import MotionEngine from '../engine/motion.engine.js';
+import GlowEffect from '../performance/glow.effect.js';
 import Logger from '../core/logger.js';
 
 class TestimonialsModuleClass extends BaseModule {

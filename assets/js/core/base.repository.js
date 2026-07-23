@@ -3,9 +3,9 @@
  * Base Repository
  * Path: assets/js/core/base.repository.js
  */
-import ApiEngine from './api.engine.js';
-import CacheEngine from './cache.engine.js';
-import RequestQueue from './request.queue.js';
+import ApiEngine from '../engine/api.engine.js';
+import CacheEngine from '../cache/cache.engine.js';
+import RequestQueue from '../network/request.queue.js';
 import Logger from './logger.js';
 
 export default class BaseRepository {

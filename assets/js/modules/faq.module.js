@@ -7,8 +7,8 @@ import BaseModule from '../core/base.module.js';
 import FaqService from '../services/faq.service.js';
 import FaqRenderer from '../renderers/faq.renderer.js';
 import FaqComponent from '../components/faq.component.js';
-import MotionEngine from '../core/motion.engine.js';
-import GlowEffect from '../core/glow.effect.js';
+import MotionEngine from '../engine/motion.engine.js';
+import GlowEffect from '../performance/glow.effect.js';
 
 class FaqModuleClass extends BaseModule {
     constructor() {

@@ -8,7 +8,7 @@ import BaseModule from '../core/base.module.js';
 import TrustedService from '../services/trusted.service.js';
 import TrustedRenderer from '../renderers/trusted.renderer.js';
 import TrustedComponent from '../components/trusted.component.js';
-import MotionEngine from '../core/motion.engine.js';
+import MotionEngine from '../engine/motion.engine.js';
 
 class TrustedModuleClass extends BaseModule {
     constructor() {

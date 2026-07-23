@@ -1,59 +1,30 @@
 /**
  * TopCare AI Platform V2.0.0
- * Pricing Renderer with Monthly/Yearly Toggle Support
+ * Pricing Renderer
  * Path: assets/js/renderers/pricing.renderer.js
  */
-
-import BaseRenderer from '../core/base.renderer.js';
+import BaseRenderer from './base.renderer.js';
 import Logger from '../core/logger.js';
 
 const PricingRenderer = {
     render(data) {
-        if (!data) return '';
-        Logger.info("[PricingRenderer] HTML generated");
-
-        const tagText = BaseRenderer.sanitize(data.tag || 'Transparent Pricing');
-        const titleText = BaseRenderer.sanitize(data.title || 'Invest in Scalable Intelligence');
-
-        const plansHtml = (data.plans || []).map(plan => {
-            const isFeatured = plan.featured ? 'pricing__card--featured glass-card' : 'pricing__card glass-card';
-            const badgeHtml = plan.badge ? `<span class="pricing__badge">${BaseRenderer.sanitize(plan.badge)}</span>` : '';
-            const featuresHtml = (plan.features || []).map(feat => `<li>✓ ${BaseRenderer.sanitize(feat)}</li>`).join('');
-
-            return `
-                <div class="${isFeatured}" data-animate="scale">
-                    ${badgeHtml}
-                    <h3 class="pricing__plan-title">${BaseRenderer.sanitize(plan.name || '')}</h3>
-                    <p class="pricing__plan-desc">${BaseRenderer.sanitize(plan.description || '')}</p>
-                    <div class="pricing__amount" data-monthly="${BaseRenderer.sanitize(plan.price || '0')}" data-yearly="${BaseRenderer.sanitize(plan.yearlyPrice || plan.price || '0')}">
-                        <span class="pricing__price-value">${BaseRenderer.sanitize(plan.price || '0')}</span>
-                        <span class="pricing__period">${BaseRenderer.sanitize(plan.period || '/mo')}</span>
-                    </div>
-                    <ul class="pricing__features">
-                        ${featuresHtml}
-                    </ul>
-                    <a href="${BaseRenderer.safeURL(plan.buttonLink)}" class="btn btn-${BaseRenderer.sanitize(plan.buttonStyle || 'secondary')} pricing__btn">${BaseRenderer.sanitize(plan.buttonText || 'Choose Plan')}</a>
-                </div>
-            `;
-        }).join('');
-
+        Logger.info("[PricingRenderer] Rendering pricing markup");
         return `
-            <section id="pricing" class="pricing">
-                <div class="pricing__container">
-                    <div class="pricing__header" data-animate="fade-up">
-                        <span class="pricing__tag">${tagText}</span>
-                        <h2 class="pricing__title">${titleText}</h2>
-                        <div class="pricing__toggle-wrapper">
-                            <span class="pricing__toggle-label active" id="monthly-label">Monthly</span>
-                            <label class="pricing__switch" aria-label="Toggle billing frequency">
-                                <input type="checkbox" id="pricing-toggle">
-                                <span class="pricing__slider"></span>
-                            </label>
-                            <span class="pricing__toggle-label" id="yearly-label">Yearly <small style="color:var(--color-accent-cyan)">(Save 20%)</small></span>
-                        </div>
+            <section id="pricing" class="pricing" style="padding: 6rem 2rem; max-width: 1280px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: 2.5rem; font-weight: 800; color: white; margin-bottom: 1rem;">${data.title || 'Pricing'}</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                    <div class="glass-card" style="padding: 2.5rem; background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px;">
+                        <h3 style="color: white; font-size: 1.5rem; margin-bottom: 0.5rem;">Starter</h3>
+                        <p style="color: #9ca3af; font-size: 1rem; margin-bottom: 1.5rem;">Free tier for personal growth.</p>
+                        <div style="font-size: 2rem; font-weight: 800; color: #06b6d4; margin-bottom: 1.5rem;">$0</div>
+                        <a href="#cta" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem; background: var(--gradient-primary); border-radius: 50px; color: white; font-weight: 600;">Get Started</a>
                     </div>
-                    <div class="pricing__grid">
-                        ${plansHtml}
+                    <div class="glass-card" style="padding: 2.5rem; background: rgba(17, 24, 39, 0.7); border: 1px solid rgba(37, 99, 235, 0.4); border-radius: 20px; position: relative;">
+                        <span style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #2563eb; color: white; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 50px; text-transform: uppercase;">Most Popular</span>
+                        <h3 style="color: white; font-size: 1.5rem; margin-bottom: 0.5rem;">Enterprise</h3>
+                        <p style="color: #9ca3af; font-size: 1rem; margin-bottom: 1.5rem;">For high-performance scale.</p>
+                        <div style="font-size: 2rem; font-weight: 800; color: #06b6d4; margin-bottom: 1.5rem;">Custom</div>
+                        <a href="#cta" class="btn btn-primary" style="display: inline-block; padding: 0.75rem 1.5rem; background: var(--gradient-primary); border-radius: 50px; color: white; font-weight: 600;">Contact Sales</a>
                     </div>
                 </div>
             </section>
