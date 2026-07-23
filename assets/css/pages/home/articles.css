@@ -1,0 +1,148 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Articles Section Stylesheet (BUILD 027 Final Polish)
+ * Path: assets/css/pages/home/articles.css
+ */
+
+.articles {
+    padding: 8rem 2rem;
+    background: #030712;
+}
+
+.articles__container {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.articles__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.articles__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.articles__tag {
+    font-size: 0.813rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #2563eb;
+}
+
+.articles__title {
+    font-size: clamp(2.25rem, 3.5vw, 3rem);
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.025em;
+}
+
+.articles__link {
+    font-size: 0.938rem;
+    font-weight: 600;
+    color: #06b6d4;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.articles__link:hover {
+    color: #93c5fd;
+    transform: translateX(4px);
+}
+
+.articles__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 2.25rem;
+}
+
+.articles__card {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+}
+
+.articles__card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(37, 99, 235, 0.4);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+}
+
+.articles__image-wrapper {
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+}
+
+.articles__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.articles__card:hover .articles__image {
+    transform: scale(1.06);
+}
+
+.articles__content {
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+    flex: 1;
+}
+
+.articles__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.813rem;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.articles__card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+}
+
+.articles__card-desc {
+    font-size: 0.938rem;
+    color: #9ca3af;
+    line-height: 1.65;
+}
+
+.articles__btn {
+    margin-top: auto;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #06b6d4;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.articles__btn:hover {
+    color: #93c5fd;
+}

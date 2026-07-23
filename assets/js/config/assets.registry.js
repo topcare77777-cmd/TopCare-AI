@@ -70,9 +70,6 @@ const AssetsRegistry = {
     },
     init() {
         console.log("[AssetsRegistry] Initialized with full inventory.");
-        console.log("[VISUAL SYSTEM LOADED]");
-        console.log("[HOME CSS READY]");
-        console.log("[ASSET THEME ACTIVE]");
     }
 };
 

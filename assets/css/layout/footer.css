@@ -1,7 +1,135 @@
-footer a {
-  transition: color 0.2s ease;
+/**
+ * TopCare AI Platform V2.0.0
+ * Enterprise Footer Stylesheet (BUILD 027 5-Columns & Dark Gradient)
+ * Path: assets/css/layout/footer.css
+ */
+
+.site-footer {
+    background: linear-gradient(180deg, #030712 0%, #020617 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 6rem 2.5rem 2.5rem;
+    color: #9ca3af;
 }
 
-footer a:hover {
-  color: #38bdf8;
+.footer-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2.2fr 1fr 1fr 1fr 1fr;
+    gap: 3.5rem;
+    padding-bottom: 4.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-col-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.375rem;
+}
+
+.footer-brand-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-logo {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #ffffff;
+    font-size: 0.875rem;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.footer-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.footer-desc {
+    font-size: 0.938rem;
+    line-height: 1.65;
+    max-width: 340px;
+    color: #9ca3af;
+}
+
+.footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.813rem;
+    color: #6b7280;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1.125rem;
+}
+
+.footer-heading {
+    font-size: 0.938rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.footer-links a {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+.footer-bottom {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 2.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 1.75rem;
+}
+
+.footer-socials a {
+    color: #9ca3af;
+    transition: color 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: #ffffff;
+}
+
+@media (max-width: 1200px) {
+    .footer-container {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 3rem;
+    }
+    .footer-col-brand {
+        grid-column: span 3;
+    }
 }

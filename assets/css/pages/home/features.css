@@ -1,16 +1,18 @@
 /**
  * TopCare AI Platform V2.0.0
- * Features Layout CSS
+ * Features Section Stylesheet (BUILD 027 Gradient Border & Glass Hover)
  * Path: assets/css/pages/home/features.css
  */
+
 .features {
-    padding: 7rem 2rem;
-    max-width: var(--container-max);
-    margin: 0 auto;
-    content-visibility: auto;
+    padding: 8rem 2rem;
+    background: #030712;
+    position: relative;
 }
 
 .features__container {
+    max-width: 1320px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 4rem;
@@ -18,67 +20,90 @@
 
 .features__header {
     text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    align-items: center;
-}
-
-.features__tag {
-    font-size: var(--font-size-sm);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--color-accent-cyan);
-    padding: 0.375rem 1rem;
-    background: rgba(6, 182, 212, 0.1);
-    border-radius: var(--radius-full);
-    border: 1px solid rgba(6, 182, 212, 0.2);
 }
 
 .features__title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2.25rem, 3.5vw, 3rem);
     font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--color-text-main);
-    max-width: 700px;
+    color: #ffffff;
+    letter-spacing: -0.025em;
 }
 
 .features__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
     gap: 2rem;
 }
 
 .features__card {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
     padding: 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
     position: relative;
     overflow: hidden;
 }
 
-.features__card-icon {
-    font-size: 2rem;
-    width: 50px;
-    height: 50px;
+.features__card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.4), transparent, rgba(124, 58, 237, 0.4));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.features__card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 35px rgba(37, 99, 235, 0.2);
+}
+
+.features__card:hover::before {
+    opacity: 1;
+}
+
+.features__icon {
+    width: 56px;
+    height: 56px;
+    background: rgba(37, 99, 235, 0.12);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(99, 102, 241, 0.1);
-    border-radius: var(--radius-md);
-    border: 1px solid rgba(99, 102, 241, 0.2);
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.features__card:hover .features__icon {
+    transform: scale(1.1) rotate(5deg);
+    background: rgba(37, 99, 235, 0.2);
 }
 
 .features__card-title {
-    font-size: var(--font-size-xl);
+    font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-text-main);
+    color: #ffffff;
 }
 
 .features__card-desc {
-    font-size: var(--font-size-md);
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    font-size: 0.938rem;
+    color: #9ca3af;
+    line-height: 1.65;
 }
