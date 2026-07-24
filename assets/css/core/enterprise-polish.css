@@ -95,3 +95,33 @@ body::after {
         animation: none !important;
     }
 }
+
+/* ==========================================
+   BUILD 108.4 FINAL IMAGE HARDENING
+========================================== */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.brand-wrapper img,
+.footer-logo,
+.footer-col-match img {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+
+/* Hero / Feature image protection */
+
+.hero img,
+.feature-card img,
+.community-card img,
+.page-image img {
+    max-width: 520px;
+    height: auto;
+    object-fit: contain;
+}

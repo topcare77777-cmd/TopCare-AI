@@ -1,0 +1,18 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Login Specific Stylesheet
+ * Path: assets/css/pages/auth/login.css
+ */
+
+.tc-auth__login-extra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.813rem;
+    color: #9ca3af;
+}
+
+.tc-auth__login-extra a {
+    color: #60a5fa;
+    text-decoration: none;
+}

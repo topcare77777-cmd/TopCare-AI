@@ -1,0 +1,117 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Shared Auth Stylesheet with BEM Modifiers (--primary, --error, --loading, etc.)
+ * Path: assets/css/pages/auth/auth.css
+ */
+
+.tc-auth {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.tc-auth__container {
+    max-width: 440px;
+    width: 100%;
+    margin: 8rem auto 4rem;
+    padding: 2.5rem;
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.tc-auth__header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.tc-auth__title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.tc-auth__subtitle {
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+.tc-auth__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.tc-auth__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tc-auth__field--error .tc-auth__input {
+    border-color: #ef4444;
+}
+
+.tc-auth__field--success .tc-auth__input {
+    border-color: #10b981;
+}
+
+.tc-auth__label {
+    font-size: 0.813rem;
+    font-weight: 600;
+    color: #d1d5db;
+}
+
+.tc-auth__input {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.tc-auth__input:focus {
+    border-color: #2563eb;
+}
+
+.tc-auth__button {
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    color: #fff;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    transition: transform 0.2s ease;
+}
+
+.tc-auth__button:hover {
+    transform: translateY(-1px);
+}
+
+.tc-auth__button--primary {
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+}
+
+.tc-auth__button--danger {
+    background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+}
+
+.tc-auth__button--loading {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.tc-auth__button--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

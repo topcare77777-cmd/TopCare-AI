@@ -1,0 +1,11 @@
+/**
+ * TopCare AI Platform V2.0.0
+ * Register Specific Stylesheet
+ * Path: assets/css/pages/auth/register.css
+ */
+
+.tc-auth__register-terms {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    text-align: center;
+}
