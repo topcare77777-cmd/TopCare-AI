@@ -1,0 +1,12 @@
+# Backup archives
+assets/*.zip
+
+# Temporary project tree (hapus baris ini jika ingin file tree ikut di Git)
+PROJECT-TREE-*.txt
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
