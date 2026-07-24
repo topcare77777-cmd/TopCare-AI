@@ -1,14 +1,20 @@
 /**
  * TopCare AI Platform V2.0.0
- * Trusted Logos Section Stylesheet (BUILD 027 Centered & Equal Spacing)
+ * Trusted Logos Section Stylesheet (Final Single-Row Breakpoint Audit)
  * Path: assets/css/pages/home/trusted.css
  */
 
-.trusted {
-    padding: 5rem 2rem;
+.trusted,
+.trusted-section-match {
+    padding-top: 64px;
+    padding-bottom: 64px;
     background: #030712;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     border-top: 1px solid rgba(255, 255, 255, 0.06);
+    text-align: center;
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .trusted__container {
@@ -17,38 +23,108 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2.25rem;
+    gap: 2rem;
+    padding: 0 1.5rem;
 }
 
-.trusted__title {
+.trusted__title,
+.trusted-label-match {
     font-size: 0.813rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: #6b7280;
+    margin-bottom: 1.5rem;
     text-align: center;
 }
 
+.trusted-logos-match,
 .trusted__logos {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+    flex-wrap: nowrap;
     justify-content: center;
-    gap: 3.5rem;
+    align-items: center;
+    gap: 36px;
     width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
-.trusted__logo-item {
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: #6b7280;
-    opacity: 0.7;
-    transition: opacity 0.25s ease, color 0.25s ease, transform 0.25s ease;
+.trusted-logos-match img,
+.trusted__logos img,
+.trusted__logo-item img {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 135px;
+    object-fit: contain;
+    flex-shrink: 1;
+    opacity: 0.95;
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.2));
+    transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
 }
 
-.trusted__logo-item:hover {
+.trusted-logos-match img:hover,
+.trusted__logos img:hover,
+.trusted__logo-item img:hover {
     opacity: 1;
-    color: #ffffff;
-    transform: translateY(-2px);
+    transform: translateY(-2px) scale(1.06);
+    filter: drop-shadow(0 4px 16px rgba(59, 130, 246, 0.35));
+}
+
+@media (max-width: 1100px) {
+    .trusted-logos-match,
+    .trusted__logos {
+        flex-wrap: wrap;
+        gap: 24px 32px;
+        justify-content: center;
+    }
+
+    .trusted-logos-match img,
+    .trusted__logos img,
+    .trusted__logo-item img {
+        height: 32px;
+        max-width: 120px;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .trusted,
+    .trusted-section-match {
+        padding-top: 52px;
+        padding-bottom: 52px;
+    }
+
+    .trusted-logos-match,
+    .trusted__logos {
+        gap: 20px 24px;
+    }
+
+    .trusted-logos-match img,
+    .trusted__logos img,
+    .trusted__logo-item img {
+        height: 28px;
+        max-width: 105px;
+    }
+}
+
+@media (max-width: 480px) {
+    .trusted,
+    .trusted-section-match {
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+
+    .trusted-logos-match,
+    .trusted__logos {
+        gap: 16px 18px;
+    }
+
+    .trusted-logos-match img,
+    .trusted__logos img,
+    .trusted__logo-item img {
+        height: 24px;
+        max-width: 90px;
+    }
 }

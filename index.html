@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="id" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopCare AI Platform V2.0.0 - Enterprise Intelligence</title>
+    <title>TopCare AI Platform V2.0.0 RC1 - Enterprise Intelligence</title>
     
     <!-- Enterprise Design System Stylesheets -->
     <link rel="stylesheet" href="assets/css/base/variables.css">
@@ -26,48 +26,1053 @@
     <link rel="stylesheet" href="assets/css/components/button/button.css">
     <link rel="stylesheet" href="assets/css/components/card/card.css">
     <link rel="stylesheet" href="assets/css/core/enterprise-polish.css">
+
+    <style>
+        /* Exact UI Match & Enterprise Section Audit Alignment */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #030712;
+            color: #f9fafb;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Scroll margin top to prevent fixed navbar overlapping */
+        section, .page-view {
+            scroll-margin-top: 96px;
+        }
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(3, 7, 18, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1320px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.875rem 2rem;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .brand-logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .brand-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.25rem;
+            align-items: center;
+            font-size: 0.813rem;
+            font-weight: 500;
+        }
+
+        .nav-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ffffff;
+        }
+
+        .auth-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lang-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.3rem 0.6rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .nav-link-signin {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+            color: #fff;
+            padding: 0.5rem 1.25rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+        }
+        
+        /* Dynamic Page Views Container */
+        .page-view {
+            display: none;
+            padding-top: 90px;
+            min-height: 85vh;
+        }
+        .page-view.active-view {
+            display: block;
+        }
+
+        /* Hero Section Standardized */
+        .hero-section-match {
+            padding: 6rem 2rem 5rem;
+            background: radial-gradient(circle at 60% 20%, rgba(37, 99, 235, 0.15), transparent 50%),
+                        radial-gradient(circle at 20% 70%, rgba(124, 58, 237, 0.15), transparent 50%),
+                        #030712;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.35rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 999px;
+            font-size: 0.75rem;
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title-match {
+            font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+            font-weight: 800;
+            line-height: 1.15;
+            max-width: 900px;
+            margin: 0 auto 1.25rem;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+        }
+
+        .hero-title-match span {
+            background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-sub-match {
+            font-size: 1.05rem;
+            color: #9ca3af;
+            max-width: 680px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn-hero-primary {
+            background: #2563eb;
+            color: #fff;
+            padding: 0.85rem 1.75rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 0.85rem 1.75rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+        }
+
+        .hero-social-proof-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .proof-avatars {
+            display: flex;
+        }
+
+        .proof-avatars img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #030712;
+            object-fit: cover;
+        }
+
+        .proof-avatars img:not(:first-child) {
+            margin-left: -10px;
+        }
+
+        .proof-text {
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .proof-text strong {
+            display: block;
+            color: #fff;
+        }
+
+        .proof-text span {
+            color: #9ca3af;
+            font-size: 0.75rem;
+        }
+
+        /* Hero Preview Dashboard Image Match */
+        .hero-preview-container {
+            max-width: 900px;
+            margin: 3rem auto 0;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            background: #0b0f19;
+        }
+
+        .hero-preview-container img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Enterprise Standardized Section Shell (Title, Description, Illustration, CTA, Spacing) */
+        .enterprise-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .section-header-box {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .section-header-box h1, .section-header-box h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #fff;
+            background: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .section-header-box p {
+            color: #9ca3af;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .section-content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .enterprise-card {
+            background: rgba(17, 24, 39, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.25s ease, border-color 0.25s ease;
+        }
+
+        .enterprise-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .enterprise-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+        }
+
+        .enterprise-card p {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .section-cta-wrap {
+            display: flex;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 1100px) {
+            .nav-links { display: none; }
+        }
+    </style>
 </head>
 <body>
-    <!-- Transparent Glass Sticky Enterprise Navbar (BUILD 031 data-route Unified) -->
+
+    <!-- Header Navigation -->
     <header class="site-header">
         <div class="header-container">
-            <div class="brand-wrapper">
-                <div class="brand-logo">TC</div>
+            <a href="#/home" class="brand-wrapper" data-target="home">
+                <img src="assets/images/icons/brand-mark.svg" alt="TopCare AI Logo" class="brand-logo-img" loading="eager">
                 <span class="brand-title">TopCare AI</span>
-            </div>
+            </a>
 
             <nav class="nav-links">
-                <a href="#" data-route="/home">Beranda</a>
-                <a href="#" data-route="/about">Tentang Kami</a>
-                <a href="#" data-route="/learning">Belajar AI</a>
-                <a href="#" data-route="/personality">Personality</a>
-                <a href="#" data-route="/ebook">Ebook</a>
-                <a href="#" data-route="/articles">Artikel</a>
-                <a href="#" data-route="/prompt">Prompt AI</a>
-                <a href="#" data-route="/community">Community</a>
-                <a href="#" data-route="/creator">Creator</a>
-                <a href="#" data-route="/marketplace">Marketplace</a>
-                <a href="#" data-route="/premium">Premium</a>
-                <a href="#" data-route="/faq">FAQ</a>
-                <a href="#" data-route="/contact">Kontak</a>
+                <a href="#/home" data-target="home" class="active">Beranda</a>
+                <a href="#/about" data-target="about">Tentang Kami</a>
+                <a href="#/learning" data-target="learning">Belajar AI</a>
+                <a href="#/personality" data-target="personality">Personality</a>
+                <a href="#/ebook" data-target="ebook">Ebook</a>
+                <a href="#/articles" data-target="articles">Artikel</a>
+                <a href="#/prompt" data-target="prompt">Prompt AI</a>
+                <a href="#/community" data-target="community">Community</a>
+                <a href="#/creator" data-target="creator">Creator</a>
+                <a href="#/marketplace" data-target="marketplace">Marketplace</a>
+                <a href="#/premium" data-target="premium">Premium</a>
+                <a href="#/faq" data-target="faq">FAQ</a>
+                <a href="#/contact" data-target="contact">Kontak</a>
             </nav>
 
             <div class="auth-actions">
-                <a href="#" data-route="/login" class="nav-link-signin">Masuk</a>
-                <a href="#" data-route="/premium" class="btn btn-primary">Mulai Gratis</a>
+                <div class="lang-badge">
+                    <span>🇮🇩 ID</span> ▾
+                </div>
+                <a href="#/login" data-target="login" class="nav-link-signin">Masuk</a>
+                <a href="#/register" data-target="register" class="btn-primary-custom">Mulai Gratis</a>
             </div>
         </div>
     </header>
 
-    <!-- Single Page Application Dynamic Container Root -->
+    <!-- Main Content Area with Dynamic Views & Standardized Section Alignment -->
     <main id="main-content" class="main-content">
-        <!-- Dynamic Page Injector Root -->
+        
+        <!-- 1. HOME VIEW (Beranda) -->
+        <div id="view-home" class="page-view active-view">
+            <!-- Hero Section -->
+            <section id="home" class="hero-section-match">
+                <div class="hero-badge-pill">
+                    TopCare AI Platform • AI Learning Ecosystem
+                </div>
+                <h1 class="hero-title-match">
+                    Bangun Potensi Dirimu<br>Bersama <span>TopCare AI</span>
+                </h1>
+                <p class="hero-sub-match">
+                    Platform AI untuk belajar, mengenal diri, dan membangun masa depan yang lebih baik bersama komunitas global.
+                </p>
+                <div class="hero-cta-group">
+                    <a href="#/register" data-target="register" class="btn-hero-primary">Mulai Gratis &rarr;</a>
+                    <a href="#/learning" data-target="learning" class="btn-hero-secondary">Jelajahi Platform</a>
+                </div>
+                
+                <div class="hero-social-proof-row">
+                    <div class="proof-avatars">
+                        <img src="assets/images/creator/6df8a3fb-a66e-4d97-bf13-5b00a2701c57.png" alt="Member" loading="lazy">
+                        <img src="assets/images/creator/d072906c-7705-4532-aca8-f096f4bed892.png" alt="Member" loading="lazy">
+                        <img src="assets/images/profile/founder.webp" alt="Founder" loading="lazy">
+                    </div>
+                    <div class="proof-text">
+                        <strong>10.000+ Member Aktif</strong>
+                        <span>Bergabung dan mulai perjalananmu hari ini</span>
+                    </div>
+                </div>
+
+                <div class="hero-preview-container">
+                    <img src="assets/images/home/hero-main.webp" alt="TopCare AI Dashboard Overview" loading="eager">
+                </div>
+            </section>
+
+            <!-- Trusted Partner Section -->
+            <section class="trusted-section-match">
+                <p class="trusted-label-match">Dipercaya oleh Komunitas & Partner Global</p>
+                <div class="trusted-logos-match">
+                    <img src="assets/logos/Symbol-logo-google.png" alt="Google" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-microsoft.png" alt="Microsoft" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-openai.png" alt="OpenAI" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-nvidia.png" alt="NVIDIA" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-aws.png" alt="AWS" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-meta.png" alt="Meta" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-adobe.png" alt="Adobe" loading="lazy" decoding="async">
+                    <img src="assets/logos/logo-canva.png" alt="Canva" loading="lazy" decoding="async">
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="features-section-match">
+                <div class="features-header-match">
+                    <h2>Jelajahi Fitur Unggulan Kami</h2>
+                </div>
+                <div class="features-grid-match">
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-ai-assistant_512.svg" alt="AI Assistant" loading="lazy">
+                        </div>
+                        <h3>AI Assistant</h3>
+                        <p>Pendamping cerdas untuk belajar dan produktivitas Anda.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-personality.svg" alt="Personality Test" loading="lazy">
+                        </div>
+                        <h3>Personality Test</h3>
+                        <p>Kenali tipe temperamen dasar dan kembangkan dirimu.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-learning.svg" alt="Learning Center" loading="lazy">
+                        </div>
+                        <h3>Learning Center</h3>
+                        <p>Ratusan kursus berkualitas untuk tingkatkan skill Anda.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-prompt.svg" alt="Prompt Marketplace" loading="lazy">
+                        </div>
+                        <h3>Prompt Marketplace</h3>
+                        <p>Temukan prompt terbaik untuk berbagai kebutuhan AI.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-analytics.svg" alt="E-Library & Ebook" loading="lazy">
+                        </div>
+                        <h3>E-Library & Ebook</h3>
+                        <p>Koleksi ebook premium dan gratis untuk Anda.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-community.svg" alt="Community Hub" loading="lazy">
+                        </div>
+                        <h3>Community Hub</h3>
+                        <p>Bergabung dengan komunitas positif dan inspiratif.</p>
+                    </div>
+                    <div class="feature-card-match">
+                        <div class="feature-icon-box">
+                            <img src="assets/images/features/feature-security.svg" alt="Creator Platform" loading="lazy">
+                        </div>
+                        <h3>Creator Platform</h3>
+                        <p>Jadi kreator dan bagikan karya & ilmu Anda.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Statistics Bar -->
+            <div class="stats-bar-match">
+                <div class="stats-container-match">
+                    <div class="stat-item-match">
+                        <h4>10.000+</h4>
+                        <p>Member Aktif</p>
+                    </div>
+                    <div class="stat-item-match">
+                        <h4>500+</h4>
+                        <p>Kursus & Materi</p>
+                    </div>
+                    <div class="stat-item-match">
+                        <h4>1.000+</h4>
+                        <p>Ebook & Artikel</p>
+                    </div>
+                    <div class="stat-item-match">
+                        <h4>50+</h4>
+                        <p>Negara</p>
+                    </div>
+                    <div class="stat-item-match">
+                        <h4>98%</h4>
+                        <p>Kepuasan Member</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Latest Articles Section -->
+            <section id="articles" class="articles-section-match">
+                <div class="articles-header-match">
+                    <div>
+                        <span style="color:#2563eb; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em;">Wawasan & Berita</span>
+                        <h2 style="margin-top:0.25rem;">Artikel Terbaru</h2>
+                    </div>
+                    <a href="#/articles" data-target="articles">Lihat Semua Artikel &rarr;</a>
+                </div>
+                <div class="articles-grid-match">
+                    <article class="article-card-match">
+                        <div class="article-img-wrap">
+                            <img src="assets/images/articles/article-ai.webp" alt="AI Generatif" loading="lazy">
+                        </div>
+                        <div class="article-body-match">
+                            <span class="article-tag-match">Artificial Intelligence</span>
+                            <h3>Mengenal AI Generatif untuk Pemula</h3>
+                            <p>Pelajari dasar-dasar AI generatif dan bagaimana teknologi ini dapat membantu produktivitas.</p>
+                            <div class="article-footer-match">
+                                <span>20 Mei 2026</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-card-match">
+                        <div class="article-img-wrap">
+                            <img src="assets/images/articles/article-personality.webp" alt="Tipe Kepribadian" loading="lazy">
+                        </div>
+                        <div class="article-body-match">
+                            <span class="article-tag-match">Personal Development</span>
+                            <h3>4 Tipe Kepribadian dan Cara Mengembangkannya</h3>
+                            <p>Memahami kepribadian diri adalah kunci untuk mencapai potensi maksimal.</p>
+                            <div class="article-footer-match">
+                                <span>18 Mei 2026</span>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="article-card-match">
+                        <div class="article-img-wrap">
+                            <img src="assets/images/articles/article-prompt.webp" alt="Prompt Engineering" loading="lazy">
+                        </div>
+                        <div class="article-body-match">
+                            <span class="article-tag-match">Productivity</span>
+                            <h3>Prompt Engineering untuk Hasil Maksimal</h3>
+                            <p>Teknik menulis prompt yang efektif untuk mendapatkan hasil AI yang lebih baik.</p>
+                            <div class="article-footer-match">
+                                <span>17 Mei 2026</span>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Premium Banner Section -->
+            <section id="premium" class="premium-banner-match">
+                <div class="premium-box-match">
+                    <div class="premium-content">
+                        <h3>Upgrade ke Premium</h3>
+                        <p>Dapatkan akses tak terbatas ke semua kursus premium, ebook eksklusif, dan fitur AI advanced.</p>
+                        <ul class="premium-features-list">
+                            <li>Akses semua kursus premium</li>
+                            <li>Ebook eksklusif setiap bulan</li>
+                            <li>AI Assistant priority</li>
+                            <li>Sertifikat digital</li>
+                        </ul>
+                        <a href="#/premium" data-target="premium" class="btn-premium-match">Mulai Premium</a>
+                    </div>
+                    <div>
+                        <img src="assets/images/icons/premium-bg.webp" alt="Crown Premium" class="premium-crown-img" loading="lazy">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call To Action Section -->
+            <section id="contact" class="cta-section-match">
+                <div class="cta-box-match">
+                    <h2>Siap Mengembangkan Potensi Terbaikmu?</h2>
+                    <p>Bergabunglah dengan ribuan member TopCare AI dan mulai perjalanan transformasimu hari ini.</p>
+                    <a href="#/register" data-target="register" class="btn-cta-match">Mulai Gratis Sekarang &rarr;</a>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. ABOUT VIEW (Tentang Kami) -->
+        <div id="view-about" class="page-view">
+            <div id="about" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Tentang Kami</h2>
+                    <p>TopCare AI adalah ekosistem platform kecerdasan buatan terdepan untuk belajar, mengenal diri, dan akselerasi karir masa depan.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Misi Global</h3>
+                        <p>Menghadirkan akses teknologi AI yang inklusif, mudah dipahami, dan aplikatif bagi seluruh masyarakat global.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Pendekatan Humanis</h3>
+                        <p>Menggabungkan kecerdasan mesin mutakhir dengan pemahaman psikologi temperamen dan pengembangan potensi manusia.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Komunitas Kolaboratif</h3>
+                        <p>Ruang aman dan inspiratif bagi kreator, pembelajar, dan profesional untuk bertukar wawasan dan karya.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/register" data-target="register" class="btn-hero-primary">Bergabung Bersama Kami &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. LEARNING VIEW (Belajar AI) -->
+        <div id="view-learning" class="page-view">
+            <div id="learning" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Belajar AI: Bangun Skill, Ciptakan Masa Depan</h2>
+                    <p>Kurikulum komprehensif dirancang khusus untuk membawa Anda dari tingkat pemula hingga mahir di era transformasi digital.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>AI Fundamental</h3>
+                        <p>Pelajari konsep dasar kecerdasan buatan, sejarah machine learning, dan etika pemanfaatan AI modern.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>AI Tools</h3>
+                        <p>Menguasai berbagai perangkat produktivitas berbasis AI terkini untuk optimasi tugas harian dan bisnis.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Prompt Engineering</h3>
+                        <p>Teknik komunikasi tingkat lanjut dengan Large Language Models agar menghasilkan output akurat dan efisien.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>AI Automation</h3>
+                        <p>Membangun alur kerja otomatisasi cerdas menggunakan integrasi API dan tools no-code/low-code.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>AI Creator</h3>
+                        <p>Memanfaatkan generative AI untuk pembuatan konten visual, video, dan storytelling digital berkualitas tinggi.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/register" data-target="register" class="btn-hero-primary">Mulai Belajar Sekarang &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. PERSONALITY VIEW (Personality) -->
+        <div id="view-personality" class="page-view">
+            <div id="personality" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Personality Test & Temperamen</h2>
+                    <p>Kenali potensi dasar diri Anda melalui pendekatan psikologi modern untuk memaksimalkan jalur karir dan hubungan interpersonal.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Koleris</h3>
+                        <p>Karakter pemimpin yang tegas, berorientasi pada target, mandiri, dan memiliki dorongan kuat untuk sukses.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Sanguinis</h3>
+                        <p>Kepribadian yang ekspresif, antusias, ramah, dan sangat menikmati interaksi serta energi sosial.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Melankolis</h3>
+                        <p>Individu yang analitis, perfeksionis, mendetail, dan memiliki dedikasi tinggi pada kualitas pekerjaan.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Plegmatis</h3>
+                        <p>Sosok yang tenang, sabar, cinta damai, konsisten, dan sangat diandalkan sebagai penengah tim.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/personality" data-target="personality" class="btn-hero-primary">Ikuti Quiz Personality AI &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. EBOOK VIEW (Ebook) -->
+        <div id="view-ebook" class="page-view">
+            <div id="ebook" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Ebook & Digital Library</h2>
+                    <p>Pustaka literasi eksklusif berisi panduan mendalam seputar teknologi AI, pengembangan diri, dan strategi bisnis digital.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Free Ebook: AI for Everyone</h3>
+                        <p>Panduan pengantar ramah pemula untuk memahami cara kerja AI dalam kehidupan sehari-hari.</p>
+                        <a href="#/ebook" data-target="ebook" class="btn-hero-secondary" style="margin-top:auto; text-align:center;">Download Free</a>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Premium Ebook: Master Prompt Engineering</h3>
+                        <p>Buku pegangan komprehensif 200+ halaman berisi formula prompt tingkat lanjut untuk profesional.</p>
+                        <a href="#/premium" data-target="premium" class="btn-hero-primary" style="margin-top:auto; text-align:center;">Preview & Akses</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. ARTICLES VIEW (Artikel) -->
+        <div id="view-articles" class="page-view">
+            <div id="articles" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Artikel & Wawasan Terbaru</h2>
+                    <p>Temukan artikel pilihan seputar tren teknologi global, kiat produktivitas, dan ulasan mendalam ekosistem AI.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Mengenal AI Generatif untuk Pemula</h3>
+                        <p>Pelajari dasar-dasar AI generatif dan bagaimana teknologi ini dapat membantu meningkatkan produktivitas harian.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>4 Tipe Kepribadian dan Cara Mengembangkannya</h3>
+                        <p>Memahami tipe temperamen diri adalah kunci utama dalam mencapai potensi puncak secara profesional.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Prompt Engineering untuk Hasil Maksimal</h3>
+                        <p>Kumpulan teknik menyusun instruksi yang efektif untuk mendapatkan hasil respons AI berkualitas tinggi.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. PROMPT VIEW (Prompt AI) -->
+        <div id="view-prompt" class="page-view">
+            <div id="prompt" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Prompt AI Marketplace</h2>
+                    <p>Jelajahi dan gunakan koleksi prompt siap pakai yang telah dioptimasi untuk berbagai model bahasa besar (LLM).</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Copywriting & Marketing Prompts</h3>
+                        <p>Template prompt khusus untuk menghasilkan draf iklan, email kampanye, dan konten media sosial bernilai konversi tinggi.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Developer & Code Assistant Prompts</h3>
+                        <p>Koleksi prompt efisien untuk debugging, pembuatan dokumentasi kode, dan perancangan arsitektur sistem.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/prompt" data-target="prompt" class="btn-hero-primary">Jelajahi Marketplace &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. COMMUNITY VIEW (Community) -->
+        <div id="view-community" class="page-view">
+            <div id="community" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Community Hub</h2>
+                    <p>Wadah kolaborasi global tempat para pembelajar, kreator, dan praktisi AI berbagi inspirasi serta pengalaman.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Diskusi Grup Eksklusif</h3>
+                        <p>Terhubung langsung dengan ribuan anggota aktif untuk memecahkan tantangan teknis maupun kreatif bersama.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Webinar & Live Workshop</h3>
+                        <p>Sesi rutin bersama pakar industri internasional untuk membahas tren teknologi mutakhir.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/community" data-target="community" class="btn-hero-primary">Join Community Sekarang &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. CREATOR VIEW (Creator) -->
+        <div id="view-creator" class="page-view">
+            <div id="creator" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Creator Platform</h2>
+                    <p>Wujudkan karya terbaik Anda, publikasikan kursus atau ebook, dan monetisasi keahlian Anda ke audiens global.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Publikasi Materi Mandiri</h3>
+                        <p>Gunakan perangkat authoring intuitif kami untuk merilis modul belajar dan karya digital Anda sendiri.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Sistem Monetisasi Transparan</h3>
+                        <p>Dapatkan dukungan bagi hasil terbaik serta analitik performa audiens secara real-time.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. MARKETPLACE VIEW (Marketplace) -->
+        <div id="view-marketplace" class="page-view">
+            <div id="marketplace" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Digital Marketplace</h2>
+                    <p>Temukan solusi digital premium, template siap pakai, dan perangkat penunjang produktivitas eksklusif.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>AI Workflow Templates</h3>
+                        <p>Template otomatisasi siap pakai untuk mempercepat operasional bisnis dan riset Anda.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Enterprise Tools Add-ons</h3>
+                        <p>Ekstensi dan plugin pilihan yang terintegrasi penuh dengan ekosistem TopCare AI.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/marketplace" data-target="marketplace" class="btn-hero-primary">Kunjungi Marketplace &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. PREMIUM VIEW (Premium) -->
+        <div id="view-premium" class="page-view">
+            <div id="premium" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>TopCare AI Premium Membership</h2>
+                    <p>Dapatkan akses tanpa batas ke seluruh kursus lanjutan, prioritas server AI assistant, dan sertifikasi resmi.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>All-Access Courses</h3>
+                        <p>Bebas akses ke seluruh katalog kursus reguler maupun lanjutan tanpa batasan waktu.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Priority AI Assistant</h3>
+                        <p>Respon instan tanpa antrean dengan alokasi bandwidth server prioritas tinggi.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Sertifikat Digital Resmi</h3>
+                        <p>Dapatkan sertifikat terverifikasi berstandar industri untuk portofolio profesional Anda.</p>
+                    </div>
+                </div>
+                <div class="section-cta-wrap">
+                    <a href="#/premium" data-target="premium" class="btn-hero-primary">Upgrade ke Premium Sekarang &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 12. FAQ VIEW (FAQ) -->
+        <div id="view-faq" class="page-view">
+            <div id="faq" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Frequently Asked Questions (FAQ)</h2>
+                    <p>Temukan jawaban cepat atas berbagai pertanyaan seputar layanan dan keanggotaan TopCare AI.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Bagaimana cara mendaftar akun gratis?</h3>
+                        <p>Anda cukup menekan tombol "Mulai Gratis" di sudut kanan atas atau halaman utama dan ikuti instruksi pendaftaran singkat.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Apakah sertifikat premium diakui industri?</h3>
+                        <p>Ya, sertifikat digital kami dirancang sesuai standar kompetensi teknologi modern dan dilengkapi kode verifikasi unik.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Bagaimana cara bergabung dengan komunitas?</h3>
+                        <p>Pilih menu Community pada navigasi utama lalu klik tombol bergabung untuk masuk ke grup diskusi resmi kami.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 13. CONTACT VIEW (Kontak) -->
+        <div id="view-contact" class="page-view">
+            <div id="contact" class="enterprise-section">
+                <div class="section-header-box">
+                    <h2>Kontak & Layanan Dukungan</h2>
+                    <p>Tim support profesional kami siap membantu kendala maupun pertanyaan Anda seputar platform.</p>
+                </div>
+                <div class="section-content-grid">
+                    <div class="enterprise-card">
+                        <h3>Email Resmi</h3>
+                        <p>Kirimkan pertanyaan Anda ke support@topcare.ai dan kami akan merespons dalam 1x24 jam.</p>
+                    </div>
+                    <div class="enterprise-card">
+                        <h3>Pusat Bantuan Korporat</h3>
+                        <p>Untuk kebutuhan kolaborasi enterprise dan institusi pendidikan, hubungi partner@topcare.ai.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 14. LOGIN VIEW (Masuk) -->
+        <div id="view-login" class="page-view">
+            <div class="dynamic-page-container">
+                <h1>Masuk ke Akun Anda</h1>
+                <p>Silakan masukkan kredensial akun TopCare AI Anda untuk melanjutkan ke dashboard personal.</p>
+            </div>
+        </div>
+
+        <!-- 15. REGISTER VIEW (Mulai Gratis) -->
+        <div id="view-register" class="page-view">
+            <div class="dynamic-page-container">
+                <h1>Mulai Perjalanan Anda</h1>
+                <p>Daftarkan akun gratis Anda sekarang dan nikmati akses awal ke seluruh ekosistem pembelajaran AI.</p>
+            </div>
+        </div>
+
     </main>
 
-    <!-- Footer Container -->
-    <div id="footer-wrapper"></div>
+    <!-- Footer Section -->
+    <footer class="footer-match">
+        <div class="footer-grid-match">
+            <div class="footer-col-match" style="grid-column: span 1;">
+                <div class="brand-wrapper" style="margin-bottom: 1rem; text-decoration: none;">
+                    <img src="assets/images/icons/brand-mark.svg" alt="Logo" style="width:28px; height:28px;" loading="lazy">
+                    <span style="font-weight:700; color:#fff; font-size:1.1rem;">TopCare AI</span>
+                </div>
+                <p style="font-size: 0.85rem; line-height: 1.6; color: #9ca3af;">
+                    Platform AI untuk belajar, berkembang, mengenal diri, dan membangun masa depan.
+                </p>
+                <div class="social-icons-match">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Instagram">ig</a>
+                    <a href="#" aria-label="YouTube">yt</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                    <a href="#" aria-label="TikTok">tt</a>
+                </div>
+            </div>
+            <div class="footer-col-match">
+                <h5>Platform</h5>
+                <ul>
+                    <li><a href="#/learning" data-target="learning">Belajar AI</a></li>
+                    <li><a href="#/personality" data-target="personality">Personality Test</a></li>
+                    <li><a href="#/ebook" data-target="ebook">Ebook & Library</a></li>
+                    <li><a href="#/prompt" data-target="prompt">Prompt Marketplace</a></li>
+                </ul>
+            </div>
+            <div class="footer-col-match">
+                <h5>Komunitas</h5>
+                <ul>
+                    <li><a href="#/community" data-target="community">Community Hub</a></li>
+                    <li><a href="#/creator" data-target="creator">Creator Platform</a></li>
+                    <li><a href="#/events" data-target="home">Event & Webinar</a></li>
+                    <li><a href="#/forum" data-target="community">Forum Diskusi</a></li>
+                </ul>
+            </div>
+            <div class="footer-col-match">
+                <h5>Perusahaan</h5>
+                <ul>
+                    <li><a href="#/about" data-target="about">Tentang Kami</a></li>
+                    <li><a href="#/vision" data-target="about">Visi & Misi</a></li>
+                    <li><a href="#/career" data-target="home">Karir</a></li>
+                    <li><a href="#/contact" data-target="contact">Kontak</a></li>
+                </ul>
+            </div>
+            <div class="footer-col-match">
+                <h5>Bantuan</h5>
+                <ul>
+                    <li><a href="#/faq" data-target="faq">FAQ</a></li>
+                    <li><a href="#/panduan" data-target="learning">Panduan</a></li>
+                    <li><a href="#/privacy" data-target="home">Kebijakan Privasi</a></li>
+                    <li><a href="#/terms" data-target="home">Syarat & Ketentuan</a></li>
+                </ul>
+            </div>
+            <div class="footer-col-match">
+                <h5>Newsletter</h5>
+                <p style="font-size: 0.8rem; color: #9ca3af; margin-top: 0.25rem;">
+                    Dapatkan update terbaru dari TopCare AI langsung ke email Anda.
+                </p>
+                <div class="newsletter-input-group">
+                    <input type="email" placeholder="Masukan email Anda">
+                    <button type="button">&rarr;</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom-match">
+            <p>&copy; 2026 TopCare AI. All rights reserved. TopCare AI Platform V2.0.0 RC1</p>
+        </div>
+    </footer>
 
-    <!-- Core Modular Bootstrapper -->
-    <script type="module" src="assets/js/main.js"></script>
+    <!-- Comprehensive Single-Page Navigation & Smooth Scrolling Controller -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const views = document.querySelectorAll('.page-view');
+
+            function switchView(targetId) {
+                if (!targetId) targetId = 'home';
+                
+                // Toggle active view
+                views.forEach(view => {
+                    if (view.id === 'view-' + targetId) {
+                        view.classList.add('active-view');
+                    } else {
+                        view.classList.remove('active-view');
+                    }
+                });
+
+                // Update active state in navbar
+                document.querySelectorAll('header nav a').forEach(link => {
+                    if (link.getAttribute('data-target') === targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Click event delegation for navigation
+            document.body.addEventListener('click', (e) => {
+                const targetEl = e.target.closest('[data-target]');
+                if (targetEl) {
+                    const target = targetEl.getAttribute('data-target');
+                    if (target) {
+                        e.preventDefault();
+                        window.location.hash = '#/' + target;
+                        switchView(target);
+                    }
+                }
+            });
+
+            // Handle browser history / hash routing
+            function handleRouting() {
+                const hash = window.location.hash;
+                if (hash.startsWith('#/')) {
+                    const target = hash.replace('#/', '');
+                    switchView(target);
+                } else {
+                    switchView('home');
+                }
+            }
+
+            window.addEventListener('hashchange', handleRouting);
+            handleRouting();
+        });
+    </script>
 </body>
 </html>

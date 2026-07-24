@@ -2,7 +2,7 @@
  * @file route.guard.js
  * @description Enterprise SPA Route Guard acting as the sole security gateway between the router 
  * and page controllers. Enforces strict fail-closed routing policies, guest versus protected route 
- * segregation, and delegation to AuthModule.
+ * segregation, role-based access control (RBAC) via AccessControl, and delegation to AuthModule.
  * @module Security/RouteGuard
  * @version 3.0.0
  * @status Production Ready
@@ -10,10 +10,12 @@
 
 import { guard } from './guard.js';
 import { authModule } from '../modules/auth.module.js';
+import { accessControl } from './access.control.js';
 
 export class RouteGuard {
     #guestRoutes;
     #protectedRoutes;
+    #routePermissions;
 
     /**
      * Creates an instance of RouteGuard.
@@ -31,6 +33,15 @@ export class RouteGuard {
             '/settings',
             '/admin',
             '/cms'
+        ]);
+
+        // Map protected routes to required permissions for RBAC enforcement
+        this.#routePermissions = new Map([
+            ['/dashboard', 'dashboard.view'],
+            ['/profile', 'profile.view'],
+            ['/settings', 'profile.view'],
+            ['/admin', 'admin.view'],
+            ['/cms', 'cms.view']
         ]);
     }
 
@@ -107,6 +118,26 @@ export class RouteGuard {
     }
 
     /**
+     * Resolves required permission for a given normalized route.
+     * @private
+     * @param {string} normalizedRoute - Normalized route path.
+     * @returns {string|null} Permission string or null.
+     */
+    #getRequiredPermission(normalizedRoute) {
+        if (this.#routePermissions.has(normalizedRoute)) {
+            return this.#routePermissions.get(normalizedRoute);
+        }
+
+        for (const [protectedPath, permission] of this.#routePermissions.entries()) {
+            if (normalizedRoute.startsWith(`${protectedPath}/`)) {
+                return permission;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Evaluates security constraints before entering a route.
      * @param {string} route - Target route path.
      * @returns {Promise<boolean>} True if access is permitted, false if redirected/denied.
@@ -135,6 +166,19 @@ export class RouteGuard {
                         this.#redirect('/login');
                         return false;
                     }
+
+                    // Enforce RBAC via AccessControl and PermissionEngine integration
+                    const currentUser = authModule.getCurrentUser();
+                    const userRole = currentUser && (currentUser.role || currentUser.userRole) ? (currentUser.role || currentUser.userRole) : 'member';
+                    const requiredPermission = this.#getRequiredPermission(normalized);
+
+                    if (requiredPermission) {
+                        const hasAccess = accessControl.can(userRole, requiredPermission);
+                        if (!hasAccess) {
+                            this.#redirect('/dashboard');
+                            return false;
+                        }
+                    }
                 } catch (error) {
                     this.#redirect('/login');
                     return false;
@@ -162,7 +206,7 @@ export class RouteGuard {
     /**
      * Determines whether the current route can be deactivated.
      * @param {string} route - Current route path.
-     * @returns {boolean} True for Build 036.
+     * @returns {boolean} True for Build 038.
      */
     canDeactivate(route) {
         return true;
