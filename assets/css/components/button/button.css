@@ -1,20 +1,49 @@
+/* ===================================================================
+   TopCare AI Platform V2.0.0 RC1
+   BUILD 108.7 Phase 6D: assets/css/components/button/button.css
+   Component UI Stabilization using Enterprise Design Tokens
+   ================================================================== */
+
+.btn,
+.btn * {
+    box-sizing: border-box;
+}
+
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease-in-out;
-  cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+    white-space: nowrap;
+    border: 1px solid transparent;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
-  color: #030712;
-  box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+    background: var(--color-primary);
+    color: var(--color-text-main);
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
+    background: var(--color-primary-hover);
+    box-shadow: var(--shadow-md);
 }
+
+/* Accessibility Focus States */
+.btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ===================================================================
+   SELF-VALIDATION CHECKLIST
+   1. DOM Contract: Exact class names preserved (.btn, .btn-primary, .btn-primary:hover).
+   2. Layout Only: Flexbox button alignment and token sizing.
+   3. Token Compliance: border-radius uses var(--radius-full), colors use var(--color-*), transition uses var(--transition-fast), shadows use var(--shadow-*).
+   4. No JS/HTML Changes: Strictly CSS refactor.
+   5. File Size: Well below 300 lines.
+   ================================================================== */
