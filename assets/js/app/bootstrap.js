@@ -1,31 +1,4 @@
-/**
- * @file bootstrap.js
- * @description Enterprise application initialization and bootstrap sequence. 
- * Orchestrates core infrastructure startup, router engine initialization, router attachment, 
- * and DOM root configuration without direct session verification responsibilities.
- * @module App/Bootstrap
- * @version 3.0.0
- * @status Production Ready
- */
-
-import { router } from '../router/router.js';
-import { routerEngine } from '../router/router.engine.js';
-
-export class Bootstrap {
-    #initialized;
-
-    /**
-     * Creates an instance of Bootstrap.
-     */
-    constructor() {
-        this.#initialized = false;
-    }
-
-    /**
-     * Initializes the entire application infrastructure boot sequence.
-     * @returns {boolean} True when initialization succeeds, false otherwise.
-     */
-    init() {
+init() {
         if (this.#initialized) {
             return true;
         }
@@ -46,6 +19,10 @@ export class Bootstrap {
                 routerEngine.init();
             }
 
+            if (routerEngine && typeof routerEngine.attachRouter === 'function' && router) {
+                routerEngine.attachRouter(router);
+            }
+
             if (router && typeof router.init === 'function') {
                 router.init(rootContainer);
             }
@@ -56,12 +33,7 @@ export class Bootstrap {
             return false;
         }
     }
-}
+```[cite: 6]
 
-export const bootstrap = new Bootstrap();
-
-if (typeof window !== 'undefined') {
-    window.addEventListener('DOMContentLoaded', () => {
-        bootstrap.init();
-    });
-}
+### Why That Location Is Correct
+Inserting `routerEngine.attachRouter(router)` immediately after `routerEngine.init()` and before `router.init(rootContainer)` ensures that the `router` instance is successfully linked and stored inside `routerEngine` *before* the application's initial rendering cycle begins and *before* any subsequent hashchange event listener triggers[cite: 6, 8]. This guarantees that `this.#routerInstance` is no longer `null` when a navigation or route change event occurs, enabling the engine to invoke `router.render()` successfully[cite: 8].

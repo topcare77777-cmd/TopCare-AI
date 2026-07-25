@@ -1,0 +1,166 @@
+{
+  "title": "Tes Kepribadian Remaja (SMP)",
+  "intro": "Pilih jawaban yang paling mencerminkan dirimu dalam kehidupan sehari-hari di sekolah dan pertemanan.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Saat mendapat tugas kelompok di sekolah, peran apa yang biasanya kamu ambil?",
+      "options": [
+        { "text": "Memimpin kelompok dan membagi tugas dengan tegas", "type": "Koleris" },
+        { "text": "Membuat suasana ceria dan memberikan banyak ide kreatif", "type": "Sanguinis" },
+        { "text": "Mengerjakan bagian detail dengan sangat teliti dan rapi", "type": "Melankolis" },
+        { "text": "Mengikuti arahan teman dan mendengarkan dengan tenang", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Bagaimana cara mu menghadapi teman yang berbeda pendapat saat diskusi?",
+      "options": [
+        { "text": "Berdebat secara aktif sampai argumen saya diterima", "type": "Koleris" },
+        { "text": "Mengajak bercanda agar suasana kembali cair dan menyenangkan", "type": "Sanguinis" },
+        { "text": "Menyiapkan data atau alasan tertulis yang akurat untuk membuktikan pendapat", "type": "Melankolis" },
+        { "text": "Mengalah atau mencari jalan tengah demi menjaga kedamaian", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Apa yang paling membuatmu bersemangat saat di sekolah?",
+      "options": [
+        { "text": "Memenangkan kompetisi atau perlombaan antar kelas", "type": "Koleris" },
+        { "text": "Berkumpul, ngobrol, dan bersenang-senang dengan banyak teman", "type": "Sanguinis" },
+        { "text": "Mendapatkan nilai sempurna dari tugas yang dikerjakan dengan hati-hati", "type": "Melankolis" },
+        { "text": "Suasana kelas yang tenang, damai, dan tanpa konflik", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Ketika menghadapi ujian mendadak, sikapmu adalah:",
+      "options": [
+        { "text": "Langsung mengerjakannya dengan cepat dan penuh percaya diri", "type": "Koleris" },
+        { "text": "Sedikit panik awalnya, tapi lalu mencoba menebak-nebak dengan santai", "type": "Sanguinis" },
+        { "text": "Merasa cemas karena takut ada materi yang belum dipelajari secara sempurna", "type": "Melankolis" },
+        { "text": "Menghadapinya dengan tenang dan mengerjakan sebisanya tanpa stres berlebih", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Bagaimana gaya kamarnya atau meja belajarmu sehari-hari?",
+      "options": [
+        { "text": "Praktis, yang penting barang-barang utama mudah dijangkau", "type": "Koleris" },
+        { "text": "Cukup ramai dengan berbagai poster atau pernak-pernik kesukaan", "type": "Sanguinis" },
+        { "text": "Sangat rapi, teratur, setiap benda punya tempat khusus yang presisi", "type": "Melankolis" },
+        { "text": "Nyaman, sederhana, dan tidak terlalu pusing dengan kerapian ekstrem", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Saat waktu istirahat sekolah tiba, apa yang biasanya kamu lakukan?",
+      "options": [
+        { "text": "Mengatur rencana kegiatan ekstrakurikuler atau olahraga bersama teman", "type": "Koleris" },
+        { "text": "Berkeliling menyapa banyak teman dari berbagai kelas dan bercerita seru", "type": "Sanguinis" },
+        { "text": "Duduk tenang di perpustakaan membaca buku atau merapikan catatan", "type": "Melankolis" },
+        { "text": "Bersantai di kelas atau kantin bersama sahabat dekat dengan tenang", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Bagaimana reaksi kamu jika rencana liburan bersama teman batal secara tiba-tiba?",
+      "options": [
+        { "text": "Kesal dan langsung mencari solusi atau rencana pengganti saat itu juga", "type": "Koleris" },
+        { "text": "Kecewa sebentar, tapi langsung beralih mencari kegiatan seru lainnya", "type": "Sanguinis" },
+        { "text": "Merasa kecewa mendalam karena semua jadwal dan persiapan jadi berantakan", "type": "Melankolis" },
+        { "text": "Menerimanya dengan santai dan menikmati waktu istirahat di rumah saja", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Apa sifat utama yang sering dikatakan orang lain tentang dirimu?",
+      "options": [
+        { "text": "Berani, mandiri, dan memiliki jiwa pemimpin", "type": "Koleris" },
+        { "text": "Ramah, ceria, dan mudah menghidupkan suasana", "type": "Sanguinis" },
+        { "text": "Pintar, teliti, dan perfeksionis dalam mengerjakan sesuatu", "type": "Melankolis" },
+        { "text": "Sabar, penurut, dan tidak pernah memicu keributan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Ketika kamu melakukan kesalahan saat mengerjakan PR, apa yang kamu lakukan?",
+      "options": [
+        { "text": "Cepat memperbaikinya agar bisa segera selesai dan lanjut ke hal lain", "type": "Koleris" },
+        { "text": "Tertawa kecil dan meminta bantuan teman untuk memperbaikinya", "type": "Sanguinis" },
+        { "text": "Merasa tidak puas dan ingin mengulang dari awal agar hasilnya sempurna", "type": "Melankolis" },
+        { "text": "Menerima koreksi tersebut dengan tenang tanpa merasa terbebani", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "Dalam permainan tim atau olahraga, bagaimana posisimu?",
+      "options": [
+        { "text": "Kapten tim yang mengatur strategi dan memotivasi pemain lain", "type": "Koleris" },
+        { "text": "Pemain yang paling bersemangat sorak-sorai dan menghibur penonton", "type": "Sanguinis" },
+        { "text": "Pemain yang mempelajari peraturan secara mendetail dan disiplin posisi", "type": "Melankolis" },
+        { "text": "Pemain andal yang konsisten dan bisa ditempatkan di posisi mana saja", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Bagaimana caramu belajar menghadapi ujian sekolah?",
+      "options": [
+        { "text": "Membuat target belajar yang cepat dan fokus pada bab penting", "type": "Koleris" },
+        { "text": "Belajar kelompok sambil ngobrol agar tidak bosan", "type": "Sanguinis" },
+        { "text": "Membuat rangkuman catatan berwarna-warni dan sangat terperinci", "type": "Melankolis" },
+        { "text": "Belajar secara bertahap dan santai jauh-jauh hari tanpa terburu-buru", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Apa impian atau cita-citamu di masa depan?",
+      "options": [
+        { "text": "Menjadi pemimpin perusahaan, direktur, atau pengusaha sukses", "type": "Koleris" },
+        { "text": "Menjadi public figure, artis, atau content creator terkenal", "type": "Sanguinis" },
+        { "text": "Menjadi ilmuwan, peneliti, atau ahli di bidang spesifik", "type": "Melankolis" },
+        { "text": "Menjadi pengajar, diplomat, atau profesi yang menolong sesama dengan damai", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Bagaimana sikapmu saat diberi tanggung jawab baru oleh guru?",
+      "options": [
+        { "text": "Langsung menerimanya dan menunjukkan hasil kerja yang cepat", "type": "Koleris" },
+        { "text": "Menerimanya dengan antusias dan menceritakannya ke teman-teman", "type": "Sanguinis" },
+        { "text": "Memastikan saya memahami seluruh instruksi detail sebelum mulai mengerjakannya", "type": "Melankolis" },
+        { "text": "Menerimanya dengan tenang dan mengerjakannya secara stabil", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Apa kelemahan diri yang paling sering kamu sadari?",
+      "options": [
+        { "text": "Terkadang terlalu mendominasi dan kurang sabar pada orang lain", "type": "Koleris" },
+        { "text": "Cepat bosan dan mudah terdistraksi oleh hal-hal baru", "type": "Sanguinis" },
+        { "text": "Terlalu memikirkan hal kecil dan mudah cemas berlebihan", "type": "Melankolis" },
+        { "text": "Sering menunda-nunda dan kurang inisiatif memulai duluan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Bagaimana caramu menghibur sahabat dekat yang sedang sedih?",
+      "options": [
+        { "text": "Memberikan saran praktis dan solusi tegas agar masalahnya cepat selesai", "type": "Koleris" },
+        { "text": "Mengajaknya jalan-jalan atau melawak agar ia bisa tertawa lagi", "type": "Sanguinis" },
+        { "text": "Menyimak ceritanya dengan penuh empati dan mendengarkan keluh kesahnya secara sabar", "type": "Melankolis" },
+        { "text": "Menemaninya duduk berdampingan dalam keheningan yang menenangkan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Bagaimana perasaanmu ketika menjadi pusat perhatian di kelas?",
+      "options": [
+        { "text": "Sangat percaya diri dan memanfaatkannya untuk memimpin", "type": "Koleris" },
+        { "text": "Sangat menikmatinya dan merasa gembira disorot banyak orang", "type": "Sanguinis" },
+        { "text": "Merasa grogi dan risih karena takut ada kekurangan pada diri saya", "type": "Melankolis" },
+        { "text": "Cenderung malu dan lebih suka menjadi pendukung di balik layar", "type": "Plegmatis" }
+      ]
+    }
+  ]
+}

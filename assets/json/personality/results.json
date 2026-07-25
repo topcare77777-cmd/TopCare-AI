@@ -1,0 +1,162 @@
+{
+  "Koleris": {
+    "icon": "⚡",
+    "color": "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
+    "summary": "Karakter pemimpin yang tegas, berorientasi target, mandiri, dan berani mengambil risiko untuk hasil maksimal.",
+    "strengths": [
+      "Tegas & Berorientasi Hasil",
+      "Percaya Diri Tinggi",
+      "Efisien & Cepat Bertindak",
+      "Jiwa Kepemimpinan Alami"
+    ],
+    "weaknesses": [
+      "Cenderung tidak sabar",
+      "Kurang peka terhadap perasaan emosional orang lain",
+      "Keras kepala pada pendirian"
+    ],
+    "communicationStyle": "Langsung pada inti permasalahan, lugas, tegas, dan berfokus pada instruksi atau target terukur.",
+    "learningStyle": "Praktis, cepat menangkap konsep besar, menyukai tantangan, kompetisi sehat, dan efisiensi waktu.",
+    "leadershipStyle": "Otoritatif visioner, menggerakkan tim melalui target jelas, ketegasan eksekusi, dan akuntabilitas.",
+    "stressResponse": "Menjadi lebih mendominasi, menuntut, agresif, atau mudah marah jika target tertunda.",
+    "developmentAdvice": "Melatih kesabaran dalam proses tim, mendengarkan empati sudut pandang orang lain, dan meredam ego.",
+    "careerRecommendation": "Eksekutif Perusahaan, Pengusaha/Founder, Manajer Proyek, Direktur Operasional, Militer/Penegak Hukum.",
+    "recommendedStudy": "Manajemen Bisnis, Hukum, Teknik Industri, Administrasi Publik.",
+    "compatiblePersonality": "Plegmatis & Sanguinis",
+    "historicalFigures": [
+      "Napoleon Bonaparte",
+      "Steve Jobs",
+      "Margaret Thatcher",
+      "Winston Churchill"
+    ],
+    "recommendedJobs": [
+      "CEO / Founder",
+      "Project Manager",
+      "Operations Director",
+      "Military Commander"
+    ],
+    "jobsToAvoid": [
+      "Pekerjaan administratif murni yang lambat",
+      "Peran pendukung pasif tanpa otoritas keputusan"
+    ]
+  },
+  "Sanguinis": {
+    "icon": "☀️",
+    "color": "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
+    "summary": "Kepribadian yang ekspresif, sangat antusias, ramah, karismatik, dan menikmati interaksi serta energi sosial yang dinamis.",
+    "strengths": [
+      "Antusias & Inspiratif",
+      "Kreatif & Penuh Ide",
+      "Mudah Bergaul & Persuasif",
+      "Optimis Tinggi"
+    ],
+    "weaknesses": [
+      "Kurang konsisten dalam jangka panjang",
+      "Mudah terdistraksi oleh hal baru",
+      "Kurang teliti pada administrasi detail"
+    ],
+    "communicationStyle": "Hangat, ekspresif, interaktif, penuh energi, dan sangat pandai mencairkan suasana.",
+    "learningStyle": "Visual dan auditori interaktif, menyukai diskusi kelompok, brainstorming, dan suasana dinamis.",
+    "leadershipStyle": "Partisipatif inspiratif, memotivasi tim melalui antusiasme positif, pujian, dan visi bersama.",
+    "stressResponse": "Menjadi gelisah, mudah bosan, kehilangan fokus, atau mencari pelarian sosial saat tertekan.",
+    "developmentAdvice": "Meningkatkan komitmen jangka panjang, melatih kedisiplinan catatan detail, dan menjaga konsistensi tugas.",
+    "careerRecommendation": "Public Relations, Marketing Executive, Entertainer/Content Creator, Sales Director, Event Planner.",
+    "recommendedStudy": "Ilmu Komunikasi, Hubungan Masyarakat, Seni Pertunjukan, Pemasaran.",
+    "compatiblePersonality": "Melankolis & Koleris",
+    "historicalFigures": [
+      "Robin Williams",
+      "Bill Clinton",
+      "Oprah Winfrey",
+      "Richard Branson"
+    ],
+    "recommendedJobs": [
+      "Marketing Director",
+      "Public Relations Specialist",
+      "Event Planner",
+      "Content Creator / Entertainer"
+    ],
+    "jobsToAvoid": [
+      "Akuntan atau Auditor data terisolasi",
+      "Pekerjaan laboratorium yang monoton dan sepi"
+    ]
+  },
+  "Melankolis": {
+    "icon": "📘",
+    "color": "linear-gradient(135deg, #3b82f6 100%, #1d4ed8 100%)",
+    "summary": "Individu yang analitis, perfeksionis, sangat mendetail, setia, dan memiliki dedikasi tinggi pada kualitas kesempurnaan.",
+    "strengths": [
+      "Analitis & Kritis",
+      "Sangat Teliti & Rapi",
+      "Setia & Berdedikasi Tinggi",
+      "Standar Kualitas Prima"
+    ],
+    "weaknesses": [
+      "Mudah cemas & overthinking",
+      "Terlalu kaku pada standar sempurna",
+      "Sensitif terhadap kritik"
+    ],
+    "communicationStyle": "Hati-hati, terstruktur, berbasis data akurat, fakta logis, dan disampaikan secara formal.",
+    "learningStyle": "Mendalam, mandiri, gemar membaca literatur lengkap, riset komprehensif, dan analisis terperinci.",
+    "leadershipStyle": "Sistematis analitis, memastikan setiap prosedur kerja mematuhi standar tertinggi tanpa celah.",
+    "stressResponse": "Menarik diri dari sosial, mengalami kecemasan berlebihan, atau menyalahkan diri sendiri saat ada kesalahan.",
+    "developmentAdvice": "Menerima bahwa kesempurnaan mutlak jarang ada, mengurangi overthinking, dan lebih fleksibel terhadap dinamika.",
+    "careerRecommendation": "Akuntan/Auditor, Peneliti/Scientist, Data Scientist, Editor/Arsitek, Software Architect.",
+    "recommendedStudy": "Matematika, Ilmu Komputer/Informatika, Akuntansi, Kedokteran/Farmasi.",
+    "compatiblePersonality": "Sanguinis & Plegmatis",
+    "historicalFigures": [
+      "Albert Einstein",
+      "Isaac Newton",
+      "Beethoven",
+      "Mark Zuckerberg"
+    ],
+    "recommendedJobs": [
+      "Data Scientist",
+      "Software Architect",
+      "Financial Auditor",
+      "Scientific Researcher"
+    ],
+    "jobsToAvoid": [
+      "Sales lapangan dengan target agresif instan tanpa SOP",
+      "Peran kreatif improvisasi tinggi tanpa struktur"
+    ]
+  },
+  "Plegmatis": {
+    "icon": "🌿",
+    "color": "linear-gradient(135deg, #10b981 100%, #059669 100%)",
+    "summary": "Sosok yang tenang, sabar, cinta damai, konsisten, diplomatik, dan sangat diandalkan sebagai penengah dalam situasi konflik.",
+    "strengths": [
+      "Tenang & Sabar",
+      "Pendengar yang Baik",
+      "Konsisten & Stabil",
+      "Diplomatis & Harmonis"
+    ],
+    "weaknesses": [
+      "Kurang inisiatif mandiri",
+      "Cenderung menghindari konfrontasi penting",
+      "Lambat dalam mengambil keputusan kilat"
+    ],
+    "communicationStyle": "Lembut, tenang, suportif, penuh empati, dan menghindari ketegangan atau nada tinggi.",
+    "learningStyle": "Bertahap, stabil, menyukai lingkungan belajar yang damai, terstruktur, dan minim tekanan mendadak.",
+    "leadershipStyle": "Demokratis suportif, mengayomi anggota tim, menciptakan harmoni kerja, dan adil.",
+    "stressResponse": "Menutup diri, memendam emosi dalam-dalam, atau bersikap pasif-agresif saat menghadapi tekanan ekstrem.",
+    "developmentAdvice": "Melatih ketegasan (assertiveness) dalam menyuarakan pendapat dan meningkatkan inisiatif proaktif.",
+    "careerRecommendation": "Konselor/Psikolog, HR Specialist, Diplomat/Mediator, Pengajar/Dosen, Administrator Senior.",
+    "recommendedStudy": "Psikologi, Hubungan Internasional, Sastra, Pendidikan/Keguruan.",
+    "compatiblePersonality": "Koleris & Melankolis",
+    "historicalFigures": [
+      "Mahatma Gandhi",
+      "Carl Jung",
+      "Keanu Reeves",
+      "Grace Kelly"
+    ],
+    "recommendedJobs": [
+      "HR Specialist / Counselor",
+      "Diplomat / Mediator",
+      "Academic Lecturer",
+      "Senior Administrator"
+    ],
+    "jobsToAvoid": [
+      "Negosiator krisis garis depan yang berkonfrontasi tinggi",
+      "Pekerjaan dengan perubahan ekstrem harian tanpa kestabilan"
+    ]
+  }
+}

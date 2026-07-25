@@ -1,0 +1,166 @@
+{
+  "title": "Tes Kepribadian Profesional & Dewasa",
+  "intro": "Pilih jawaban yang paling mencerminkan gaya kepemimpinan, pengambilan keputusan karier, manajemen bisnis, dan dinamika kehidupan profesional Anda.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Dalam lingkungan kerja profesional atau rapat manajemen, gaya utama Anda adalah:",
+      "options": [
+        { "text": "Memimpin diskusi secara tegas, berorientasi target, dan mempercepat pengambilan keputusan", "type": "Koleris" },
+        { "text": "Membangun antusiasme tim, mencairkan suasana, dan meyakinkan klien lewat persuasi", "type": "Sanguinis" },
+        { "text": "Menyiapkan analisis data mendalam, evaluasi risiko, dan standar kualitas operasional", "type": "Melankolis" },
+        { "text": "Mendengarkan seluruh masukan secara bijak, menjaga keharmonisan, dan meredakan ketegangan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Bagaimana pendekatan Anda dalam memimpin atau mendelegasikan tugas kepada bawahan/rekan kerja?",
+      "options": [
+        { "text": "Memberikan target terukur yang jelas dengan pengawasan hasil yang ketat", "type": "Koleris" },
+        { "text": "Memberikan kebebasan kreatif dengan dorongan semangat dan pujian publik", "type": "Sanguinis" },
+        { "text": "Menyediakan instruksi kerja standar (SOP) yang sangat rinci dan terstruktur", "type": "Melankolis" },
+        { "text": "Membimbing dengan penuh kesabaran, dukungan personal, dan suasana kekeluargaan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Ketika menghadapi krisis keuangan atau proyek bisnis yang hampir gagal, tindakan Anda:",
+      "options": [
+        { "text": "Bertindak cepat mengambil alih komando, memangkas inefisiensi, dan eksekusi penyelamatan", "type": "Koleris" },
+        { "text": "Mengumpulkan jaringan relasi dan mencari suntikan semangat atau kolaborasi baru", "type": "Sanguinis" },
+        { "text": "Melakukan audit menyeluruh terhadap pembukuan untuk menemukan akar masalah finansial", "type": "Melankolis" },
+        { "text": "Tetap tenang, menjaga mental tim agar tidak panik, dan mencari solusi damai bertahap", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Bagaimana gaya negosiasi Anda saat menghadapi klien yang keras atau kompetitor bisnis?",
+      "options": [
+        { "text": "Agresif, percaya diri tinggi, dan memegang kendali penuh atas arah kesepakatan", "type": "Koleris" },
+        { "text": "Persuasif, ramah, karismatik, dan membangun hubungan emosional yang kuat", "type": "Sanguinis" },
+        { "text": "Sangat teliti membaca klausul kontrak terkecil dan menguasai data teknis secara sempurna", "type": "Melankolis" },
+        { "text": "Diplomatis, sabar, mencari win-win solution tanpa memicu ketegangan relasi", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Apa kriteria utama Anda dalam menilai kesuksesan dalam berkarier atau berbisnis?",
+      "options": [
+        { "text": "Pencapaian target omzet besar, posisi eksekutif puncak, dan dominasi pasar", "type": "Koleris" },
+        { "text": "Pengakuan luas, popularitas brand, serta jaringan relasi internasional yang luas", "type": "Sanguinis" },
+        { "text": "Kualitas karya yang sempurna, pengakuan keahlian pakar, dan kepuasan standar tertinggi", "type": "Melankolis" },
+        { "text": "Kestabilan hidup jangka panjang, kedamaian mental, dan keseimbangan kerja-keluarga", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Bagaimana reaksi Anda terhadap birokrasi kantor yang lambat atau tidak efisien?",
+      "options": [
+        { "text": "Frustrasi dan berusaha mendobrak atau memangkas prosedur berbelit-belit tersebut", "type": "Koleris" },
+        { "text": "Mencari jalur pintas informal yang lebih menyenangkan dan cepat melalui relasi", "type": "Sanguinis" },
+        { "text": "Merasa terganggu dan mencatat semua kelemahan sistem untuk direvisi secara sistematis", "type": "Melankolis" },
+        { "text": "Mengikutinya dengan sabar dan beradaptasi tanpa perlu menciptakan konfrontasi", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Bagaimana cara Anda mengelola stres akibat tekanan pekerjaan yang menumpuk?",
+      "options": [
+        { "text": "Menyalurkan energi pada olahraga kompetitif atau merancang strategi penyelesaian kilat", "type": "Koleris" },
+        { "text": "Berlibur singkat, bersosialisasi, atau melakukan hobi yang menyenangkan bersama rekan", "type": "Sanguinis" },
+        { "text": "Menarik diri sejenak untuk refleksi sunyi, membaca, atau merapikan ruang kerja", "type": "Melankolis" },
+        { "text": "Menikmati waktu santai di rumah bersama keluarga tercinta dalam ketenangan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Apa gaya utama Anda dalam mengambil keputusan strategis yang berisiko tinggi?",
+      "options": [
+        { "text": "Berani ambil keputusan cepat berbasis intuisi kepemimpinan dan target ambisius", "type": "Koleris" },
+        { "text": "Mempertimbangkan peluang kolaborasi dan dampak antusiasme publik secara intuitif", "type": "Sanguinis" },
+        { "text": "Analisis risiko mendalam (risk assessment) berbasis data historis dan skenario terburuk", "type": "Melankolis" },
+        { "text": "Konsultasi damai dengan semua pemangku kepentingan untuk mencapai konsensus bersama", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Bagaimana pandangan Anda terhadap inovasi teknologi baru di tempat kerja?",
+      "options": [
+        { "text": "Harus segera diadopsi secara agresif jika terbukti menaikkan produktivitas dan profit", "type": "Koleris" },
+        { "text": "Sangat menarik untuk dicoba karena menawarkan pengalaman baru yang seru dan modern", "type": "Sanguinis" },
+        { "text": "Harus diuji coba secara ketat keamanannya dan dipelajari dokumentasinya secara mendalam", "type": "Melankolis" },
+        { "text": "Diterima secara bertahap setelah sistem yang lama terbukti benar-benar memerlukan perubahan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "Saat terjadi perbedaan visi antara Anda dan rekan bisnis senior, sikap Anda:",
+      "options": [
+        { "text": "Mempertahankan argumen visi saya secara tegas jika data membuktikan saya benar", "type": "Koleris" },
+        { "text": "Melakukan lobi persuasif dalam jam makan siang santai untuk melunakkan penolakannya", "type": "Sanguinis" },
+        { "text": "Menyusun dokumen perbandingan komprehensif antara kedua visi secara objektif", "type": "Melankolis" },
+        { "text": "Mencari kompromi moderat demi menjaga keharmonisan kerja sama jangka panjang", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Bagaimana penilaian rekan kerja terhadap integritas dan etos kerja Anda?",
+      "options": [
+        { "text": "Disiplin tinggi, berorientasi hasil, berani, dan berwibawa", "type": "Koleris" },
+        { "text": "Inovatif, ramah, energik, dan pencair suasana terbaik di kantor", "type": "Sanguinis" },
+        { "text": "Sangat teliti, perfeksionis pada detail laporan, dan dapat diandalkan kualitasnya", "type": "Melankolis" },
+        { "text": "Sabar, konsisten, suportif, dan penjaga kedamaian tim yang loyal", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Apa tantangan terbesar Anda dalam memimpin tim yang beragam karakter?",
+      "options": [
+        { "text": "Kurang sabar menghadapi anggota tim yang bekerja lambat atau kurang berambisi", "type": "Koleris" },
+        { "text": "Menjaga konsistensi administrasi dan fokus detail jangka panjang", "type": "Sanguinis" },
+        { "text": "Terlalu kritis terhadap kesalahan kecil orang lain sehingga menaikkan tingkat kecemasan", "type": "Melankolis" },
+        { "text": "Kurang tegas dalam memberikan sanksi keras kepada anggota yang melanggar aturan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Bagaimana cara Anda merayakan keberhasilan pencapaian target perusahaan?",
+      "options": [
+        { "text": "Menetapkan target berikutnya yang lebih tinggi dan menantang untuk ditaklukkan", "type": "Koleris" },
+        { "text": "Mengadakan pesta perayaan meriah yang melibatkan seluruh tim dengan penuh suka cita", "type": "Sanguinis" },
+        { "text": "Melakukan evaluasi mendalam mengapa target tercapai untuk disalin polanya ke depan", "type": "Melankolis" },
+        { "text": "Bersyukur dalam jamuan sederhana yang hangat dan mempererat kebersamaan tim", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Bagaimana pandangan Anda tentang pengembangan diri (self-improvement) profesional?",
+      "options": [
+        { "text": "Harus berorientasi pada peningkatan skill kepemimpinan, eksekusi, dan daya saing", "type": "Koleris" },
+        { "text": "Fokus pada penguatan public speaking, networking, dan seni mempengaruhi orang", "type": "Sanguinis" },
+        { "text": "Pendalaman keahlian spesialis (mastery) melalui sertifikasi dan literatur tingkat tinggi", "type": "Melankolis" },
+        { "text": "Pengembangan kecerdasan emosional, manajemen stres, dan keharmonisan hidup", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Apa reaksi Anda saat menerima delegasi wewenang penuh atas proyek bernilai besar?",
+      "options": [
+        { "text": "Sangat antusias, langsung menyusun cetak biru eksekusi, dan memimpin di depan", "type": "Koleris" },
+        { "text": "Bersemangat mengabarkannya ke jaringan relasi dan membentuk tim yang dinamis", "type": "Sanguinis" },
+        { "text": "Merasa tertantang sekaligus teliti merancang mitigasi risiko di setiap lini detail", "type": "Melankolis" },
+        { "text": "Menerimanya dengan penuh tanggung jawab, tenang, dan terstruktur rapi", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Prinsip utama apa yang paling Anda pegang teguh dalam meniti jenjang profesional dewasa?",
+      "options": [
+        { "text": "Hasil nyata, kecepatan eksekusi, dan keberanian memimpin perubahan", "type": "Koleris" },
+        { "text": "Hubungan manusiawi yang hangat, kolaborasi luas, dan optimisme tanpa batas", "type": "Sanguinis" },
+        { "text": "Standar kualitas tanpa kompromi, kebenaran analitis, dan integritas data", "type": "Melankolis" },
+        { "text": "Konsistensi pengabdian, ketenangan batin, dan kontribusi harmonis bagi sesama", "type": "Plegmatis" }
+      ]
+    }
+  ]
+}

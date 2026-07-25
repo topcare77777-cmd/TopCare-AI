@@ -1,0 +1,166 @@
+{
+  "title": "Tes Kepribadian Pelajar (SMA)",
+  "intro": "Pilih jawaban yang paling sesuai dengan pola pikir dan sikapmu dalam menghadapi persiapan masa depan, organisasi, dan pergaulan SMA.",
+  "questions": [
+    {
+      "id": 1,
+      "text": "Dalam kepengurusan organisasi OSIS atau ekstrakurikuler, posisi apa yang paling cocok untukmu?",
+      "options": [
+        { "text": "Ketua atau pemimpin proyek yang menentukan arah kebijakan dan target kerja", "type": "Koleris" },
+        { "text": "Koordinator humas atau acara yang aktif berinteraksi dengan banyak pihak", "type": "Sanguinis" },
+        { "text": "Sekretaris atau bendahara yang menyusun laporan rinci, proposal, dan arsip presisi", "type": "Melankolis" },
+        { "text": "Anggota divisi logistik atau pendukung yang bekerja konsisten dan diandalkan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 2,
+      "text": "Bagaimana cara kamu memilih jurusan kuliah atau jalur karier masa depan?",
+      "options": [
+        { "text": "Memilih bidang yang menjanjikan posisi kepemimpinan dan kemandirian finansial tinggi", "type": "Koleris" },
+        { "text": "Memilih bidang yang dinamis, penuh relasi sosial, dan tidak membosankan", "type": "Sanguinis" },
+        { "text": "Melakukan riset mendalam terhadap kurikulum, prospek, dan analisis akademisnya", "type": "Melankolis" },
+        { "text": "Memilih bidang yang stabil, minim konflik, dan mendapat restu penuh keluarga", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 3,
+      "text": "Ketika menghadapi konflik internal dalam kelompok pertemanan, apa reaksimu?",
+      "options": [
+        { "text": "Bertindak tegas sebagai penengah dan menyuruh kedua pihak segera berdamai", "type": "Koleris" },
+        { "text": "Mencairkan suasana dengan candaan agar ketegangan mereda", "type": "Sanguinis" },
+        { "text": "Menganalisis akar permasalahan secara mendalam siapa yang benar dan salah", "type": "Melankolis" },
+        { "text": "Menghindari perdebatan terbuka dan memilih meredam emosi secara pribadi", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 4,
+      "text": "Bagaimana caramu mengatasi stres menjelang ujian akhir semester?",
+      "options": [
+        { "text": "Membuat jadwal belajar super ketat dan mengejar target materi harian", "type": "Koleris" },
+        { "text": "Nongkrong sejenak atau curhat dengan teman agar pikiran kembali fresh", "type": "Sanguinis" },
+        { "text": "Belajar seorang diri di kamar yang tenang dengan catatan terstruktur sempurna", "type": "Melankolis" },
+        { "text": "Menonton film atau tidur cukup untuk menjaga kestabilan mental", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 5,
+      "text": "Bagaimana gaya komunikasi kamu saat menyampaikan pendapat di forum diskusi?",
+      "options": [
+        { "text": "Lugas, tegas, argumentatif, dan berorientasi pada hasil keputusan", "type": "Koleris" },
+        { "text": "Ekspresif, antusias, persuasif, dan menggunakan bahasa tubuh yang hidup", "type": "Sanguinis" },
+        { "text": "Terstruktur, sistematis, didukung data valid, dan disampaikan secara hati-hati", "type": "Melankolis" },
+        { "text": "Tenang, santun, mendengarkan seksama, dan menghargai semua sudut pandang", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 6,
+      "text": "Apa pandanganmu terhadap aturan dan tata tertib sekolah?",
+      "options": [
+        { "text": "Aturan dibuat untuk ditaati agar efisiensi dan ketertiban tercapai", "type": "Koleris" },
+        { "text": "Kadang aturan terasa kaku, tapi bisa dijalani jika suasananya santai", "type": "Sanguinis" },
+        { "text": "Harus dipatuhi secara ketat tanpa ada toleransi pelanggaran sekecil apa pun", "type": "Melankolis" },
+        { "text": "Ditaati secara wajar demi menjaga keharmonisan bersama pihak sekolah", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 7,
+      "text": "Ketika mendapat kritik pedas atas hasil karya atau tugasmu, bagaimana sikapmu?",
+      "options": [
+        { "text": "Menjadikannya cambuk motivasi untuk membuktikan diri lebih unggul", "type": "Koleris" },
+        { "text": "Sedih sesaat, namun cepat melupakannya karena masih banyak hal seru lain", "type": "Sanguinis" },
+        { "text": "Merasa sangat terpukul, menganalisis letak kesalahannya secara berlebihan", "type": "Melankolis" },
+        { "text": "Menerimanya dengan lapang dada tanpa memasukkannya ke dalam hati", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 8,
+      "text": "Bagaimana cara kamu mengatur waktu antara belajar, hobi, dan organisasi?",
+      "options": [
+        { "text": "Menetapkan skala prioritas yang ketat dan mengeksekusinya secara disiplin", "type": "Koleris" },
+        { "text": "Mengalir begitu saja mengikuti suasana hati dan energi saat itu", "type": "Sanguinis" },
+        { "text": "Membuat to-do list harian yang rapi dan dijaga agar tidak ada yang meleset", "type": "Melankolis" },
+        { "text": "Mengikuti ritme yang stabil dan menghindari jadwal yang terlalu padat", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 9,
+      "text": "Apa motivasi terbesar kamu dalam meraih prestasi akademik di SMA?",
+      "options": [
+        { "text": "Menjadi yang terbaik, diakui, dan membuka jalan menuju kekuasaan/kesuksesan", "type": "Koleris" },
+        { "text": "Membuat bangga orang tua dan menikmati pujian serta apresiasi sosial", "type": "Sanguinis" },
+        { "text": "Kepuasan batin karena menguasai ilmu pengetahuan secara mendalam dan sempurna", "type": "Melankolis" },
+        { "text": "Menjalani kewajiban dengan damai tanpa tekanan ambisi yang berlebihan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 10,
+      "text": "Dalam situasi kerja kelompok proyek akhir (project based learning), peranmu adalah:",
+      "options": [
+        { "text": "Project manager yang memimpin pembagian tugas dan memantau tenggat waktu", "type": "Koleris" },
+        { "text": "Presentator kreatif yang meyakinkan audiens saat sidang hasil proyek", "type": "Sanguinis" },
+        { "text": "Peneliti utama yang menyusun dokumen laporan dan analisis data secara teliti", "type": "Melankolis" },
+        { "text": "Eksekutor stabil yang menyelesaikan bagian teknis tanpa banyak protes", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 11,
+      "text": "Bagaimana sikapmu terhadap perubahan jadwal atau kurikulum mendadak di sekolah?",
+      "options": [
+        { "text": "Cepat beradaptasi dan langsung menyusun strategi baru untuk menaklukkannya", "type": "Koleris" },
+        { "text": "Antusias karena ada suasana baru yang tidak membosankan", "type": "Sanguinis" },
+        { "text": "Merasa terganggu karena persiapan matang dan rencana awal saya rusak", "type": "Melankolis" },
+        { "text": "Mengikuti alur perubahan dengan tenang tanpa protes berarti", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 12,
+      "text": "Bagaimana caramu memilih teman akrab di lingkungan sekolah?",
+      "options": [
+        { "text": "Memilih teman yang memiliki visi, ambisi, dan semangat maju yang sama", "type": "Koleris" },
+        { "text": "Memilih teman yang seru diajak ngobrol, humoris, dan asyik", "type": "Sanguinis" },
+        { "text": "Memilih teman yang setia kawan, tulus, dan memiliki kedalaman pemikiran", "type": "Melankolis" },
+        { "text": "Berteman dengan siapa saja secara damai dan menghindari drama pertemanan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 13,
+      "text": "Apa reaksi emosionalmu saat tim sekolahmu kalah dalam kompetisi antarsekolah?",
+      "options": [
+        { "text": "Geram dan bertekad mengevaluasi total agar pertandingan berikutnya pasti menang", "type": "Koleris" },
+        { "text": "Kecewa sebentar, lalu menghibur teman-teman dengan makan bersama", "type": "Sanguinis" },
+        { "text": "Merenungi setiap kesalahan strategi pertandingan secara mendalam berhari-hari", "type": "Melankolis" },
+        { "text": "Menerima kekalahan dengan legawa dan menghargai usaha tim lawan", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 14,
+      "text": "Apa tantangan terbesar yang sering kamu hadapi dalam belajar mandiri?",
+      "options": [
+        { "text": "Kurang sabar jika penjelasan materi terlalu lambat atau bertele-tele", "type": "Koleris" },
+        { "text": "Mudah teralihkan oleh notifikasi HP dan ajakan nongkrong teman", "type": "Sanguinis" },
+        { "text": "Terlalu lama meriset detail kecil sampai waktu ujian hampir habis", "type": "Melankolis" },
+        { "text": "Kurangnya dorongan motivasi internal untuk mulai belajar tepat waktu", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 15,
+      "text": "Bagaimana pandanganmu tentang masa depan dan impian kuliah?",
+      "options": [
+        { "text": "Harus dirancang secara strategis, ambisius, dan menghasilkan posisi top", "type": "Koleris" },
+        { "text": "Penuh peluang seru yang penting bisa mengeksplorasi banyak pengalaman", "type": "Sanguinis" },
+        { "text": "Harus dipersiapkan secara matang, terencana, dan meminimalisir kegagalan", "type": "Melankolis" },
+        { "text": "Menjalani prosesnya dengan tenang sambil mengalir mencari kestabilan hidup", "type": "Plegmatis" }
+      ]
+    },
+    {
+      "id": 16,
+      "text": "Bagaimana sifat utama yang paling dominan saat kamu menghadapi tekanan teman sebaya (peer pressure)?",
+      "options": [
+        { "text": "Tetap teguh pada pendirian dan memimpin arah kelompok agar tidak terbawa arus", "type": "Koleris" },
+        { "text": "Mudah beradaptasi dan mengikuti tren agar tetap diterima di lingkaran pergaulan", "type": "Sanguinis" },
+        { "text": "Menjauh dari lingkaran yang toksik dan memilih prinsip hidup yang independen", "type": "Melankolis" },
+        { "text": "Diam dan menghindari konfrontasi langsung dengan kelompok tersebut", "type": "Plegmatis" }
+      ]
+    }
+  ]
+}

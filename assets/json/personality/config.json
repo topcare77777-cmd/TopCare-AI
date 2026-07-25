@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "ageGroups": [
+    {
+      "key": "12-15",
+      "title": "12–15 Tahun (SMP)",
+      "subtitle": "Fokus pada pertemanan, sekolah, hobi, dan kepercayaan diri remaja.",
+      "file": "teen-junior.json"
+    },
+    {
+      "key": "16-18",
+      "title": "16–18 Tahun (SMA)",
+      "subtitle": "Fokus pada persiapan karier, organisasi, kepemimpinan, dan studi lanjut.",
+      "file": "teen-senior.json"
+    },
+    {
+      "key": "19+",
+      "title": "19 Tahun ke atas (Dewasa)",
+      "subtitle": "Fokus pada dunia kerja profesional, bisnis, kepemimpinan, dan kehidupan dewasa.",
+      "file": "adult.json"
+    }
+  ]
+}
