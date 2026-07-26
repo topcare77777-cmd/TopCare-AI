@@ -1,7 +1,7 @@
 // assets/js/coach/coach-storage.js
 /**
  * @file coach-storage.js
- * @description Persistence layer and contract adapter for AI Coach.
+ * @description Persistence layer and contract adapter for AI Coach supporting direct progress payload structures.
  * @module Coach/Storage
  */
 
@@ -21,13 +21,13 @@ export const CoachStorage = {
         }
     },
 
-    saveProgress(state) {
+    saveProgress(progress) {
         try {
             const payload = {
-                currentLessonIndex: state.progress.currentLessonIndex,
-                completedLessonsCount: state.progress.completedLessonsCount,
-                totalLessons: state.progress.totalLessons,
-                lastUpdated: new Date().toISOString()
+                currentLessonIndex: progress.currentLessonIndex,
+                completedLessonsCount: progress.completedLessonsCount,
+                totalLessons: progress.totalLessons,
+                lastUpdated: progress.lastUpdated || new Date().toISOString()
             };
             localStorage.setItem(COACH_STORAGE_KEY, JSON.stringify(payload));
             return true;
