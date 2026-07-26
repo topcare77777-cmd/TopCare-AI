@@ -1,9 +1,4 @@
-/**
- * @file router.js
- * @description Single source of truth client-side router managing route dispatching and layout isolation.
- * @module Router/Core
- */
-
+// assets/js/router/router.js
 import personalityPage from '../pages/personality.page.js';
 import { initPersonalityTest } from '../personality/personality-test.js';
 
@@ -11,36 +6,52 @@ export const Router = {
     routes: {},
     rootContainer: null,
     currentActiveRoute: '#/home',
+    currentActiveModule: null,
+    initialized: false,
 
     init(container) {
+        if (this.initialized) {
+            return;
+        }
+
         this.rootContainer = container;
-        
-        this.register('/personality', (container) => {
+        this.initialized = true;
+
+        this.register('/personality', () => {
             this.restoreGlobalLayout();
-            personalityPage.mount(container);
+            this.teardownCurrentModule();
+
+            const viewPersonality = document.getElementById('view-personality');
+            if (viewPersonality) {
+                this.currentActiveModule = personalityPage;
+                personalityPage.beforeEnter();
+                personalityPage.mount(viewPersonality);
+                personalityPage.afterEnter();
+            }
         });
 
         this.register('/personality-test', () => {
-            this.isolateQuizLayout();
-            const container = Router.rootContainer;
-            container.innerHTML = `
-                <div id="personality-quiz-app" style="width:100%; min-height:80vh; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-                    <div id="personality-test" style="width:100%; max-width:860px;"></div>
-                </div>
-            `;
-            initPersonalityTest();
+            this.restoreGlobalLayout();
+            this.teardownCurrentModule();
+
+            const testContainer = document.getElementById('personality-test');
+            if (testContainer) {
+                initPersonalityTest(testContainer);
+            } else {
+                initPersonalityTest();
+            }
         });
 
-        // Pendaftaran rute AI Coach V1
-        this.register('/coach', (container) => {
+        this.register('/coach', () => {
+            this.teardownCurrentModule();
             this.restoreGlobalLayout();
-            container.innerHTML = '<div id="view-coach" class="page-view active-view" style="width:100%;"></div>';
-            const coachContainer = container.querySelector('#view-coach');
-            
-            import('../coach/coach.js').then(({ CoachController }) => {
-                window.CoachController = CoachController;
-                CoachController.init(coachContainer);
-            });
+            const viewCoach = document.getElementById('view-coach');
+            if (viewCoach) {
+                import('../coach/coach.js').then(({ CoachController }) => {
+                    window.CoachController = CoachController;
+                    CoachController.init(viewCoach);
+                });
+            }
         });
 
         window.addEventListener('hashchange', () => this.handleRouting());
@@ -51,20 +62,13 @@ export const Router = {
         this.routes[path] = handler;
     },
 
-    isolateQuizLayout() {
-        document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
-        const header = document.querySelector('.site-header');
-        if (header) header.style.display = 'none';
-
-        const footer = document.querySelector('.footer-match');
-        if (footer) footer.style.display = 'none';
-        
-        if (this.rootContainer) {
-            this.rootContainer.style.padding = '0';
-            this.rootContainer.style.margin = '0';
-            this.rootContainer.style.maxWidth = '100%';
+    teardownCurrentModule() {
+        if (this.currentActiveModule && typeof this.currentActiveModule.beforeLeave === 'function') {
+            this.currentActiveModule.beforeLeave();
+            this.currentActiveModule.destroy();
+            this.currentActiveModule.cleanup();
+            this.currentActiveModule = null;
         }
-        window.scrollTo({ top: 0, behavior: 'instant' });
     },
 
     restoreGlobalLayout() {
@@ -85,38 +89,43 @@ export const Router = {
         const hash = window.location.hash || '#/home';
         const path = hash.replace('#', '');
 
-        // Cleanup active coach controller if moving away from #/coach
         if (this.currentActiveRoute === '#/coach' && hash !== '#/coach') {
             if (window.CoachController && typeof window.CoachController.destroy === 'function') {
                 window.CoachController.destroy();
             }
         }
 
+        if (hash !== '#/personality') {
+            this.teardownCurrentModule();
+        }
+
         this.currentActiveRoute = hash;
 
-        if (!this.rootContainer) return;
+        // 1. Nonaktifkan semua view terlebih dahulu
+        document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
 
-        if (path !== '/personality-test') {
-            this.restoreGlobalLayout();
+        // 2. Tentukan view ID secara presisi berdasar rute terisolasi
+        let viewId = path.replace('/', '') || 'home';
+        if (path === '/personality-test') {
+            viewId = 'personality-test';
         }
 
-        if (this.routes[path]) {
-            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
-            this.routes[path](this.rootContainer);
-            if (path !== '/personality-test') {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            return;
-        }
-
-        const viewId = path.replace('/', '') || 'home';
         const targetView = document.getElementById(`view-${viewId}`);
-        
         if (targetView) {
-            document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
             targetView.classList.add('active-view');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            const homeView = document.getElementById('view-home');
+            if (homeView) {
+                homeView.classList.add('active-view');
+            }
         }
+
+        // 3. Panggil handler rute terdaftar
+        if (this.routes[path]) {
+            this.routes[path]();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };
 
