@@ -1,0 +1,18 @@
+// assets/json/coach-achievements.json
+[
+  {
+    "id": "first_lesson",
+    "title": "Langkah Pertama",
+    "description": "Selesaikan pelajaran pertama Anda."
+  },
+  {
+    "id": "voice_used",
+    "title": "Mendengar Coach",
+    "description": "Gunakan Voice Coach untuk mendengarkan materi pertama kali."
+  },
+  {
+    "id": "program_completed",
+    "title": "Lulus AI Coach",
+    "description": "Selesaikan seluruh program pembelajaran dengan sukses."
+  }
+]
