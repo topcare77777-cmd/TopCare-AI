@@ -71,20 +71,38 @@ function attachQuestionEvents(container) {
             if (radio) radio.checked = true;
 
             PersonalityState.setAnswer(PersonalityState.currentIndex, idx);
+
+            const isLast =
+                PersonalityState.currentIndex ===
+                PersonalityState.dataset.questions.length - 1;
+
+            if (isLast) {
+                handleSubmission(container);
+                return;
+            }
+
             const nextBtn = container.querySelector('[data-action="next"]');
-            if (nextBtn) nextBtn.removeAttribute('disabled');
+            if (nextBtn) {
+                nextBtn.removeAttribute("disabled");
+            }
         });
     });
 
-    const nextBtn = container.querySelector('[data-action="next"]');
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (PersonalityState.currentIndex < PersonalityState.dataset.questions.length - 1) {
-                PersonalityState.currentIndex++;
-                renderQuestionView(container);
-            } else {
+    const actionBtn = container.querySelector(
+        '[data-action="next"], [data-action="finish"]'
+    );
+
+    if (actionBtn) {
+        actionBtn.addEventListener("click", () => {
+
+            if (actionBtn.dataset.action === "finish") {
                 handleSubmission(container);
+                return;
             }
+
+            PersonalityState.currentIndex++;
+            renderQuestionView(container);
+
         });
     }
 

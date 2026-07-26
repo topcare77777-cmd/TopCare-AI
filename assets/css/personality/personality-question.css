@@ -1,0 +1,224 @@
+/**
+ * @file personality-question.css
+ * @description Strictly isolated Questionnaire Mode stylesheet with strict viewport locking and non-scrollable flex distribution.
+ * @module Personality/CSS/Question
+ */
+
+.personality-test:has(.test-question-fieldset) {
+    width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #030712;
+    color: #f9fafb;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    padding: 1rem;
+}
+
+.personality-test:has(.test-question-fieldset) .test-shell {
+    width: 100%;
+    max-width: 860px;
+    height: calc(100vh - 2rem);
+    max-height: calc(100vh - 2rem);
+    margin: 0 auto;
+    background: rgba(17, 24, 39, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.test-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.test-progress {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+}
+
+.test-progress span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    transition: width 0.3s ease;
+}
+
+.test-counter {
+    font-size: 0.825rem;
+    color: #9ca3af;
+    margin-bottom: 1.25rem;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.test-question-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
+    min-height: 0;
+}
+
+.test-legend-bold {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.4;
+    margin-bottom: 1.25rem;
+    width: 100%;
+    display: block;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.test-options-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    flex: 0 0 auto;
+    overflow: hidden;
+}
+
+.test-option-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 0.85rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    width: 100%;
+    min-height: 64px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.test-option-row:hover {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(59, 130, 246, 0.4);
+}
+
+.test-option-row.selected {
+    background: rgba(37, 99, 235, 0.18);
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+.test-option-row input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.option-radio-indicator {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.test-option-row input[type="radio"]:checked ~ .option-radio-indicator {
+    border-color: #3b82f6;
+    background: #3b82f6;
+    box-shadow: inset 0 0 0 4px #111827;
+}
+
+.option-text {
+    font-size: 0.95rem;
+    color: #e5e7eb;
+    line-height: 1.4;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.test-actions {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 50;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.test-actions .btn {
+    height: 44px;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    visibility: visible !important;
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f9fafb;
+}
+.btn-secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.2);
+}
+.btn-secondary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: #ffffff;
+}
+.btn-primary:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+.btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

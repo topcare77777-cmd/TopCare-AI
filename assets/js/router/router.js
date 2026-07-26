@@ -10,6 +10,7 @@ import { initPersonalityTest } from '../personality/personality-test.js';
 export const Router = {
     routes: {},
     rootContainer: null,
+    currentActiveRoute: '#/home',
 
     init(container) {
         this.rootContainer = container;
@@ -28,6 +29,18 @@ export const Router = {
                 </div>
             `;
             initPersonalityTest();
+        });
+
+        // Pendaftaran rute AI Coach V1
+        this.register('/coach', (container) => {
+            this.restoreGlobalLayout();
+            container.innerHTML = '<div id="view-coach" class="page-view active-view" style="width:100%;"></div>';
+            const coachContainer = container.querySelector('#view-coach');
+            
+            import('../coach/coach.js').then(({ CoachController }) => {
+                window.CoachController = CoachController;
+                CoachController.init(coachContainer);
+            });
         });
 
         window.addEventListener('hashchange', () => this.handleRouting());
@@ -71,6 +84,15 @@ export const Router = {
     handleRouting() {
         const hash = window.location.hash || '#/home';
         const path = hash.replace('#', '');
+
+        // Cleanup active coach controller if moving away from #/coach
+        if (this.currentActiveRoute === '#/coach' && hash !== '#/coach') {
+            if (window.CoachController && typeof window.CoachController.destroy === 'function') {
+                window.CoachController.destroy();
+            }
+        }
+
+        this.currentActiveRoute = hash;
 
         if (!this.rootContainer) return;
 

@@ -78,12 +78,28 @@ export const PersonalityUI = {
     renderFooter(currentIndex, totalQuestions, selectedAnswerIndex) {
         const isFirst = currentIndex === 0;
         const isLast = currentIndex === totalQuestions - 1;
+
         return `
-            <div class="test-actions">
-                <button type="button" class="btn btn-secondary" data-action="previous" ${isFirst ? "disabled" : ""}>Kembali</button>
-                <button type="button" class="btn btn-primary" data-action="next" ${selectedAnswerIndex === null ? "disabled" : ""}>${isLast ? "Lihat Hasil" : "Lanjut"}</button>
-            </div>
-        `;
+        <div class="test-actions">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-action="previous"
+                ${isFirst ? "disabled" : ""}>
+                ← Kembali
+            </button>
+
+            <button
+                type="button"
+                class="btn btn-primary"
+                data-action="${isLast ? "finish" : "next"}"
+                ${selectedAnswerIndex === null ? "disabled" : ""}>
+                ${isLast ? "Lihat Hasil" : "Lanjut →"}
+            </button>
+
+        </div>
+    `;
     },
 
     renderLoading() {
@@ -108,6 +124,7 @@ export const PersonalityUI = {
             "Plegmatis": "plegmatis.webp"
         };
         const imageFileName = primaryImageMap[primary] || "koleris.webp";
+
         const imagePath = `assets/images/personality/${imageFileName}`;
 
         return `
@@ -183,14 +200,39 @@ export const PersonalityUI = {
                         </div>
                     </div>
 
-                    <p class="test-disclaimer">Hasil ini adalah refleksi kecenderungan temperamen berdasarkan model psikologi modern, bukan diagnosis klinis.</p>
-                    
-                    <div class="test-actions center-actions">
-                        <button type="button" class="btn btn-secondary" data-action="restart">Ulangi Tes</button>
-                        <button type="button" class="btn btn-primary" data-action="print-pdf">Download Hasil PDF</button>
-                        <a href="index.html#learning" class="btn btn-secondary" style="text-decoration: none; display: inline-flex; align-items: center;">Mulai Belajar</a>
-                    </div>
                 </div>
+
+               <div class="result-footer">
+
+    <p class="test-disclaimer">
+        Hasil ini adalah refleksi kecenderungan temperamen berdasarkan model psikologi modern,
+        bukan diagnosis klinis.
+    </p>
+
+    <div 
+
+</div>
+
+<div class="test-actions center-actions">
+
+<button type="button" 
+class="btn btn-secondary" 
+data-action="restart">
+Ulangi Tes
+</button>
+
+<button type="button" 
+class="btn btn-primary" 
+data-action="print-pdf">
+Download PDF
+</button>
+
+<a href="#/coach" 
+class="btn btn-secondary">
+Mulai Belajar
+</a>
+
+</div>
             </section>
         `;
     }

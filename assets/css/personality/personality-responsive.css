@@ -1,0 +1,84 @@
+/**
+ * @file personality-responsive.css
+ * @description Responsive media query rules for mobile, tablet, and desktop viewports.
+ * @module Personality/CSS/Responsive
+ */
+
+@media (max-width: 480px) {
+    .personality-test {
+        padding: 0.75rem;
+    }
+    .test-shell {
+        padding: 1rem;
+        border-radius: 14px;
+    }
+    .age-selector-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    .age-card {
+        min-height: 140px;
+        padding: 1.25rem 1rem;
+    }
+    .test-option-row {
+        min-height: 56px;
+        padding: 0.65rem 1rem;
+    }
+    .option-text {
+        font-size: 0.85rem;
+    }
+    .test-legend-bold {
+        font-size: 1.05rem;
+        margin-bottom: 0.85rem;
+    }
+    .result-avatar-container {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+    }
+    .result-header-content-wrapper {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .age-selector-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+    .test-shell {
+        padding: 1.5rem;
+    }
+    .result-avatar-container {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1365px) {
+    .age-selector-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+    .result-avatar-container {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+@media (min-width: 1366px) {
+    .age-selector-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+    .test-shell {
+        max-width: 900px;
+        padding: 2.5rem;
+    }
+    .result-avatar-container {
+        width: 160px;
+        height: 160px;
+    }
+}

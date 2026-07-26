@@ -1,0 +1,111 @@
+// assets/json/coach-lessons.json
+{
+  "Koleris": [
+    {
+      "id": 1,
+      "title": "Strategi Kepemimpinan & Komunikasi Koleris",
+      "content": "Sebagai individu dengan dominasi temperamen Koleris, fokus utama pengembangan Anda adalah mengasah empati, mendengarkan secara aktif, serta mengelola ketidaksabaran saat berkolaborasi dengan tim."
+    },
+    {
+      "id": 2,
+      "title": "Manajemen Delegasi & Kepercayaan Tim",
+      "content": "Pelajari cara mendelegasikan tugas secara efektif tanpa melakukan mikromanajemen agar anggota tim Anda dapat berkembang secara mandiri."
+    },
+    {
+      "id": 3,
+      "title": "Kecerdasan Emosional dalam Resolusi Konflik",
+      "content": "Mengendalikan reaktivitas tinggi dan mengubah konflik menjadi peluang kolaborasi yang konstruktif melalui komunikasi asertif."
+    },
+    {
+      "id": 4,
+      "title": "Strategi Eksekusi Visi Jangka Panjang",
+      "content": "Menyeimbangkan kecepatan target harian dengan perencanaan strategis yang berkelanjutan untuk hasil yang stabil."
+    },
+    {
+      "id": 5,
+      "title": "Refleksi dan Evaluasi Kepemimpinan Koleris",
+      "content": "Mengevaluasi pencapaian personal dan merumuskan langkah pengembangan diri berikutnya sebagai pemimpin yang inspiratif."
+    }
+  ],
+  "Sanguinis": [
+    {
+      "id": 1,
+      "title": "Pengembangan Fokus & Pengelolaan Waktu Sanguinis",
+      "content": "Sebagai individu Sanguinis yang ekspresif dan antusias, area pengembangan utama Anda adalah meningkatkan konsentrasi jangka panjang dan menindaklanjuti komitmen secara konsisten."
+    },
+    {
+      "id": 2,
+      "title": "Disiplin Personal & Konsistensi Eksekusi",
+      "content": "Strategi praktis mengubah ide-ide kreatif menjadi tindakan nyata yang tuntas tanpa mudah terdistraksi oleh hal baru."
+    },
+    {
+      "id": 3,
+      "title": "Membangun Kedalaman Hubungan Profesional",
+      "content": "Melampaui interaksi sosial yang superfisial untuk membangun relasi kerja yang bermakna dan berjangka panjang."
+    },
+    {
+      "id": 4,
+      "title": "Manajemen Energi dan Pencegahan Burnout",
+      "content": "Mengelola antusiasme tinggi agar energi Anda tetap terjaga secara stabil dalam menyelesaikan target harian."
+    },
+    {
+      "id": 5,
+      "title": "Refleksi dan Evaluasi Produktivitas Sanguinis",
+      "content": "Meninjau kembali pencapaian dan menyelaraskan antusiasme sosial dengan target profesional yang terukur."
+    }
+  ],
+  "Melankolis": [
+    {
+      "id": 1,
+      "title": "Manajemen Ekspektasi & Fleksibilitas Melankolis",
+      "content": "Sebagai individu Melankolis yang analitis dan perfeksionis, fokus utama pembelajaran Anda adalah mengurangi overthinking, menerima ketidaksempurnaan, serta membangun ketahanan mental."
+    },
+    {
+      "id": 2,
+      "title": "Mengatasi Perfeksionisme yang Menghambat",
+      "content": "Belajar menerapkan prinsip 'selesai lebih baik daripada sempurna' untuk menghindari penundaan akibat standar yang terlalu tinggi."
+    },
+    {
+      "id": 3,
+      "title": "Kecerdasan Emosional dan Manajemen Suasana Hati",
+      "content": "Mengelola kecenderungan suasana hati yang mudah turun dengan pendekatan kognitif dan apresiasi diri yang positif."
+    },
+    {
+      "id": 4,
+      "title": "Kolaborasi Terbuka dan Kepercayaan Tim",
+      "content": "Mengurangi kebutuhan untuk mengontrol setiap detail kecil dan memberikan ruang bagi rekan kerja untuk berkontribusi."
+    },
+    {
+      "id": 5,
+      "title": "Refleksi dan Evaluasi Keseimbangan Melankolis",
+      "content": "Merayakan pencapaian kecil secara objektif guna membangun rasa percaya diri dan kepuasan kerja yang sehat."
+    }
+  ],
+  "Plegmatis": [
+    {
+      "id": 1,
+      "title": "Inisiatif & Asertivitas Plegmatis",
+      "content": "As a Plegmatis individual who values peace and stability, your primary development area is building courage to take initiative, assertiveness, and speaking up openly."
+    },
+    {
+      "id": 2,
+      "title": "Keluar dari Zona Nyaman dan Menghadapi Perubahan",
+      "content": "Strategi proaktif dalam menyambut dinamika lingkungan kerja yang cepat tanpa merasa terbebani oleh ketidakpastian."
+    },
+    {
+      "id": 3,
+      "title": "Seni Berpendapat dan Menyuarakan Gagasan",
+      "content": "Mengembangkan keberanian untuk menyampaikan ide dan ketidaksetujuan secara konstruktif demi kemajuan bersama."
+    },
+    {
+      "id": 4,
+      "title": "Meningkatkan Energi dan Motivasi Eksekusi",
+      "content": "Mengatasi kecenderungan prokrastinasi pasif dengan menetapkan target mikro yang menantang dan memotivasi diri."
+    },
+    {
+      "id": 5,
+      "title": "Refleksi dan Evaluasi Potensi Diri Plegmatis",
+      "content": "Menilai kemajuan personal dalam mengambil peran kepemimpinan yang lebih aktif di dalam tim maupun organisasi."
+    }
+  ]
+}

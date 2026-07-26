@@ -1,0 +1,9 @@
+{
+  "version": "1.0.0",
+  "defaultLessonDuration": 3,
+  "lessons": [
+    { "id": "lesson-001", "file": "lesson-001.json" },
+    { "id": "lesson-002", "file": "lesson-002.json" },
+    { "id": "lesson-003", "file": "lesson-003.json" }
+  ]
+}

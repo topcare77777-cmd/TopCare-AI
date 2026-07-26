@@ -1,0 +1,44 @@
+/**
+ * @file personality-print.css
+ * @description Print layout optimization rules for PDF exports.
+ * @module Personality/CSS/Print
+ */
+
+@media print {
+
+    body,
+    html {
+        background: #ffffff !important;
+        color: #000000 !important;
+    }
+
+    .site-header,
+    .site-footer,
+    .test-actions,
+    button,
+    .btn {
+        display: none !important;
+    }
+
+    .test-shell {
+        background: #ffffff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .result-header-card {
+        color: #000000 !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .result-card,
+    .result-card-section,
+    .result-secondary-banner,
+    .comprehensive-item {
+        background: #f9fafb !important;
+        border: 1px solid #e5e7eb !important;
+        color: #111827 !important;
+    }
+}
