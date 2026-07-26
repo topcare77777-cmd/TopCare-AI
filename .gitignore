@@ -1,3 +1,7 @@
+# Archive backup files
+*.zip
+*.txt
+
 # Backup archives
 assets/*.zip
 
