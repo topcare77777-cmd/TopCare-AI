@@ -14,3 +14,17 @@ Desktop.ini
 
 # macOS
 .DS_Store
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary
+*.tmp
+*.bak
+
+# Logs
+*.log

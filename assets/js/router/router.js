@@ -1,6 +1,7 @@
 // assets/js/router/router.js
 import personalityPage from '../pages/personality.page.js';
 import { initPersonalityTest } from '../personality/personality-test.js';
+import { ViewManager } from '../core/view-manager.js';
 
 export const Router = {
     routes: {},
@@ -17,8 +18,11 @@ export const Router = {
         this.rootContainer = container;
         this.initialized = true;
 
+        // Initialize ViewManager with root container
+        ViewManager.init(container);
+
         this.register('/personality', () => {
-            this.restoreGlobalLayout();
+            ViewManager.restoreShell();
             this.teardownCurrentModule();
 
             const viewPersonality = document.getElementById('view-personality');
@@ -31,7 +35,7 @@ export const Router = {
         });
 
         this.register('/personality-test', () => {
-            this.restoreGlobalLayout();
+            ViewManager.restoreShell();
             this.teardownCurrentModule();
 
             const testContainer = document.getElementById('personality-test');
@@ -44,7 +48,7 @@ export const Router = {
 
         this.register('/coach', () => {
             this.teardownCurrentModule();
-            this.restoreGlobalLayout();
+            ViewManager.restoreShell();
             const viewCoach = document.getElementById('view-coach');
             if (viewCoach) {
                 import('../coach/coach.js').then(({ CoachController }) => {
@@ -71,20 +75,6 @@ export const Router = {
         }
     },
 
-    restoreGlobalLayout() {
-        const header = document.querySelector('.site-header');
-        if (header) header.style.display = '';
-
-        const footer = document.querySelector('.footer-match');
-        if (footer) footer.style.display = '';
-
-        if (this.rootContainer) {
-            this.rootContainer.style.padding = '';
-            this.rootContainer.style.margin = '';
-            this.rootContainer.style.maxWidth = '';
-        }
-    },
-
     handleRouting() {
         const hash = window.location.hash || '#/home';
         const path = hash.replace('#', '');
@@ -101,26 +91,21 @@ export const Router = {
 
         this.currentActiveRoute = hash;
 
-        // 1. Nonaktifkan semua view terlebih dahulu
-        document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active-view'));
+        // 1. Manage layout shell isolation or restoration via ViewManager
+        if (path === '/personality-test') {
+            ViewManager.isolateShell();
+        } else {
+            ViewManager.restoreShell();
+        }
 
-        // 2. Tentukan view ID secara presisi berdasar rute terisolasi
+        // 2. Delegate view activation to ViewManager
         let viewId = path.replace('/', '') || 'home';
         if (path === '/personality-test') {
             viewId = 'personality-test';
         }
+        ViewManager.activateView(viewId);
 
-        const targetView = document.getElementById(`view-${viewId}`);
-        if (targetView) {
-            targetView.classList.add('active-view');
-        } else {
-            const homeView = document.getElementById('view-home');
-            if (homeView) {
-                homeView.classList.add('active-view');
-            }
-        }
-
-        // 3. Panggil handler rute terdaftar
+        // 3. Execute registered route handler (module mounting/controllers)
         if (this.routes[path]) {
             this.routes[path]();
         }
