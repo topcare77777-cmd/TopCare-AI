@@ -18,7 +18,7 @@ const BaseComponent = {
             container.innerHTML = html;
             this.show(containerId);
             GlowEffect.attach(container);
-            
+
             // Register newly mounted elements with MotionEngine if they contain [data-animate]
             const animatedElements = container.querySelectorAll('[data-animate]');
             animatedElements.forEach(el => MotionEngine.observe(el));

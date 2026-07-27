@@ -4,7 +4,7 @@
  * Path: assets/js/services/about.service.js
  */
 
-import AboutRepository from '../repository/about.repository.js';
+import AboutRepository from '../../repository/about.repository.js';
 
 const AboutService = {
     async load() {

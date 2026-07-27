@@ -1,6 +1,6 @@
 /**
  * TopCare AI Platform V2.0.0
- * Hero Section Stylesheet (BUILD 028 Audit & Flow Fix)
+ * Hero Section Stylesheet (Sprint 45 Phase 6.5 Hero Image Recovery)
  * Path: assets/css/pages/home/hero.css
  */
 
@@ -12,8 +12,8 @@
     position: relative;
     padding: 10rem 2rem 6rem;
     background: radial-gradient(circle at 70% 20%, rgba(37, 99, 235, 0.15), transparent 45%),
-                radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.15), transparent 45%),
-                #030712;
+        radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.15), transparent 45%),
+        #030712;
     overflow: hidden;
 }
 
@@ -175,15 +175,14 @@
 }
 
 .hero__preview {
-    position: relative;
-    width: 100%;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .hero__image {
     width: 100%;
+    max-width: 720px;
+    height: auto;
     border-radius: 36px;
     box-shadow: 0 35px 90px rgba(0, 0, 0, 0.55);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -220,9 +219,17 @@
     border-radius: 50%;
 }
 
-.dashboard__dot--red { background-color: #ef4444; }
-.dashboard__dot--yellow { background-color: #f59e0b; }
-.dashboard__dot--green { background-color: #10b981; }
+.dashboard__dot--red {
+    background-color: #ef4444;
+}
+
+.dashboard__dot--yellow {
+    background-color: #f59e0b;
+}
+
+.dashboard__dot--green {
+    background-color: #10b981;
+}
 
 .dashboard__address {
     margin-left: 0.5rem;
@@ -270,16 +277,24 @@
         grid-template-columns: 1fr;
         text-align: center;
     }
+
     .hero__content {
         align-items: center;
     }
+
     .hero__subtitle {
         margin: 0 auto;
     }
+
     .hero__buttons {
         justify-content: center;
     }
+
     .hero__social-proof {
         justify-content: center;
+    }
+
+    .hero__image {
+        max-width: 100%;
     }
 }

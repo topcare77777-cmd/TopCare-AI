@@ -1,44 +1,44 @@
 import BaseComponent
-from "./base.component.js";
+    from "./base.component.js";
 
 
 import ArticleService
-from "../services/article.service.js";
+    from "../services/article.service.js";
 
 
 
 class ArticleComponent
-extends BaseComponent{
+    extends BaseComponent {
 
 
-constructor(){
+    constructor() {
 
-super(
-"#articles"
-);
+        super(
+            "#articles"
+        );
 
-}
-
-
-
-
-
-async mount(){
-
-
-const articles =
-await ArticleService.getLatest();
+    }
 
 
 
-let html="";
+
+
+    async mount() {
+
+
+        const articles =
+            await ArticleService.getLatest();
 
 
 
-articles.forEach(article=>{
+        let html = "";
 
 
-html += `
+
+        articles.forEach(article => {
+
+
+            html += `
 
 
 <article class="article-card">
@@ -61,15 +61,15 @@ ${article.excerpt}
 
 
 
-});
+        });
 
 
 
-this.render(html);
+        this.render(html);
 
 
 
-}
+    }
 
 
 }

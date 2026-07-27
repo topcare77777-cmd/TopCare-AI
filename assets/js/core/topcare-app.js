@@ -1,6 +1,7 @@
 // assets/js/core/topcare-app.js
 import { Router } from '../router/router.js';
-import { CoachFrontendExperience } from '../coach/ui/coach-frontend-experience.js';
+import { CoachController } from '../coach/coach.js';
+import { MobileMenu } from './mobile-menu.js';
 
 export const TopCareApp = {
     initialized: false,
@@ -9,33 +10,25 @@ export const TopCareApp = {
         if (this.initialized) {
             return;
         }
+
+        const rootContainer = document.getElementById('main-content');
+        if (!rootContainer) {
+            return;
+        }
+
+        // 1. Initialize mobile menu interaction layer
+        MobileMenu.init();
+
+        // 2. Initialize Router core system
+        Router.init(rootContainer);
+
+        // 3. Bind Homepage AI Coach controller automatically if container exists
+        const coachContainer = document.getElementById('topcare-ai-coach-container');
+        if (coachContainer) {
+            CoachController.init(coachContainer);
+        }
+
         this.initialized = true;
-
-        this.initializeConfiguration();
-        this.initializeRouter();
-        this.initializeCoach();
-    },
-
-    initializeConfiguration() {
-        // Core configuration setup
-    },
-
-    initializeRouter() {
-        const mainContent = document.getElementById('main-content');
-        if (mainContent) {
-            Router.init(mainContent);
-        }
-    },
-
-    initializeCoach() {
-        try {
-            const container = document.getElementById('topcare-ai-coach-container');
-            if (container) {
-                CoachFrontendExperience.start(container);
-            }
-        } catch (error) {
-            console.error("Failed to initialize Coach:", error);
-        }
     }
 };
 

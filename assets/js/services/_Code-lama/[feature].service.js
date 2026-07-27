@@ -3,7 +3,7 @@
  * Feature Service Template
  */
 
-import FeatureRepository from '../repository/[feature].repository.js';
+import FeatureRepository from '../../repository/[feature].repository.js';
 
 const FeatureService = {
     async load() {

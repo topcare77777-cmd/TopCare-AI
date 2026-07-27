@@ -1,33 +1,44 @@
 // assets/js/pages/personality.page.js
+
+import { initPersonalityTest } from '../personality/personality-test.js';
+
 export const personalityPage = {
-    isMounted: false,
+
     container: null,
 
-    beforeEnter() {
-        // Lifecycle hook prior to mounting
-    },
+    beforeEnter() {},
 
-    mount(container) {
-        if (this.isMounted || !container) {
+    async mount(container) {
+
+        this.container = container;
+
+        if (!this.container) {
             return;
         }
-        this.container = container;
-        this.isMounted = true;
+
+        this.container.innerHTML = `
+            <div id="personality-test"
+                 style="width:100%; max-width:860px; margin:0 auto;">
+            </div>
+        `;
+
+        const target = this.container.querySelector(
+            '#personality-test'
+        );
+
+        if (target) {
+            await initPersonalityTest(target);
+        }
     },
 
-    afterEnter() {
-        // Lifecycle hook post mount completion
-    },
+    afterEnter() {},
 
-    beforeLeave() {
-        // Lifecycle hook prior to teardown
-    },
+    beforeLeave() {},
 
     destroy() {
-        if (!this.isMounted) {
-            return;
+        if (this.container) {
+            this.container.innerHTML = '';
         }
-        this.isMounted = false;
     },
 
     cleanup() {

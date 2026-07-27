@@ -1,7 +1,7 @@
 // assets/js/coach/ui/coach-widget.js
 /**
  * @file coach-widget.js
- * @description Renders a lightweight, fast, and mobile-friendly AI Coach widget for the Home Page.
+ * @description Renders a lightweight, fast, and mobile-friendly AI Coach widget for the Home Page and manages DOM rendering ownership using enterprise CSS classes.
  * @module Coach/UI/Widget
  */
 
@@ -49,5 +49,37 @@ export const CoachWidget = {
             layoutHint: deviceMode === "mobile" ? "compact_card" : "standard_widget",
             generatedAt: new Date().toISOString()
         };
+    },
+
+    render(container, userPersonality = null, deviceProfile = null) {
+        if (!container) return;
+
+        const data = this.renderWidget(userPersonality, deviceProfile);
+
+        const actionsHtml = data.actions.map(action => `
+            <button class="coach-button" data-action="${action.actionType}" data-coming-soon="true" disabled>
+                ${action.label}
+            </button>
+        `).join('');
+
+        container.innerHTML = `
+            <div class="coach-widget">
+                <div class="coach-header">
+                    <div class="coach-title-group">
+                        <div class="coach-online"></div>
+                        <span class="coach-title">${data.title}</span>
+                    </div>
+                    <span class="coach-badge-online">Online</span>
+                </div>
+                <div class="coach-message">
+                    <p>${data.message}</p>
+                </div>
+                <div class="coach-actions">
+                    ${actionsHtml}
+                </div>
+            </div>
+        `;
     }
 };
+
+export default CoachWidget;

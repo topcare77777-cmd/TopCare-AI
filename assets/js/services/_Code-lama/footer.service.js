@@ -4,7 +4,7 @@
  * Path: assets/js/services/footer.service.js
  */
 
-import FooterRepository from '../repository/footer.repository.js';
+import FooterRepository from '../../repository/footer.repository.js';
 
 const FooterService = {
     async load() {

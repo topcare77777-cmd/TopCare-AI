@@ -4,8 +4,8 @@
  * Path: assets/js/services/features.service.js
  */
 
-import FeaturesRepository from '../repository/features.repository.js';
-import Logger from '../core/logger.js';
+import FeaturesRepository from '../../repository/features.repository.js';
+import Logger from '../../core/logger.js';
 
 const FeaturesService = {
     async load() {

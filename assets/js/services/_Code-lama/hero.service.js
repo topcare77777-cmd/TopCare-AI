@@ -4,7 +4,7 @@
  * Path: assets/js/services/hero.service.js
  */
 
-import HeroRepository from '../repository/hero.repository.js';
+import HeroRepository from '../../repository/hero.repository.js';
 
 const HeroService = {
     async load() {

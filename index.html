@@ -35,9 +35,9 @@
     <link rel="stylesheet" href="assets/css/personality/personality-question.css">
     <link rel="stylesheet" href="assets/css/personality/personality-result.css">
     <link rel="stylesheet" href="assets/css/personality/personality-responsive.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-print.css">
+    <link rel="stylesheet" href="assets/css/pages/personality-print.css">
 
-    <!-- Application Shell Layout Stylesheet (Extracted Inline CSS) -->
+    <!-- Application Shell Layout Stylesheet -->
     <link rel="stylesheet" href="assets/css/layout/application-shell.css">
 </head>
 
@@ -49,6 +49,11 @@
                 <img src="assets/images/icons/brand-mark.svg" alt="TopCare AI Logo" class="brand-logo-img"
                     loading="eager">
             </a>
+            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
             <nav class="nav-links">
                 <a href="#/home" data-target="home" class="active">Beranda</a>
                 <a href="#/about" data-target="about">Tentang Kami</a>
@@ -122,16 +127,18 @@
             </div>
         </div>
         <div id="view-personality" class="page-view">
-            <div class="enterprise-section">
+            <div class="enterprise-section" style="width:100%; max-width:1200px; margin:0 auto; padding:2rem 1.5rem;">
                 <div class="section-header-box">
                     <h2>Personality Test & Temperamen</h2>
                     <p>Kenali potensi dasar diri Anda melalui pendekatan psikologi modern untuk memaksimalkan jalur
                         karir dan hubungan interpersonal.</p>
                 </div>
-                <div class="section-cta-wrap">
+                <div class="section-cta-wrap" style="margin-bottom: 2rem;">
                     <a href="#/personality-test" data-target="personality-test" class="btn-hero-primary">Ikuti Quiz
                         Personality AI &rarr;</a>
                 </div>
+                <!-- Dynamic Personality Component Mount Container -->
+                <div id="personality-container" style="width:100%;"></div>
             </div>
         </div>
         <!-- Kontainer Kuis Personality Test yang Diisolasi -->
