@@ -1,78 +1,154 @@
 /**
- * TopCare AI Platform V2.0.0
- * Audited SessionManager incorporating spanId alongside traceId and correlationId
- * Path: assets/js/auth/session/session.manager.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * File         : assets/js/auth/session/session.manager.js
+ * Layer        : Session Manager Service
+ * Status       : ACTIVE
+ * Version      : 1.1.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Centralized singleton manager handling active session lifecycle,
+ *                persistence, expiration checks, and promise-locked initialization.
+ * -----------------------------------------------------------------
  */
 
+import { LocalSessionRepository } from "./local-session.repository.js";
+import { SessionModel } from "./session.model.js";
+import Logger from "../../core/logger.js";
+
 class SessionManager {
-    constructor(storageKey = 'topcare_user_session_v3', clock = new SystemClock(), tokenGenerator = new CryptoTokenGenerator()) {
-        this.storageKey = storageKey;
-        this.clock = clock;
-        this.tokenGenerator = tokenGenerator;
+    constructor(sessionRepository = new LocalSessionRepository()) {
+        this.sessionRepository = sessionRepository;
         this.currentSession = null;
+        this._initialized = false;
+        this._initPromise = null;
     }
 
-    createSession(userEntity, token, rememberMe = false, telemetryCtx = {}) {
-        const now = this.clock.now();
-        const durationMs = rememberMe ? (7 * 24 * 60 * 60 * 1000) : (2 * 60 * 60 * 1000);
+    async init() {
+        if (this._initialized) {
+            return;
+        }
+        if (this._initPromise) {
+            return this._initPromise;
+        }
 
-        this.currentSession = Object.freeze({
-            sessionId: this.tokenGenerator.generateToken('sessid'),
-            userId: userEntity.userId,
-            token,
-            issuedAt: now,
-            expiresAt: now + durationMs,
-            deviceId: DeviceFingerprint.generate(),
-            rememberMe,
-            traceId: telemetryCtx.traceId || null,
-            spanId: telemetryCtx.spanId || null,
-            correlationId: telemetryCtx.correlationId || null
+        this._initPromise = (async () => {
+            try {
+                const session = await this.sessionRepository.load();
+                if (session) {
+                    if (session.isExpired()) {
+                        await this.end();
+                    } else {
+                        this.currentSession = session;
+                    }
+                }
+            } catch (error) {
+                Logger.error("[SessionManager] Initialization failed:", error);
+                this.currentSession = null;
+            } finally {
+                this._initialized = true;
+                this._initPromise = null;
+            }
+        })();
+
+        return this._initPromise;
+    }
+
+    async start(user, rememberMe = false) {
+        if (!user || !user.id) {
+            throw new Error("[SessionManager] Cannot start session without valid user data.");
+        }
+
+        const expiryDate = new Date();
+        if (!rememberMe) {
+            // Default 24 hours session expiry if rememberMe is false
+            expiryDate.setHours(expiryDate.getHours() + 24);
+        } else {
+            // Extended expiry for rememberMe (e.g., 30 days)
+            expiryDate.setDate(expiryDate.getDate() + 30);
+        }
+
+        const session = new SessionModel({
+            userId: user.id,
+            issuedAt: new Date().toISOString(),
+            expiresAt: expiryDate.toISOString(),
+            rememberMe
         });
 
-        const storage = rememberMe ? localStorage : sessionStorage;
-        try {
-            storage.setItem(this.storageKey, JSON.stringify(this.currentSession));
-        } catch (e) {
-            throw new PersistenceException("Failed to persist session state.");
+        const success = await this.sessionRepository.save(session);
+        if (success) {
+            this.currentSession = session;
+            Logger.info(`[SessionManager] Session started for user: ${user.id}`);
+            return true;
         }
-        return this.currentSession;
+        return false;
     }
 
-    restoreSession() {
-        if (this.currentSession) {
-            if (this.clock.now() > this.currentSession.expiresAt) {
-                this.destroySession();
-                return null;
-            }
-            return this.currentSession;
-        }
+    async restore() {
+        await this.init();
+        return this.current();
+    }
 
-        let raw = sessionStorage.getItem(this.storageKey) || localStorage.getItem(this.storageKey);
-        if (!raw) return null;
+    async end() {
+        await this.sessionRepository.clear();
+        this.currentSession = null;
+        Logger.info("[SessionManager] Session ended and cleared.");
+        return true;
+    }
 
-        try {
-            const parsed = JSON.parse(raw);
-            if (this.clock.now() > parsed.expiresAt) {
-                this.destroySession();
-                return null;
-            }
-            this.currentSession = Object.freeze(parsed);
-            return this.currentSession;
-        } catch (e) {
-            this.destroySession();
+    current() {
+        if (!this.currentSession) {
             return null;
         }
+        // Return cloned plain object representation or cloned model to prevent direct internal mutation
+        return new SessionModel(this.currentSession.toPlainObject());
     }
 
-    destroySession() {
-        this.currentSession = null;
-        try {
-            sessionStorage.removeItem(this.storageKey);
-            localStorage.removeItem(this.storageKey);
-        } catch (e) {}
+    async isAuthenticated() {
+        await this.init();
+        if (!this.currentSession) {
+            return false;
+        }
+        if (this.currentSession.isExpired()) {
+            await this.end();
+            return false;
+        }
+        return true;
     }
 
-    isAuthenticated() {
-        return this.restoreSession() !== null;
+    async isExpired() {
+        await this.init();
+        if (!this.currentSession) {
+            return true;
+        }
+        return this.currentSession.isExpired();
+    }
+
+    async refresh() {
+        await this.init();
+        if (!this.currentSession || this.currentSession.isExpired()) {
+            return false;
+        }
+
+        const expiryDate = new Date();
+        if (!this.currentSession.rememberMe) {
+            expiryDate.setHours(expiryDate.getHours() + 24);
+        } else {
+            expiryDate.setDate(expiryDate.getDate() + 30);
+        }
+
+        // Use immutable model extension
+        const updatedSession = this.currentSession.extendExpiration(expiryDate.toISOString());
+
+        const saved = await this.sessionRepository.update(updatedSession);
+        if (!saved) {
+            return false;
+        }
+
+        this.currentSession = updatedSession;
+        return true;
     }
 }
+
+export const sessionManager = new SessionManager();
+export default sessionManager;

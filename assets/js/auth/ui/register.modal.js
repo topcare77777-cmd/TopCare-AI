@@ -126,8 +126,14 @@ class RegisterModal {
     }
 
     open(container = document.body) { container.appendChild(this.element); }
+
     close() {
         document.removeEventListener('keydown', this._escapeListener);
-        if (this.element && this.element.parentNode) this.element.parentNode.removeChild(this.element);
+        if (this.element && this.element.parentNode) {
+            this.element.parentNode.removeChild(this.element);
+        }
     }
 }
+
+export { RegisterModal };
+export default RegisterModal;

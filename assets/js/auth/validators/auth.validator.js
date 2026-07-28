@@ -1,40 +1,77 @@
 /**
- * TopCare AI Platform V2.0.0
- * Composite AuthValidator (Facade pattern)
- * Path: assets/js/auth/validators/auth.validator.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Auth Validator Layer
+ * Status       : ACTIVE
+ * Version      : 2.0.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Enterprise Auth Validation Engine
+ * -----------------------------------------------------------------
  */
 
-class AuthValidator {
+export class AuthValidator {
     static validateEmail(email) {
-        return new EmailValidator().validate(email);
+        if (!email || typeof email !== "string") {
+            throw new Error("Email wajib diisi.");
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email.trim())) {
+            throw new Error("Format email tidak valid.");
+        }
+        return true;
     }
 
     static validatePassword(password) {
-        return new PasswordValidator().validate(password);
-    }
-
-    static validateConfirmPassword(password, confirmPassword) {
-        if (!confirmPassword) throw new ValidationError("Konfirmasi password wajib diisi.");
-        if (password !== confirmPassword) throw new ValidationError("Konfirmasi password tidak cocok.");
+        if (!password || typeof password !== "string") {
+            throw new Error("Password wajib diisi.");
+        }
+        if (password.length < 6) {
+            throw new Error("Password minimal harus 6 karakter.");
+        }
         return true;
     }
 
     static validateUsername(username) {
-        if (!username) throw new ValidationError("Username wajib diisi.");
-        if (username.length < 3) throw new ValidationError("Username minimal 3 karakter.");
+        if (!username || typeof username !== "string") {
+            throw new Error("Username wajib diisi.");
+        }
+        if (username.trim().length < 3) {
+            throw new Error("Username minimal harus 3 karakter.");
+        }
+        return true;
+    }
+
+    static validateConfirmPassword(password, confirmPassword) {
+        if (!confirmPassword || typeof confirmPassword !== "string") {
+            throw new Error("Konfirmasi password wajib diisi.");
+        }
+        if (password !== confirmPassword) {
+            throw new Error("Konfirmasi password tidak cocok.");
+        }
+        return true;
+    }
+
+    static validateOTP(otp) {
+        if (!otp || typeof otp !== "string") {
+            throw new Error("Kode OTP wajib diisi.");
+        }
+        if (otp.trim().length !== 6) {
+            throw new Error("Kode OTP harus 6 digit.");
+        }
         return true;
     }
 
     static validatePhone(phone) {
-        return new PhoneValidator().validate(phone);
-    }
-
-    static validateOTP(otp) {
-        return new OTPValidator().validate(otp);
-    }
-
-    static validateCaptcha(token) {
-        if (!token) throw new ValidationError("Verifikasi captcha wajib diselesaikan.");
+        if (!phone || typeof phone !== "string") {
+            throw new Error("Nomor telepon wajib diisi.");
+        }
+        const phoneRegex = /^[0-9]{10,15}$/;
+        if (!phoneRegex.test(phone.trim())) {
+            throw new Error("Format nomor telepon tidak valid.");
+        }
         return true;
     }
 }
+
+export default AuthValidator;

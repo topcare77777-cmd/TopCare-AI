@@ -4,14 +4,11 @@
  * -----------------------------------------------------------------
  * Layer        : Router Layer (Conductor)
  * Status       : ACTIVE
- * Version      : 2.6.1
+ * Version      : 2.7.0 (BUILD 095.4 Guard Integration)
  * Architecture : Development Constitution v1.1
  * Owner        : Router Conductor
- * Created      : BUILD 091.1 Router Runtime Hardening (Shell Isolation Fix)
- * 
- * Description  : Pure route conductor responsible for route registry, 
- *                module lifecycle execution, and ViewManager synchronization. 
- *                Corrects shell isolation conflict on full-screen routes.
+ * Description  : Pure route conductor integrated with Route Guards & Guest Guards
+ *                utilizing AuthObserver as the single source of truth.
  * -----------------------------------------------------------------
  */
 
@@ -20,9 +17,13 @@ import HomePage from '../pages/home.page.js';
 import { ViewManager } from '../core/view-manager.js';
 import { CoachController } from '../coach/coach.js';
 import { routerEngine } from './router.engine.js';
+import { protectedRouteGuard, guestRouteGuard } from '../auth/guards/index.js';
+import authUIController from '../auth/ui/auth.ui.controller.js';
+import Logger from '../core/logger.js';
 
 export const Router = {
     routes: {},
+    routeGuards: {},
     rootContainer: null,
     currentActiveRoute: '#/home',
     currentActiveModule: null,
@@ -43,7 +44,7 @@ export const Router = {
         const staticRoutes = [
             'about', 'learning', 'ebook', 'articles',
             'prompt', 'community', 'creator', 'marketplace',
-            'premium', 'faq', 'contact', 'login', 'register'
+            'premium', 'faq', 'contact'
         ];
 
         staticRoutes.forEach(route => {
@@ -52,6 +53,22 @@ export const Router = {
                 this.teardownCurrentModule();
             });
         });
+
+        // Register Guest-only routes with GuestRouteGuard (e.g. login, register if dedicated views)
+        const guestRoutes = ['login', 'register'];
+        guestRoutes.forEach(route => {
+            this.register(`/${route}`, () => {
+                ViewManager.restoreShell();
+                this.teardownCurrentModule();
+            }, guestRouteGuard);
+        });
+
+        // Register Protected routes example (e.g. dashboard)
+        this.register('/dashboard', () => {
+            ViewManager.restoreShell();
+            this.teardownCurrentModule();
+            // Dashboard mount logic can go here or via view activation
+        }, protectedRouteGuard);
 
         // Register Home page route with full lifecycle integration
         this.register('/home', async () => {
@@ -79,7 +96,7 @@ export const Router = {
             }
         });
 
-        // Register Personality Test route with dynamic import (Shell isolation handled by handleRouting)
+        // Register Personality Test route with dynamic import
         this.register('/personality-test', () => {
             this.teardownCurrentModule();
 
@@ -99,7 +116,7 @@ export const Router = {
                 .catch(err => console.error("Router: Failed to load personality-test.js", err));
         });
 
-        // Register Coach page route
+        // Register Coach page route (Protected example)
         this.register('/coach', () => {
             this.teardownCurrentModule();
             ViewManager.restoreShell();
@@ -108,9 +125,9 @@ export const Router = {
             if (viewCoach) {
                 CoachController.init(viewCoach);
             }
-        });
+        }, protectedRouteGuard);
 
-        // Attach this Router instance to RouterEngine and initialize engine (Single Authority)
+        // Attach this Router instance to RouterEngine and initialize engine
         routerEngine.attachRouter(this);
         routerEngine.init();
 
@@ -118,8 +135,11 @@ export const Router = {
         this.handleRouting();
     },
 
-    register(path, handler) {
+    register(path, handler, guard = null) {
         this.routes[path] = handler;
+        if (guard) {
+            this.routeGuards[path] = guard;
+        }
     },
 
     teardownCurrentModule() {
@@ -138,6 +158,34 @@ export const Router = {
     handleRouting() {
         const hash = window.location.hash || '#/home';
         const path = hash.replace('#', '');
+
+        // Evaluate Route Guard if present
+        const guard = this.routeGuards[path];
+        if (guard && typeof guard.canActivate === 'function') {
+            const evaluation = guard.canActivate();
+
+            if (!evaluation.allowed) {
+                Logger.info(`[Router] Navigation blocked for path: ${path}. Reason: ${evaluation.reason}`);
+
+                if (evaluation.reason === "AUTH_NOT_READY") {
+                    // Session restoration still pending, defer or hold gently
+                    return;
+                }
+
+                if (evaluation.reason === "AUTH_REQUIRED") {
+                    // Redirect to home/fallback and safely open login modal via UI controller
+                    window.location.hash = '#/home';
+                    authUIController.openLogin();
+                    return;
+                }
+
+                if (evaluation.reason === "ALREADY_AUTHENTICATED") {
+                    // Redirect active users away from guest-only pages back to home/dashboard
+                    window.location.hash = '#/home';
+                    return;
+                }
+            }
+        }
 
         // Teardown CoachController if leaving the coach route
         if (this.currentActiveRoute === '#/coach' && hash !== '#/coach') {

@@ -1,18 +1,40 @@
 /**
- * TopCare AI Platform V2.0.0
- * Logout UseCase
- * Path: assets/js/auth/usecases/logout.usecase.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * File         : assets/js/auth/usecases/logout.usecase.js
+ * Layer        : Business Use Case Layer
+ * Status       : ACTIVE
+ * Version      : 1.0.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Orchestrates session termination cleanly without side effects
+ *                such as DOM manipulation or UI redirects.
+ * -----------------------------------------------------------------
  */
 
-class LogoutUseCase {
-    constructor(sessionManager, eventBus) {
+import sessionManagerInstance from "../session/session.manager.js";
+
+export class LogoutUseCase {
+    constructor(sessionManager = sessionManagerInstance) {
         this.sessionManager = sessionManager;
-        this.eventBus = eventBus || globalAuthEventBus;
     }
 
-    execute() {
-        this.eventBus.dispatch(AUTH_EVENTS.LOGOUT_STARTED, {});
-        this.sessionManager.destroySession(AUTH_EVENTS.LOGOUT);
-        return { success: true };
+    async execute() {
+        try {
+            await this.sessionManager.end();
+            return {
+                success: true,
+                data: null,
+                error: null
+            };
+        } catch (error) {
+            return {
+                success: false,
+                data: null,
+                error: "SESSION_END_FAILED"
+            };
+        }
     }
 }
+
+export default LogoutUseCase;

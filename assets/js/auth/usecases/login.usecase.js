@@ -1,34 +1,67 @@
 /**
- * TopCare AI Platform V2.0.0
- * Login UseCase
- * Path: assets/js/auth/usecases/login.usecase.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * File         : assets/js/auth/usecases/login.usecase.js
+ * Layer        : Business Use Case Layer
+ * Status       : ACTIVE
+ * Version      : 1.0.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Orchestrates credential verification and active session
+ *                initialization upon successful login.
+ * -----------------------------------------------------------------
  */
 
-class LoginUseCase {
-    constructor(provider, sessionManager, eventBus) {
-        this.provider = provider;
+import { LocalAuthRepository } from "../repositories/local.auth.repository.js";
+import sessionManagerInstance from "../session/session.manager.js";
+
+export class LoginUseCase {
+    constructor(authRepository = new LocalAuthRepository(), sessionManager = sessionManagerInstance) {
+        this.authRepository = authRepository;
         this.sessionManager = sessionManager;
-        this.eventBus = eventBus || globalAuthEventBus;
     }
 
-    async execute(email, password) {
-        this.eventBus.dispatch(AUTH_EVENTS.LOGIN_STARTED, { email });
-
-        try {
-            AuthValidator.validateEmail(email);
-            AuthValidator.validatePassword(password);
-        } catch (err) {
-            this.eventBus.dispatch(AUTH_EVENTS.LOGIN_FAILED, { error: err.message });
-            throw err;
+    async execute(dto) {
+        if (!dto || !dto.identifier || !dto.password) {
+            return {
+                success: false,
+                data: null,
+                error: "INVALID_REQUEST_PAYLOAD"
+            };
         }
 
         try {
-            const result = await this.provider.login(email, password);
-            this.sessionManager.createSession(result.user, result.token);
-            return { success: true, user: result.user };
+            const user = await this.authRepository.verifyCredentials(dto.identifier, dto.password);
+            if (!user) {
+                return {
+                    success: false,
+                    data: null,
+                    error: "INVALID_CREDENTIALS"
+                };
+            }
+
+            const sessionStarted = await this.sessionManager.start(user, Boolean(dto.rememberMe));
+            if (!sessionStarted) {
+                return {
+                    success: false,
+                    data: null,
+                    error: "SESSION_START_FAILED"
+                };
+            }
+
+            return {
+                success: true,
+                data: user,
+                error: null
+            };
         } catch (error) {
-            this.eventBus.dispatch(AUTH_EVENTS.LOGIN_FAILED, { error: error.message });
-            throw error;
+            return {
+                success: false,
+                data: null,
+                error: "UNKNOWN_ERROR"
+            };
         }
     }
 }
+
+export default LoginUseCase;

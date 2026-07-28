@@ -1,31 +1,39 @@
-# Archive backup files
+# ==========================================================
+# TopCare AI Platform
+# ==========================================================
+
+# -------------------------
+# Backup & Archive
+# -------------------------
 *.zip
-*.txt
+*.bak
+*.tmp
 
-# Backup archives
-assets/*.zip
-
-# Temporary project tree (hapus baris ini jika ingin file tree ikut di Git)
+# Project tree export
 PROJECT-TREE-*.txt
 
+# -------------------------
+# Logs
+# -------------------------
+*.log
+
+# -------------------------
+# Deployment
+# -------------------------
+.vercel/
+
+# -------------------------
+# IDE
+# -------------------------
+.vscode/
+
+# -------------------------
 # Windows
+# -------------------------
 Thumbs.db
 Desktop.ini
 
+# -------------------------
 # macOS
+# -------------------------
 .DS_Store
-
-# IDE
-.vscode/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Temporary
-*.tmp
-*.bak
-
-# Logs
-*.log
-.vercel

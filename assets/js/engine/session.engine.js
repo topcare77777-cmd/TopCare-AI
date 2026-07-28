@@ -54,7 +54,7 @@ export class SessionEngine {
         const data = this.#loadSessionFromAnyStorage();
         if (data) {
             this.#sessionData = data;
-            this.#startIdleTimer();
+            this.#initIdleTimer();       // ✅ BENAR
             this.#bindActivityListeners();
         }
     }

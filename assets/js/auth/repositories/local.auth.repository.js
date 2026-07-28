@@ -1,45 +1,55 @@
 /**
- * TopCare AI Platform V2.0.0
- * LocalAuthRepository returning Result.ok() and Result.fail() consistently
- * Path: assets/js/auth/repositories/local.auth.repository.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ *File         : assets/js/auth/repositories/local.auth.repository.js
+ * Layer        : Auth Repository Local Implementation
+ * Status       : ACTIVE
+ * Version      : 2.2.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Concrete implementation handling authentication verification 
+ *                leveraging user repository query methods for lookup.
+ * -----------------------------------------------------------------
  */
 
-class LocalAuthRepository extends AuthRepositoryInterface {
-    constructor(provider, cacheProvider) {
-        super();
-        this.provider = provider;
-        this.cacheProvider = cacheProvider;
-        this.cacheKey = "user_profile_cache";
+import { LocalUserRepository } from "./local-user.repository.js";
+
+export class LocalAuthRepository {
+    constructor(userRepository = new LocalUserRepository()) {
+        this.userRepository = userRepository;
     }
 
-    async login(email, password) {
-        try {
-            const result = await this.provider.login(email, password);
-            const userModel = UserFactory.create(result.user);
-            this.cacheProvider.set(this.cacheKey, userModel.toJSON());
-            return Result.ok({ user: userModel.toJSON(), token: result.token });
-        } catch (e) {
-            return Result.fail(e.message || "Login repository failed.");
-        }
+    _comparePassword(inputPassword, storedPassword) {
+        // Abstracted password comparison to support future hashing algorithms (bcrypt/argon2)
+        return inputPassword === storedPassword;
     }
 
-    async register(name, email, password) {
-        try {
-            const result = await this.provider.register(name, email, password);
-            const userModel = UserFactory.create(result.user);
-            this.cacheProvider.set(this.cacheKey, userModel.toJSON());
-            return Result.ok({ user: userModel.toJSON(), token: result.token });
-        } catch (e) {
-            return Result.fail(e.message || "Register repository failed.");
+    async verifyCredentials(identifier, password) {
+        if (!identifier || !password) {
+            return null;
         }
+        const target = identifier.trim();
+
+        // Memanfaatkan method pencarian terpusat pada user repository
+        const user = target.includes("@")
+            ? await this.userRepository.findUserByEmail(target)
+            : await this.userRepository.findUserByUsername(target);
+
+        if (!user || !this._comparePassword(password, user.password)) {
+            return null; // Business outcome: credential mismatch returns null, not exception
+        }
+
+        // Return user payload without password for security
+        const { password: _, ...safeUser } = user;
+        return safeUser;
     }
 
-    async forgotPassword(email) {
-        try {
-            const res = await this.provider.forgotPassword(email);
-            return Result.ok(res);
-        } catch (e) {
-            return Result.fail(e.message || "Forgot password repository failed.");
+    async changePassword(userId, newPassword) {
+        if (!userId || !newPassword) {
+            throw new Error("User ID and new password are required.");
         }
+        return await this.userRepository.changePassword(userId, newPassword);
     }
 }
+
+export default LocalAuthRepository;
