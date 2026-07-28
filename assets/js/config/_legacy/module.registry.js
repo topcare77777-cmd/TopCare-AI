@@ -12,7 +12,7 @@ import TestimonialsModule from './testimonials.module.js';
 import PricingModule from '../modules/pricing.module.js';
 import FaqModule from '../modules/faq.module.js';
 import FooterModule from '../modules/footer.module.js';
-import Logger from '../core/logger.js';
+import Logger from '../../core/logger.js';
 
 const ModuleRegistry = {
     modules: new Map(),

@@ -3,11 +3,11 @@
  * Workflow Module
  * Path: assets/js/modules/workflow.module.js
  */
-import BaseModule from '../core/base.module.js';
-import WorkflowService from '../services/workflow.service.js';
-import WorkflowRenderer from '../renderers/workflow.renderer.js';
-import WorkflowComponent from '../components/workflow.component.js';
-import Logger from '../core/logger.js';
+import BaseModule from '../../core/base.module.js';
+import WorkflowService from '../../services/workflow.service.js';
+import WorkflowRenderer from '../../renderers/workflow.renderer.js';
+import WorkflowComponent from '../../components/workflow.component.js';
+import Logger from '../../core/logger.js';
 
 class WorkflowModuleClass extends BaseModule {
     constructor() {

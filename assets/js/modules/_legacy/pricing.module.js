@@ -3,11 +3,11 @@
  * Pricing Module
  * Path: assets/js/modules/pricing.module.js
  */
-import BaseModule from '../core/base.module.js';
-import PricingService from '../services/pricing.service.js';
-import PricingRenderer from '../renderers/pricing.renderer.js';
-import PricingComponent from '../components/pricing.component.js';
-import Logger from '../core/logger.js';
+import BaseModule from '../../core/base.module.js';
+import PricingService from '../../services/pricing.service.js';
+import PricingRenderer from '../../renderers/pricing.renderer.js';
+import PricingComponent from '../../components/pricing.component.js';
+import Logger from '../../core/logger.js';
 
 class PricingModuleClass extends BaseModule {
     constructor() {

@@ -3,11 +3,11 @@
  * Showcase Module
  * Path: assets/js/modules/showcase.module.js
  */
-import BaseModule from '../core/base.module.js';
-import ShowcaseService from '../services/showcase.service.js';
-import ShowcaseRenderer from '../renderers/showcase.renderer.js';
-import ShowcaseComponent from '../components/showcase.component.js';
-import Logger from '../core/logger.js';
+import BaseModule from '../../core/base.module.js';
+import ShowcaseService from '../../services/showcase.service.js';
+import ShowcaseRenderer from '../../renderers/showcase.renderer.js';
+import ShowcaseComponent from '../../components/showcase.component.js';
+import Logger from '../../core/logger.js';
 
 class ShowcaseModuleClass extends BaseModule {
     constructor() {

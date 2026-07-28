@@ -4,11 +4,11 @@
  * Path: assets/js/modules/footer.module.js
  */
 
-import BaseModule from '../core/base.module.js';
+import BaseModule from '../../core/base.module.js';
 import FooterService from '../services/footer.service.js';
-import FooterRenderer from '../renderers/footer.renderer.js';
+import FooterRenderer from '../../renderers/footer.renderer.js';
 import FooterComponent from '../components/footer.component.js';
-import MotionEngine from '../engine/motion.engine.js';
+import MotionEngine from '../../engine/motion.engine.js';
 
 class FooterModuleClass extends BaseModule {
     constructor() {

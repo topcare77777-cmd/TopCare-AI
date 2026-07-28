@@ -4,14 +4,14 @@
  * Path: assets/js/modules/hero.module.js
  */
 
-import BaseModule from '../core/base.module.js';
+import BaseModule from '../../core/base.module.js';
 import HeroService from '../services/hero.service.js';
-import HeroRenderer from '../renderers/hero.renderer.js';
+import HeroRenderer from '../../renderers/hero.renderer.js';
 import HeroComponent from '../components/hero.component.js';
-import MotionEngine from '../engine/motion.engine.js';
-import GlowEffect from '../performance/glow.effect.js';
-import Parallax from '../performance/parallax.js';
-import Logger from '../core/logger.js';
+import MotionEngine from '../../engine/motion.engine.js';
+import GlowEffect from '../../performance/glow.effect.js';
+import Parallax from '../../performance/parallax.js';
+import Logger from '../../core/logger.js';
 
 class HeroModuleClass extends BaseModule {
     constructor() {
