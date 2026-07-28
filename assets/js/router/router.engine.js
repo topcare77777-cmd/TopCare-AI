@@ -2,176 +2,167 @@
  * -----------------------------------------------------------------
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
- * Layer        : Router Layer
+ * Layer        : Router Layer (Enterprise Router Engine)
  * Status       : ACTIVE
- * Version      : 2.5.0
+ * Version      : 3.2.0
  * Architecture : Development Constitution v1.1
  * Owner        : Router Conductor
- * Last Updated : BUILD 090.1 Single Route Authority (RouterEngine Delegation)
+ * Created      : BUILD 091 Router Runtime Hardening
+ * 
+ * Description  : Enterprise Router Engine acting as the SINGLE owner 
+ *                of browser hashchange events, delegating execution 
+ *                exclusively to the Router conductor.
  * -----------------------------------------------------------------
  */
 
-import personalityPage from '../pages/personality.page.js';
-import HomePage from '../pages/home.page.js';
-import { ViewManager } from '../core/view-manager.js';
-import { CoachController } from '../coach/coach.js';
-import { routerEngine } from './router.engine.js';
+export class RouterEngine {
+    #currentRoute;
+    #previousRoute;
+    #listeners;
+    #routerInstance;
+    #initialized;
 
-export const Router = {
-    routes: {},
-    rootContainer: null,
-    currentActiveRoute: '#/home',
-    currentActiveModule: null,
-    initialized: false,
+    constructor() {
+        this.#currentRoute = '';
+        this.#previousRoute = '';
+        this.#listeners = new Set();
+        this.#routerInstance = null;
+        this.#initialized = false;
+    }
 
-    init(container) {
-        if (this.initialized) {
+    #normalizeRoute(route) {
+        if (!route || typeof route !== 'string') {
+            return '/home';
+        }
+
+        let cleaned = route.trim();
+
+        if (cleaned.startsWith('#/')) {
+            cleaned = cleaned.substring(1);
+        } else if (cleaned.startsWith('#')) {
+            cleaned = `/${cleaned.substring(1)}`;
+        }
+
+        if (!cleaned.startsWith('/')) {
+            cleaned = `/${cleaned}`;
+        }
+
+        if (cleaned.length > 1 && cleaned.endsWith('/')) {
+            cleaned = cleaned.slice(0, -1);
+        }
+
+        return cleaned;
+    }
+
+    #notify(route) {
+        for (const callback of this.#listeners) {
+            try {
+                if (typeof callback === 'function') {
+                    callback(route);
+                }
+            } catch (error) {
+                // Suppress listener notification faults
+            }
+        }
+    }
+
+    attachRouter(routerInstance) {
+        if (routerInstance) {
+            this.#routerInstance = routerInstance;
+        }
+    }
+
+    init() {
+        if (this.#initialized || typeof window === 'undefined') {
             return;
         }
+        this.#initialized = true;
 
-        this.rootContainer = container;
-        this.initialized = true;
+        const initialHash = window.location.hash;
+        const initialRoute = this.#normalizeRoute(initialHash || '/home');
 
-        // Initialize ViewManager with root container
-        ViewManager.init(container);
+        this.#currentRoute = initialRoute;
+        this.#previousRoute = initialRoute;
 
-        // Register static view routes using pure ViewManager toggling without forcing missing page modules
-        const staticRoutes = [
-            'about', 'learning', 'ebook', 'articles',
-            'prompt', 'community', 'creator', 'marketplace',
-            'premium', 'faq', 'contact', 'login', 'register'
-        ];
+        window.addEventListener('hashchange', () => {
+            const newHash = window.location.hash;
+            const targetRoute = this.#normalizeRoute(newHash || '/home');
 
-        staticRoutes.forEach(route => {
-            this.register(`/${route}`, () => {
-                ViewManager.restoreShell();
-                this.teardownCurrentModule();
-            });
-        });
+            if (targetRoute !== this.#currentRoute) {
+                this.#previousRoute = this.#currentRoute;
+                this.#currentRoute = targetRoute;
+                this.#notify(this.#currentRoute);
+            }
 
-        // Register Home page route with full lifecycle integration
-        this.register('/home', async () => {
-            ViewManager.restoreShell();
-            this.teardownCurrentModule();
-
-            const viewHome = document.getElementById('view-home');
-            if (viewHome) {
-                this.currentActiveModule = HomePage;
-                await HomePage.mount(viewHome);
+            if (this.#routerInstance && typeof this.#routerInstance.handleRouting === 'function') {
+                this.#routerInstance.handleRouting();
             }
         });
-
-        // Register Personality module route
-        this.register('/personality', () => {
-            ViewManager.restoreShell();
-            this.teardownCurrentModule();
-
-            const viewPersonality = document.getElementById('view-personality');
-            if (viewPersonality) {
-                this.currentActiveModule = personalityPage;
-                personalityPage.beforeEnter();
-                personalityPage.mount(viewPersonality);
-                personalityPage.afterEnter();
-            }
-        });
-
-        // Register Personality Test route with dynamic import
-        this.register('/personality-test', () => {
-            ViewManager.restoreShell();
-            this.teardownCurrentModule();
-
-            const testContainer = document.getElementById('personality-test');
-
-            import('../personality/personality-test.js')
-                .then((module) => {
-                    const initTest = module.initPersonalityTest || module.default;
-                    if (initTest && typeof initTest === 'function') {
-                        if (testContainer) {
-                            initTest(testContainer);
-                        } else {
-                            initTest();
-                        }
-                    }
-                })
-                .catch(err => console.error("Router: Failed to load personality-test.js", err));
-        });
-
-        // Register Coach page route
-        this.register('/coach', () => {
-            this.teardownCurrentModule();
-            ViewManager.restoreShell();
-
-            const viewCoach = document.getElementById('view-coach');
-            if (viewCoach) {
-                CoachController.init(viewCoach);
-            }
-        });
-
-        // Attach this Router instance to RouterEngine for centralized orchestration
-        routerEngine.attachRouter(this);
-        routerEngine.init();
-
-        // Trigger initial routing state evaluation
-        this.handleRouting();
-    },
-
-    register(path, handler) {
-        this.routes[path] = handler;
-    },
-
-    teardownCurrentModule() {
-        if (this.currentActiveModule && typeof this.currentActiveModule.beforeLeave === 'function') {
-            this.currentActiveModule.beforeLeave();
-            if (typeof this.currentActiveModule.destroy === 'function') {
-                this.currentActiveModule.destroy();
-            }
-            if (typeof this.currentActiveModule.cleanup === 'function') {
-                this.currentActiveModule.cleanup();
-            }
-            this.currentActiveModule = null;
-        }
-    },
-
-    handleRouting() {
-        const hash = window.location.hash || '#/home';
-        const path = hash.replace('#', '');
-
-        // Teardown CoachController if leaving the coach route
-        if (this.currentActiveRoute === '#/coach' && hash !== '#/coach') {
-            if (typeof CoachController.destroy === 'function') {
-                CoachController.destroy();
-            }
-        }
-
-        if (hash !== '#/personality') {
-            this.teardownCurrentModule();
-        }
-
-        this.currentActiveRoute = hash;
-
-        // Manage layout shell isolation or restoration via ViewManager
-        if (path === '/personality-test') {
-            ViewManager.isolateShell();
-        } else {
-            ViewManager.restoreShell();
-        }
-
-        // Delegate view activation to ViewManager FIRST
-        let viewId = path.replace('/', '') || 'home';
-        if (path === '/personality-test') {
-            viewId = 'personality-test';
-        }
-        ViewManager.activateView(viewId);
-
-        // Execute registered route handler asynchronously to respect lifecycle timing
-        if (this.routes[path]) {
-            setTimeout(() => {
-                this.routes[path]();
-            }, 0);
-        }
-
-        window.scrollTo({ top: 0, behavior: 'auto' });
     }
-};
 
-export default Router;
+    navigate(route) {
+        const normalized = this.#normalizeRoute(route);
+        if (typeof window !== 'undefined') {
+            window.location.hash = `#${normalized}`;
+        }
+    }
+
+    replace(route) {
+        const normalized = this.#normalizeRoute(route);
+        if (typeof window !== 'undefined' && window.location) {
+            const newUrl = `${window.location.pathname}${window.location.search}#${normalized}`;
+            if (typeof window.location.replace === 'function') {
+                window.location.replace(newUrl);
+            } else {
+                window.location.hash = `#${normalized}`;
+            }
+        }
+    }
+
+    back() {
+        if (typeof window !== 'undefined' && window.history) {
+            window.history.back();
+        }
+    }
+
+    forward() {
+        if (typeof window !== 'undefined' && window.history) {
+            window.history.forward();
+        }
+    }
+
+    reload() {
+        if (this.#routerInstance && typeof this.#routerInstance.handleRouting === 'function') {
+            this.#routerInstance.handleRouting();
+        }
+    }
+
+    getCurrentRoute() {
+        if (typeof window !== 'undefined') {
+            const hash = window.location.hash;
+            if (hash && hash !== '#' && hash !== '#/') {
+                this.#currentRoute = this.#normalizeRoute(hash);
+            }
+        }
+        return this.#currentRoute;
+    }
+
+    getPreviousRoute() {
+        return this.#previousRoute;
+    }
+
+    subscribe(callback) {
+        if (typeof callback === 'function') {
+            this.#listeners.add(callback);
+        }
+    }
+
+    unsubscribe(callback) {
+        if (callback) {
+            this.#listeners.delete(callback);
+        }
+    }
+}
+
+export const routerEngine = new RouterEngine();
+export default routerEngine;

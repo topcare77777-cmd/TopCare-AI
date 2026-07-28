@@ -2,12 +2,16 @@
  * -----------------------------------------------------------------
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
- * Layer        : Router Layer
+ * Layer        : Router Layer (Conductor)
  * Status       : ACTIVE
- * Version      : 2.4.2
+ * Version      : 2.6.1
  * Architecture : Development Constitution v1.1
  * Owner        : Router Conductor
- * Last Updated : BUILD 088.1 Patch
+ * Created      : BUILD 091.1 Router Runtime Hardening (Shell Isolation Fix)
+ * 
+ * Description  : Pure route conductor responsible for route registry, 
+ *                module lifecycle execution, and ViewManager synchronization. 
+ *                Corrects shell isolation conflict on full-screen routes.
  * -----------------------------------------------------------------
  */
 
@@ -15,6 +19,7 @@ import personalityPage from '../pages/personality.page.js';
 import HomePage from '../pages/home.page.js';
 import { ViewManager } from '../core/view-manager.js';
 import { CoachController } from '../coach/coach.js';
+import { routerEngine } from './router.engine.js';
 
 export const Router = {
     routes: {},
@@ -34,7 +39,7 @@ export const Router = {
         // Initialize ViewManager with root container
         ViewManager.init(container);
 
-        // Register static view routes using pure ViewManager toggling without forcing missing page modules
+        // Register static view routes using pure ViewManager toggling
         const staticRoutes = [
             'about', 'learning', 'ebook', 'articles',
             'prompt', 'community', 'creator', 'marketplace',
@@ -74,9 +79,8 @@ export const Router = {
             }
         });
 
-        // Register Personality Test route with dynamic import
+        // Register Personality Test route with dynamic import (Shell isolation handled by handleRouting)
         this.register('/personality-test', () => {
-            ViewManager.restoreShell();
             this.teardownCurrentModule();
 
             const testContainer = document.getElementById('personality-test');
@@ -106,7 +110,11 @@ export const Router = {
             }
         });
 
-        window.addEventListener('hashchange', () => this.handleRouting());
+        // Attach this Router instance to RouterEngine and initialize engine (Single Authority)
+        routerEngine.attachRouter(this);
+        routerEngine.init();
+
+        // Trigger initial routing state evaluation
         this.handleRouting();
     },
 
@@ -165,7 +173,7 @@ export const Router = {
             }, 0);
         }
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'auto' });
     }
 };
 
