@@ -1,66 +1,66 @@
 import Auth from "../core/auth.js";
 
-class SidebarService{
+class SidebarService {
 
-menu(){
+    menu() {
 
-const role=Auth.role();
+        const role = Auth.role();
 
-switch(role){
+        switch (role) {
 
-case "admin":
+            case "admin":
 
-return [
+                return [
 
-"Dashboard",
+                    "Dashboard",
 
-"Member",
+                    "Member",
 
-"Creator",
+                    "Creator",
 
-"Finance",
+                    "Finance",
 
-"Settings"
+                    "Settings"
 
-];
+                ];
 
-case "creator":
+            case "creator":
 
-return [
+                return [
 
-"Dashboard",
+                    "Dashboard",
 
-"My Product",
+                    "My Product",
 
-"Earning",
+                    "Earning",
 
-"Statistics"
+                    "Statistics"
 
-];
+                ];
 
-case "finance":
+            case "finance":
 
-return [
+                return [
 
-"Invoice",
+                    "Invoice",
 
-"Transaction",
+                    "Transaction",
 
-"Revenue"
+                    "Revenue"
 
-];
+                ];
 
-default:
+            default:
 
-return [
+                return [
 
-"Dashboard"
+                    "Dashboard"
 
-];
+                ];
 
-}
+        }
 
-}
+    }
 
 }
 

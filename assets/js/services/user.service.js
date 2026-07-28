@@ -1,37 +1,37 @@
 import JsonDatabase
-from "../core/json.database.js";
+    from "../core/json.database.js";
 
-class UserService{
+class UserService {
 
-async login(
+    async login(
 
-email,
-password
+        email,
+        password
 
-){
+    ) {
 
-const users=
+        const users =
 
-await JsonDatabase.load(
+            await JsonDatabase.load(
 
-"users"
+                "users"
 
-);
+            );
 
-const user=
+        const user =
 
-users.find(
+            users.find(
 
-u=>
+                u =>
 
-u.email===email &&
-u.password===password
+                    u.email === email &&
+                    u.password === password
 
-);
+            );
 
-return user??null;
+        return user ?? null;
 
-}
+    }
 
 }
 

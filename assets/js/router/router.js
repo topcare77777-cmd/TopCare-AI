@@ -1,5 +1,18 @@
-// assets/js/router/router.js
+/**
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Router Layer
+ * Status       : ACTIVE
+ * Version      : 2.4.1
+ * Architecture : Development Constitution v1.1
+ * Owner        : Router Conductor
+ * Last Updated : Sprint 46A.10
+ * -----------------------------------------------------------------
+ */
+
 import personalityPage from '../pages/personality.page.js';
+import HomePage from '../pages/home.page.js';
 import { ViewManager } from '../core/view-manager.js';
 import { CoachController } from '../coach/coach.js';
 
@@ -17,14 +30,14 @@ export const Router = {
 
         this.rootContainer = container;
         this.initialized = true;
-        
+
         // Initialize ViewManager with root container
         ViewManager.init(container);
 
         // Register static view routes using pure ViewManager toggling without forcing missing page modules
         const staticRoutes = [
-            'home', 'about', 'learning', 'ebook', 'articles', 
-            'prompt', 'community', 'creator', 'marketplace', 
+            'about', 'learning', 'ebook', 'articles',
+            'prompt', 'community', 'creator', 'marketplace',
             'premium', 'faq', 'contact', 'login', 'register'
         ];
 
@@ -33,6 +46,18 @@ export const Router = {
                 ViewManager.restoreShell();
                 this.teardownCurrentModule();
             });
+        });
+
+        // Register Home page route with full lifecycle integration
+        this.register('/home', async () => {
+            ViewManager.restoreShell();
+            this.teardownCurrentModule();
+
+            const viewHome = document.getElementById('view-home');
+            if (viewHome) {
+                this.currentActiveModule = HomePage;
+                await HomePage.mount(viewHome);
+            }
         });
 
         // Register Personality module route
@@ -55,7 +80,7 @@ export const Router = {
             this.teardownCurrentModule();
 
             const testContainer = document.getElementById('personality-test');
-            
+
             import('../personality/personality-test.js')
                 .then((module) => {
                     const initTest = module.initPersonalityTest || module.default;
@@ -74,7 +99,7 @@ export const Router = {
         this.register('/coach', () => {
             this.teardownCurrentModule();
             ViewManager.restoreShell();
-            
+
             const viewCoach = document.getElementById('view-coach');
             if (viewCoach) {
                 CoachController.init(viewCoach);

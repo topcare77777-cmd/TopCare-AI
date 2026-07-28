@@ -40,7 +40,7 @@ const CoachComponent = {
 
     async mount(container) {
         if (!container) return;
-        
+
         if (this.container !== container) {
             this.container = container;
         }
@@ -59,7 +59,7 @@ const CoachComponent = {
 
     async update() {
         if (!this.isMounted || !this.container) return;
-        
+
         try {
             if (typeof CoachWidget.refresh === 'function') {
                 await CoachWidget.refresh();
@@ -98,4 +98,4 @@ const CoachComponent = {
     }
 };
 
-export default Object.freeze(CoachComponent);
+export default CoachComponent;

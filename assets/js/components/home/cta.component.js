@@ -98,4 +98,4 @@ const CTAComponent = {
     }
 };
 
-export default Object.freeze(CTAComponent);
+export default CTAComponent;

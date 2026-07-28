@@ -4,7 +4,7 @@
  * Path: assets/js/services/cta.service.js
  */
 
-import CtaRepository from '../repository/cta.repository.js';
+import CtaRepository from '../../repository/cta.repository.js';
 
 const CtaService = {
     async load() {

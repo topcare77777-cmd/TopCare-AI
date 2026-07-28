@@ -98,4 +98,4 @@ const HeroComponent = {
     }
 };
 
-export default Object.freeze(HeroComponent);
+export default HeroComponent;

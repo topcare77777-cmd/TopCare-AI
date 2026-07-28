@@ -40,7 +40,7 @@ const FeatureComponent = {
 
     async mount(container) {
         if (!container) return;
-        
+
         if (this.container !== container) {
             this.container = container;
         }
@@ -59,7 +59,7 @@ const FeatureComponent = {
 
     async update() {
         if (!this.isMounted || !this.container) return;
-        
+
         try {
             if (typeof FeatureWidget.refresh === 'function') {
                 await FeatureWidget.refresh();
@@ -98,4 +98,4 @@ const FeatureComponent = {
     }
 };
 
-export default Object.freeze(FeatureComponent);
+export default FeatureComponent;

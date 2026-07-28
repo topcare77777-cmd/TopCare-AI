@@ -7,12 +7,12 @@
  * Version      : 2.3.0
  * Owner        : Home Module
  * Created      : Sprint 46A
- * Last Updated : Sprint 46A.6
+ * Last Updated : Sprint 46A.7
  *
  * Architecture : Development Constitution v1.1
  * Pattern      : Conductor Component
- * Migration    : SPRINT 46A
- * Revision     : 46A.6
+ * Migration    : SPRINT 46A.7
+ * Revision     : 46A.7
  * Runtime      : V2 Runtime
  * Compatible   : TopCare AI Runtime 2.x
  *
@@ -40,7 +40,7 @@ const AboutComponent = {
 
     async mount(container) {
         if (!container) return;
-        
+
         if (this.container !== container) {
             this.container = container;
         }
@@ -59,7 +59,7 @@ const AboutComponent = {
 
     async update() {
         if (!this.isMounted || !this.container) return;
-        
+
         try {
             if (typeof AboutWidget.refresh === 'function') {
                 await AboutWidget.refresh();
@@ -98,4 +98,4 @@ const AboutComponent = {
     }
 };
 
-export default Object.freeze(AboutComponent);
+export default AboutComponent;

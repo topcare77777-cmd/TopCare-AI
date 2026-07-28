@@ -5,10 +5,6 @@
  * Layer        : Layer 4.5 - Component
  * Status       : ACTIVE
  * Version      : 2.3.0
- * Owner        : Home Module
- * Created      : Sprint 46A
- * Last Updated : Sprint 46A.7
- *
  * Architecture : Development Constitution v1.1
  * Pattern      : Conductor Component
  * Migration    : SPRINT 46A.7
@@ -98,4 +94,4 @@ const FooterComponent = {
     }
 };
 
-export default Object.freeze(FooterComponent);
+export default FooterComponent;
