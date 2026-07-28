@@ -1,210 +1,177 @@
 /**
- * @file router.engine.js
- * @description Enterprise Router Engine managing Single Page Application navigation history,
- * state tracking, hash synchronization, subscription listeners, and router instance orchestration.
- * @module Router/RouterEngine
- * @version 3.0.0
- * @status Production Ready
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Router Layer
+ * Status       : ACTIVE
+ * Version      : 2.5.0
+ * Architecture : Development Constitution v1.1
+ * Owner        : Router Conductor
+ * Last Updated : BUILD 090.1 Single Route Authority (RouterEngine Delegation)
+ * -----------------------------------------------------------------
  */
 
-export class RouterEngine {
-    #currentRoute;
-    #previousRoute;
-    #listeners;
-    #routerInstance;
+import personalityPage from '../pages/personality.page.js';
+import HomePage from '../pages/home.page.js';
+import { ViewManager } from '../core/view-manager.js';
+import { CoachController } from '../coach/coach.js';
+import { routerEngine } from './router.engine.js';
 
-    /**
-     * Creates an instance of RouterEngine.
-     */
-    constructor() {
-        this.#currentRoute = '';
-        this.#previousRoute = '';
-        this.#listeners = new Set();
-        this.#routerInstance = null;
-    }
+export const Router = {
+    routes: {},
+    rootContainer: null,
+    currentActiveRoute: '#/home',
+    currentActiveModule: null,
+    initialized: false,
 
-    /**
-     * Normalizes a route string into a standardized path format.
-     * @private
-     * @param {string} route - Raw route string.
-     * @returns {string} Normalized route path.
-     */
-    #normalizeRoute(route) {
-        if (!route || typeof route !== 'string') {
-            return '/login';
-        }
-
-        let cleaned = route.trim();
-
-        if (cleaned.startsWith('#/')) {
-            cleaned = cleaned.substring(1);
-        } else if (cleaned.startsWith('#')) {
-            cleaned = `/${cleaned.substring(1)}`;
-        }
-
-        if (!cleaned.startsWith('/')) {
-            cleaned = `/${cleaned}`;
-        }
-
-        if (cleaned.length > 1 && cleaned.endsWith('/')) {
-            cleaned = cleaned.slice(0, -1);
-        }
-
-        return cleaned;
-    }
-
-    /**
-     * Notifies all registered subscription listeners of a route change.
-     * @private
-     * @param {string} route - Current route path.
-     */
-    #notify(route) {
-        for (const callback of this.#listeners) {
-            try {
-                if (typeof callback === 'function') {
-                    callback(route);
-                }
-            } catch (error) {
-                // Suppress listener notification faults
-            }
-        }
-    }
-
-    /**
-     * Attaches the Router instance to the RouterEngine.
-     * @param {Object} routerInstance - Router instance.
-     */
-    attachRouter(routerInstance) {
-        if (routerInstance) {
-            this.#routerInstance = routerInstance;
-        }
-    }
-
-    /**
-     * Initializes the router engine, reads initial hash state, and binds the sole hashchange listener.
-     */
-    init() {
-        if (typeof window === 'undefined') {
+    init(container) {
+        if (this.initialized) {
             return;
         }
 
-        const initialHash = window.location.hash;
-        const initialRoute = this.#normalizeRoute(initialHash || '/login');
+        this.rootContainer = container;
+        this.initialized = true;
 
-        this.#currentRoute = initialRoute;
-        this.#previousRoute = initialRoute;
+        // Initialize ViewManager with root container
+        ViewManager.init(container);
 
-        window.addEventListener('hashchange', () => {
-            const newHash = window.location.hash;
-            const targetRoute = this.#normalizeRoute(newHash || '/login');
+        // Register static view routes using pure ViewManager toggling without forcing missing page modules
+        const staticRoutes = [
+            'about', 'learning', 'ebook', 'articles',
+            'prompt', 'community', 'creator', 'marketplace',
+            'premium', 'faq', 'contact', 'login', 'register'
+        ];
 
-            if (targetRoute !== this.#currentRoute) {
-                this.#previousRoute = this.#currentRoute;
-                this.#currentRoute = targetRoute;
-                this.#notify(this.#currentRoute);
-            }
+        staticRoutes.forEach(route => {
+            this.register(`/${route}`, () => {
+                ViewManager.restoreShell();
+                this.teardownCurrentModule();
+            });
+        });
 
-            if (this.#routerInstance && typeof this.#routerInstance.render === 'function') {
-                this.#routerInstance.render();
+        // Register Home page route with full lifecycle integration
+        this.register('/home', async () => {
+            ViewManager.restoreShell();
+            this.teardownCurrentModule();
+
+            const viewHome = document.getElementById('view-home');
+            if (viewHome) {
+                this.currentActiveModule = HomePage;
+                await HomePage.mount(viewHome);
             }
         });
-    }
 
-    /**
-     * Navigates to a target route by normalizing and updating the location hash.
-     * @param {string} route - Target route path.
-     */
-    navigate(route) {
-        const normalized = this.#normalizeRoute(route);
-        if (typeof window !== 'undefined') {
-            window.location.hash = `#${normalized}`;
+        // Register Personality module route
+        this.register('/personality', () => {
+            ViewManager.restoreShell();
+            this.teardownCurrentModule();
+
+            const viewPersonality = document.getElementById('view-personality');
+            if (viewPersonality) {
+                this.currentActiveModule = personalityPage;
+                personalityPage.beforeEnter();
+                personalityPage.mount(viewPersonality);
+                personalityPage.afterEnter();
+            }
+        });
+
+        // Register Personality Test route with dynamic import
+        this.register('/personality-test', () => {
+            ViewManager.restoreShell();
+            this.teardownCurrentModule();
+
+            const testContainer = document.getElementById('personality-test');
+
+            import('../personality/personality-test.js')
+                .then((module) => {
+                    const initTest = module.initPersonalityTest || module.default;
+                    if (initTest && typeof initTest === 'function') {
+                        if (testContainer) {
+                            initTest(testContainer);
+                        } else {
+                            initTest();
+                        }
+                    }
+                })
+                .catch(err => console.error("Router: Failed to load personality-test.js", err));
+        });
+
+        // Register Coach page route
+        this.register('/coach', () => {
+            this.teardownCurrentModule();
+            ViewManager.restoreShell();
+
+            const viewCoach = document.getElementById('view-coach');
+            if (viewCoach) {
+                CoachController.init(viewCoach);
+            }
+        });
+
+        // Attach this Router instance to RouterEngine for centralized orchestration
+        routerEngine.attachRouter(this);
+        routerEngine.init();
+
+        // Trigger initial routing state evaluation
+        this.handleRouting();
+    },
+
+    register(path, handler) {
+        this.routes[path] = handler;
+    },
+
+    teardownCurrentModule() {
+        if (this.currentActiveModule && typeof this.currentActiveModule.beforeLeave === 'function') {
+            this.currentActiveModule.beforeLeave();
+            if (typeof this.currentActiveModule.destroy === 'function') {
+                this.currentActiveModule.destroy();
+            }
+            if (typeof this.currentActiveModule.cleanup === 'function') {
+                this.currentActiveModule.cleanup();
+            }
+            this.currentActiveModule = null;
         }
-    }
+    },
 
-    /**
-     * Replaces the current history entry hash without creating a new history state stack record.
-     * @param {string} route - Target route path.
-     */
-    replace(route) {
-        const normalized = this.#normalizeRoute(route);
-        if (typeof window !== 'undefined' && window.location) {
-            const newUrl = `${window.location.pathname}${window.location.search}#${normalized}`;
-            if (typeof window.location.replace === 'function') {
-                window.location.replace(newUrl);
-            } else {
-                window.location.hash = `#${normalized}`;
+    handleRouting() {
+        const hash = window.location.hash || '#/home';
+        const path = hash.replace('#', '');
+
+        // Teardown CoachController if leaving the coach route
+        if (this.currentActiveRoute === '#/coach' && hash !== '#/coach') {
+            if (typeof CoachController.destroy === 'function') {
+                CoachController.destroy();
             }
         }
-    }
 
-    /**
-     * Navigates backward in the browser history stack.
-     */
-    back() {
-        if (typeof window !== 'undefined' && window.history) {
-            window.history.back();
+        if (hash !== '#/personality') {
+            this.teardownCurrentModule();
         }
-    }
 
-    /**
-     * Navigates forward in the browser history stack.
-     */
-    forward() {
-        if (typeof window !== 'undefined' && window.history) {
-            window.history.forward();
+        this.currentActiveRoute = hash;
+
+        // Manage layout shell isolation or restoration via ViewManager
+        if (path === '/personality-test') {
+            ViewManager.isolateShell();
+        } else {
+            ViewManager.restoreShell();
         }
-    }
 
-    /**
-     * Triggers a manual reload/re-render of the current route through the attached router.
-     */
-    reload() {
-        if (this.#routerInstance && typeof this.#routerInstance.render === 'function') {
-            this.#routerInstance.render();
+        // Delegate view activation to ViewManager FIRST
+        let viewId = path.replace('/', '') || 'home';
+        if (path === '/personality-test') {
+            viewId = 'personality-test';
         }
-    }
+        ViewManager.activateView(viewId);
 
-    /**
-     * Retrieves the current active route.
-     * @returns {string} Current route path.
-     */
-    getCurrentRoute() {
-        if (typeof window !== 'undefined') {
-            const hash = window.location.hash;
-            if (hash && hash !== '#' && hash !== '#/') {
-                this.#currentRoute = this.#normalizeRoute(hash);
-            }
+        // Execute registered route handler asynchronously to respect lifecycle timing
+        if (this.routes[path]) {
+            setTimeout(() => {
+                this.routes[path]();
+            }, 0);
         }
-        return this.#currentRoute;
-    }
 
-    /**
-     * Retrieves the previously active route.
-     * @returns {string} Previous route path.
-     */
-    getPreviousRoute() {
-        return this.#previousRoute;
+        window.scrollTo({ top: 0, behavior: 'auto' });
     }
+};
 
-    /**
-     * Subscribes a callback function to route change events.
-     * @param {Function} callback - Callback function receiving the new route string.
-     */
-    subscribe(callback) {
-        if (typeof callback === 'function') {
-            this.#listeners.add(callback);
-        }
-    }
-
-    /**
-     * Unsubscribes a callback function from route change events.
-     * @param {Function} callback - Registered callback function.
-     */
-    unsubscribe(callback) {
-        if (callback) {
-            this.#listeners.delete(callback);
-        }
-    }
-}
-
-export const routerEngine = new RouterEngine();
+export default Router;
