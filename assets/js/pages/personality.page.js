@@ -4,11 +4,11 @@
  * -----------------------------------------------------------------
  * Layer        : Layer 4 - Page
  * Status       : ACTIVE
- * Version      : 2.4.0
+ * Version      : 2.5.0
  * Architecture : Development Constitution v1.1
  * Owner        : Personality Landing Page Conductor
  * Created      : Sprint 46A
- * Last Updated : Sprint 46A.10
+ * Last Updated : BUILD 092.2 Personality Lifecycle Hardening
  *
  * Pattern      : Page Conductor (Layer 4)
  * Compatible   : TopCare AI Runtime 2.x
@@ -17,6 +17,9 @@
  *   init()
  *   mount(container)
  *   render(container)
+ *   beforeEnter()
+ *   afterEnter()
+ *   beforeLeave()
  *   destroy()
  *   cleanup()
  * -----------------------------------------------------------------
@@ -25,6 +28,7 @@
 export const personalityPage = {
     container: null,
     isMounted: false,
+    boundCtaHandler: null,
 
     init() {
         // Initialization hook for backward compatibility
@@ -37,9 +41,19 @@ export const personalityPage = {
     async render(container) {
         if (!container) return;
 
+        // Mount protection: prevent duplicate rendering if already mounted on the same container
+        if (this.isMounted && this.container === container) {
+            return;
+        }
+
+        // If mounted elsewhere, cleanup first
+        if (this.isMounted) {
+            this.destroy();
+        }
+
         this.container = container;
 
-        // Render pure introduction/landing view without executing quiz logic
+        // Render introduction/landing view with UTF-8 encoding corrections
         this.container.innerHTML = `
             <div class="enterprise-section personality-landing-wrapper" style="width:100%; max-width:900px; margin:0 auto; padding:3rem 1.5rem; text-align:center;">
                 <div class="section-header-box" style="margin-bottom: 2rem;">
@@ -67,7 +81,7 @@ export const personalityPage = {
                     </div>
 
                     <button id="start-personality-cta" class="btn-hero-primary" style="background: #2563eb; color: #fff; border: none; padding: 0.85rem 2.5rem; font-size: 1rem; font-weight: 600; border-radius: 999px; cursor: pointer; transition: background 0.2s ease; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
-                        Mulai Test Kepribadian &rarr;
+                        Mulai Tes Kepribadian &rarr;
                     </button>
                 </div>
             </div>
@@ -75,9 +89,11 @@ export const personalityPage = {
 
         const ctaButton = this.container.querySelector('#start-personality-cta');
         if (ctaButton) {
-            ctaButton.addEventListener('click', () => {
+            // Define named handler for proper event cleanup and duplication prevention
+            this.boundCtaHandler = () => {
                 window.location.hash = '#/personality-test';
-            });
+            };
+            ctaButton.addEventListener('click', this.boundCtaHandler);
         }
 
         this.isMounted = true;
@@ -90,6 +106,15 @@ export const personalityPage = {
     beforeLeave() { },
 
     destroy() {
+        // Cleanup event listeners before wiping markup
+        if (this.container && this.boundCtaHandler) {
+            const ctaButton = this.container.querySelector('#start-personality-cta');
+            if (ctaButton) {
+                ctaButton.removeEventListener('click', this.boundCtaHandler);
+            }
+        }
+        this.boundCtaHandler = null;
+
         if (this.container) {
             this.container.innerHTML = '';
         }
@@ -97,8 +122,8 @@ export const personalityPage = {
     },
 
     cleanup() {
+        this.destroy();
         this.container = null;
-        this.isMounted = false;
     }
 };
 
