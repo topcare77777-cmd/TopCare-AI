@@ -4,10 +4,10 @@
  * -----------------------------------------------------------------
  * Layer        : Router Layer
  * Status       : ACTIVE
- * Version      : 2.4.1
+ * Version      : 2.4.2
  * Architecture : Development Constitution v1.1
  * Owner        : Router Conductor
- * Last Updated : Sprint 46A.10
+ * Last Updated : BUILD 088.1 Patch
  * -----------------------------------------------------------------
  */
 

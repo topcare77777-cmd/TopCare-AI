@@ -1,176 +1,244 @@
-/* ===================================================================
-   TopCare AI Platform V2.0.0 RC1
-   Phase 4B: assets/css/layout/header.css
-   Layout & Spacing Stabilization using Enterprise Design Tokens
-   ================================================================== */
+/**
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Layout CSS (Header)
+ * Status       : ACTIVE
+ * Version      : 2.0.0
+ * Architecture : Development Constitution v1.1
+ * Owner        : Frontend Core Team
+ * -----------------------------------------------------------------
+ */
 
-.site-header,
-.site-header * {
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    width: 100%;
     box-sizing: border-box;
 }
 
-.site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: var(--z-index-fixed, 1000);
-    min-width: 0;
+.site-header *,
+.site-header *::before,
+.site-header *::after {
+    box-sizing: border-box;
 }
 
 .header-container {
-    max-width: var(--layout-max-width, 1320px);
-    margin-inline: auto;
+    max-width: 1320px;
+    width: 100%;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 0.75rem 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--space-sm) var(--space-lg);
-    width: 100%;
-    min-width: 0;
+    position: relative;
 }
 
 .brand-wrapper {
     display: flex;
     align-items: center;
-    gap: var(--space-sm);
     text-decoration: none;
-    min-width: 0;
-}
-
-.brand-logo-img {
-    width: 32px;
-    height: 32px;
-    object-fit: contain;
     flex-shrink: 0;
 }
 
-.brand-title {
-    font-size: 1.125rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+.brand-logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
 }
 
 .nav-links {
     display: flex;
-    gap: var(--space-md);
+    flex: 1;
+    justify-content: center;
     align-items: center;
-    font-size: 0.813rem;
-    font-weight: 500;
+    gap: 1rem;
     min-width: 0;
+    margin: 0 1rem;
+    overflow: hidden;
 }
 
 .nav-links a {
+    color: #94a3b8;
     text-decoration: none;
-    transition: color 0.2s ease;
+    font-size: 0.85rem;
+    font-weight: 500;
     white-space: nowrap;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: #ffffff;
 }
 
 .auth-actions {
     display: flex;
     align-items: center;
-    gap: var(--space-md);
-    min-width: 0;
+    gap: 1rem;
+    flex-shrink: 0;
 }
 
 .lang-badge {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-full, 999px);
-    font-size: 0.75rem;
+    color: #cbd5e1;
+    font-size: 0.85rem;
     cursor: pointer;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .nav-link-signin {
-    font-size: 0.85rem;
-    font-weight: 600;
+    color: #cbd5e1;
     text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
     white-space: nowrap;
 }
 
 .btn-primary-custom {
-    padding: var(--space-xs) var(--space-md);
-    border-radius: var(--radius-full, 999px);
-    font-weight: 600;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
     font-size: 0.85rem;
+    font-weight: 600;
     text-decoration: none;
     white-space: nowrap;
+    transition: opacity 0.2s ease;
 }
 
-/* Accessibility Focus Support */
-.nav-links a:focus-visible,
-.nav-link-signin:focus-visible,
-.btn-primary-custom:focus-visible {
-    outline: 2px solid var(--color-primary, #2563eb);
-    outline-offset: 2px;
+.btn-primary-custom:hover {
+    opacity: 0.9;
 }
 
-/* Reduced Motion Support */
-@media (prefers-reduced-motion: reduce) {
-    .nav-links a {
-        transition: none;
-    }
+.mobile-menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 32px;
+    height: 28px;
+    flex-shrink: 0;
 }
 
-/* Responsive Media Queries & Breakpoint Support */
+.hamburger-bar {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #cbd5e1;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
 @media (max-width: 1320px) {
     .header-container {
-        padding: var(--space-sm) var(--space-md);
+        max-width: 1100px;
+    }
+
+    .nav-links {
+        gap: 0.75rem;
+    }
+
+    .nav-links a {
+        font-size: 0.8rem;
     }
 }
 
 @media (max-width: 1100px) {
+    .header-container {
+        max-width: 1024px;
+        padding: 0.75rem 1.25rem;
+    }
+
     .nav-links {
-        gap: var(--space-sm);
+        gap: 0.5rem;
+    }
+
+    .nav-links a {
         font-size: 0.75rem;
     }
 }
 
 @media (max-width: 1024px) {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
     .nav-links {
         display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(16px);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.5rem 2rem;
+        gap: 1rem;
+        margin: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        overflow: visible;
+    }
+
+    .nav-links.is-open {
+        display: flex;
+    }
+
+    .nav-links a {
+        font-size: 1rem;
+        width: 100%;
+        padding: 0.25rem 0;
+        white-space: normal;
     }
 }
 
 @media (max-width: 768px) {
     .header-container {
-        padding: var(--space-xs) var(--space-md);
+        padding: 0.75rem 1rem;
     }
-    .auth-actions {
-        gap: var(--space-sm);
-    }
-}
 
-@media (max-width: 480px) {
-    .header-container {
-        padding: var(--space-xs) var(--space-sm);
-    }
     .auth-actions {
-        gap: var(--space-xs);
+        gap: 0.75rem;
     }
+
     .lang-badge {
         display: none;
     }
 }
 
-@media (max-width: 360px) {
-    .brand-title {
+@media (max-width: 480px) {
+    .brand-logo-img {
+        height: 28px;
+    }
+
+    .nav-link-signin {
         display: none;
+    }
+
+    .btn-primary-custom {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.8rem;
     }
 }
 
-/* ===================================================================
-   SELF-VALIDATION CHECKLIST
-   1. DOM Contract: All exact class names preserved.
-   2. Layout Only: Strictly spacing, gap, flex, alignment, width, overflow protection.
-   3. Token Compliance: Spacing uses var(--space-*), radius & z-index use design tokens.
-   4. Accessibility: :focus-visible and prefers-reduced-motion fully supported.
-   5. Responsive Support: Breakpoints covered (1320+, 1100, 1024, 768, 480, 360).
-   6. File Size: Well under 500 lines.
-   ================================================================== */
+@media (max-width: 360px) {
+    .header-container {
+        padding: 0.5rem 0.75rem;
+    }
 
-STATUS:
-READY FOR FINAL LOCK
+    .brand-logo-img {
+        height: 24px;
+    }
+}

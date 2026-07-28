@@ -1,39 +1,68 @@
-init() {
-        if (this.#initialized) {
+/**
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Application Boot Layer (Bootstrap)
+ * Status       : ACTIVE
+ * Version      : 2.1.0
+ * Architecture : Development Constitution v1.1
+ * Owner        : Frontend Core Team
+ *
+ * Description  : Core application bootstrap service module.
+ *                Initializes application runtime entry points safely.
+ * -----------------------------------------------------------------
+ */
+
+export const Bootstrap = {
+    initialized: false,
+
+    /**
+     * Initializes application runtime lifecycle.
+     */
+    init() {
+        if (this.initialized) {
             return true;
         }
 
         try {
-            if (typeof document === 'undefined' || typeof window === 'undefined') {
+            if (
+                typeof window === 'undefined' ||
+                typeof document === 'undefined'
+            ) {
                 return false;
             }
 
-            let rootContainer = document.getElementById('app');
+            const rootContainer =
+                document.getElementById('app');
+
             if (!rootContainer) {
-                rootContainer = document.createElement('div');
-                rootContainer.id = 'app';
-                document.body.appendChild(rootContainer);
+                console.warn(
+                    '[Bootstrap] Application root container missing.'
+                );
+                return false;
             }
 
-            if (routerEngine && typeof routerEngine.init === 'function') {
-                routerEngine.init();
-            }
+            this.initialized = true;
 
-            if (routerEngine && typeof routerEngine.attachRouter === 'function' && router) {
-                routerEngine.attachRouter(router);
-            }
-
-            if (router && typeof router.init === 'function') {
-                router.init(rootContainer);
-            }
-
-            this.#initialized = true;
             return true;
+
         } catch (error) {
+
+            console.error(
+                '[Bootstrap] Initialization failed:',
+                error
+            );
+
             return false;
         }
-    }
-```[cite: 6]
+    },
 
-### Why That Location Is Correct
-Inserting `routerEngine.attachRouter(router)` immediately after `routerEngine.init()` and before `router.init(rootContainer)` ensures that the `router` instance is successfully linked and stored inside `routerEngine` *before* the application's initial rendering cycle begins and *before* any subsequent hashchange event listener triggers[cite: 6, 8]. This guarantees that `this.#routerInstance` is no longer `null` when a navigation or route change event occurs, enabling the engine to invoke `router.render()` successfully[cite: 8].
+    /**
+     * Resets bootstrap state.
+     */
+    destroy() {
+        this.initialized = false;
+    }
+};
+
+export default Bootstrap;

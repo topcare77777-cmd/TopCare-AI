@@ -2,86 +2,123 @@
  * -----------------------------------------------------------------
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
- * Layer        : Widget Layer
+ * Layer        : Widget Layer (Home Footer Widget)
  * Status       : ACTIVE
- * Version      : 2.3.0
+ * Version      : 2.1.0
  * Architecture : Development Constitution v1.1
- * Pattern      : Pure UI Renderer
- * Owner        : Footer Widget
- * Created      : Sprint 46A
- * Last Updated : Sprint 46A.10
- *
- * API :
- *   render(container)
- *   refresh()
- *   destroy()
+ * Owner        : Frontend Core Team
+ * Created      : BUILD 088 Footer Synchronization
+ * 
+ * Description  : Synchronized footer widget rendering exact DOM structure 
+ *                matching footer-match.css with preserved legacy component API.
  * -----------------------------------------------------------------
  */
 
-import FooterService from '../../services/home/footer.service.js';
+export const FooterWidget = {
+    initialized: false,
+    containerElement: null,
 
-const FooterWidget = {
-    container: null,
-    data: null,
+    /**
+     * Renders and mounts the footer widget into the target container.
+     * Preserves legacy component API contract (render).
+     * 
+     * @param {HTMLElement|string} container - Target container element or selector.
+     */
+    render(container) {
+        const targetContainer = typeof container === 'string' 
+            ? document.querySelector(container) 
+            : container;
 
-    async render(container) {
-        if (!container) {
-            console.warn("[FooterWidget] container missing");
+        if (!targetContainer) {
             return;
         }
 
-        this.container = container;
-        this.data = FooterService.getData();
+        this.containerElement = targetContainer;
+        this.containerElement.innerHTML = this.renderTemplate();
+        this.initialized = true;
+    },
 
-        if (!this.data) {
-            console.warn("[FooterWidget] data missing");
-            return;
+    /**
+     * Alias for render to support alternative initialization patterns.
+     * 
+     * @param {HTMLElement|string} container - Target container element or selector.
+     */
+    init(container) {
+        this.render(container);
+    },
+
+    /**
+     * Refreshes the footer widget view state.
+     */
+    refresh() {
+        if (this.containerElement && this.initialized) {
+            this.containerElement.innerHTML = this.renderTemplate();
         }
+    },
 
-        if (typeof this.container.replaceChildren === 'function') {
-            this.container.replaceChildren();
-        } else {
-            this.container.innerHTML = '';
-        }
+    /**
+     * Generates the structured HTML matching footer-match.css classes precisely.
+     * 
+     * @returns {string} HTML markup string.
+     */
+    renderTemplate() {
+        return `
+            <footer class="footer-match">
+                <div class="footer-grid-match">
+                    <section class="footer-col-match">
+                        <div class="footer-brand-wrapper">
+                            <img src="assets/images/icons/brand-mark.svg" alt="TopCare AI Logo" class="footer-logo-img" loading="lazy">
+                            <span class="footer-brand-title">TopCare AI</span>
+                        </div>
+                        <p class="footer-description">Platform AI untuk belajar, berkembang, mengenal diri, dan membangun masa depan bersama komunitas global.</p>
+                    </section>
+                    
+                    <section class="footer-col-match">
+                        <h5>Navigasi</h5>
+                        <ul>
+                            <li><a href="#/home">Beranda</a></li>
+                            <li><a href="#/learning">Belajar AI</a></li>
+                            <li><a href="#/personality">Personality</a></li>
+                            <li><a href="#/articles">Artikel</a></li>
+                        </ul>
+                    </section>
 
-        const wrapper = document.createElement('footer');
-        wrapper.className = 'footer-section-match';
+                    <section class="footer-col-match">
+                        <h5>Platform</h5>
+                        <ul>
+                            <li><a href="#/coach">AI Coach</a></li>
+                            <li><a href="#/prompt">Prompt AI</a></li>
+                            <li><a href="#/community">Community</a></li>
+                            <li><a href="#/premium">Premium</a></li>
+                        </ul>
+                    </section>
 
-        const linksHTML = (this.data.links || []).map(link => `
-            <a href="${link.url}" class="footer-link">${link.label}</a>
-        `).join('');
-
-        wrapper.innerHTML = `
-            <div class="footer-content">
-                <p class="footer-tagline">${this.data.brandTagline || ''}</p>
-                <div class="footer-links">${linksHTML}</div>
-                <p class="footer-copyright">${this.data.copyright || ''}</p>
-            </div>
+                    <section class="footer-col-match">
+                        <h5>Dukungan</h5>
+                        <ul>
+                            <li><a href="#/faq">FAQ</a></li>
+                            <li><a href="#/contact">Kontak</a></li>
+                            <li><a href="#/about">Tentang Kami</a></li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="footer-bottom-match">
+                    <p>&copy; 2026 TopCare AI. All rights reserved. TopCare AI Platform V2.0.0 RC1</p>
+                </div>
+            </footer>
         `;
-
-        this.container.appendChild(wrapper);
     },
 
-    async refresh() {
-        FooterService.clearCache();
-        this.data = FooterService.getData();
-        if (this.container) {
-            await this.render(this.container);
-        }
-    },
-
+    /**
+     * Cleans up widget resources and unmounts content.
+     */
     destroy() {
-        if (!this.container) return;
-
-        if (typeof this.container.replaceChildren === 'function') {
-            this.container.replaceChildren();
-        } else {
-            this.container.innerHTML = '';
+        if (this.containerElement) {
+            this.containerElement.innerHTML = '';
         }
-
-        this.data = null;
-        this.container = null;
+        this.containerElement = null;
+        this.initialized = false;
     }
 };
 
-export { FooterWidget };
+export default FooterWidget;
