@@ -1,28 +1,8 @@
-export {
-default as ArticleRepository
-}
-from "./article.repository.js";
+/**
+ * file: assets/js/repository/index.js
+ */
 
-
-export {
-default as PersonalityRepository
-}
-from "./personality.repository.js";
-
-
-export {
-default as EbookRepository
-}
-from "./ebook.repository.js";
-
-
-export {
-default as CourseRepository
-}
-from "./course.repository.js";
-
-
-export {
-default as UserRepository
-}
-from "./user.repository.js";
+export { Repository } from './repository.service.js';
+export { REPOSITORY_EVENTS, PROVIDER_TYPES } from './repository.types.js';
+export { MockRepositoryProvider } from './repository.provider.mock.js';
+export { HttpRepositoryProvider } from './http.provider.service.js';

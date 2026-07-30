@@ -1,248 +1,425 @@
 <!DOCTYPE html>
-<html lang="id" data-theme="dark">
+<html lang="id" class="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopCare AI Platform V2.0.0 RC1 - Enterprise Intelligence</title>
+    <title>TopCare AI Platform — AI Coach & Personality Intelligence</title>
 
-    <!-- Enterprise Design System Stylesheets -->
-    <link rel="icon" type="image/x-icon" href="assets/images/icons/favicon.svg">
-
-    <link rel="stylesheet" href="assets/css/base/variables.css">
-    <link rel="stylesheet" href="assets/css/base/reset.css">
-    <link rel="stylesheet" href="assets/css/base/typography.css">
-    <link rel="stylesheet" href="assets/css/base/utilities.css">
-    <link rel="stylesheet" href="assets/css/tokens/color.css">
-    <link rel="stylesheet" href="assets/css/tokens/glass.css">
-    <link rel="stylesheet" href="assets/css/tokens/gradient.css">
-    <link rel="stylesheet" href="assets/css/tokens/shadow.css">
-    <link rel="stylesheet" href="assets/css/layout/header.css">
-    <link rel="stylesheet" href="assets/css/layout/footer.css">
-    <link rel="stylesheet" href="assets/css/layout/footer-match.css">
-    <link rel="stylesheet" href="assets/css/pages/home.css">
+    <link rel="stylesheet" href="assets/css/pages/home/application-shell.css">
+    <link rel="stylesheet" href="assets/css/pages/home/header.css">
     <link rel="stylesheet" href="assets/css/pages/home/hero.css">
     <link rel="stylesheet" href="assets/css/pages/home/features.css">
     <link rel="stylesheet" href="assets/css/pages/home/trusted.css">
     <link rel="stylesheet" href="assets/css/pages/home/statistics.css">
     <link rel="stylesheet" href="assets/css/pages/home/articles.css">
     <link rel="stylesheet" href="assets/css/pages/home/cta.css">
-    <link rel="stylesheet" href="assets/css/components/button/button.css">
-    <link rel="stylesheet" href="assets/css/components/card/card.css">
-    <link rel="stylesheet" href="assets/css/core/enterprise-polish.css">
-
-    <link rel="stylesheet" href="assets/css/pages/personality-print.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-test.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-selector.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-question.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-result.css">
-    <link rel="stylesheet" href="assets/css/personality/personality-responsive.css">
-
-    <!-- Application Shell Layout Stylesheet -->
-    <link rel="stylesheet" href="assets/css/layout/application-shell.css">
+    <link rel="stylesheet" href="assets/css/pages/home/footer-match.css">
 </head>
 
-<body>
+<body class="app-shell">
 
-    <header class="site-header">
-        <div id="auth-container"></div>
+    <a href="#main-content" class="skip-link">Lewati ke konten utama</a>
+
+    <header class="header-section" role="banner">
         <div class="header-container">
-            <a href="#/home" class="brand-wrapper" data-target="home">
-                <img src="assets/images/icons/brand-mark.svg" alt="TopCare AI Logo" class="brand-logo-img"
-                    loading="eager">
+            <a href="#" class="header-brand" aria-label="TopCare AI Beranda">
+                <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Logo" class="header-logo">
             </a>
-            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Toggle Mobile Menu">
-                <span class="hamburger-bar"></span>
-                <span class="hamburger-bar"></span>
-                <span class="hamburger-bar"></span>
-            </button>
-            <nav class="nav-links">
-                <a href="#/home" data-target="home" class="active">Beranda</a>
-                <a href="#/about" data-target="about">Tentang Kami</a>
-                <a href="#/learning" data-target="learning">Belajar AI</a>
-                <a href="#/personality" data-target="personality">Personality</a>
-                <a href="#/ebook" data-target="ebook">Ebook</a>
-                <a href="#/articles" data-target="articles">Artikel</a>
-                <a href="#/prompt" data-target="prompt">Prompt AI</a>
-                <a href="#/community" data-target="community">Community</a>
-                <a href="#/creator" data-target="creator">Creator</a>
-                <a href="#/marketplace" data-target="marketplace">Marketplace</a>
-                <a href="#/premium" data-target="premium">Premium</a>
-                <a href="#/faq" data-target="faq">FAQ</a>
-                <a href="#/contact" data-target="contact">Kontak</a>
-                <a href="#/coach" data-target="coach">AI Coach</a>
+            <nav class="header-nav" aria-label="Navigasi Utama">
+                <a href="#" class="header-nav-link">Beranda</a>
+                <a href="#features" class="header-nav-link">AI Coach</a>
+                <a href="#" class="header-nav-link">Personality</a>
+                <a href="#" class="header-nav-link">Belajar</a>
+                <a href="#" class="header-nav-link">Prompt</a>
+                <a href="#" class="header-nav-link">Komunitas</a>
+                <a href="#" class="header-nav-link">Premium</a>
+                <a href="#" class="header-nav-link">Tentang</a>
+                <a href="#" class="header-nav-link">Bahasa</a>
             </nav>
-            <div class="auth-actions">
-                <div class="lang-badge"><span>🇮🇩 ID</span> ▾</div>
-                <a href="#/login" data-target="login" class="nav-link-signin">Masuk</a>
-                <a href="#/register" data-target="register" class="btn-primary-custom">Mulai Gratis</a>
+            <div class="header-actions">
+                <a href="#" class="header-nav-link">Masuk</a>
+                <a href="#cta" class="btn-primary">Mulai Sekarang</a>
             </div>
         </div>
     </header>
 
-    <main id="main-content" class="main-content">
-        <div id="view-home" class="page-view active-view">
-            <section id="home" class="hero-section-match">
-                <div class="hero-badge-pill">TopCare AI Platform • AI Learning Ecosystem</div>
-                <h1 class="hero-title-match">Bangun Potensi Dirimu<br>Bersama <span>TopCare AI</span></h1>
-                <p class="hero-sub-match">Platform AI untuk belajar, mengenal diri, dan membangun masa depan yang lebih
-                    baik bersama komunitas global.</p>
+    <main id="main-content" class="page-view" role="main">
 
-                <!-- Wadah AI Coach Widget -->
-                <div id="topcare-ai-coach-container"></div>
+        <section class="hero-section" aria-label="Beranda Utama">
 
-                <div class="hero-cta-group">
-                    <a href="#/register" data-target="register" class="btn-hero-primary">Mulai Gratis &rarr;</a>
-                    <a href="#/learning" data-target="learning" class="btn-hero-secondary">Jelajahi Platform</a>
-                </div>
+            <div class="hero-background" aria-hidden="true">
+                <img src="assets/images/icons/hero-glow.webp" alt="" class="hero-glow-layer" aria-hidden="true"
+                    decoding="async">
+                <img src="assets/images/icons/hero-mesh.webp" alt="" class="hero-mesh-layer" aria-hidden="true"
+                    decoding="async">
+            </div>
 
-                <div class="hero-social-proof-row">
-                    <div class="proof-avatars">
-                        <img src="assets/images/creator/6df8a3fb-a66e-4d97-bf13-5b00a2701c57.png" alt="Member"
-                            loading="lazy">
-                        <img src="assets/images/creator/d072906c-7705-4532-aca8-f096f4bed892.png" alt="Member"
-                            loading="lazy">
-                        <img src="assets/images/profile/founder.webp" alt="Founder" loading="lazy">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="hero-badge">TopCare AI Platform</span>
+
+                    <h1 class="hero-title">
+                        Temukan AI Coach terbaik <span>untuk perjalanan hidupmu.</span>
+                    </h1>
+
+                    <p class="hero-subtitle">
+                        Satu platform cerdas yang memadukan AI Coach, kecerdasan karakter, pustaka prompt, dan ruang
+                        belajar untuk membimbing potensi terbaik dalam dirimu.
+                    </p>
+
+                    <div class="hero-cta-group">
+                        <a href="#cta" class="btn-primary">Mulai Bersama AI Coach</a>
+                        <a href="#features" class="btn-secondary">Eksplorasi Platform</a>
                     </div>
-                    <div class="proof-text"><strong>10.000+ Member Aktif</strong><span>Bergabung dan mulai perjalananmu
-                            hari ini</span></div>
+
+                    <div class="hero-stats">
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-value">AI Coach</span>
+                            <span class="hero-stat-label">Pendamping Pintar</span>
+                        </div>
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-value">Personality</span>
+                            <span class="hero-stat-label">Kecerdasan Karakter</span>
+                        </div>
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-value">Learning</span>
+                            <span class="hero-stat-label">Pusat Belajar Mandiri</span>
+                        </div>
+                        <div class="hero-stat-card">
+                            <span class="hero-stat-value">Community</span>
+                            <span class="hero-stat-label">Ruang Kolaborasi</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="hero-preview-container">
-                    <img src="assets/images/home/hero-main.webp" alt="TopCare AI Dashboard Overview" loading="eager">
-                </div>
-            </section>
-        </div>
+                <div class="hero-illustration-wrapper">
+                    <img src="assets/images/icons/neural-network.svg" alt="" class="hero-floating-neural"
+                        aria-hidden="true" decoding="async">
 
-        <div id="view-about" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Tentang Kami</h2>
+                    <div class="hero-ai-layer" aria-hidden="true">
+                        <img src="assets/images/icons/hero-ai-illustration.webp" alt="" class="hero-ai-illustration-img"
+                            decoding="async">
+                    </div>
+
+                    <div class="hero-illustration-card">
+                        <picture>
+                            <source srcset="assets/images/home/hero-main.webp" type="image/webp">
+                            <img src="assets/images/home/hero-main.webp" alt="TopCare AI Platform Dashboard Preview"
+                                class="hero-illustration-img" loading="eager" decoding="async" fetchpriority="high">
+                        </picture>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="view-learning" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Belajar AI</h2>
+        </section>
+
+        <section id="features" class="features-section" aria-labelledby="features-heading">
+            <div class="features-container">
+                <div class="features-header">
+                    <span class="features-badge">Keunggulan Platform</span>
+                    <h2 id="features-heading" class="features-title">
+                        Dirancang untuk <span>Pertumbuhan & Produktivitas</span>
+                    </h2>
+                    <p class="features-subtitle">
+                        Fitur komprehensif yang dioptimalkan khusus untuk pengembangan diri dan kecerdasan buatan.
+                    </p>
+                </div>
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-ai-assistant_512.svg" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                        <h3 class="feature-title">AI Coach Interaktif</h3>
+                        <p class="feature-description">Pendamping virtual cerdas untuk memandu proses belajar dan
+                            pencapaian target Anda.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-personality.svg" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                        <h3 class="feature-title">Personality Intelligence</h3>
+                        <p class="feature-description">Analisis mendalam mengenai karakter dan potensi diri berdasarkan
+                            empat tipe temperamen.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-learning.svg" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                        <h3 class="feature-title">Learning Hub</h3>
+                        <p class="feature-description">Pusat pembelajaran mandiri dengan modul terstruktur seputar
+                            teknologi dan karier.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-prompt.svg" alt="" loading="lazy" decoding="async">
+                        </div>
+                        <h3 class="feature-title">Prompt Library</h3>
+                        <p class="feature-description">Koleksi pustaka prompt pilihan untuk memaksimalkan hasil kerja
+                            bersama AI.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-community.svg" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                        <h3 class="feature-title">AI Community</h3>
+                        <p class="feature-description">Ruang kolaborasi dan berbagi pengalaman antar pembelajar serta
+                            kreator digital.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">
+                            <img src="assets/images/features/feature-analytics.svg" alt="" loading="lazy"
+                                decoding="async">
+                        </div>
+                        <h3 class="feature-title">Productivity Tools</h3>
+                        <p class="feature-description">Alat bantu penunjang efisiensi harian untuk mempercepat
+                            pencapaian tujuan Anda.</p>
+                        <a href="#" class="feature-link">Selengkapnya &rarr;</a>
+                    </article>
                 </div>
             </div>
-        </div>
-        <div id="view-personality" class="page-view">
-            <div class="enterprise-section" style="width:100%; max-width:1200px; margin:0 auto; padding:2rem 1.5rem;">
-                <div class="section-header-box">
-                    <h2>Personality Test & Temperamen</h2>
-                    <p>Kenali potensi dasar diri Anda melalui pendekatan psikologi modern untuk memaksimalkan jalur
-                        karir dan hubungan interpersonal.</p>
+        </section>
+
+        <section id="trusted" class="trusted-section" aria-labelledby="trusted-heading">
+            <div class="trusted-container">
+                <div class="trusted-header">
+                    <span class="trusted-badge">Komunitas Global</span>
+                    <h2 id="trusted-heading" class="trusted-title">
+                        Dipercaya oleh <span>Pembelajar & Kreator</span>
+                    </h2>
+                    <p class="trusted-subtitle">
+                        Digunakan oleh ribuan individu yang ingin berkembang bersama teknologi AI.
+                    </p>
                 </div>
-                <div class="section-cta-wrap" style="margin-bottom: 2rem;">
-                    <a href="#/personality-test" data-target="personality-test" class="btn-hero-primary">Ikuti Quiz
-                        Personality AI &rarr;</a>
-                </div>
-                <!-- Dynamic Personality Component Mount Container -->
-                <div id="personality-container" style="width:100%;"></div>
-            </div>
-        </div>
-        <!-- Kontainer Kuis Personality Test yang Diisolasi -->
-        <div id="view-personality-test" class="page-view">
-            <div class="enterprise-section">
-                <div id="personality-test" style="width:100%; max-width:860px; margin:0 auto;"></div>
-            </div>
-        </div>
-        <div id="view-ebook" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Ebook</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-articles" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Artikel</h2>
+                <div class="trusted-grid">
+                    <a href="#" class="trusted-item" aria-label="Komunitas Pembelajar">
+                        <img src="assets/images/icons/topcare-logo.svg" alt="Komunitas A" class="trusted-logo"
+                            loading="lazy" decoding="async">
+                    </a>
+                    <a href="#" class="trusted-item" aria-label="Creator Hub">
+                        <img src="assets/images/icons/brand-mark.svg" alt="Creator Hub" class="trusted-logo"
+                            loading="lazy" decoding="async">
+                    </a>
+                    <a href="#" class="trusted-item" aria-label="AI Enthusiasts">
+                        <img src="assets/images/icons/gemini-svg.svg" alt="AI Enthusiasts" class="trusted-logo"
+                            loading="lazy" decoding="async">
+                    </a>
+                    <a href="#" class="trusted-item" aria-label="Global Network">
+                        <img src="assets/images/icons/topcare-logo.svg" alt="Global Network" class="trusted-logo"
+                            loading="lazy" decoding="async">
+                    </a>
                 </div>
             </div>
-        </div>
-        <div id="view-prompt" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Prompt AI</h2>
+        </section>
+
+        <section id="statistics" class="statistics-section" aria-labelledby="stats-heading">
+            <div class="statistics-container">
+                <div class="statistics-header">
+                    <span class="statistics-badge">Ekosistem Platform</span>
+                    <h2 id="stats-heading" class="statistics-title">
+                        Pilar <span>TopCare AI</span>
+                    </h2>
+                    <p class="statistics-subtitle">
+                        Komponen utama yang membangun ekosistem digital untuk pertumbuhan Anda.
+                    </p>
+                </div>
+                <div class="statistics-grid">
+                    <div class="statistics-card">
+                        <span class="statistics-value">AI Coach</span>
+                        <h3 class="statistics-label">Pendamping Pintar</h3>
+                        <p class="statistics-description">Bimbingan personal interaktif berbasis model kecerdasan
+                            buatan.</p>
+                    </div>
+                    <div class="statistics-card">
+                        <span class="statistics-value">Learning</span>
+                        <h3 class="statistics-label">Pusat Belajar</h3>
+                        <p class="statistics-description">Kurikulum dan modul pengetahuan terstruktur untuk pengembangan
+                            skill.</p>
+                    </div>
+                    <div class="statistics-card">
+                        <span class="statistics-value">Community</span>
+                        <h3 class="statistics-label">Ruang Kolaborasi</h3>
+                        <p class="statistics-description">Wadah interaksi positif bagi sesama pegiat teknologi dan
+                            kreator.</p>
+                    </div>
+                    <div class="statistics-card">
+                        <span class="statistics-value">Personality</span>
+                        <h3 class="statistics-label">Kecerdasan Karakter</h3>
+                        <p class="statistics-description">Pemahaman mendalam mengenai tipe kepribadian dan potensi diri.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="view-community" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Community</h2>
+        </section>
+
+        <section id="articles" class="articles-section" aria-labelledby="articles-heading">
+            <div class="articles-container">
+                <div class="articles-header">
+                    <span class="articles-badge">Wawasan & Panduan</span>
+                    <h2 id="articles-heading" class="articles-title">
+                        Eksplorasi <span>Artikel & Wawasan AI</span>
+                    </h2>
+                    <p class="articles-subtitle">
+                        Temukan artikel terbaru seputar ChatGPT, Gemini, Claude, dan pengembangan diri.
+                    </p>
+                </div>
+                <div class="articles-grid">
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-chatgpt.png" alt="ChatGPT untuk Produktivitas"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Produktivitas</span>
+                            <h3 class="article-title">Memaksimalkan ChatGPT untuk Produktivitas Harian</h3>
+                            <p class="article-description">Strategi praktis mengintegrasikan model bahasa ke dalam
+                                rutinitas kerja...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-07">Jul 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">5 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-gemini.png" alt="Eksplorasi Gemini AI"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Kecerdasan Buatan</span>
+                            <h3 class="article-title">Menggali Potensi Multimodal Gemini untuk Kreativitas</h3>
+                            <p class="article-description">Eksplorasi fitur tingkat lanjut untuk mendukung proses
+                                kreatif dan analisis...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-07">Jul 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">7 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-claude.png" alt="Claude AI untuk Analisis"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Pengembangan Diri</span>
+                            <h3 class="article-title">Analisis Mendalam Bersama Claude untuk Riset</h3>
+                            <p class="article-description">Memanfaatkan kapabilitas penalaran tingkat tinggi untuk studi
+                                literatur...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-06">Jun 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">6 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-ai.png" alt="Prompt Engineering"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Prompt Engineering</span>
+                            <h3 class="article-title">Seni Menyusun Prompt Efektif untuk Hasil Optimal</h3>
+                            <p class="article-description">Teknik komunikasi presisi dengan AI untuk mendapatkan output
+                                akurat...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-06">Jun 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">8 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-learning.webp" alt="Learning Hub"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Edukasi</span>
+                            <h3 class="article-title">Membangun Kebiasaan Belajar Mandiri di Era Digital</h3>
+                            <p class="article-description">Panduan terstruktur menguasai keahlian baru secara
+                                konsisten...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-06">Jun 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">4 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
+                    <article class="article-card">
+                        <a href="#" class="article-image-link" tabindex="-1">
+                            <img src="assets/images/articles/article-productivity.png" alt="AI Productivity"
+                                class="article-image" loading="lazy" decoding="async">
+                        </a>
+                        <div class="article-content">
+                            <span class="article-category">Karier</span>
+                            <h3 class="article-title">Menavigasi Karier Masa Depan Bersama Teknologi AI</h3>
+                            <p class="article-description">Strategi adaptasi profesional menghadapi disrupsi teknologi
+                                modern...</p>
+                            <div class="article-meta">
+                                <time class="article-date" datetime="2026-05">May 2026</time>
+                                <span class="article-meta-divider" aria-hidden="true">•</span>
+                                <span class="article-reading-time">6 min read</span>
+                            </div>
+                            <a href="#" class="article-link">Baca Artikel &rarr;</a>
+                        </div>
+                    </article>
                 </div>
             </div>
-        </div>
-        <div id="view-creator" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Creator</h2>
+        </section>
+
+        <section id="cta" class="cta-section" aria-labelledby="cta-heading">
+            <div class="cta-container">
+                <div class="cta-card">
+                    <div class="cta-content">
+                        <span class="cta-badge">Mulai Perjalanan Anda</span>
+                        <h2 id="cta-heading" class="cta-title">
+                            Mulai Bersama AI Coach <span>Hari Ini</span>
+                        </h2>
+                        <p class="cta-description">
+                            Bergabunglah dengan ribuan pembelajar dan kreator, temukan AI Coach pribadi Anda, dan
+                            kembangkan potensi terbaikmu.
+                        </p>
+                        <div class="cta-actions">
+                            <a href="#" class="btn-primary">Mulai Gratis</a>
+                            <a href="#" class="btn-secondary">Buat Akun Gratis</a>
+                        </div>
+                    </div>
+                    <div class="cta-illustration">
+                        <img src="assets/images/dashboard/dashboard-assistant.png" alt="Ilustrasi Asisten AI TopCare"
+                            class="cta-image" loading="lazy" decoding="async">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="view-marketplace" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Marketplace</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-premium" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Premium</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-faq" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>FAQ</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-contact" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Kontak</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-login" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Masuk</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-register" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>Daftar</h2>
-                </div>
-            </div>
-        </div>
-        <div id="view-coach" class="page-view">
-            <div class="enterprise-section">
-                <div class="section-header-box">
-                    <h2>AI Coach V1</h2>
-                </div>
-            </div>
-        </div>
+        </section>
+
     </main>
 
-    <!-- Single Application Core Entry Point -->
-    <script type="module">
-        import { TopCareApp } from "./assets/js/core/topcare-app.js";
-
-        document.addEventListener("DOMContentLoaded", () => {
-            TopCareApp.start();
-        });
-    </script>
+    <footer class="footer-section" role="contentinfo">
+        <div class="footer-container">
+            <div class="footer-brand-wrap">
+                <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Footer Logo" class="footer-logo"
+                    loading="lazy" decoding="async">
+            </div>
+            <p class="footer-copy">&copy; 2026 TopCare AI Platform. Hak Cipta Dilindungi Undang-Undang.</p>
+        </div>
+    </footer>
 
 </body>
 

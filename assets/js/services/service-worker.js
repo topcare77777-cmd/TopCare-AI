@@ -1,66 +1,66 @@
 const CACHE =
-"topcare-ai-v1";
+    "topcare-ai-v1";
 
 
-const FILES=[
+const FILES = [
 
-"/",
+    "/",
 
-"/index.html",
+    "/index.html",
 
-"/assets/css/style.css",
+    "/assets/css/style.css",
 
-"/assets/js/main.js"
+    "/assets/js/app/bootstrap.js"
 
 ];
 
 
 
 self.addEventListener(
-"install",
-event=>{
+    "install",
+    event => {
 
 
-event.waitUntil(
+        event.waitUntil(
 
-caches.open(CACHE)
+            caches.open(CACHE)
 
-.then(cache=>
-cache.addAll(FILES)
-)
+                .then(cache =>
+                    cache.addAll(FILES)
+                )
 
-);
+        );
 
 
-});
+    });
 
 
 
 self.addEventListener(
-"fetch",
-event=>{
+    "fetch",
+    event => {
 
 
-event.respondWith(
+        event.respondWith(
 
 
-caches.match(
-event.request
-)
+            caches.match(
+                event.request
+            )
 
-.then(response=>{
-
-
-return response ||
-
-fetch(event.request);
+                .then(response => {
 
 
-})
+                    return response ||
+
+                        fetch(event.request);
 
 
-);
+                })
+
+
+        );
 
 
 
-});
+    });

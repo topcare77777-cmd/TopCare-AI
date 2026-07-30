@@ -1,0 +1,259 @@
+/* =====================================================================
+   TOPCARE AI PLATFORM — BUTTON.CSS (Enterprise Button System)
+   Target File: assets/css/02-components/button.css
+   Zero Inline CSS, Zero JS framework, Native CSS3 only, Full Replace
+   ==================================================================== */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2, 0.5rem);
+    font-family: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    border-radius: var(--radius-pill, 9999px);
+    border: 1px solid transparent;
+    cursor: pointer;
+    user-select: none;
+    min-height: 44px;
+    padding: var(--space-2, 0.5rem) var(--space-6, 1.5rem);
+    font-size: 0.925rem;
+    line-height: 1.5;
+    transition:
+        transform var(--transition-fast, 0.2s cubic-bezier(0.16, 1, 0.3, 1)),
+        background-color var(--transition-normal, 0.3s cubic-bezier(0.16, 1, 0.3, 1)),
+        border-color var(--transition-normal, 0.3s cubic-bezier(0.16, 1, 0.3, 1)),
+        color var(--transition-normal, 0.3s cubic-bezier(0.16, 1, 0.3, 1)),
+        box-shadow var(--transition-normal, 0.3s cubic-bezier(0.16, 1, 0.3, 1));
+    position: relative;
+    overflow: hidden;
+}
+
+.btn:hover:not(:disabled):not(.is-disabled) {
+    transform: translateY(-2px);
+}
+
+.btn:active:not(:disabled):not(.is-disabled),
+.btn.pressed {
+    transform: translateY(0);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--color-primary, #4f46e5);
+    outline-offset: 3px;
+}
+
+.btn:disabled,
+.btn.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Loading State */
+.btn.loading {
+    pointer-events: none;
+    cursor: wait;
+}
+
+.btn.loading .btn-spinner {
+    position: absolute;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: btnSpin 0.75s linear infinite;
+}
+
+@keyframes btnSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Variants */
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary, #4f46e5) 0%, var(--color-secondary, #3b82f6) 100%);
+    color: var(--text-primary, #f8fafc);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.1)), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, var(--color-primary-hover, #4338ca) 0%, var(--color-primary, #4f46e5) 100%);
+    box-shadow: var(--shadow-md, 0 10px 30px -10px rgba(0, 0, 0, 0.3)), var(--shadow-glow, 0 0 50px -10px rgba(99, 102, 241, 0.3));
+}
+
+.btn-secondary {
+    background: rgba(30, 41, 59, 0.6);
+    backdrop-filter: var(--blur-sm, blur(12px));
+    -webkit-backdrop-filter: var(--blur-sm, blur(12px));
+    color: var(--text-primary, #f8fafc);
+    border-color: var(--border-soft, rgba(255, 255, 255, 0.08));
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: rgba(51, 65, 85, 0.8);
+    border-color: var(--border-focus, rgba(99, 102, 241, 0.4));
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary, #94a3b8);
+    border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary, #f8fafc);
+    transform: none;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary, #f8fafc);
+    border-color: var(--border-soft, rgba(255, 255, 255, 0.08));
+}
+
+.btn-outline:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-secondary, #3b82f6);
+}
+
+.btn-glass {
+    background: var(--surface-glass, rgba(15, 23, 42, 0.8));
+    backdrop-filter: var(--blur-md, blur(16px));
+    -webkit-backdrop-filter: var(--blur-md, blur(16px));
+    color: var(--text-primary, #f8fafc);
+    border: 1px solid var(--border-soft, rgba(255, 255, 255, 0.08));
+    box-shadow: var(--shadow-md, 0 10px 30px -10px rgba(0, 0, 0, 0.3));
+}
+
+.btn-glass:hover:not(:disabled) {
+    background: rgba(30, 41, 59, 0.85);
+    border-color: var(--border-focus, rgba(99, 102, 241, 0.4));
+    box-shadow: var(--shadow-lg, 0 20px 40px -15px rgba(0, 0, 0, 0.5)), var(--shadow-glow, 0 0 50px -10px rgba(99, 102, 241, 0.3));
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--color-danger, #ef4444), #dc2626);
+    color: var(--text-primary, #f8fafc);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--color-success, #10b981), #059669);
+    color: var(--text-primary, #f8fafc);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--color-warning, #f59e0b), #d97706);
+    color: var(--text-primary, #f8fafc);
+    box-shadow: var(--shadow-sm, 0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+.btn-link {
+    background: transparent;
+    color: var(--text-accent, #818cf8);
+    border: none;
+    padding: 0;
+    min-height: auto;
+    border-radius: 0;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.btn-link:hover:not(:disabled) {
+    color: var(--text-primary, #f8fafc);
+    transform: none;
+    background: transparent;
+    box-shadow: none;
+}
+
+.btn-icon {
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+}
+
+.btn-fab {
+    position: fixed;
+    bottom: var(--space-8, 2rem);
+    right: var(--space-8, 2rem);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary, #4f46e5), var(--color-accent, #9333ea));
+    color: var(--text-primary, #f8fafc);
+    box-shadow: var(--shadow-xl, 0 30px 60px -15px rgba(0, 0, 0, 0.7));
+    z-index: var(--z-sticky, 1000);
+    padding: 0;
+}
+
+/* Sizes */
+.btn-sm {
+    min-height: 36px;
+    padding: var(--space-1, 0.25rem) var(--space-4, 1rem);
+    font-size: 0.825rem;
+}
+
+.btn-md {
+    min-height: 44px;
+    padding: var(--space-2, 0.5rem) var(--space-6, 1.5rem);
+    font-size: 0.925rem;
+}
+
+.btn-lg {
+    min-height: 52px;
+    padding: var(--space-3, 0.75rem) var(--space-8, 2rem);
+    font-size: 1rem;
+}
+
+.btn-xl {
+    min-height: 60px;
+    padding: var(--space-4, 1rem) var(--space-10, 2.5rem);
+    font-size: 1.125rem;
+}
+
+/* Width Modifiers */
+.btn-auto {
+    width: auto;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.btn-square {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+}
+
+/* Icon Alignment */
+.btn-icon-left .btn-icon-wrapper {
+    margin-right: var(--space-1, 0.25rem);
+}
+
+.btn-icon-right .btn-icon-wrapper {
+    margin-left: var(--space-1, 0.25rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn {
+        transition: none !important;
+        transform: none !important;
+    }
+
+    .btn:hover:not(:disabled) {
+        transform: none !important;
+    }
+}

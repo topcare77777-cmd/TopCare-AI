@@ -1,0 +1,64 @@
+/* =====================================================================
+   TOPCARE AI PLATFORM — APP.CSS (Master Entry Point)
+   Enterprise Architecture Constitution v2.0
+   Zero Inline CSS, Zero JS framework, Native CSS Architecture Only
+   ==================================================================== */
+
+/* --- 00. FOUNDATION --- */
+@import url('assets/css/00-foundation/reset.css');
+@import url('assets/css/00-foundation/variables.css');
+@import url('assets/css/00-foundation/colors.css');
+@import url('assets/css/00-foundation/typography.css');
+@import url('assets/css/00-foundation/spacing.css');
+@import url('assets/css/00-foundation/radius.css');
+@import url('assets/css/00-foundation/shadows.css');
+@import url('assets/css/00-foundation/blur.css');
+@import url('assets/css/00-foundation/breakpoints.css');
+
+/* --- 01. BASE --- */
+@import url('assets/css/01-base/base.css');
+@import url('assets/css/01-base/container.css');
+@import url('assets/css/01-base/utilities.css');
+@import url('assets/css/01-base/helpers.css');
+@import url('assets/css/01-base/accessibility.css');
+
+/* --- 02. COMPONENTS --- */
+@import url('assets/css/02-components/buttons.css');
+@import url('assets/css/02-components/badges.css');
+@import url('assets/css/02-components/cards.css');
+@import url('assets/css/02-components/forms.css');
+@import url('assets/css/02-components/inputs.css');
+@import url('assets/css/02-components/modal.css');
+@import url('assets/css/02-components/dropdown.css');
+@import url('assets/css/02-components/tooltip.css');
+@import url('assets/css/02-components/accordion.css');
+@import url('assets/css/02-components/navbar.css');
+@import url('assets/css/02-components/footer.css');
+
+/* --- 03. LAYOUT --- */
+@import url('assets/css/03-layout/grid.css');
+@import url('assets/css/03-layout/section.css');
+@import url('assets/css/03-layout/header.css');
+@import url('assets/css/03-layout/responsive.css');
+@import url('assets/css/03-layout/animations.css');
+
+/* --- 04. FEATURES --- */
+@import url('assets/css/04-features/hero.css');
+@import url('assets/css/04-features/trusted.css');
+@import url('assets/css/04-features/features.css');
+@import url('assets/css/04-features/coach.css');
+@import url('assets/css/04-features/about.css');
+@import url('assets/css/04-features/pricing.css');
+@import url('assets/css/04-features/testimonial.css');
+@import url('assets/css/04-features/faq.css');
+@import url('assets/css/04-features/contact.css');
+@import url('assets/css/04-features/personality.css');
+
+/* --- 05. PAGES --- */
+@import url('assets/css/05-pages/home.css');
+@import url('assets/css/05-pages/login.css');
+@import url('assets/css/05-pages/register.css');
+@import url('assets/css/05-pages/forgot-password.css');
+@import url('assets/css/05-pages/dashboard.css');
+@import url('assets/css/05-pages/profile.css');
+@import url('assets/css/05-pages/settings.css');

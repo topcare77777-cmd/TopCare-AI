@@ -1,18 +1,24 @@
 /**
- * TopCare AI Platform V2.0.0
- * Enterprise Navigation Engine (BUILD 031 Hover & Active State Only)
- * Path: assets/js/core/navigation.engine.js
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : Navigation Engine (BUILD 096 Cleanup)
+ * Status       : ACTIVE
+ * Version      : 3.3.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Enterprise Navigation Engine managing active states 
+ *                and navigation event listeners safely.
+ * -----------------------------------------------------------------
  */
 
-import RouterEngine from './router.engine.js';
 import Logger from '../core/logger.js';
 
 const NavigationEngine = {
     init() {
         Logger.info("[NavigationEngine] Initializing Navigation Event Listeners...");
-        
+
         const navLinks = document.querySelectorAll('[data-route], .nav-links a, .auth-actions a, footer a');
-        
+
         navLinks.forEach(link => {
             const routePath = link.getAttribute('data-route') || link.getAttribute('href');
             if (routePath && (routePath.startsWith('/') || routePath.startsWith('#'))) {
@@ -21,15 +27,10 @@ const NavigationEngine = {
                     const clean = routePath.substring(1);
                     formattedPath = clean === 'hero' ? '/home' : `/${clean}`;
                 }
-
-                // Prefetch on hover for instant SPA loading
-                link.addEventListener('mouseenter', () => {
-                    RouterEngine.prefetch(formattedPath);
-                });
             }
         });
 
-        Logger.info("[NavigationEngine] Navigation hover and active state manager active.");
+        Logger.info("[NavigationEngine] Navigation active state manager active.");
     },
 
     updateActiveNav(path) {

@@ -1,55 +1,223 @@
 /**
- * TopCare AI Platform V2.0.0
- * Statistics Section Stylesheet (BUILD 027 Dark Strip & Animated Counters)
- * Path: assets/css/pages/home/statistics.css
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
+ * -----------------------------------------------------------------
+ * Layer        : CSS Statistics Component Layout & Styling (BUILD 102)
+ * Status       : ACTIVE
+ * Version      : 2.0.0
+ * Architecture : Development Constitution v1.1
+ * Description  : Enterprise statistics section styling featuring responsive
+ *                auto-fit grid, glassmorphism stat cards, gradient typography,
+ *                badge, subtle hover elevation, and V2 standard breakpoints.
+ * -----------------------------------------------------------------
  */
 
-.statistics {
-    padding: 6rem 2rem;
-    background: linear-gradient(135deg, #020617 0%, #090d16 100%);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+/* Statistics Section Wrapper */
+.statistics-section {
     position: relative;
+    width: 100%;
+    padding: 100px 1.5rem;
     overflow: hidden;
+    background-color: #0b0f19;
+    isolation: isolate;
 }
 
-.statistics__container {
-    max-width: 1320px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 3rem;
-    text-align: center;
+/* Decorative Background Glow */
+.statistics-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.12) 0%, rgba(124, 58, 237, 0.06) 50%, transparent 70%);
+    filter: blur(100px);
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.statistics__item {
+/* Statistics Container */
+.statistics-container {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    max-width: 1320px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* Statistics Header Group */
+.statistics-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    max-width: 700px;
+    margin-bottom: 4rem;
+}
+
+/* Statistics Badge */
+.statistics-badge {
+    display: inline-flex;
+    align-items: center;
     gap: 0.5rem;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.015);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(12px);
-    transition: transform 0.3s ease, background 0.3s ease;
+    padding: 0.4rem 1rem;
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid rgba(37, 99, 235, 0.25);
+    border-radius: 999px;
+    color: #60a5fa;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
 }
 
-.statistics__item:hover {
-    transform: translateY(-4px);
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.statistics__value {
-    font-size: 3rem;
+/* Statistics Title */
+.statistics-title {
+    font-size: clamp(2.25rem, 3.5vw, 3rem);
     font-weight: 800;
-    background: linear-gradient(135deg, #ffffff 30%, #93c5fd 100%);
+    color: #ffffff;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    margin: 0;
+}
+
+.statistics-title span {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.03em;
 }
 
-.statistics__label {
-    font-size: 0.938rem;
-    font-weight: 600;
+/* Statistics Subtitle */
+.statistics-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
     color: #9ca3af;
+    margin: 0;
+}
+
+/* Statistics Grid Layout */
+.statistics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Statistic Card */
+.statistics-card {
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.5rem 2rem;
+    background: rgba(30, 41, 59, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.statistics-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 99, 235, 0.3);
+    background: rgba(30, 41, 59, 0.6);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+}
+
+.statistics-card:focus-visible {
+    outline: 2px solid #60a5fa;
+    outline-offset: 4px;
+}
+
+/* Statistic Value */
+.statistics-value {
+    font-size: clamp(2.5rem, 3.5vw, 3.25rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin: 0 0 0.5rem 0;
+    background: linear-gradient(135deg, #ffffff, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Statistic Label */
+.statistics-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f3f4f6;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+}
+
+/* Optional Statistic Description */
+.statistics-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* V2 Responsive Breakpoints Implementation */
+@media (max-width: 1320px) {
+    .statistics-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media (max-width: 1100px) {
+    .statistics-header {
+        margin-bottom: 3.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .statistics-header {
+        margin-bottom: 3rem;
+    }
+
+    .statistics-card {
+        padding: 2.25rem 1.75rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .statistics-section {
+        padding: 60px 1rem;
+    }
+
+    .statistics-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .statistics-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .statistics-title {
+        font-size: 2rem;
+    }
+
+    .statistics-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .statistics-title {
+        font-size: 1.75rem;
+    }
 }
