@@ -9,6 +9,8 @@ import { Repository } from '../repository/index.js';
 import { UserService } from '../services/index.js';
 import { Router, History, RouteLoader, RouteGuard } from '../router/index.js';
 import { RuntimeRouter } from './runtime.router.service.js';
+import { FeatureRegistry, FeatureLoader } from '../features/index.js';
+import { ViewService, ViewMountService } from '../view/index.js';
 
 export class RuntimeBootstrap {
     static _initialized = false;
@@ -30,25 +32,50 @@ export class RuntimeBootstrap {
             Container.register("History", History);
             Container.register("RouteLoader", RouteLoader);
             Container.register("RouteGuard", RouteGuard);
+            Container.register("FeatureRegistry", FeatureRegistry);
+            Container.register("ViewService", ViewService);
+            Container.register("ViewMountService", ViewMountService);
 
-            Core.Logger.info("DI Container bindings registered successfully (including Router & Subsystems).");
+            Core.Logger.info("DI Container bindings registered successfully.");
 
             // 2. Initialize Core Subsystems & Event Bus
             Core.Lifecycle.boot();
 
-            // 3. Initialize Router Runtime Integration
+            // 3. Load Feature Modules & Bind Feature Routes via FeatureLoader
+            await FeatureLoader.load();
+
+            // 4. Initialize Feature Modules via FeatureRegistry & View Adapter
+            await FeatureRegistry.initializeAll();
+
+            // 5. Initialize Route Loader SSOT
+            if (RouteLoader && typeof RouteLoader.initialize === 'function') {
+                RouteLoader.initialize();
+            }
+
+            // 6. Initialize View Service Layer
+            await ViewService.initialize();
+
+            // 7. Start View Mount Service
+            const mountService = Container.resolve("ViewMountService");
+            if (mountService && typeof mountService.initialize === 'function') {
+                mountService.initialize('#app');
+            } else if (mountService && typeof mountService.start === 'function') {
+                mountService.start();
+            }
+
+            // 8. Initialize Router Runtime Integration
             await RuntimeRouter.initialize();
 
-            // 4. Mark initialization flag as true (Idempotent Guard)
+            // 9. Mark initialization flag as true (Idempotent Guard)
             RuntimeBootstrap._initialized = true;
 
-            // 5. Emit Application Ready Event
+            // 10. Emit Application Ready Event
             Core.Event.emit(Core.Constants.get('events', 'READY') || 'app.ready', {
                 timestamp: Date.now(),
                 version: Core.version
             });
 
-            Core.Logger.info("RuntimeBootstrap successfully completed full enterprise initialization.");
+            Core.Logger.info("RuntimeBootstrap successfully completed enterprise feature route binding initialization.");
             return true;
         } catch (error) {
             Core.Logger.error(`RuntimeBootstrap initialization failed: ${error.message}`);
