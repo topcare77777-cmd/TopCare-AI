@@ -7,11 +7,13 @@ import { HttpRepositoryProvider } from '../repository/index.js';
 import { ApiClientInterface } from './api.client.interface.js';
 import { API_EVENTS } from './api.client.types.js';
 import { InterceptorService } from './interceptor/interceptor.service.js';
+import { TokenInterceptor } from './interceptor/index.js';
 
 export class ApiClientBase extends ApiClientInterface {
     constructor(provider = new HttpRepositoryProvider()) {
         super();
         this._provider = provider;
+        TokenInterceptor.attach();
         Object.seal(this);
     }
 
@@ -47,8 +49,7 @@ export class ApiClientBase extends ApiClientInterface {
         }
 
         const normalizedMethod = method.toUpperCase();
-
-        // 1. Build initial request config
+        
         let initialConfig = {
             method: normalizedMethod,
             endpoint,
@@ -64,10 +65,8 @@ export class ApiClientBase extends ApiClientInterface {
         Core.Event.emit(API_EVENTS.REQUEST, { method: normalizedMethod, endpoint, config: initialConfig });
 
         try {
-            // 2. Run Request Pipeline through Interceptors
             const processedConfig = await InterceptorService.executeRequestPipeline(initialConfig);
 
-            // 3. Dispatch through HttpProvider
             let rawResponse;
             const finalOptions = {
                 ...(processedConfig.options || {}),
@@ -82,7 +81,6 @@ export class ApiClientBase extends ApiClientInterface {
                 rawResponse = await this._provider.mutate(processedConfig.endpoint, processedConfig.data, finalOptions);
             }
 
-            // 4. Run Response Pipeline through Interceptors
             const finalResponse = await InterceptorService.executeResponsePipeline(rawResponse);
             const clonedResponse = Core.Utils.clone(finalResponse);
 
@@ -91,9 +89,21 @@ export class ApiClientBase extends ApiClientInterface {
 
             return clonedResponse;
         } catch (error) {
-            Core.Logger.error(`ApiClient error [${normalizedMethod}] for ${endpoint}: ${error.message}`);
-            Core.Event.emit(API_EVENTS.ERROR, { method: normalizedMethod, endpoint, error });
-            throw error;
+            // Attach retry helper and config reference so response error interceptors can re-trigger execution safely
+            error.config = initialConfig;
+            error.retryRequest = async (cfg) => {
+                return await this.execute(cfg.method, cfg.endpoint, cfg.data, cfg.options);
+            };
+
+            try {
+                // Pass error through response interceptor pipeline (which includes TokenInterceptor 401 check & retry)
+                const interceptedErrorResult = await InterceptorService.executeResponsePipeline(Promise.reject(error));
+                return interceptedErrorResult;
+            } catch (finalError) {
+                Core.Logger.error(`ApiClient error [${normalizedMethod}] for ${endpoint}: ${finalError.message}`);
+                Core.Event.emit(API_EVENTS.ERROR, { method: normalizedMethod, endpoint, error: finalError });
+                throw finalError;
+            }
         }
     }
 
