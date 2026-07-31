@@ -14,3 +14,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error('[Runtime Index] Critical Boot Failure:', err);
     }
 });
+
+import { LanguageService } from './core/language.service.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Terapkan bahasa sesuai preferensi tersimpan saat web dibuka
+    LanguageService.applyLanguage();
+
+    // 2. Event Listener Tombol Ganti Bahasa (ID / EN)
+    const langBtn = document.getElementById('lang-toggle-btn');
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            LanguageService.toggleLanguage();
+        });
+    }
+});

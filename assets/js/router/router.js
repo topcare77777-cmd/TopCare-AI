@@ -1,6 +1,6 @@
 /**
  * file: assets/js/router/router.js
- * Version: 140.1.0
+ * Version: 140.4.0
  * Status: APPROVED & LOCKED
  * SRP: Dynamic Route Loader & Manifest Dispatcher connecting URLs to Dynamic Page Instances.
  */
@@ -25,13 +25,15 @@ class RouterEngine {
     }
 
     _registerRoutes() {
-        // 1. Core Dynamic Application Routes (Mapped to existing root files in assets/js/pages/)
+        // 1. Core Dynamic Application Routes (Auth & Home)
         this.register('/home', () => this._dispatchPage('home.page.js', false));
-        this.register('/login', () => this._dispatchPage('login.page.js', false));
-        this.register('/register', () => this._dispatchPage('register.page.js', false));
+        this.register('/login', () => this._dispatchPage('auth/login.page.js', true));
+        this.register('/register', () => this._dispatchPage('auth/register.page.js', true));
 
-        // 2. Personality & Legacy Sandbox Integration Route
+        // 2. Personality Domain Routes (PASTIKAN RUTE INI TERDAFTAR)
         this.register('/personality', () => this._dispatchPage('personality.page.js', false));
+
+        // Dynamic Sandbox Halaman Tes Kepribadian
         this.register('/personality-test', async () => {
             const { PersonalityBootstrap } = await import('../personality/personality.bootstrap.js');
             ViewManager.mountView({
@@ -46,8 +48,19 @@ class RouterEngine {
             });
         });
 
-        // 3. Generic Dynamic Manifest Route Registration
-        const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'coach'];
+        // 3. Rute Khusus Smooth Scroll ke Seksi AI Coach di Beranda
+        this.register('/coach', () => {
+            window.location.hash = '#/home';
+            setTimeout(() => {
+                const coachEl = document.getElementById('coach') || document.getElementById('features');
+                if (coachEl) {
+                    coachEl.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        });
+
+        // 4. Manifest Dynamic Pages
+        const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant'];
         manifestPages.forEach(page => {
             this.register(`/${page}`, () => this._dispatchPage(`${page}.page.js`, false));
         });

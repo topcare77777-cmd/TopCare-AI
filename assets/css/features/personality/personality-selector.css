@@ -55,3 +55,19 @@
     line-height: 1.4;
     margin: 0;
 }
+
+/* Perbaikan Kontainer Pilihan Umur */
+.tc-sandbox-host,
+.tc-age-selection-container {
+    height: auto !important;
+    min-height: 100vh;
+    padding-bottom: 80px !important;
+    /* Memberi ruang aman di bawah agar tidak terpotong tombol browser */
+    overflow-y: auto !important;
+}
+
+.tc-age-card {
+    margin-bottom: 16px;
+    padding: 16px !important;
+    /* Kurangi padding kartu di HP agar lebih hemat ruang */
+}

@@ -12,6 +12,7 @@
     <!-- SINGLE SOURCE OF TRUTH MASTER STYLESHEET BUNDLE (SSOT) -->
     <link rel="stylesheet" href="assets/css/app.css">
 
+    <!-- Di bagian Header index.html -->
 
 </head>
 
@@ -40,41 +41,31 @@
             </nav>
 
             <!-- Aksi & Pemilih Bahasa -->
+
             <div class="header-actions">
-                <!-- Dropdown Pilih Bahasa -->
+                <!-- Tombol Pemilih Bahasa -->
                 <div class="lang-selector">
                     <button class="lang-btn" id="lang-toggle-btn" aria-label="Pilih Bahasa">
                         <span>🇮🇩 ID</span>
                     </button>
                 </div>
 
-                <a href="#/login" class="header-nav-link">Masuk</a>
-                <a href="#/register" class="btn-primary">Mulai Sekarang</a>
-
-                <!-- Tombol Garis 3 untuk HP / Tablet -->
-                <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi"
-                    aria-expanded="false">
-                    <span class="hamburger-bar"></span>
-                    <span class="hamburger-bar"></span>
-                    <span class="hamburger-bar"></span>
-                </button>
+                <a href="#/login" class="header-nav-link" data-i18n="nav_login">Masuk</a>
+                <a href="#/register" class="btn-primary" data-i18n="nav_register">Mulai Gratis</a>
             </div>
+
+            <!-- Tombol Garis 3 untuk HP / Tablet -->
+            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi"
+                aria-expanded="false">
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+                <span class="hamburger-bar"></span>
+            </button>
         </div>
     </header>
 
     <!-- SINGLE DYNAMIC MOUNT POINT FOR THE RUNTIME SHELL -->
     <main id="app" class="app-view-viewport" role="main"></main>
-
-    <!-- Global Application Footer -->
-    <footer class="footer-section" role="contentinfo">
-        <div class="footer-container">
-            <div class="footer-brand-wrap">
-                <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Footer Logo" class="footer-logo"
-                    loading="lazy" decoding="async">
-            </div>
-            <p class="footer-copy">&copy; 2026 TopCare AI Platform. Hak Cipta Dilindungi Undang-Undang.</p>
-        </div>
-    </footer>
 
     <!-- Script Sederhana Ringan untuk Toggle Mobile Menu & Bahasa -->
     <script>

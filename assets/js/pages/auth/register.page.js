@@ -1,62 +1,82 @@
 /**
- * file: assets/js/pages/auth/register.page.js
- * Version: 132.1.0
- * Status: APPROVED & LOCKED
- * SRP: Register Page LifeCycle Conductor calling AuthService.register().
+ * TOPCARE AI PLATFORM V2 — REGISTER PAGE (SINGLETON CLEAN)
+ * Path: assets/js/pages/auth/register.page.js
  */
 
-import { Core } from '../../core/index.js';
-import { AuthService } from '../../auth/auth.service.js';
-import { RegisterForm } from '../../components/auth/register.form.js';
-
 export class RegisterPage {
-    constructor(hostElement) {
-        this.host = hostElement;
-        this.registerForm = new RegisterForm({
-            onSubmit: (data) => this.handleRegister(data)
-        });
-        Object.seal(this);
+    constructor(hostContainer) {
+        this.container = hostContainer;
     }
 
-    async init() {
-        Core.Logger.info("[RegisterPage] Lifecycle: Initializing...");
-    }
+    async beforeEnter() { }
 
-    mount() {
-        Core.Logger.info("[RegisterPage] Lifecycle: Mounting...");
+    async afterEnter() {
         this.render();
-        this.bindEvents();
+        this.attachEvents();
     }
 
     render() {
-        this.host.innerHTML = `
-            <div class="tc-page-register-container">
-                ${this.registerForm.render()}
-            </div>
+        this.container.innerHTML = `
+            <section class="tc-auth">
+                <div class="tc-auth__container">
+                    <div class="tc-auth__header">
+                        <h2 class="tc-auth__title">Daftar Akun TopCare AI</h2>
+                        <p class="tc-auth__subtitle">Mulai perjalanan Coach AI & Tes Kepribadian kamu secara gratis.</p>
+                    </div>
+
+                    <form id="register-form" class="tc-auth__form">
+                        <div class="tc-auth__field">
+                            <label class="tc-auth__label" for="reg-name">Nama Lengkap</label>
+                            <input class="tc-auth__input" type="text" id="reg-name" required placeholder="Masukkan nama kamu">
+                        </div>
+
+                        <div class="tc-auth__field">
+                            <label class="tc-auth__label" for="reg-email">Alamat Email</label>
+                            <input class="tc-auth__input" type="email" id="reg-email" required placeholder="nama@email.com">
+                        </div>
+
+                        <div class="tc-auth__field">
+                            <label class="tc-auth__label" for="reg-password">Kata Sandi</label>
+                            <input class="tc-auth__input" type="password" id="reg-password" required placeholder="Minimal 6 karakter">
+                        </div>
+
+                        <button type="submit" class="tc-auth__button tc-auth__button--primary">
+                            Daftar Member Gratis
+                        </button>
+
+                        <p class="tc-auth__register-terms">
+                            Dengan mendaftar, Anda menyetujui Ketentuan Layanan & Kebijakan Privasi TopCare AI.
+                        </p>
+                    </form>
+                </div>
+            </section>
         `;
     }
 
-    bindEvents() {
-        this.registerForm.bindEvents(this.host);
-    }
+    attachEvents() {
+        const form = document.getElementById('register-form');
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('reg-name').value;
 
-    async handleRegister(formData) {
-        try {
-            Core.Logger.info(`[RegisterPage] Executing register for: ${formData.username}`);
-            await AuthService.register(formData);
-            Core.Event.emit('ui.notification.show', { type: 'success', message: 'Account created! Please sign in.' });
-            window.location.hash = '#login';
-        } catch (err) {
-            Core.Logger.error(`[RegisterPage] Registration failed: ${err.message}`);
-            Core.Event.emit('ui.notification.show', { type: 'error', message: `Registration Failed: ${err.message}` });
+                localStorage.setItem('topcare_user', JSON.stringify({
+                    name: name,
+                    isMember: true,
+                    joinedAt: new Date().toISOString()
+                }));
+
+                alert(`Selamat datang, ${name}! Akun member gratis kamu berhasil dibuat.`);
+                window.location.hash = '#/home';
+            });
         }
     }
 
-    destroy() {
-        this.cleanup();
-    }
-
-    cleanup() {
-        this.host.innerHTML = '';
+    async destroy() {
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
     }
 }
+
+export default RegisterPage;

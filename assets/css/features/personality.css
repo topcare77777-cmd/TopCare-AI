@@ -127,3 +127,36 @@
     }
 
 }
+
+@media (max-width: 768px) {
+    /* 1. Tampilkan Tombol Hamburger di HP */
+    .mobile-menu-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .hamburger-bar {
+        width: 100%;
+        height: 3px;
+        background-color: #ffffff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    /* 2. Sembunyikan Navigasi Desktop & Ubah ke Mode Overlay/Drawer */
+    .header-nav {
+        display: none; /* Muncul hanya jika kelas .active ditambahkan lewat JS */
+    }
+
+    /* 3. Ringkaskan Aksi Header agar tidak memenuhi baris */
+    .header-actions .header-nav-link {
+        display: none; /* Sembunyikan tombol Masuk teks biasa di header HP */
+    }
+}
