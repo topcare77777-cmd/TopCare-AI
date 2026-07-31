@@ -11,6 +11,8 @@
 
     <!-- SINGLE SOURCE OF TRUTH MASTER STYLESHEET BUNDLE (SSOT) -->
     <link rel="stylesheet" href="assets/css/app.css">
+
+
 </head>
 
 <body class="app-shell">
@@ -20,22 +22,42 @@
     <!-- Global Application Header Navigation -->
     <header class="header-section" role="banner">
         <div class="header-container">
+            <!-- Brand Logo -->
             <a href="#/home" class="header-brand" aria-label="TopCare AI Beranda">
                 <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Logo" class="header-logo">
             </a>
-            <nav class="header-nav" aria-label="Navigasi Utama">
-                <a href="#/home" class="header-nav-link">Beranda</a>
+
+            <!-- Navigasi Utama (Bahasa Indonesia) -->
+            <nav class="header-nav" id="main-nav" aria-label="Navigasi Utama">
+                <a href="#/home" class="header-nav-link active">Beranda</a>
                 <a href="#features" class="header-nav-link">AI Coach</a>
-                <a href="#/personality" class="header-nav-link">Personality</a>
+                <a href="#/personality" class="header-nav-link">Tes Kepribadian</a>
                 <a href="#/learning" class="header-nav-link">Belajar</a>
-                <a href="#/prompt" class="header-nav-link">Prompt</a>
+                <a href="#/prompt" class="header-nav-link">Prompt AI</a>
                 <a href="#/community" class="header-nav-link">Komunitas</a>
                 <a href="#/premium" class="header-nav-link">Premium</a>
-                <a href="#/about" class="header-nav-link">Tentang</a>
+                <a href="#/about" class="header-nav-link">Tentang Kami</a>
             </nav>
+
+            <!-- Aksi & Pemilih Bahasa -->
             <div class="header-actions">
+                <!-- Dropdown Pilih Bahasa -->
+                <div class="lang-selector">
+                    <button class="lang-btn" id="lang-toggle-btn" aria-label="Pilih Bahasa">
+                        <span>🇮🇩 ID</span>
+                    </button>
+                </div>
+
                 <a href="#/login" class="header-nav-link">Masuk</a>
                 <a href="#/register" class="btn-primary">Mulai Sekarang</a>
+
+                <!-- Tombol Garis 3 untuk HP / Tablet -->
+                <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi"
+                    aria-expanded="false">
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                    <span class="hamburger-bar"></span>
+                </button>
             </div>
         </div>
     </header>
@@ -47,11 +69,38 @@
     <footer class="footer-section" role="contentinfo">
         <div class="footer-container">
             <div class="footer-brand-wrap">
-                <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Footer Logo" class="footer-logo" loading="lazy" decoding="async">
+                <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Footer Logo" class="footer-logo"
+                    loading="lazy" decoding="async">
             </div>
             <p class="footer-copy">&copy; 2026 TopCare AI Platform. Hak Cipta Dilindungi Undang-Undang.</p>
         </div>
     </footer>
+
+    <!-- Script Sederhana Ringan untuk Toggle Mobile Menu & Bahasa -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mainNav = document.getElementById('main-nav');
+            const langBtn = document.getElementById('lang-toggle-btn');
+
+            // Toggle Garis 3 HP/Tablet
+            if (menuBtn && mainNav) {
+                menuBtn.addEventListener('click', () => {
+                    const isOpen = mainNav.classList.toggle('is-open');
+                    menuBtn.setAttribute('aria-expanded', isOpen);
+                });
+            }
+
+            // Toggle Bahasa (ID / EN)
+            if (langBtn) {
+                let currentLang = 'ID';
+                langBtn.addEventListener('click', () => {
+                    currentLang = currentLang === 'ID' ? 'EN' : 'ID';
+                    langBtn.querySelector('span').textContent = currentLang === 'ID' ? '🇮🇩 ID' : '🇬🇧 EN';
+                });
+            }
+        });
+    </script>
 
     <!-- Native ES Module Bootstrapper -->
     <script type="module" src="assets/js/index.js"></script>

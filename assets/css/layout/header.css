@@ -1,21 +1,8 @@
 /**
  * -----------------------------------------------------------------
- * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
- * -----------------------------------------------------------------
- * Layer        : CSS Header Layout & Components (BUILD 097 Revison)
- * Status       : ACTIVE
- * Version      : 2.6.0
- * Architecture : Development Constitution v1.1
- * Description  : Enterprise sticky header layout with V2 breakpoints (1320px),
- *                flexible padding-based height, animated V2 underline,
- *                lightweight absolute mobile dropdown, and hamburger animation.
- * -----------------------------------------------------------------
- */
-/**
- * -----------------------------------------------------------------
- * TOPCARE AI PLATFORM V2 - GLASS NAVBAR HEADER
+ * TOPCARE AI PLATFORM V2 - GLASS NAVBAR HEADER (INDONESIA & MOBILE READY)
  * Path Location : assets/css/layout/header.css
- * Architecture  : Native CSS Glassmorphism Header (Lightweight)
+ * Focus         : Personality & Coach AI Platform
  * -----------------------------------------------------------------
  */
 
@@ -26,14 +13,14 @@
     top: 0;
     z-index: 1000;
     width: 100%;
-    background-color: rgba(11, 15, 25, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background-color: rgba(11, 15, 25, 0.90);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Header Container */
+/* Header Inner Container */
 .header-container {
     display: flex;
     align-items: center;
@@ -45,7 +32,7 @@
     box-sizing: border-box;
 }
 
-/* Logo Brand Lock (Mencegah Logo Raksasa Gambar 1) */
+/* Brand Logo Lock (Presisi & Bebas Logo Raksasa) */
 .header-brand,
 .brand-wrapper {
     display: flex;
@@ -54,11 +41,15 @@
     flex-shrink: 0;
 }
 
+/* Lokasi: assets/css/layout/header.css */
+
 .header-logo,
 .brand-logo-img {
-    height: 36px;
+    height: 48px;
+    /* Ubah dari 36px menjadi 48px (atau 52px jika ingin lebih besar) */
     width: auto;
-    max-width: 160px;
+    max-width: 220px;
+    /* Tingkatkan max-width dari 160px agar gambarnya tidak terpotong */
     object-fit: contain;
     display: block;
 }
@@ -68,7 +59,7 @@
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.75rem;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -92,7 +83,6 @@
     color: #ffffff;
 }
 
-/* Underline Animation Effect */
 .header-nav-link::after,
 .nav-links a::after {
     content: '';
@@ -113,31 +103,60 @@
     width: 100%;
 }
 
-/* Actions Group */
+/* Right Actions Group */
 .header-actions,
 .auth-actions {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
-/* CTA Primary Neon Gradient Button (Persis Gambar 2) */
+/* Pemilih Bahasa (Language Selector Badge) */
+.lang-selector {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Primary Button Neon Gradient */
 .btn-primary,
 .btn-primary-custom {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.6rem 1.25rem;
+    padding: 0.55rem 1.25rem;
     background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
     color: #ffffff !important;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-    transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .btn-primary:hover,
@@ -147,36 +166,85 @@
     box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
 }
 
-/* Mobile Menu Toggle */
+/* Tombol Garis 3 (Mobile Hamburger Menu Toggle) */
 .mobile-menu-toggle {
     display: none;
+    /* Tersembunyi di Desktop */
     flex-direction: column;
-    justify-content: space-between;
-    width: 26px;
-    height: 18px;
-    background: transparent;
-    border: none;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
     cursor: pointer;
     padding: 0;
+    z-index: 1010;
+    transition: background-color 0.2s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
 }
 
 .hamburger-bar {
     display: block;
-    width: 100%;
+    width: 20px;
     height: 2px;
-    background-color: #f3f4f6;
+    background-color: #f8fafc;
     border-radius: 2px;
+    transition: all 0.25s ease;
 }
 
-/* Mobile Breakpoints */
-@media (max-width: 768px) {
+/* Responsive Mobile & Tablet Breakpoints (< 992px) */
+@media (max-width: 992px) {
     .mobile-menu-toggle {
         display: flex;
+        /* Muncul di HP & Tablet */
     }
 
     .header-nav,
     .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: rgba(11, 15, 25, 0.98);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem;
+        gap: 1.25rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         display: none;
-        /* Controlled by MobileMenu JS */
+        /* Di-toggle via JavaScript saat tombol diklik */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Class saat menu mobile dibuka */
+    .header-nav.is-open,
+    .nav-links.is-open,
+    .header-nav.active,
+    .nav-links.active {
+        display: flex !important;
+    }
+
+    .header-nav-link,
+    .nav-links a {
+        font-size: 1.05rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0.75rem 1rem;
+    }
+
+    .btn-primary {
+        padding: 0.45rem 0.85rem;
+        font-size: 0.8rem;
     }
 }
