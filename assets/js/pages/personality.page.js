@@ -1,129 +1,96 @@
 /**
- * -----------------------------------------------------------------
- * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
- * -----------------------------------------------------------------
- * Layer        : Layer 4 - Page
- * Status       : ACTIVE
- * Version      : 2.5.0
- * Architecture : Development Constitution v1.1
- * Owner        : Personality Landing Page Conductor
- * Created      : Sprint 46A
- * Last Updated : BUILD 092.2 Personality Lifecycle Hardening
- *
- * Pattern      : Page Conductor (Layer 4)
- * Compatible   : TopCare AI Runtime 2.x
- *
- * Page API :
- *   init()
- *   mount(container)
- *   render(container)
- *   beforeEnter()
- *   afterEnter()
- *   beforeLeave()
- *   destroy()
- *   cleanup()
- * -----------------------------------------------------------------
+ * file: assets/js/pages/personality.page.js
+ * Version: 137.0.0
+ * Status: APPROVED & LOCKED
+ * SRP: Pure View Conductor for Personality Domain Landing & Result View.
  */
 
+import { Core } from '../core/index.js';
+import { PersonalityRuntime } from '../personality/personality.runtime.js';
+
 export const personalityPage = {
-    container: null,
-    isMounted: false,
-    boundCtaHandler: null,
+    _host: null,
 
-    init() {
-        // Initialization hook for backward compatibility
+    /**
+     * Executes pre-enter checks or data fetching before DOM mounting.
+     */
+    async beforeEnter() {
+        Core.Logger.info("[PersonalityPage] Lifecycle: Executing beforeEnter...");
     },
 
-    async mount(container) {
-        return await this.render(container);
+    /**
+     * Initializes host element reference.
+     * @param {HTMLElement} hostElement 
+     */
+    async init(hostElement) {
+        this._host = hostElement;
+        Core.Logger.info("[PersonalityPage] Lifecycle: Initialized with host container.");
     },
 
-    async render(container) {
-        if (!container) return;
+    /**
+     * Mounts the landing page view into the dynamic Shell container.
+     * @param {HTMLElement} hostElement 
+     */
+    async mount(hostElement) {
+        this._host = hostElement || this._host;
+        if (!this._host) return;
 
-        // Mount protection: prevent duplicate rendering if already mounted on the same container
-        if (this.isMounted && this.container === container) {
-            return;
-        }
+        const hasTestResult = PersonalityRuntime.hasResult();
+        const profile = hasTestResult ? PersonalityRuntime.getProfile() : null;
 
-        // If mounted elsewhere, cleanup first
-        if (this.isMounted) {
-            this.destroy();
-        }
-
-        this.container = container;
-
-        // Render introduction/landing view with UTF-8 encoding corrections
-        this.container.innerHTML = `
-            <div class="enterprise-section personality-landing-wrapper" style="width:100%; max-width:900px; margin:0 auto; padding:3rem 1.5rem; text-align:center;">
-                <div class="section-header-box" style="margin-bottom: 2rem;">
-                    <span class="result-badge" style="background: rgba(37, 99, 235, 0.2); color: #60a5fa; padding: 0.4rem 1rem; border-radius: 999px; font-weight: 700; display: inline-block; margin-bottom: 1rem;">Personality & Temperament Ecosystem</span>
-                    <h1 style="font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Kenali Potensi Dasar Dirimu</h1>
-                    <p style="font-size: 1.05rem; color: #9ca3af; line-height: 1.6; max-width: 650px; margin: 0 auto;">
-                        Temukan tipe kepribadian dan temperamen dominan Anda melalui pendekatan psikologi modern yang terstruktur. Pahami kekuatan, gaya komunikasi, serta jalur pengembangan personal untuk memaksimalkan potensi harian Anda.
-                    </p>
+        this._host.innerHTML = `
+            <div class="tc-personality-page-container" style="padding: 40px 20px; max-width: 900px; margin: 0 auto; text-align: center;">
+                <div class="tc-personality-header" style="margin-bottom: 32px;">
+                    <span class="tc-badge" style="background: rgba(37, 99, 235, 0.1); color: #2563eb; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">TopCare Intelligence</span>
+                    <h1 style="font-size: 28px; color: #0f172a; margin: 12px 0 8px 0;">Analisis Kecerdasan Karakter & Personality</h1>
+                    <p style="color: #64748b; font-size: 14px; max-width: 600px; margin: 0 auto;">Pahami tipe temperamen dominan Anda (Koleris, Sanguinis, Melankolis, Plegmatis) untuk memaksimalkan bimbingan AI Coach.</p>
                 </div>
 
-                <div class="personality-hero-card" style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 20px; padding: 2.5rem; margin-bottom: 2.5rem; backdrop-filter: blur(12px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);">
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; text-align: left;">
-                        <div style="background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.25rem;">
-                            <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">🧠 Pemetaan Ilmiah</h3>
-                            <p style="color: #d1d5db; font-size: 0.9rem; margin: 0; line-height: 1.4;">Analisis berbasis klasifikasi temperamen klasik dan literatur psikologi teruji.</p>
+                ${hasTestResult && profile ? `
+                    <div class="tc-result-card" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; margin-bottom: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); text-align: left;">
+                        <h3 style="margin: 0 0 12px 0; font-size: 18px; color: #0f172a;">Hasil Analisis Kepribadian Anda</h3>
+                        <div style="display: flex; gap: 16px; align-items: center; margin-bottom: 16px;">
+                            <div style="background: #2563eb; color: #ffffff; padding: 12px 20px; border-radius: 8px; font-weight: 700; font-size: 18px;">
+                                ${profile.primaryType || 'Terdeteksi'}
+                            </div>
+                            <div>
+                                <div style="font-size: 12px; color: #64748b;">Tipe Utama / Dominan</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #1e293b;">${profile.secondaryType ? `Sekunder: ${profile.secondaryType}` : 'Karakter Tunggal Dominan'}</div>
+                            </div>
                         </div>
-                        <div style="background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.25rem;">
-                            <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">⚡ Wawasan Instan</h3>
-                            <p style="color: #d1d5db; font-size: 0.9rem; margin: 0; line-height: 1.4;">Dapatkan laporan komprehensif setelah menyelesaikan rangkaian tes interaktif.</p>
-                        </div>
-                        <div style="background: rgba(17, 24, 39, 0.5); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.25rem;">
-                            <h3 style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">🎯 Pertumbuhan Terarah</h3>
-                            <p style="color: #d1d5db; font-size: 0.9rem; margin: 0; line-height: 1.4;">Rekomendasi pengembangan diri yang disesuaikan khusus dengan profil Anda.</p>
+                        <div style="font-size: 12px; color: #94a3b8;">
+                            Terakhir diperbarui: ${profile.completedAt ? new Date(profile.completedAt).toLocaleDateString('id-ID') : 'Sesi Aktif'}
                         </div>
                     </div>
+                ` : ''}
 
-                    <button id="start-personality-cta" class="btn-hero-primary" style="background: #2563eb; color: #fff; border: none; padding: 0.85rem 2.5rem; font-size: 1rem; font-weight: 600; border-radius: 999px; cursor: pointer; transition: background 0.2s ease; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);">
-                        Mulai Tes Kepribadian &rarr;
-                    </button>
+                <div class="tc-action-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 32px;">
+                    <h3 style="margin: 0 0 8px 0; font-size: 18px; color: #1e293b;">${hasTestResult ? 'Ingin Mengulang Tes Kepribadian?' : 'Belum Melakukan Tes Kepribadian?'}</h3>
+                    <p style="margin: 0 0 20px 0; font-size: 13px; color: #64748b;">Tes ini membutuhkan waktu sekitar 3–5 menit dengan pilihan pertanyaan terstandarisasi.</p>
+                    <a href="#/personality-test" class="btn-primary" style="display: inline-block; padding: 12px 28px; background-color: #2563eb; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: 600; font-size: 14px;">
+                        ${hasTestResult ? 'Ulangi Tes Kepribadian' : 'Mulai Tes Sekarang'}
+                    </a>
                 </div>
             </div>
         `;
-
-        const ctaButton = this.container.querySelector('#start-personality-cta');
-        if (ctaButton) {
-            // Define named handler for proper event cleanup and duplication prevention
-            this.boundCtaHandler = () => {
-                window.location.hash = '#/personality-test';
-            };
-            ctaButton.addEventListener('click', this.boundCtaHandler);
-        }
-
-        this.isMounted = true;
     },
 
-    beforeEnter() { },
-
-    afterEnter() { },
-
-    beforeLeave() { },
-
-    destroy() {
-        // Cleanup event listeners before wiping markup
-        if (this.container && this.boundCtaHandler) {
-            const ctaButton = this.container.querySelector('#start-personality-cta');
-            if (ctaButton) {
-                ctaButton.removeEventListener('click', this.boundCtaHandler);
-            }
-        }
-        this.boundCtaHandler = null;
-
-        if (this.container) {
-            this.container.innerHTML = '';
-        }
-        this.isMounted = false;
+    /**
+     * Post-mounting lifecycle hook.
+     */
+    async afterEnter() {
+        Core.Logger.info("[PersonalityPage] Lifecycle: Executing afterEnter...");
     },
 
-    cleanup() {
-        this.destroy();
-        this.container = null;
+    /**
+     * Cleans up resources when unmounted.
+     */
+    async destroy() {
+        Core.Logger.info("[PersonalityPage] Lifecycle: Destroying Page Instance...");
+        if (this._host) {
+            this._host.innerHTML = '';
+            this._host = null;
+        }
     }
 };
 

@@ -1,0 +1,102 @@
+/* =====================================================================
+   TOPCARE AI PLATFORM V2 — APP.CSS (Master Entry Point SSOT)
+   Path Location : assets/css/app.css
+   Status        : 100% AUDITED & VERIFIED AGAINST PHYSICAL FILE TREE
+   ==================================================================== */
+
+/* --- 00. TOKENS & DESIGN SYSTEM --- */
+@import url('tokens/color.css');
+@import url('tokens/spacing.css');
+@import url('tokens/radius.css');
+@import url('tokens/shadow.css');
+@import url('tokens/zindex.css');
+@import url('tokens/glass.css');
+@import url('tokens/gradient.css');
+
+/* --- 01. CORE & FOUNDATION BASE --- */
+@import url('core/design.tokens.css');
+@import url('core/animation.css');
+@import url('core/components.css');
+@import url('core/enterprise-polish.css');
+
+@import url('foundation/base/reset.css');
+@import url('foundation/base/variables.css');
+@import url('foundation/base/typography.css');
+@import url('foundation/base/utilities.css');
+
+@import url('foundation/container.css');
+@import url('foundation/grid.css');
+@import url('foundation/section.css');
+
+/* --- 02. REUSABLE UI COMPONENTS --- */
+@import url('components/button.css');
+@import url('components/badge/badge.css');
+@import url('components/card/card.css');
+@import url('components/input.css');
+@import url('components/modal/modal.css');
+@import url('components/navbar/navbar.css');
+@import url('components/dropdown.css');
+@import url('components/tooltip.css');
+@import url('components/toast.css');
+@import url('components/tabs.css');
+@import url('components/pagination.css');
+@import url('components/progress.css');
+@import url('components/rating.css');
+@import url('components/search.css');
+@import url('components/sidebar.css');
+@import url('components/skeleton.css');
+@import url('components/spinner.css');
+@import url('components/stats.css');
+@import url('components/table/table.css');
+@import url('components/avatar/avatar.css');
+@import url('components/alert/alert.css');
+@import url('components/auth/auth.components.css');
+@import url('components/language/language.css');
+
+/* --- 03. LAYOUT & SHELL ARCHITECTURE --- */
+@import url('layout/application-shell.css');
+@import url('layout/header.css');
+@import url('layout/footer.css');
+@import url('layout/footer-match.css');
+
+/* --- 04. FEATURE & DOMAIN STYLES --- */
+@import url('features/personality.css');
+@import url('features/personality-print.css');
+@import url('features/community/community.css');
+
+/* --- 05. PERSONALITY ENGINE DOMAIN --- */
+@import url('features/personality/personality-test.css');
+@import url('features/personality/personality-question.css');
+@import url('features/personality/personality-result.css');
+@import url('features/personality/personality-selector.css');
+@import url('features/personality/personality-responsive.css');
+@import url('features/personality/personality-print.css');
+
+/* --- 06. PAGE VIEWS & HOME DOMAIN --- */
+@import url('pages/home.css');
+@import url('pages/home/home-stabilization.css');
+@import url('pages/home/hero.css');
+@import url('pages/home/features.css');
+@import url('pages/home/coach.css');
+@import url('pages/home/articles.css');
+@import url('pages/home/cta.css');
+@import url('pages/home/footer.css');
+@import url('pages/home/statistics.css');
+@import url('pages/home/testimonials.css');
+@import url('pages/home/trusted.css');
+@import url('pages/home/pricing.css');
+@import url('pages/home/pricing-toggle.css');
+@import url('pages/home/bento.css');
+@import url('pages/home/product-experience.css');
+
+/* --- 07. AUTHENTICATION & OTHER PAGES --- */
+@import url('pages/auth/auth.css');
+@import url('pages/auth/login.css');
+@import url('pages/auth/register.css');
+@import url('pages/auth/forgot-password.css');
+@import url('pages/dashboard.css');
+@import url('pages/creator.css');
+@import url('pages/learning.css');
+@import url('pages/about.css');
+@import url('pages/assistant.css');
+@import url('pages/faq.css');

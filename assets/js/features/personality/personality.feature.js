@@ -3,8 +3,8 @@
  */
 
 class PersonalityPageComponent {
-    constructor(data = {}) {
-        this.data = data;
+    constructor(context = {}) {
+        this.context = context;
         Object.seal(this);
     }
 
@@ -39,17 +39,23 @@ class PersonalityPageComponent {
         return wrapper;
     }
 
-    unmount() {
-        // Cleanup lifecycle hook if needed
-    }
+    unmount() {}
 }
 
 export const PersonalityFeature = {
-    name: "personality",
-
-    async initialize(Container) {
-        return true;
+    manifest: {
+        id: "personality",
+        version: "1.0.0",
+        title: "Personality Analysis",
+        dependencies: []
     },
+
+    async boot() { return true; },
+    async initialize(container) { return true; },
+    async mount(context) { return true; },
+    async ready() { return true; },
+    async unmount() { return true; },
+    async destroy() { return true; },
 
     views: {
         personality: PersonalityPageComponent

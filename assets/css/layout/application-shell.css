@@ -11,6 +11,13 @@
  *                framing, and active/hidden page-view routing toggles.
  * -----------------------------------------------------------------
  */
+/**
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM V2 - APPLICATION SHELL CANVAS
+ * Path Location : assets/css/layout/application-shell.css
+ * Architecture  : Light-weight Native CSS (Zero Framework)
+ * -----------------------------------------------------------------
+ */
 
 html,
 body {
@@ -18,35 +25,47 @@ body {
     padding: 0;
     width: 100%;
     min-height: 100vh;
+    background-color: #070b14;
+    color: #f8fafc;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
-#main-content {
+.app-shell {
     display: flex;
     flex-direction: column;
-    width: 100%;
     min-height: 100vh;
-    position: relative;
-    outline: none;
+    background: radial-gradient(circle at 50% 0%, #0f172a 0%, #070b14 70%);
 }
 
-.page-view {
-    display: none;
-    width: 100%;
-    opacity: 0;
-    visibility: hidden;
+.skip-link {
     position: absolute;
-    top: 0;
+    top: -40px;
     left: 0;
-    pointer-events: none;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 8px 16px;
+    z-index: 9999;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 0 0 6px 0;
+    transition: top 0.2s ease;
 }
 
-.page-view.active-view {
-    display: flex;
-    flex-direction: column;
-    opacity: 1;
-    visibility: visible;
-    position: relative;
-    pointer-events: auto;
+.skip-link:focus {
+    top: 0;
+}
+
+/* Single Dynamic Mount Container */
+#app {
+    flex: 1;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 32px 24px;
+    box-sizing: border-box;
 }
 
 .hidden {

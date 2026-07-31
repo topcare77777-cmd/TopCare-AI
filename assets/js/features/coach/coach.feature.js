@@ -3,8 +3,8 @@
  */
 
 class CoachAIPageComponent {
-    constructor(data = {}) {
-        this.data = data;
+    constructor(context = {}) {
+        this.context = context;
         Object.seal(this);
     }
 
@@ -33,17 +33,23 @@ class CoachAIPageComponent {
         return wrapper;
     }
 
-    unmount() {
-        // Cleanup lifecycle hook if needed
-    }
+    unmount() { }
 }
 
 export const CoachFeature = {
-    name: "coach",
-
-    async initialize(Container) {
-        return true;
+    manifest: {
+        id: "coach",
+        version: "1.0.0",
+        title: "AI Coach Workspace",
+        dependencies: []
     },
+
+    async boot() { return true; },
+    async initialize(container) { return true; },
+    async mount(context) { return true; },
+    async ready() { return true; },
+    async unmount() { return true; },
+    async destroy() { return true; },
 
     views: {
         coach: CoachAIPageComponent

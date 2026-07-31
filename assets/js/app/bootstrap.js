@@ -1,68 +1,29 @@
 /**
- * -----------------------------------------------------------------
- * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
- * -----------------------------------------------------------------
- * Layer        : Application Boot Layer (Bootstrap)
- * Status       : ACTIVE
- * Version      : 2.1.0
- * Architecture : Development Constitution v1.1
- * Owner        : Frontend Core Team
- *
- * Description  : Core application bootstrap service module.
- *                Initializes application runtime entry points safely.
- * -----------------------------------------------------------------
+ * file: assets/js/app/bootstrap.js
+ * Version: 135.0.0
+ * Status: APPROVED & LOCKED
+ * SRP: Orchestrates TopCare App startup, initializes Router, Mobile Menu, and Event bindings.
  */
 
-export const Bootstrap = {
-    initialized: false,
+import { Core } from '../core/index.js';
+import { Router } from '../router/router.js';
+import { MobileMenu } from '../core/mobile-menu.js';
 
-    /**
-     * Initializes application runtime lifecycle.
-     */
-    init() {
-        if (this.initialized) {
-            return true;
-        }
+export async function bootstrap() {
+    Core.Logger.info('[Bootstrap] Starting TopCare AI Platform V2 Runtime...');
 
-        try {
-            if (
-                typeof window === 'undefined' ||
-                typeof document === 'undefined'
-            ) {
-                return false;
-            }
-
-            const rootContainer =
-                document.getElementById('app');
-
-            if (!rootContainer) {
-                console.warn(
-                    '[Bootstrap] Application root container missing.'
-                );
-                return false;
-            }
-
-            this.initialized = true;
-
-            return true;
-
-        } catch (error) {
-
-            console.error(
-                '[Bootstrap] Initialization failed:',
-                error
-            );
-
-            return false;
-        }
-    },
-
-    /**
-     * Resets bootstrap state.
-     */
-    destroy() {
-        this.initialized = false;
+    // 1. Initialize Mobile Menu Event Handlers
+    if (typeof MobileMenu !== 'undefined' && typeof MobileMenu.init === 'function') {
+        MobileMenu.init();
     }
-};
 
-export default Bootstrap;
+    // 2. Initialize Single Page Application Router & Hash Listeners
+    if (Router && typeof Router.init === 'function') {
+        Router.init();
+    } else if (Router && typeof Router.handleRoute === 'function') {
+        Router.handleRoute();
+        window.addEventListener('hashchange', () => Router.handleRoute());
+    }
+
+    Core.Logger.info('[Bootstrap] TopCare AI Platform V2 Successfully Bootstrapped.');
+}

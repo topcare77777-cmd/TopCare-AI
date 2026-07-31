@@ -7,34 +7,35 @@ import { RouteLoader } from '../router/index.js';
 import { FeatureRegistry } from './feature.registry.js';
 
 export const FeatureRouteLoader = Object.freeze({
-    loadRoutes() {
-        Core.Logger.info("FeatureRouteLoader extracting and registering routes from feature modules...");
-
+    loadRoutesForFeature(featureName, featureDef) {
         try {
-            const allFeatures = FeatureRegistry.getAll();
-            let registeredCount = 0;
-
-            for (const [featureName, featureDef] of Object.entries(allFeatures)) {
-                if (featureDef && Array.isArray(featureDef.routes)) {
-                    for (const route of featureDef.routes) {
-                        if (route && route.path && route.name) {
-                            // Register route dynamically into RouteLoader SSOT
-                            RouteLoader.register(route.path, {
-                                name: route.name,
-                                feature: featureName,
-                                ...(route.options || {})
-                            });
-                            registeredCount++;
-                            Core.Logger.info(`FeatureRouteLoader registered route '${route.path}' for feature '${featureName}'`);
-                        }
+            if (featureDef && Array.isArray(featureDef.routes)) {
+                for (const route of featureDef.routes) {
+                    if (route && route.path && route.name) {
+                        RouteLoader.register(route.path, {
+                            name: route.name,
+                            feature: featureName,
+                            ...(route.options || {})
+                        });
+                        Core.Logger.info(`FeatureRouteLoader registered route '${route.path}' for feature '${featureName}'`);
                     }
                 }
             }
+        } catch (error) {
+            Core.Logger.error(`Route registration failed for feature '${featureName}': ${error.message}`);
+        }
+    },
 
-            Core.Logger.info(`FeatureRouteLoader successfully registered ${registeredCount} feature routes.`);
+    loadRoutes() {
+        Core.Logger.info("FeatureRouteLoader extracting and registering routes from all active features...");
+        try {
+            const allFeatures = FeatureRegistry.getAll();
+            for (const [featureName, featureDef] of Object.entries(allFeatures)) {
+                this.loadRoutesForFeature(featureName, featureDef);
+            }
             return true;
         } catch (error) {
-            Core.Logger.error(`FeatureRouteLoader route extraction failed: ${error.message}`);
+            Core.Logger.error(`FeatureRouteLoader batch route extraction failed: ${error.message}`);
             throw error;
         }
     }

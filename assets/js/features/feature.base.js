@@ -5,6 +5,7 @@
 import { Core } from '../core/index.js';
 import { Container } from '../container/index.js';
 import { ViewRegistry } from '../view/index.js';
+import { FeatureLifecycleRegistry } from './feature.lifecycle.registry.js';
 import { FeatureInterface } from './feature.interface.js';
 import { FEATURE_EVENTS } from './feature.types.js';
 
@@ -12,6 +13,7 @@ export class FeatureBase extends FeatureInterface {
     constructor() {
         super();
         this._registry = new Map();
+        this._viewIndex = new Map(); // O(1) index mapping viewName -> featureName
         this._initialized = false;
         Object.seal(this);
     }
@@ -37,6 +39,17 @@ export class FeatureBase extends FeatureInterface {
 
         this._registry.set(name, featureMeta);
 
+        // Build O(1) index for views exposed by this feature
+        if (definition && definition.views && typeof definition.views === 'object') {
+            for (const [viewName, viewComponent] of Object.entries(definition.views)) {
+                this._viewIndex.set(viewName, name);
+                if (!ViewRegistry.has(viewName)) {
+                    ViewRegistry.register(viewName, viewComponent, { feature: name });
+                    Core.Logger.info(`Feature lifecycle adapter registered view '${viewName}' from feature '${name}'`);
+                }
+            }
+        }
+
         Core.Logger.info(`Feature registered successfully: ${name}`);
         Core.Event.emit(FEATURE_EVENTS.REGISTERED, { name, options });
 
@@ -53,6 +66,10 @@ export class FeatureBase extends FeatureInterface {
         }
 
         return this._registry.get(name).definition;
+    }
+
+    getFeatureNameByView(viewName) {
+        return this._viewIndex.get(viewName) || null;
     }
 
     has(name) {
@@ -77,39 +94,24 @@ export class FeatureBase extends FeatureInterface {
             return true;
         }
 
-        Core.Logger.info("Initializing registered feature modules...");
+        Core.Logger.info("Booting and initializing registered feature modules...");
 
         for (const [name, meta] of this._registry.entries()) {
             try {
                 if (!meta.initialized) {
-                    // Check if feature definition exposes views and register them automatically to ViewRegistry
-                    if (meta.definition && meta.definition.views && typeof meta.definition.views === 'object') {
-                        for (const [viewName, viewComponent] of Object.entries(meta.definition.views)) {
-                            if (!ViewRegistry.has(viewName)) {
-                                ViewRegistry.register(viewName, viewComponent, { feature: name });
-                                Core.Logger.info(`Feature adapter registered view '${viewName}' from feature '${name}'`);
-                            }
-                        }
-                    }
-
-                    // Check if feature definition has an initialize lifecycle hook
-                    if (meta.definition && typeof meta.definition.initialize === 'function') {
-                        await meta.definition.initialize(Container);
-                    }
+                    const def = meta.definition;
+                    await FeatureLifecycleRegistry.boot(name, def);
+                    await FeatureLifecycleRegistry.initialize(name, def, Container);
                     meta.initialized = true;
-                    Core.Logger.info(`Feature initialized: ${name}`);
-                    Core.Event.emit(FEATURE_EVENTS.INITIALIZED, { name });
                 }
             } catch (error) {
-                Core.Logger.error(`Failed to initialize feature '${name}': ${error.message}`);
-                Core.Event.emit(FEATURE_EVENTS.FAILED, { name, error: error.message });
+                Core.Logger.error(`Failed feature initialization for '${name}': ${error.message}`);
                 throw error;
             }
         }
 
         this._initialized = true;
-        Core.Event.emit(FEATURE_EVENTS.ALL_INITIALIZED, {});
-        Core.Logger.info("All registered feature modules initialized successfully.");
+        Core.Logger.info("All registered feature modules completed initialization successfully.");
         return true;
     }
 }

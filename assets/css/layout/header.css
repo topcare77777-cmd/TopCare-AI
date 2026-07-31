@@ -11,8 +11,16 @@
  *                lightweight absolute mobile dropdown, and hamburger animation.
  * -----------------------------------------------------------------
  */
+/**
+ * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM V2 - GLASS NAVBAR HEADER
+ * Path Location : assets/css/layout/header.css
+ * Architecture  : Native CSS Glassmorphism Header (Lightweight)
+ * -----------------------------------------------------------------
+ */
 
-/* Sticky Header Wrapper */
+/* Sticky Glass Header Wrapper */
+.header-section,
 .site-header {
     position: sticky;
     top: 0;
@@ -25,7 +33,7 @@
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Header Inner Container */
+/* Header Container */
 .header-container {
     display: flex;
     align-items: center;
@@ -33,10 +41,12 @@
     width: 100%;
     max-width: 1320px;
     margin: 0 auto;
-    padding: 1.25rem 1.5rem;
+    padding: 0.875rem 1.5rem;
+    box-sizing: border-box;
 }
 
-/* Brand Wrapper & Logo */
+/* Logo Brand Lock (Mencegah Logo Raksasa Gambar 1) */
+.header-brand,
 .brand-wrapper {
     display: flex;
     align-items: center;
@@ -44,15 +54,17 @@
     flex-shrink: 0;
 }
 
+.header-logo,
 .brand-logo-img {
     height: 36px;
     width: auto;
+    max-width: 160px;
     object-fit: contain;
     display: block;
-    flex-shrink: 0;
 }
 
-/* Navigation Links (Desktop) */
+/* Desktop Navigation Links */
+.header-nav,
 .nav-links {
     display: flex;
     align-items: center;
@@ -62,6 +74,7 @@
     padding: 0;
 }
 
+.header-nav-link,
 .nav-links a {
     position: relative;
     color: #9ca3af;
@@ -72,12 +85,15 @@
     transition: color 0.2s ease;
 }
 
+.header-nav-link:hover,
+.header-nav-link.active,
 .nav-links a:hover,
 .nav-links a.active {
     color: #ffffff;
 }
 
-/* Animated Underline Effect via ::after */
+/* Underline Animation Effect */
+.header-nav-link::after,
 .nav-links a::after {
     content: '';
     position: absolute;
@@ -90,84 +106,58 @@
     border-radius: 999px;
 }
 
+.header-nav-link:hover::after,
+.header-nav-link.active::after,
 .nav-links a:hover::after,
 .nav-links a.active::after {
     width: 100%;
 }
 
-/* Auth Actions Group */
+/* Actions Group */
+.header-actions,
 .auth-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 1.25rem;
 }
 
-/* Language Badge */
-.lang-badge {
-    background: transparent;
-    border: none;
-    color: #d1d5db;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    padding: 0.5rem;
-    transition: color 0.2s ease;
-}
-
-.lang-badge:hover {
-    color: #ffffff;
-}
-
-/* Sign-In Link */
-.nav-link-signin {
-    color: #d1d5db;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0.5rem 0.75rem;
-    transition: color 0.2s ease;
-}
-
-.nav-link-signin:hover {
-    color: #ffffff;
-}
-
-/* Custom Primary Button (CTA) */
+/* CTA Primary Neon Gradient Button (Persis Gambar 2) */
+.btn-primary,
 .btn-primary-custom {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.6rem 1.25rem;
-    background: linear-gradient(135deg, #2563eb, #7c3aed);
-    color: #ffffff;
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: #ffffff !important;
     font-size: 0.95rem;
     font-weight: 600;
     text-decoration: none;
     border-radius: 999px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
     transition: opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.btn-primary:hover,
 .btn-primary-custom:hover {
-    opacity: 0.92;
+    opacity: 0.95;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
 }
 
-/* Mobile Menu Toggle & Hamburger Bars */
+/* Mobile Menu Toggle */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
     justify-content: space-between;
-    width: 28px;
-    height: 20px;
+    width: 26px;
+    height: 18px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0;
-    z-index: 1010;
 }
 
 .hamburger-bar {
@@ -176,120 +166,17 @@
     height: 2px;
     background-color: #f3f4f6;
     border-radius: 2px;
-    transition: transform 0.25s ease, opacity 0.25s ease, background-color 0.25s ease;
 }
 
-/* Hamburger X Transformation Animation when Open */
-.mobile-menu-toggle.is-open .hamburger-bar:nth-child(1),
-.mobile-menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(1),
-.mobile-menu-toggle.active .hamburger-bar:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-}
-
-.mobile-menu-toggle.is-open .hamburger-bar:nth-child(2),
-.mobile-menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(2),
-.mobile-menu-toggle.active .hamburger-bar:nth-child(2) {
-    opacity: 0;
-}
-
-.mobile-menu-toggle.is-open .hamburger-bar:nth-child(3),
-.mobile-menu-toggle[aria-expanded="true"] .hamburger-bar:nth-child(3),
-.mobile-menu-toggle.active .hamburger-bar:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-}
-
-/* V2 Responsive Breakpoints Implementation */
-@media (max-width: 1320px) {
-    .header-container {
-        max-width: 100%;
-        padding-left: 2rem;
-        padding-right: 2rem;
-    }
-}
-
-@media (max-width: 1100px) {
-    .nav-links {
-        gap: 1.25rem;
-    }
-}
-
-@media (max-width: 1024px) {
-    .header-container {
-        padding: 1rem 1.5rem;
-    }
-}
-
+/* Mobile Breakpoints */
 @media (max-width: 768px) {
-    .header-container {
-        padding: 0.875rem 1rem;
-    }
-
     .mobile-menu-toggle {
         display: flex;
     }
 
+    .header-nav,
     .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: rgba(11, 15, 25, 0.98);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        padding: 2rem 1.5rem;
-        gap: 1.5rem;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-        visibility: hidden;
-        transition: max-height 0.3s ease, opacity 0.25s ease, visibility 0.25s ease, padding 0.3s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        z-index: 1005;
-    }
-
-    .nav-links.is-open,
-    .nav-links.active {
-        max-height: 400px;
-        opacity: 1;
-        visibility: visible;
-        padding: 2rem 1.5rem;
-    }
-
-    .nav-links a {
-        font-size: 1.125rem;
-    }
-
-    .nav-links a::after {
         display: none;
-    }
-
-    .auth-actions {
-        gap: 0.75rem;
-    }
-
-    .btn-primary-custom {
-        padding: 0.5rem 1rem;
-        font-size: 0.875rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .auth-actions .lang-badge,
-    .auth-actions .nav-link-signin {
-        display: none;
-    }
-}
-
-@media (max-width: 360px) {
-    .brand-logo-img {
-        height: 30px;
-    }
-    
-    .btn-primary-custom {
-        padding: 0.4rem 0.75rem;
-        font-size: 0.8rem;
+        /* Controlled by MobileMenu JS */
     }
 }

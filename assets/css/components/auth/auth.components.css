@@ -1,0 +1,158 @@
+/* file: assets/css/components/auth/auth.components.css (Extended Contract) */
+
+.tc-auth-form-card {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 28px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.tc-register-card-wide {
+    max-width: 480px;
+}
+
+.tc-auth-header-wrap {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tc-auth-title {
+    margin: 0 0 6px 0;
+    font-size: 20px;
+    color: #0f172a;
+}
+
+.tc-auth-subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.tc-form-actions-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    font-size: 12px;
+}
+
+.tc-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: #475569;
+}
+
+.tc-auth-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.tc-auth-link-bold {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.tc-auth-footer-text {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.tc-btn-success {
+    background-color: #16a34a;
+}
+
+.tc-btn-success:hover {
+    background-color: #15803d;
+}
+
+/* --- Matrix Card Contracts --- */
+.tc-permission-matrix-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.tc-matrix-header-wrap {
+    margin-bottom: 16px;
+}
+
+.tc-matrix-title {
+    margin: 0 0 6px 0;
+    font-size: 18px;
+    color: #0f172a;
+}
+
+.tc-matrix-subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+}
+
+.tc-table-responsive-wrapper {
+    overflow-x: auto;
+}
+
+.tc-matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.tc-matrix-thead-row {
+    background: #f8fafc;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+.tc-matrix-th-label {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+.tc-matrix-th-role {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+}
+
+.tc-matrix-tbody-row {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tc-matrix-td-perm {
+    padding: 8px 10px;
+    font-family: monospace;
+    font-weight: 600;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+}
+
+.tc-matrix-td-status {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #e2e8f0;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.tc-matrix-cell-allowed {
+    color: #16a34a;
+    background-color: #f0fdf4;
+}
+
+.tc-matrix-cell-denied {
+    color: #cbd5e1;
+    background-color: #ffffff;
+}
