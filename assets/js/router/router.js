@@ -1,12 +1,13 @@
 /**
  * file: assets/js/router/router.js
- * Version: 140.4.0
+ * Version: 140.6.0 (BUILD 139.1 — AI COACH MENU ACTIVATION)
  * Status: APPROVED & LOCKED
- * SRP: Dynamic Route Loader & Manifest Dispatcher connecting URLs to Dynamic Page Instances.
+ * SRP: Dynamic Route Loader & Manifest Dispatcher with Resilient Workspace Coach Page Mounting.
  */
 
 import { ViewManager } from '../core/view-manager.js';
 import { Core } from '../core/index.js';
+import { AuthRouteGuard } from '../auth/guards/auth-route.guard.js';
 
 class RouterEngine {
     constructor() {
@@ -30,10 +31,10 @@ class RouterEngine {
         this.register('/login', () => this._dispatchPage('auth/login.page.js', true));
         this.register('/register', () => this._dispatchPage('auth/register.page.js', true));
 
-        // 2. Personality Domain Routes (PASTIKAN RUTE INI TERDAFTAR)
+        // 2. Personality Domain Routes (Protected)
         this.register('/personality', () => this._dispatchPage('personality.page.js', false));
 
-        // Dynamic Sandbox Halaman Tes Kepribadian
+        // Dynamic Sandbox Halaman Tes Kepribadian (Protected)
         this.register('/personality-test', async () => {
             const { PersonalityBootstrap } = await import('../personality/personality.bootstrap.js');
             ViewManager.mountView({
@@ -48,19 +49,44 @@ class RouterEngine {
             });
         });
 
-        // 3. Rute Khusus Smooth Scroll ke Seksi AI Coach di Beranda
+        // 3. Rute Smooth Scroll Landing Page (Public Home Scroll)
         this.register('/coach', () => {
-            window.location.hash = '#/home';
-            setTimeout(() => {
-                const coachEl = document.getElementById('coach') || document.getElementById('features');
-                if (coachEl) {
-                    coachEl.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
+            this.navigate('/workspace/coach');
         });
 
-        // 4. Manifest Dynamic Pages
-        const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant'];
+        // 4. RUTE WORKSPACE AI COACH RUNTIME (Protected & Activated)
+        this.register('/workspace/coach', async () => {
+            Core.Logger.info("[Router] Navigating to Workspace AI Coach Runtime...");
+
+            try {
+                // Check if Workspace DOM container exists
+                let workspaceEl = document.getElementById('app-workspace');
+                let homeEl = document.getElementById('app-home');
+
+                if (!workspaceEl) {
+                    // Fallback: Dispatch via Dynamic Coach Page Module
+                    await this._dispatchPage('coach.page.js', false);
+                    return;
+                }
+
+                if (homeEl) homeEl.style.display = 'none';
+                workspaceEl.style.display = 'block';
+
+                const { WorkspaceRuntime } = await import('../ui/workspace/workspace.runtime.js');
+                if (WorkspaceRuntime && typeof WorkspaceRuntime.mountWorkspace === 'function') {
+                    WorkspaceRuntime.mountWorkspace('coach');
+                } else if (WorkspaceRuntime && typeof WorkspaceRuntime.activateTab === 'function') {
+                    WorkspaceRuntime.activateTab('coach');
+                }
+            } catch (err) {
+                Core.Logger.error(`[Router] Failed to load Workspace AI Coach: ${err.message}`);
+                // Fallback to direct Coach Page dispatch
+                await this._dispatchPage('coach.page.js', false);
+            }
+        });
+
+        // 5. Manifest Dynamic Pages
+        const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace'];
         manifestPages.forEach(page => {
             this.register(`/${page}`, () => this._dispatchPage(`${page}.page.js`, false));
         });
@@ -77,7 +103,7 @@ class RouterEngine {
                 const instance = new TargetClass(host);
                 await ViewManager.mountView(instance);
             } else {
-                const instance = pageModule.default || pageModule.personalityPage || pageModule;
+                const instance = pageModule.default || pageModule.coachPage || pageModule.personalityPage || pageModule;
                 await ViewManager.mountView(instance);
             }
         } catch (err) {
@@ -88,6 +114,15 @@ class RouterEngine {
 
     register(path, handler) {
         this.routes.set(path, handler);
+    }
+
+    navigate(path) {
+        const targetHash = `#${path.startsWith('/') ? path : '/' + path}`;
+        if (window.location.hash !== targetHash) {
+            window.location.hash = targetHash;
+        } else {
+            this.handleRoute();
+        }
     }
 
     handleRoute() {
@@ -104,6 +139,16 @@ class RouterEngine {
 
         if (rawHash === '' || rawHash === '/') rawHash = '/home';
         const path = rawHash.startsWith('/') ? rawHash : `/${rawHash}`;
+
+        // SECURITY LAYER INTEGRATION: AuthRouteGuard Check
+        const guardDecision = AuthRouteGuard.check(path);
+
+        if (!guardDecision.allowed) {
+            if (guardDecision.redirect) {
+                this.navigate(guardDecision.redirect);
+            }
+            return;
+        }
 
         const handler = this.routes.get(path);
         if (handler) {

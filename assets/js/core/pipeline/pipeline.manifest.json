@@ -1,0 +1,55 @@
+{
+    "schemaVersion": "2.0.0",
+    "pipelineName": "TopCare Enterprise Core Conversation Pipeline",
+    "description": "Declarative SSOT Step Order Execution Specification",
+    "steps": [
+        {
+            "stepId": "INPUT_SAFETY",
+            "name": "Input Safety & Moderation Guard Step",
+            "enabled": true,
+            "allowShortCircuit": true
+        },
+        {
+            "stepId": "CAPABILITY_MATCH",
+            "name": "Declarative Capability Resolution Step",
+            "enabled": true,
+            "allowShortCircuit": false
+        },
+        {
+            "stepId": "RULE_EVALUATION",
+            "name": "Declarative Rule Engine Evaluation Step",
+            "enabled": true,
+            "allowShortCircuit": false
+        },
+        {
+            "stepId": "STRATEGY_REASONING",
+            "name": "Coach Persona & Strategy Reasoning Step",
+            "enabled": true,
+            "allowShortCircuit": false
+        },
+        {
+            "stepId": "LLM_GATEWAY",
+            "name": "Vendor-Agnostic LLM Execution Step",
+            "enabled": true,
+            "allowShortCircuit": true
+        },
+        {
+            "stepId": "OUTPUT_SAFETY",
+            "name": "Output Safety & Verification Guard Step",
+            "enabled": true,
+            "allowShortCircuit": true
+        },
+        {
+            "stepId": "MEMORY_COMMITMENT",
+            "name": "Memory SSOT History Append Step",
+            "enabled": true,
+            "allowShortCircuit": false
+        },
+        {
+            "stepId": "EVENT_BROADCAST",
+            "name": "Passive Telemetry & Event Broadcast Step",
+            "enabled": true,
+            "allowShortCircuit": false
+        }
+    ]
+}

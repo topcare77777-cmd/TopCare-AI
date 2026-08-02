@@ -14,13 +14,3 @@ FeatureLoaderService.registerFeatureManifest({
     ],
     loader: () => import('./personality/personality.feature.js')
 });
-
-FeatureLoaderService.registerFeatureManifest({
-    id: "coach",
-    version: "1.0.0",
-    dependencies: [],
-    routes: [
-        { path: '/coach', name: 'coach' }
-    ],
-    loader: () => import('./coach/coach.feature.js')
-});

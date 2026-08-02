@@ -8,9 +8,9 @@
  * Architecture : Development Constitution v1.1
  * Owner        : Coach Intelligence Team
  * Created      : Sprint 51A.5
- * 
- * Description  : Top-level ecosystem orchestrator. Manages multiple active 
- *                coach runtime instances, handles dynamic coach switching, 
+ *
+ * Description  : Top-level ecosystem orchestrator. Manages multiple active
+ *                coach runtime instances, handles dynamic coach switching,
  *                routes session messages, and aggregates global event streams.
  * -----------------------------------------------------------------
  */
@@ -30,9 +30,9 @@ const MANAGER_SCHEMA_VERSION = '1.0.0';
  */
 const CoachRuntimeManager = (() => {
 
-    /** 
+    /**
      * Map storing active runtime packages indexed by coachId.
-     * @type {Map<string, Object>} 
+     * @type {Map<string, Object>}
      */
     const activeInstances = new Map();
 
@@ -50,6 +50,14 @@ const CoachRuntimeManager = (() => {
      * @param {Object} eventPacket - Event packet from an instance.
      * @private
      */
+    // Di dalam CoachRuntimeManager (assets/js/services/home/coach.runtime.manager.js):
+    function unsubscribeGlobal(callback) {
+        if (typeof callback === 'function') {
+            globalListeners.delete(callback);
+        }
+    }
+
+    // Diikutsertakan pada Object.freeze() ekspor publik CoachRuntimeManager
     function handleInstanceEvent(eventPacket) {
         for (const callback of globalListeners) {
             try {
@@ -62,7 +70,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Ensures a runtime instance exists for the given coachId, creating one via Factory if needed.
-     * 
+     *
      * @param {string} coachId - Target coach identifier.
      * @param {string} [sessionId] - Optional session discriminator.
      * @returns {Object} Runtime package bundle.
@@ -90,7 +98,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Public API: Activates and sets the current active coach persona.
-     * 
+     *
      * @param {string} coachId - Coach identifier to activate.
      * @param {string} [sessionId] - Optional session ID.
      * @returns {Object} The activated runtime package bundle.
@@ -106,7 +114,7 @@ const CoachRuntimeManager = (() => {
     /**
      * Public API: Retrieves the currently active coach runtime package.
      * If no active coach is set, initializes and defaults to the system default coach.
-     * 
+     *
      * @returns {Object} Active runtime package bundle.
      */
     function getActive() {
@@ -119,7 +127,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Public API: Processes a message through the currently active coach runtime.
-     * 
+     *
      * @param {string} message - User message input.
      * @returns {Object} Execution bundle result.
      */
@@ -133,7 +141,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Public API: Subscribes to global aggregated event notifications across all managed runtimes.
-     * 
+     *
      * @param {Function} callback - Execution handler receiving aggregated event packets.
      * @returns {Function} Unsubscribe cleanup handler.
      */
@@ -150,7 +158,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Public API: Returns a list of all currently registered and running runtime instances.
-     * 
+     *
      * @returns {Array<Object>} List of active runtime summary objects.
      */
     function listActive() {
@@ -168,7 +176,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Public API: Cleans up and destroys a specific runtime instance.
-     * 
+     *
      * @param {string} coachId - Coach identifier to destroy.
      * @returns {boolean} True if successfully destroyed, false otherwise.
      */
@@ -191,7 +199,7 @@ const CoachRuntimeManager = (() => {
 
     /**
      * Returns operational status of the manager ecosystem.
-     * 
+     *
      * @returns {Object} Immutable status snapshot.
      */
     function getStatus() {

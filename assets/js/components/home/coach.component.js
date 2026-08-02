@@ -3,47 +3,32 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * Layer        : Layer 4.5 - Component
- * Status       : ACTIVE
- * Version      : 2.5.0
- * Owner        : Home Module
- * Created      : Sprint 46A
- * Last Updated : Sprint 47A.3
- *
+ * Status       : ACTIVE (BUILD AC-013R1)
+ * Version      : 2.7.0
  * Architecture : Development Constitution v1.1
- * Pattern      : Conductor Component
- * Migration    : SPRINT 46A.7
- * Revision     : 47A.3
- * Runtime      : V2 Runtime
- * Compatible   : TopCare AI Runtime 2.x
- *
- * Dependencies :
- *   - CoachWidget
- *   - UserState
- *
- * Forbidden :
- *   - Router
- *   - TopCareApp
- *   - ViewManager
- *   - AuthManager (Direct)
- *   - SessionManager (Direct)
- *
- * Component API :
- *   mount(container)
- *   update()
- *   destroy()
- *   cleanup()
+ * Pattern      : Adapter Component / ViewModel Builder
  * -----------------------------------------------------------------
  */
 
 import { CoachWidget } from '../../widgets/home/coach.widget.js';
 import UserState from '../../user/user.state.js';
+import CoachService from '../../services/home/coach.service.js';
 
 /**
- * Compares two identity states to check if relevant parameters have changed.
- * @param {Object|null} prev - Previous identity state snapshot.
- * @param {Object} next - Current identity state snapshot.
- * @returns {boolean} True if significant identity attributes changed.
+ * Deep Freezes nested ViewModel DTOs recursively.
+ * @param {Object} obj
+ * @returns {Object}
  */
+function deepFreeze(obj) {
+    if (obj === null || typeof obj !== 'object') return obj;
+    Object.keys(obj).forEach(prop => {
+        if (typeof obj[prop] === 'object' && obj[prop] !== null && !Object.isFrozen(obj[prop])) {
+            deepFreeze(obj[prop]);
+        }
+    });
+    return Object.freeze(obj);
+}
+
 function hasIdentityChanged(prev, next) {
     if (!prev) return true;
     return (
@@ -55,17 +40,56 @@ function hasIdentityChanged(prev, next) {
     );
 }
 
+/**
+ * Builds Standardized CoachViewModel DTO.
+ * @param {Object} identity - Raw identity state from UserState.
+ * @param {Object} serviceData - Raw static data from CoachService.
+ * @returns {Object} Deep-frozen CoachViewModel DTO.
+ */
+function buildCoachViewModel(identity, serviceData) {
+    const rawData = serviceData || {};
+    const name = identity?.displayName || identity?.name || 'Tamu';
+    const membership = identity?.membership ? `Keanggotaan: ${identity.membership.toUpperCase()}` : '';
+    const greeting = identity?.isLoggedIn
+        ? `Selamat datang kembali, ${name}. Bimbingan dipersonalisasi sesuai gaya dan tujuan Anda.`
+        : (rawData.sectionDescription || 'Silakan masuk untuk bimbingan personal.');
+
+    const viewModelDTO = {
+        header: {
+            badge: rawData.badge || 'Panduan AI Pakar',
+            title: rawData.sectionTitle || 'Sesi Bimbingan AI Coach',
+            greeting,
+            user: {
+                name,
+                membershipTag: membership
+            }
+        },
+        coaches: (rawData.coaches || []).map(coach => ({
+            name: coach.name,
+            specialty: coach.specialty,
+            bio: coach.bio
+        })),
+        // Standardized Schema Readiness Nodes
+        actions: [
+            {
+                id: 'open-coach',
+                label: 'Mulai Sesi AI Coach',
+                action: 'open-coach'
+            }
+        ],
+        status: { ready: true },
+        telemetry: { builtAt: new Date().toISOString() }
+    };
+
+    return deepFreeze(viewModelDTO);
+}
+
 const CoachComponent = {
     container: null,
     isMounted: false,
     unsubscribeState: null,
     lastIdentityState: null,
 
-    /**
-     * Handles reactive state updates from UserState.
-     * @param {Object} identityState - Current user identity state snapshot.
-     * @private
-     */
     handleIdentityChange(identityState) {
         if (!this.isMounted || !this.container) return;
 
@@ -74,7 +98,6 @@ const CoachComponent = {
 
         this.lastIdentityState = nextState;
 
-        // Trigger widget refresh only if relevant identity parameters change
         if (hasChanged) {
             void this.update();
         }
@@ -92,11 +115,12 @@ const CoachComponent = {
         }
 
         try {
-            // Render first before binding subscriptions to prevent premature callbacks
             this.lastIdentityState = { ...UserState.get() };
+            const serviceData = CoachService.getData();
+            const viewModel = buildCoachViewModel(this.lastIdentityState, serviceData);
 
             if (typeof CoachWidget.render === 'function') {
-                await CoachWidget.render(this.container, this.lastIdentityState);
+                await CoachWidget.render(this.container, viewModel);
             }
 
             this.isMounted = true;
@@ -115,10 +139,36 @@ const CoachComponent = {
         if (!this.isMounted || !this.container) return;
 
         try {
+            const serviceData = CoachService.getData();
+            const viewModel = buildCoachViewModel(this.lastIdentityState, serviceData);
+            // Potongan DTO di dalam buildCoachViewModel():
+            const viewModelDTO = {
+                header: {
+                    badge: rawData.badge || 'Panduan AI Pakar',
+                    title: rawData.sectionTitle || 'Sesi Bimbingan AI Coach',
+                    greeting,
+                    user: {
+                        name,
+                        membershipTag: membership
+                    }
+                },
+                coaches: (rawData.coaches || []).map(coach => ({
+                    name: coach.name,
+                    specialty: coach.specialty,
+                    bio: coach.bio
+                })),
+                actions: [],
+                status: { ready: true },
+                telemetry: {
+                    version: "2.0",
+                    builtAt: new Date().toISOString()
+                }
+            };
+
             if (typeof CoachWidget.refresh === 'function') {
-                await CoachWidget.refresh(this.lastIdentityState);
+                await CoachWidget.refresh(viewModel);
             } else if (typeof CoachWidget.render === 'function') {
-                await CoachWidget.render(this.container, this.lastIdentityState);
+                await CoachWidget.render(this.container, viewModel);
             }
         } catch (err) {
             console.error("[CoachComponent] update:", err);

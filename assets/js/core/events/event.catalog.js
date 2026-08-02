@@ -1,0 +1,42 @@
+/**
+ * TOPCARE AI PLATFORM V2 — HIERARCHICAL EVENT CATALOG
+ * Path: assets/js/core/events/event.catalog.js
+ * Status: ACTIVE (BUILD AC-018 - LOCKED GOLDEN BASELINE)
+ * Role: Single Source of Truth for Platform Event Type Identifiers
+ */
+
+import { deepFreezeDTO } from '../utils/dto.js';
+
+export const EVENT_TYPES = deepFreezeDTO({
+    COACH: {
+        REQUEST_STARTED: 'COACH.REQUEST_STARTED',
+        REQUEST_COMPLETED: 'COACH.REQUEST_COMPLETED',
+        RESPONSE_STREAM_STARTED: 'COACH.RESPONSE_STREAM_STARTED',
+        RESPONSE_STREAM_FINISHED: 'COACH.RESPONSE_STREAM_FINISHED'
+    },
+    LLM: {
+        PROVIDER_SELECTED: 'LLM.PROVIDER_SELECTED',
+        PROVIDER_FAILED: 'LLM.PROVIDER_FAILED'
+    },
+    MEMORY: {
+        CREATED: 'MEMORY.CREATED',
+        UPDATED: 'MEMORY.UPDATED',
+        CLEARED: 'MEMORY.CLEARED'
+    },
+    SESSION: {
+        STARTED: 'SESSION.STARTED',
+        ENDED: 'SESSION.ENDED'
+    },
+    PLUGIN: {
+        REGISTERED: 'PLUGIN.REGISTERED',
+        MOUNTED: 'PLUGIN.MOUNTED',
+        UNMOUNTED: 'PLUGIN.UNMOUNTED'
+    },
+    SYSTEM: {
+        READY: 'SYSTEM.READY',
+        DEGRADED: 'SYSTEM.DEGRADED',
+        OFFLINE: 'SYSTEM.OFFLINE'
+    }
+});
+
+export default EVENT_TYPES;

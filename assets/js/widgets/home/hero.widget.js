@@ -4,12 +4,12 @@
  * -----------------------------------------------------------------
  * Layer        : Widget Layer
  * Status       : ACTIVE
- * Version      : 2.3.0
+ * Version      : 2.3.1 (SPRINT 1A CANONICAL RELEASE)
  * Architecture : Development Constitution v1.1
  * Pattern      : Pure UI Renderer
  * Owner        : Hero Widget
  * Created      : Sprint 46A
- * Last Updated : Sprint 46A.10
+ * Last Updated : Sprint 46A.11
  *
  * API :
  *   render(container)
@@ -52,7 +52,7 @@ const HeroWidget = {
                 <h1 class="hero-title-match">${this.data.title || ''}</h1>
                 <p class="hero-subtitle">${this.data.subtitle || ''}</p>
                 <div class="hero-actions">
-                    <a href="${this.data.ctaLink || '#'}" class="hero-cta-primary">${this.data.ctaText || 'Get Started'}</a>
+                    <a href="${this.data.ctaLink || '#'}" data-action="open-coach" class="hero-cta-primary">${this.data.ctaText || 'Get Started'}</a>
                     <a href="${this.data.secondaryCtaLink || '#'}" class="hero-cta-secondary">${this.data.secondaryCtaText || 'Learn More'}</a>
                 </div>
             </div>

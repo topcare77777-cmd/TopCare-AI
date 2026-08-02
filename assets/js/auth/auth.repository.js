@@ -1,8 +1,8 @@
 /**
  * file: assets/js/auth/auth.repository.js
- * Version: 132.1.0
+ * Version: 138.6.0 (BUILD 138.6 — PERMISSION FIX RELEASE)
  * Status: APPROVED & LOCKED
- * SRP: Data Access Layer SSOT. Returns Pure DTOs only.
+ * SRP: Data Access Layer SSOT. Returns Pure DTOs with complete feature permissions.
  */
 
 import { Core } from '../core/index.js';
@@ -18,8 +18,18 @@ class AuthRepositoryBase {
                 username,
                 email: 'doctor@topcare.ai',
                 fullName: 'Dr. Alexander House, MD',
-                roles: ['PHYSICIAN'],
-                permissions: ['patient.*', 'soap.write', 'soap.read', 'vital.write', 'prescription.write']
+                roles: ['PHYSICIAN', 'USER'],
+                // Pastikan seluruh permission domain AI Coach & Personality tersedia
+                permissions: [
+                    'patient.*',
+                    'soap.write',
+                    'soap.read',
+                    'vital.write',
+                    'prescription.write',
+                    'coach.access',
+                    'workspace.chat',
+                    'personality.test'
+                ]
             },
             sessionDto: {
                 sessionId: `sess_${Date.now()}`,
@@ -45,8 +55,8 @@ class AuthRepositoryBase {
                 username: data.username,
                 email: data.email,
                 fullName: data.fullName,
-                roles: [data.role],
-                permissions: ['patient.read', 'soap.read']
+                roles: [data.role || 'USER'],
+                permissions: ['patient.read', 'soap.read', 'coach.access', 'workspace.chat']
             }
         };
     }

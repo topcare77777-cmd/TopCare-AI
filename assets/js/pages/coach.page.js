@@ -1,57 +1,71 @@
 /**
- * TOPCARE AI PLATFORM V2 — AI COACH PAGE
+ * TOPCARE AI PLATFORM V2 — COACH PAGE CONTROLLER
  * Path: assets/js/pages/coach.page.js
+ * Status: ACTIVE - BUILD 139.1 (AI COACH MENU ACTIVATION)
+ * SRP: Mounts AI Coach Subsystem Host & Initiates CoachRuntime Execution
  */
 
+import { Core } from '../core/index.js';
+import { CoachRuntime } from '../coach/coach.runtime.js';
+import { CoachStore } from '../coach/coach.store.js';
+
 export const coachPage = {
-    _host: null,
+    hostContainer: null,
+    isMounted: false,
 
-    async init(hostElement) {
-        this._host = hostElement;
-    },
+    async mount(container) {
+        this.hostContainer = container || document.getElementById('app-host') || document.body;
+        Core.Logger.info('[CoachPage] Mounting AI Coach Page Runtime...');
 
-    async mount(hostElement) {
-        this._host = hostElement || this._host;
-        if (!this._host) return;
+        const selectedCoach = CoachStore.getSelectedCoach();
 
-        this._host.innerHTML = `
-            <div style="padding: 60px 20px; max-width: 1000px; margin: 0 auto; text-align: center;">
-                <span class="tc-badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;">
-                    Expert AI Guidance
-                </span>
-                <h1 style="font-size: 2.25rem; color: #ffffff; margin: 16px 0; font-weight: 800;">
-                    Sesi Bimbingan AI Coach
-                </h1>
-                <p style="color: #94a3b8; font-size: 1rem; max-width: 600px; margin: 0 auto 40px auto; line-height: 1.6;">
-                    Pilih pendamping AI sesuai dengan kebutuhan pengembangan diri dan temperamen Anda.
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
-                    <div class="card-glass" style="padding: 24px; text-align: left; border-radius: 16px; background: rgba(30, 41, 59, 0.6);">
-                        <h3 style="color: #38bdf8; margin-top: 0;">Dr. Aria</h3>
-                        <p style="color: #e2e8f0; font-weight: 600; font-size: 0.9rem;">Physical Medicine & Well-being</p>
-                        <p style="color: #94a3b8; font-size: 0.85rem; line-height: 1.5;">Spesialis kesehatan fisik, rehabilitasi, dan rutinitas harian optimal.</p>
+        // Render Clean AI Coach Host Interface
+        this.hostContainer.innerHTML = `
+            <div class="tc-coach-page-wrapper" style="max-width: 1000px; margin: 40px auto; padding: 24px; color: #F8FAFC;">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; background: #1E293B; padding: 20px 24px; border-radius: 12px; border: 1px solid #334155;">
+                    <div>
+                        <span style="font-size: 12px; font-weight: 600; color: #3B82F6; text-transform: uppercase; letter-spacing: 0.5px;">TopCare AI Workspace</span>
+                        <h1 style="margin: 4px 0 0 0; font-size: 24px; color: #FFF;">AI Coach Workspace</h1>
                     </div>
+                    <button data-action="open-coach" style="background: #3B82F6; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer;">
+                        Ganti Coach (${selectedCoach.label})
+                    </button>
+                </div>
 
-                    <div class="card-glass" style="padding: 24px; text-align: left; border-radius: 16px; background: rgba(30, 41, 59, 0.6);">
-                        <h3 style="color: #38bdf8; margin-top: 0;">Coach Kael</h3>
-                        <p style="color: #e2e8f0; font-weight: 600; font-size: 0.9rem;">Behavioral & Habit Optimization</p>
-                        <p style="color: #94a3b8; font-size: 0.85rem; line-height: 1.5;">Pakar pelacakan kebiasaan terstruktur dan perubahan perilaku berkelanjutan.</p>
+                <div id="tc-coach-runtime-host" style="background: #0F172A; border: 1px solid #334155; border-radius: 12px; min-height: 480px; padding: 32px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <img src="${selectedCoach.avatar}" alt="${selectedCoach.label}" style="width: 96px; height: 96px; border-radius: 50%; border: 3px solid #3B82F6; margin-bottom: 16px; object-fit: cover;" />
+                    <h2 style="margin: 0 0 8px 0; color: #FFF; font-size: 22px;">${selectedCoach.label}</h2>
+                    <p style="margin: 0 0 16px 0; color: #3B82F6; font-size: 14px; font-weight: 500;">${selectedCoach.subtitle}</p>
+                    <p style="max-width: 520px; color: #94A3B8; font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
+                        ${selectedCoach.description}
+                    </p>
+                    <div style="background: #1E293B; padding: 16px 24px; border-radius: 8px; border: 1px solid #334155; font-size: 13px; color: #CBD5E1;">
+                        💬 Sesi konsultasi dengan ${selectedCoach.label} siap dimulai. Klik tombol di atas jika ingin mengganti tipe mentor.
                     </div>
                 </div>
             </div>
         `;
+
+        // Initialize CoachRuntime on host
+        CoachRuntime.init(this.hostContainer);
+        this.isMounted = true;
+        Core.Logger.info('[CoachPage] AI Coach Page Runtime successfully mounted.');
     },
 
-    async afterEnter() {
-        await this.mount(this._host);
+    async unmount() {
+        this.destroy();
     },
 
-    async destroy() {
-        if (this._host) {
-            this._host.innerHTML = '';
-            this._host = null;
+    destroy() {
+        if (!this.isMounted) return;
+
+        CoachRuntime.destroy();
+        if (this.hostContainer) {
+            this.hostContainer.innerHTML = '';
         }
+        this.hostContainer = null;
+        this.isMounted = false;
+        Core.Logger.info('[CoachPage] Unmounted & destroyed.');
     }
 };
 

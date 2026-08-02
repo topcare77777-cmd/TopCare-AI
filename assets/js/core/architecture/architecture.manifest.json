@@ -1,0 +1,90 @@
+{
+    "architectureVersion": "2.0.0",
+    "platform": "TopCare AI Platform V2",
+    "subsystems": [
+        "PRESENTATION",
+        "APPLICATION_RUNTIME",
+        "DOMAIN_INTELLIGENCE",
+        "LLM_GATEWAY",
+        "MEMORY_SSOT",
+        "EVENT_ENGINE",
+        "CAPABILITY_ENGINE",
+        "RULE_ENGINE",
+        "SAFETY_ENGINE",
+        "OBSERVABILITY"
+    ],
+    "dependencyRules": {
+        "PRESENTATION": [
+            "APPLICATION_RUNTIME",
+            "CORE_DTO"
+        ],
+        "APPLICATION_RUNTIME": [
+            "DOMAIN_INTELLIGENCE",
+            "LLM_GATEWAY",
+            "MEMORY_SSOT",
+            "EVENT_ENGINE",
+            "CAPABILITY_ENGINE",
+            "SAFETY_ENGINE",
+            "CORE_DTO"
+        ],
+        "DOMAIN_INTELLIGENCE": [
+            "RULE_ENGINE",
+            "CAPABILITY_ENGINE",
+            "SAFETY_ENGINE",
+            "CORE_DTO"
+        ],
+        "LLM_GATEWAY": [
+            "CAPABILITY_ENGINE",
+            "CORE_DTO"
+        ],
+        "MEMORY_SSOT": [
+            "EVENT_ENGINE",
+            "CORE_DTO"
+        ],
+        "RULE_ENGINE": [
+            "CORE_DTO"
+        ],
+        "SAFETY_ENGINE": [
+            "CORE_DTO"
+        ],
+        "CAPABILITY_ENGINE": [
+            "CORE_DTO"
+        ],
+        "EVENT_ENGINE": [
+            "CORE_DTO"
+        ],
+        "OBSERVABILITY": [
+            "EVENT_ENGINE",
+            "CORE_DTO"
+        ]
+    },
+    "forbiddenImports": [
+        {
+            "from": "CORE_DTO",
+            "to": "PRESENTATION",
+            "reason": "Upward dependency violation"
+        },
+        {
+            "from": "CORE_DTO",
+            "to": "APPLICATION_RUNTIME",
+            "reason": "Upward dependency violation"
+        },
+        {
+            "from": "LLM_GATEWAY",
+            "to": "PRESENTATION",
+            "reason": "Layer breach violation"
+        },
+        {
+            "from": "SYSTEM_BOOTSTRAP",
+            "to": "DOMAIN_INTELLIGENCE",
+            "reason": "Lazy loading violation at startup"
+        }
+    ],
+    "publicApiSurface": [
+        "CoachRuntime.process",
+        "CoachRuntime.subscribe",
+        "CoachRuntime.unsubscribe",
+        "CoachMemory.snapshot",
+        "CoachRuntimeManager.getStatus"
+    ]
+}

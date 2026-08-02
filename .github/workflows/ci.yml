@@ -1,0 +1,66 @@
+# TOPCARE AI PLATFORM V2 — AUTOMATED CI/CD PRODUCTION VALIDATION PIPELINE
+# Path: .github/workflows/ci.yml
+# Status: ACTIVE (PRODUCTION VALIDATION PHASE - PV-1)
+
+name: TopCare AI V2 Enterprise Production Validation Pipeline
+
+on:
+  push:
+    branches: [ main, release/* ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-and-certify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 3. Install Dependencies
+        run: npm ci
+
+      - name: 4. Execute Contract & DTO Immutability Tests
+        run: npm run test:contracts
+
+      - name: 5. Execute Real Mutation Testing
+        run: npm run test:mutation
+
+      - name: 6. Execute 50+ Real Chaos Injected Fault Tests
+        run: npm run test:chaos
+
+      - name: 7. Execute Golden Replay Determinism Verification (Fail-Fast Gate)
+        run: npm run test:replay
+
+      - name: 8. Run Coverage & Produce Real HTML Artifacts
+        run: npm run test:coverage
+
+      - name: 9. Run Real Performance Benchmarks & Heap Profiling
+        run: npm run test:benchmark
+
+      - name: 10. Execute Cross-Browser E2E Matrix (Playwright)
+        run: npx playwright test
+
+      - name: 11. Compile Production Readiness Review (PRR) & Issue Release Seal
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: node scripts/compile-production-seal.js
+
+      - name: 12. Generate Cryptographic Artifact Hashes (SHA-256)
+        run: |
+          mkdir -p artifacts/hashes
+          sha256sum artifacts/bundle/* artifacts/release/* > artifacts/hashes/sha256.txt
+
+      - name: 13. Upload Immutable Evidence Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: topcare-production-evidence-${{ github.sha }}
+          path: artifacts/
+          retention-days: 90

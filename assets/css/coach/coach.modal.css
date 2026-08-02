@@ -1,0 +1,158 @@
+/* Path: assets/css/coach/coach.modal.css */
+.tc-coach-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: tcCoachFadeIn 0.2s ease-out;
+}
+
+.tc-coach-modal-card {
+    background: #1E293B;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 620px;
+    padding: 28px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    color: #F8FAFC;
+    font-family: system-ui, -apple-system, sans-serif;
+    position: relative;
+}
+
+.tc-coach-modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: 4px;
+    padding: 4px 8px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.tc-coach-modal-close:hover {
+    color: #F8FAFC;
+    background-color: #334155;
+}
+
+.tc-coach-modal-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.tc-coach-modal-title {
+    margin: 0 0 8px 0;
+    font-size: 22px;
+    color: #3B82F6;
+}
+
+.tc-coach-modal-subtitle {
+    margin: 0;
+    font-size: 14px;
+    color: #94A3B8;
+}
+
+.tc-coach-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.tc-coach-card {
+    background: #0F172A;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.tc-coach-card:hover {
+    border-color: #3B82F6;
+    transform: translateY(-2px);
+}
+
+.tc-coach-avatar-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px;
+    border: 2px solid #334155;
+    background: #1E293B;
+}
+
+.tc-coach-name {
+    margin: 0 0 2px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F8FAFC;
+}
+
+.tc-coach-subtitle {
+    margin: 0 0 10px 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #3B82F6;
+}
+
+.tc-coach-subtitle-maya {
+    color: #10B981;
+}
+
+.tc-coach-desc {
+    margin: 0 0 16px 0;
+    font-size: 13px;
+    color: #94A3B8;
+    line-height: 1.4;
+    flex-grow: 1;
+}
+
+.tc-coach-btn-select {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.tc-coach-btn-alex {
+    background: #3B82F6;
+    color: #FFFFFF;
+}
+
+.tc-coach-btn-alex:hover {
+    background: #2563EB;
+}
+
+.tc-coach-btn-maya {
+    background: #10B981;
+    color: #FFFFFF;
+}
+
+.tc-coach-btn-maya:hover {
+    background: #059669;
+}
+
+@keyframes tcCoachFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

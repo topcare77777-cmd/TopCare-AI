@@ -1,172 +1,147 @@
 /**
- * file: assets/js/auth/auth.service.js
- * Version: 132.1.0
- * Status: APPROVED & LOCKED
- * SRP: Main Identity Application Service with explicit public getters and OAuth RFC flow.
+ * TOPCARE AI PLATFORM V2 — AUTHENTICATION SERVICE
+ * Path: assets/js/auth/auth.service.js
+ * Status: ACTIVE - FIX BUILD 138.5
+ * SRP: Central Authentication Service handling login, logout, and token session orchestrations.
  */
 
 import { Core } from '../core/index.js';
-import { AUTH_EVENTS } from './auth.types.js';
 import { AuthRepository } from './auth.repository.js';
-import { AuthTokenStorage } from './auth.storage.js';
-import { AuthGuard } from './auth.guard.js';
-import { User } from './auth.user.js';
-import { Session } from './auth.session.js';
-import { AuthToken } from './auth.token.js';
+import { AUTH_EVENTS } from './auth.types.js';
+import sessionManager from './session/session.manager.js';
 
-class AuthServiceBase {
-    constructor() {
-        this._currentUser = null;
-        this._currentSession = null;
-        this._currentToken = null;
-        Object.seal(this);
+// -----------------------------------------------------------------
+// SAFEGUARD: Ensure Core.Event provides a safe emit() wrapper
+// -----------------------------------------------------------------
+function safeEmitEvent(eventName, payload) {
+    if (!Core || !Core.Event) {
+        console.warn(`[AuthService] Core.Event not available for event '${eventName}'`);
+        return;
     }
 
-    // --- Public Readonly Accessors (Encapsulation Enforcement) ---
-    getCurrentUser() {
-        if (!this._currentUser) this.restoreSession();
-        return this._currentUser;
-    }
-
-    getCurrentSession() {
-        return this._currentSession;
-    }
-
-    getCurrentToken() {
-        return this._currentToken;
-    }
-
-    _generateCorrelationId() {
-        return (typeof crypto !== 'undefined' && crypto.randomUUID) 
-            ? crypto.randomUUID() 
-            : `corr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    }
-
-    async login(username, password) {
-        const correlationId = this._generateCorrelationId();
-        Core.Event.emit(AUTH_EVENTS.LOGIN_BEGIN, { username, correlationId });
-
-        try {
-            const { userDto, sessionDto, tokenDto } = await AuthRepository.executeLogin(username, password, correlationId);
-
-            this._currentUser = new User(userDto);
-            this._currentSession = new Session(sessionDto);
-            this._currentToken = new AuthToken(tokenDto);
-
-            await AuthTokenStorage.saveSessionData({
-                user: userDto,
-                session: sessionDto,
-                token: tokenDto
-            });
-
-            Core.Event.emit(AUTH_EVENTS.LOGIN_SUCCESS, {
-                userId: this._currentUser.id,
-                sessionId: this._currentSession.sessionId,
-                correlationId
-            });
-
-            return { user: this._currentUser, session: this._currentSession, token: this._currentToken };
-        } catch (err) {
-            Core.Event.emit(AUTH_EVENTS.LOGIN_FAILED, { username, error: err.message, correlationId });
-            throw err;
-        }
-    }
-
-    async register(registrationData) {
-        const correlationId = this._generateCorrelationId();
-        Core.Event.emit('auth.register.begin', { username: registrationData.username, correlationId });
-
-        try {
-            // Dedicated Registration Flow via AuthRepository SSOT
-            const responseDto = await AuthRepository.executeRegister(registrationData, correlationId);
-            Core.Event.emit('auth.register.success', { username: registrationData.username, correlationId });
-            return responseDto;
-        } catch (err) {
-            Core.Event.emit('auth.register.failed', { username: registrationData.username, error: err.message, correlationId });
-            throw err;
-        }
-    }
-
-    async rotateRefreshToken() {
-        const correlationId = this._generateCorrelationId();
-        if (!this._currentToken?.refreshToken) {
-            throw new Error("No active refresh token available.");
-        }
-
-        Core.Event.emit(AUTH_EVENTS.REFRESH_BEGIN, { userId: this._currentUser?.id, correlationId });
-
-        try {
-            const { sessionDto, tokenDto } = await AuthRepository.executeRefreshToken(
-                this._currentToken.refreshToken,
-                correlationId
-            );
-
-            this._currentSession = new Session(sessionDto);
-            this._currentToken = new AuthToken(tokenDto);
-
-            await AuthTokenStorage.saveSessionData({
-                user: this._currentUser,
-                session: sessionDto,
-                token: tokenDto
-            });
-
-            Core.Event.emit(AUTH_EVENTS.TOKEN_ROTATED, { sessionId: this._currentSession.sessionId, correlationId });
-            Core.Event.emit(AUTH_EVENTS.REFRESH_SUCCESS, { sessionId: this._currentSession.sessionId, correlationId });
-
-            return { session: this._currentSession, token: this._currentToken };
-        } catch (err) {
-            Core.Event.emit(AUTH_EVENTS.REFRESH_FAILED, { error: err.message, correlationId });
-            this.logout();
-            throw err;
-        }
-    }
-
-    async can(permissionConstant, contextDetails = {}) {
-        const user = this.getCurrentUser();
-        if (!user) return false;
-
-        if (this._currentToken?.isAccessTokenExpired) {
-            Core.Logger.info("[AuthService] Access token expired during check. Auto-refreshing...");
-            try {
-                await this.rotateRefreshToken();
-            } catch {
-                return false;
-            }
-        }
-
-        return AuthGuard.evaluate(user, permissionConstant, contextDetails);
-    }
-
-    async restoreSession() {
-        const saved = await AuthTokenStorage.getSessionData();
-        if (saved?.user && saved?.session && saved?.token) {
-            this._currentUser = new User(saved.user);
-            this._currentSession = new Session(saved.session);
-            this._currentToken = new AuthToken(saved.token);
-
-            if (this._currentSession.isExpired) {
-                Core.Event.emit(AUTH_EVENTS.SESSION_EXPIRED, { userId: this._currentUser.id });
-                this.logout();
-                return false;
-            }
-
-            Core.Event.emit(AUTH_EVENTS.SESSION_RESTORED, { userId: this._currentUser.id });
-            return true;
-        }
-        return false;
-    }
-
-    logout() {
-        if (this._currentUser) {
-            const correlationId = this._generateCorrelationId();
-            AuthRepository.executeLogout(this._currentSession?.sessionId, correlationId);
-            Core.Event.emit(AUTH_EVENTS.LOGOUT, { userId: this._currentUser.id, correlationId });
-        }
-        this._currentUser = null;
-        this._currentSession = null;
-        this._currentToken = null;
-        AuthTokenStorage.clearSessionData();
+    if (typeof Core.Event.emit === 'function') {
+        Core.Event.emit(eventName, payload);
+    } else if (typeof Core.Event.dispatch === 'function') {
+        Core.Event.dispatch(eventName, payload);
+    } else if (typeof Core.Event.publish === 'function') {
+        Core.Event.publish(eventName, payload);
+    } else if (typeof Core.Event.trigger === 'function') {
+        Core.Event.trigger(eventName, payload);
+    } else {
+        console.log(`[AuthService] Event '${eventName}' dispatched:`, payload);
     }
 }
 
-export const AuthService = Object.freeze(new AuthServiceBase());
+class AuthServiceImpl {
+    async login(username, password) {
+        const correlationId = `corr_login_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+
+        try {
+            Core.Logger.info(`[AuthService] Initiating login sequence for '${username}' (CorrID: ${correlationId})`);
+
+            // 1. Emit LOGIN_BEGIN Event
+            safeEmitEvent(AUTH_EVENTS.LOGIN_BEGIN, { username, correlationId });
+
+            // 2. Execute Login Request via AuthRepository
+            const response = await AuthRepository.executeLogin(username, password, correlationId);
+
+            if (!response || !response.userDto) {
+                throw new Error("Respons login dari server tidak valid.");
+            }
+
+            const { userDto, sessionDto, tokenDto } = response;
+
+            // 3. Save Session into SessionManager SSOT V2
+            await sessionManager.start({
+                id: userDto.id,
+                username: userDto.username,
+                email: userDto.email,
+                fullName: userDto.fullName,
+                roles: userDto.roles,
+                permissions: userDto.permissions
+            }, true);
+
+            // 4. Save Tokens in V2 Storage SSOT
+            try {
+                if (tokenDto?.accessToken) {
+                    localStorage.setItem('topcare.auth.token', tokenDto.accessToken);
+                    localStorage.setItem('topcare_session', tokenDto.accessToken);
+                }
+                localStorage.setItem('topcare.auth.user', JSON.stringify(userDto));
+                localStorage.setItem('topcare_user', JSON.stringify(userDto));
+            } catch (storageErr) {
+                Core.Logger.warn('[AuthService] Failed to persist auth token to local storage:', storageErr);
+            }
+
+            // 5. Emit LOGIN_SUCCESS Event
+            safeEmitEvent(AUTH_EVENTS.LOGIN_SUCCESS, {
+                userId: userDto.id,
+                sessionId: sessionDto?.sessionId || `sess_${Date.now()}`,
+                correlationId
+            });
+
+            Core.Logger.info(`[AuthService] Login successful for user '${userDto.id}'. Session initialized.`);
+
+            return {
+                success: true,
+                user: userDto,
+                sessionId: sessionDto?.sessionId,
+                token: tokenDto?.accessToken
+            };
+
+        } catch (error) {
+            Core.Logger.error(`[AuthService] Login failed for '${username}': ${error.message}`);
+
+            safeEmitEvent(AUTH_EVENTS.LOGIN_FAILED, {
+                username,
+                error: error.message,
+                correlationId
+            });
+
+            return {
+                success: false,
+                message: error.message || "Gagal melakukan autentikasi."
+            };
+        }
+    }
+
+    async logout() {
+        try {
+            const currentSession = sessionManager.current();
+            const sessionId = currentSession ? currentSession.userId : 'unknown';
+
+            Core.Logger.info(`[AuthService] Logging out session '${sessionId}'...`);
+
+            await sessionManager.end();
+
+            try {
+                localStorage.removeItem('topcare.auth.token');
+                localStorage.removeItem('topcare.auth.user');
+                localStorage.removeItem('topcare_session');
+                localStorage.removeItem('topcare_user');
+            } catch (e) {
+                // Ignore storage removal errors
+            }
+
+            safeEmitEvent(AUTH_EVENTS.LOGOUT, { sessionId });
+            Core.Logger.info('[AuthService] Logout complete.');
+            return true;
+        } catch (err) {
+            Core.Logger.error(`[AuthService] Logout error: ${err.message}`);
+            return false;
+        }
+    }
+
+    async getCurrentUser() {
+        const session = sessionManager.current();
+        if (!session) return null;
+        return session;
+    }
+
+    async isAuthenticated() {
+        return await sessionManager.isAuthenticated();
+    }
+}
+
+export const AuthService = new AuthServiceImpl();
+export default AuthService;

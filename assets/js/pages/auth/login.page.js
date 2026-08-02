@@ -1,147 +1,144 @@
 /**
- * file: assets/js/pages/auth/login.page.js
- * Version: 132.3.0
- * Status: APPROVED & LOCKED
- * SRP: Login Page LifeCycle Conductor (BEM Compliant & Core Integrated)
+ * TOPCARE AI PLATFORM V2 — LOGIN PAGE CONTROLLER
+ * Path: assets/js/pages/auth/login.page.js
+ * Status: ACTIVE - BUILD 138 (AUTHENTICATION RUNTIME BRIDGE)
+ * SRP: Manages Login UI, delegates credentials to AuthService V2, and consumes Redirect Intent.
  */
 
+import { AuthService } from '../../auth/auth.service.js';
+import { AuthRouteGuard } from '../../auth/guards/auth-route.guard.js';
+import { Router } from '../../router/router.js';
 import { Core } from '../../core/index.js';
 
 export class LoginPage {
-    constructor(hostElement) {
-        this.host = hostElement;
-        Object.seal(this);
+    constructor(hostContainer) {
+        this.host = hostContainer || document.getElementById('app-host') || document.body;
+        this.isMounted = false;
+        this._boundSubmitHandler = null;
     }
 
-    async beforeEnter() {
-        if (typeof Core !== 'undefined' && Core.Logger) {
-            Core.Logger.info("[LoginPage] Lifecycle: Executing beforeEnter...");
-        }
-    }
+    async mount() {
+        if (this.isMounted) return;
 
-    async init(hostElement) {
-        this.host = hostElement || this.host;
-        if (typeof Core !== 'undefined' && Core.Logger) {
-            Core.Logger.info("[LoginPage] Lifecycle: Initializing...");
-        }
-    }
-
-    async mount(hostElement) {
-        this.host = hostElement || this.host;
-        if (!this.host) return;
-
-        if (typeof Core !== 'undefined' && Core.Logger) {
-            Core.Logger.info("[LoginPage] Lifecycle: Mounting DOM...");
-        }
-
-        this.render();
-        this.bindEvents();
-    }
-
-    async afterEnter() {
-        if (typeof Core !== 'undefined' && Core.Logger) {
-            Core.Logger.info("[LoginPage] Lifecycle: Executing afterEnter...");
-        }
-        await this.mount(this.host);
-    }
-
-    render() {
+        // Render Clean V2 Login Template
         this.host.innerHTML = `
-            <section class="tc-auth">
-                <div class="tc-auth__container">
-                    <div class="tc-auth__header">
-                        <h2 class="tc-auth__title">Selamat Datang Kembali</h2>
-                        <p class="tc-auth__subtitle">Masuk ke akun TopCare AI Anda untuk melanjutkan sesi Coach AI.</p>
+            <div class="tc-auth-container" style="max-width: 420px; margin: 60px auto; padding: 32px; background: #1E293B; border-radius: 12px; color: #F8FAFC; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+                <div style="text-align: center; margin-bottom: 24px;">
+                    <h2 style="color: #3B82F6; margin-bottom: 8px;">Masuk ke TopCare AI</h2>
+                    <p style="color: #94A3B8; font-size: 14px; margin: 0;">Akses AI Coach & Tes Kepribadian Anda</p>
+                </div>
+
+                <div id="tc-auth-error" style="display: none; background: #991B1B; color: #FECACA; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px;"></div>
+
+                <form id="tc-login-form">
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-size: 13px; color: #CBD5E1; margin-bottom: 6px;">Username / Email</label>
+                        <input type="text" id="tc-login-username" required placeholder="doctor@topcare.ai" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: #FFF; font-size: 14px; box-sizing: border-box;" />
                     </div>
 
-                    <form id="login-form" class="tc-auth__form">
-                        <div class="tc-auth__field">
-                            <label class="tc-auth__label" for="login-email">Alamat Email</label>
-                            <input class="tc-auth__input" type="email" id="login-email" required placeholder="nama@email.com">
-                        </div>
+                    <div style="margin-bottom: 24px;">
+                        <label style="display: block; font-size: 13px; color: #CBD5E1; margin-bottom: 6px;">Kata Sandi</label>
+                        <input type="password" id="tc-login-password" required placeholder="••••••••" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: #FFF; font-size: 14px; box-sizing: border-box;" />
+                    </div>
 
-                        <div class="tc-auth__field">
-                            <label class="tc-auth__label" for="login-password">Kata Sandi</label>
-                            <input class="tc-auth__input" type="password" id="login-password" required placeholder="Masukkan kata sandi">
-                        </div>
+                    <button type="submit" id="tc-login-submit-btn" style="width: 100%; padding: 12px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; cursor: pointer;">
+                        Masuk Sekarang
+                    </button>
+                </form>
 
-                        <button type="submit" class="tc-auth__button tc-auth__button--primary">
-                            Masuk Ke Akun
-                        </button>
-
-                        <p class="tc-auth__register-terms">
-                            Belum punya akun? <a href="#/register" style="color: #38bdf8; text-decoration: none;">Daftar Gratis di sini</a>
-                        </p>
-                    </form>
+                <div style="margin-top: 20px; text-align: center; font-size: 13px; color: #94A3B8;">
+                    Belum punya akun? <a href="#/register" style="color: #3B82F6; text-decoration: none;">Daftar di sini</a>
                 </div>
-            </section>
+            </div>
         `;
+
+        this.attachFormListeners();
+        this.isMounted = true;
+        Core.Logger.info('[LoginPage] Mounted successfully.');
     }
 
-    bindEvents() {
-        const form = document.getElementById('login-form');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
+    attachFormListeners() {
+        const form = this.host.querySelector('#tc-login-form');
+        if (!form) return;
 
-                this.handleLogin({ username: email, password: password });
-            });
-        }
-    }
+        this._boundSubmitHandler = async (event) => {
+            event.preventDefault();
+            this.hideError();
 
-    async handleLogin({ username, password }) {
-        try {
-            if (typeof Core !== 'undefined' && Core.Logger) {
-                Core.Logger.info(`[LoginPage] Login attempt for: ${username}`);
+            const usernameInput = this.host.querySelector('#tc-login-username');
+            const passwordInput = this.host.querySelector('#tc-login-password');
+            const submitBtn = this.host.querySelector('#tc-login-submit-btn');
+
+            const username = usernameInput ? usernameInput.value.trim() : '';
+            const password = passwordInput ? passwordInput.value : '';
+
+            if (!username || !password) {
+                this.showError('Username dan Password wajib diisi.');
+                return;
             }
 
-            // 1. Simpan sesi autentikasi lokal
-            localStorage.setItem('topcare_user', JSON.stringify({
-                email: username,
-                isLoggedIn: true,
-                loginAt: new Date().toISOString()
-            }));
+            try {
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Memproses...';
+                }
 
-            // 2. Event Dispatching yang aman (Cek apakah emit/publish/dispatch tersedia)
-            if (typeof Core !== 'undefined' && Core.Event) {
-                if (typeof Core.Event.emit === 'function') {
-                    Core.Event.emit('ui.notification.show', { type: 'success', message: `Selamat datang kembali, ${username}!` });
-                } else if (typeof Core.Event.publish === 'function') {
-                    Core.Event.publish('ui.notification.show', { type: 'success', message: `Selamat datang kembali, ${username}!` });
-                } else if (typeof Core.Event.dispatch === 'function') {
-                    Core.Event.dispatch('ui.notification.show', { type: 'success', message: `Selamat datang kembali, ${username}!` });
+                // 1. Execute Authentication V2 Pipeline via AuthService SSOT
+                const authResult = await AuthService.login(username, password);
+
+                if (authResult && (authResult.success || authResult.user || authResult.userDto)) {
+                    Core.Logger.info(`[LoginPage] Login successful for user: ${username}`);
+
+                    // 2. Consume Redirect Intent saved by AuthRouteGuard
+                    const targetRoute = AuthRouteGuard.consumeRedirectIntent();
+                    Core.Logger.info(`[LoginPage] Navigating to target route: ${targetRoute}`);
+
+                    // 3. Navigate user to target destination
+                    Router.navigate(targetRoute);
+                } else {
+                    this.showError(authResult?.message || 'Gagal masuk. Periksa username dan password Anda.');
+                }
+            } catch (err) {
+                Core.Logger.error(`[LoginPage] Login execution error: ${err.message}`);
+                this.showError(err.message || 'Terjadi kesalahan sistem saat mencoba masuk.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Masuk Sekarang';
                 }
             }
+        };
 
-            // 3. Fallback Notifikasi Instan
-            alert(`Berhasil masuk! Selamat datang kembali, ${username}.`);
+        form.addEventListener('submit', this._boundSubmitHandler);
+    }
 
-            // 4. Pindah ke Beranda
-            this.navigateTo('#/home');
-        } catch (err) {
-            if (typeof Core !== 'undefined' && Core.Logger) {
-                Core.Logger.error(`[LoginPage] Login failed: ${err.message}`);
-            }
+    showError(msg) {
+        const errEl = this.host.querySelector('#tc-auth-error');
+        if (errEl) {
+            errEl.textContent = msg;
+            errEl.style.display = 'block';
         }
     }
 
-    navigateTo(hash) {
-        window.location.hash = hash;
-    }
-
-    async destroy() {
-        if (typeof Core !== 'undefined' && Core.Logger) {
-            Core.Logger.info("[LoginPage] Lifecycle: Destroying...");
+    hideError() {
+        const errEl = this.host.querySelector('#tc-auth-error');
+        if (errEl) {
+            errEl.style.display = 'none';
+            errEl.textContent = '';
         }
-        this.cleanup();
     }
 
-    cleanup() {
+    destroy() {
+        const form = this.host.querySelector('#tc-login-form');
+        if (form && this._boundSubmitHandler) {
+            form.removeEventListener('submit', this._boundSubmitHandler);
+            this._boundSubmitHandler = null;
+        }
         if (this.host) {
             this.host.innerHTML = '';
         }
+        this.isMounted = false;
+        Core.Logger.info('[LoginPage] Destroyed.');
     }
 }
 
