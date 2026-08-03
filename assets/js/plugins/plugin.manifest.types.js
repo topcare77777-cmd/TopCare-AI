@@ -1,5 +1,8 @@
 /**
- * file: assets/js/plugins/plugin.manifest.types.js
+ * TOPCARE AI PLATFORM V2 — PLUGIN MANIFEST TYPES & ERROR CODES
+ * Path: assets/js/plugins/plugin.manifest.types.js
+ * Status: ACTIVE (BUILD 123.2.3 — SSOT FIX)
+ * Role: Provides SSOT type definitions and validation error codes for Plugin Infrastructure.
  */
 
 export const PLUGIN_VALIDATION_ERROR_CODES = Object.freeze({
@@ -10,3 +13,15 @@ export const PLUGIN_VALIDATION_ERROR_CODES = Object.freeze({
     DUPLICATE_DEPENDENCY: 'PLUGIN_DUPLICATE_DEPENDENCY',
     DUPLICATE_PLUGIN_ID: 'PLUGIN_DUPLICATE_ID'
 });
+
+export const ROUTER_PLUGIN_TYPES = Object.freeze({
+    GUARD: 'GUARD',
+    INTERCEPTOR: 'INTERCEPTOR',
+    MIDDLEWARE: 'MIDDLEWARE',
+    RESOLVER: 'RESOLVER'
+});
+
+export default {
+    PLUGIN_VALIDATION_ERROR_CODES,
+    ROUTER_PLUGIN_TYPES
+};

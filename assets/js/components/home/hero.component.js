@@ -4,35 +4,16 @@
  * -----------------------------------------------------------------
  * Layer        : Layer 4.5 - Component
  * Status       : ACTIVE
- * Version      : 2.3.0
+ * Version      : 2.4.2 (HOTFIX BUILD 124.2.1 - ROUTER IMPORT PATH FIX)
  * Owner        : Home Module
- * Created      : Sprint 46A
- * Last Updated : Sprint 46A.7
- *
  * Architecture : Development Constitution v1.1
  * Pattern      : Conductor Component
- * Migration    : SPRINT 46A.7
- * Revision     : 46A.7
  * Runtime      : V2 Runtime
- * Compatible   : TopCare AI Runtime 2.x
- *
- * Dependencies :
- *   - HeroWidget
- *
- * Forbidden :
- *   - Router
- *   - TopCareApp
- *   - ViewManager
- *
- * Component API :
- *   mount(container)
- *   update()
- *   destroy()
- *   cleanup()
  * -----------------------------------------------------------------
  */
 
 import { HeroWidget } from '../../widgets/home/hero.widget.js';
+import { Router } from '../../router/router.js';
 
 const HeroComponent = {
     container: null,
@@ -40,7 +21,7 @@ const HeroComponent = {
 
     async mount(container) {
         if (!container) return;
-        
+
         if (this.container !== container) {
             this.container = container;
         }
@@ -52,20 +33,35 @@ const HeroComponent = {
         try {
             await HeroWidget.render(this.container);
             this.isMounted = true;
+            this.bindGetStarted();
         } catch (err) {
             console.error("[HeroComponent] mount:", err);
         }
     },
 
+    bindGetStarted() {
+        if (!this.container) return;
+
+        const getStartedButtons = this.container.querySelectorAll('[data-action="get-started"], #btn-get-started, .hero-btn-primary');
+        getStartedButtons.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sessionStorage.setItem("topcare.pending.route", "/coach-selection");
+                Router.navigate("/login");
+            });
+        });
+    },
+
     async update() {
         if (!this.isMounted || !this.container) return;
-        
+
         try {
             if (typeof HeroWidget.refresh === 'function') {
                 await HeroWidget.refresh();
             } else {
                 await HeroWidget.render(this.container);
             }
+            this.bindGetStarted();
         } catch (err) {
             console.error("[HeroComponent] update:", err);
         }

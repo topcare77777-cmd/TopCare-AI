@@ -1,8 +1,8 @@
 /**
  * file: assets/js/router/router.js
- * Version: 140.6.0 (BUILD 139.1 — AI COACH MENU ACTIVATION)
+ * Version: 124.3.0 (BUILD 124.3.0 — STRICT DYNAMIC PATH RESOLUTION FIX)
  * Status: APPROVED & LOCKED
- * SRP: Dynamic Route Loader & Manifest Dispatcher with Resilient Workspace Coach Page Mounting.
+ * SRP: Dynamic Route Loader, Explicit Path Resolver & Guard Dispatcher.
  */
 
 import { ViewManager } from '../core/view-manager.js';
@@ -26,89 +26,124 @@ class RouterEngine {
     }
 
     _registerRoutes() {
-        // 1. Core Dynamic Application Routes (Auth & Home)
-        this.register('/home', () => this._dispatchPage('home.page.js', false));
-        this.register('/login', () => this._dispatchPage('auth/login.page.js', true));
-        this.register('/register', () => this._dispatchPage('auth/register.page.js', true));
+        // 1. Explicit Auth Pages (Mapped to pages/auth/)
+        this.register('/login', () => this._dispatchPage('login.page.js', true, true));
+        this.register('/register', () => this._dispatchPage('register.page.js', true, true));
+        this.register('/forgot-password', () => this._dispatchPage('forgot-password.page.js', true, true));
 
-        // 2. Personality Domain Routes (Protected)
-        this.register('/personality', () => this._dispatchPage('personality.page.js', false));
+        // 2. Explicit Core Application Pages (Mapped to pages/)
+        this.register('/home', () => this._dispatchPage('home.page.js', false, false));
+        this.register('/coach', () => this._dispatchPage('coach.page.js', false, false));
+        this.register('/coach-selection', () => this._dispatchPage('coach-selection.page.js', false, false));
+        this.register('/personality', () => this._dispatchPage('personality.page.js', false, false));
 
-        // Dynamic Sandbox Halaman Tes Kepribadian (Protected)
+        // 3. Protected Personality Test Sandbox
         this.register('/personality-test', async () => {
-            const { PersonalityBootstrap } = await import('../personality/personality.bootstrap.js');
-            ViewManager.mountView({
-                mount: async (container) => {
-                    container.innerHTML = `<div id="personality-test" class="tc-sandbox-host"></div>`;
-                    const sandbox = container.querySelector('#personality-test');
-                    await PersonalityBootstrap.bootstrap(sandbox);
-                },
-                destroy: () => {
-                    PersonalityBootstrap.destroy();
+            Core.Logger.info('[Router] Navigating to Personality Test Sandbox...');
+            try {
+                const { PersonalityBootstrap } = await import('../personality/personality.bootstrap.js');
+                ViewManager.mountView({
+                    mount: async (container) => {
+                        container.innerHTML = `<div id="personality-test" class="tc-sandbox-host"></div>`;
+                        const sandbox = container.querySelector('#personality-test');
+                        await PersonalityBootstrap.bootstrap(sandbox);
+                    },
+                    destroy: () => {
+                        if (PersonalityBootstrap && typeof PersonalityBootstrap.destroy === 'function') {
+                            PersonalityBootstrap.destroy();
+                        }
+                    }
+                });
+            } catch (err) {
+                Core.Logger.error(`[Router] Failed to load Personality Test: ${err.message}`);
+                await this._dispatchPage('personality.page.js', false, false);
+            }
+        });
+
+        // 4. Smooth Scroll Landing Anchor Redirect
+        this.register('/features', () => {
+            window.location.hash = '#/home';
+            setTimeout(() => {
+                const featuresEl = document.getElementById('features') || document.getElementById('services');
+                if (featuresEl) {
+                    featuresEl.scrollIntoView({ behavior: 'smooth' });
                 }
-            });
+            }, 100);
         });
 
-        // 3. Rute Smooth Scroll Landing Page (Public Home Scroll)
-        this.register('/coach', () => {
-            this.navigate('/workspace/coach');
-        });
-
-        // 4. RUTE WORKSPACE AI COACH RUNTIME (Protected & Activated)
+        // 5. Workspace AI Coach Runtime Route
         this.register('/workspace/coach', async () => {
             Core.Logger.info("[Router] Navigating to Workspace AI Coach Runtime...");
 
             try {
-                // Check if Workspace DOM container exists
-                let workspaceEl = document.getElementById('app-workspace');
-                let homeEl = document.getElementById('app-home');
-
-                if (!workspaceEl) {
-                    // Fallback: Dispatch via Dynamic Coach Page Module
-                    await this._dispatchPage('coach.page.js', false);
-                    return;
-                }
-
-                if (homeEl) homeEl.style.display = 'none';
-                workspaceEl.style.display = 'block';
-
-                const { WorkspaceRuntime } = await import('../ui/workspace/workspace.runtime.js');
-                if (WorkspaceRuntime && typeof WorkspaceRuntime.mountWorkspace === 'function') {
-                    WorkspaceRuntime.mountWorkspace('coach');
-                } else if (WorkspaceRuntime && typeof WorkspaceRuntime.activateTab === 'function') {
-                    WorkspaceRuntime.activateTab('coach');
-                }
+                await this._dispatchPage('coach.page.js', false, false);
             } catch (err) {
                 Core.Logger.error(`[Router] Failed to load Workspace AI Coach: ${err.message}`);
-                // Fallback to direct Coach Page dispatch
-                await this._dispatchPage('coach.page.js', false);
+                ViewManager.renderErrorView(err);
             }
         });
 
-        // 5. Manifest Dynamic Pages
+        // 6. Manifest Dynamic Application Pages (Mapped to pages/)
         const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace'];
         manifestPages.forEach(page => {
-            this.register(`/${page}`, () => this._dispatchPage(`${page}.page.js`, false));
+            this.register(`/${page}`, () => this._dispatchPage(`${page}.page.js`, false, false));
         });
     }
 
-    async _dispatchPage(filePath, isClassType = false) {
+    async _dispatchPage(fileName, isClassType = false, isAuthPage = false) {
+        let pageModule = null;
+
+        // Strict explicit path targeting based on page domain
+        const candidatePaths = isAuthPage
+            ? [`../pages/auth/${fileName}`, `../pages/${fileName}`]
+            : [`../pages/${fileName}`, `../pages/auth/${fileName}`];
+
+        let lastError = null;
+
+        for (const path of candidatePaths) {
+            try {
+                pageModule = await import(path);
+                if (pageModule) break;
+            } catch (err) {
+                lastError = err;
+            }
+        }
+
+        if (!pageModule) {
+            Core.Logger.error(`[Router] Failed to load dynamic page module '${fileName}': ${lastError?.message}`);
+            ViewManager.renderErrorView(lastError || new Error(`Module ${fileName} not found.`));
+            return;
+        }
+
         try {
-            const modulePath = `../pages/${filePath}`;
-            const pageModule = await import(modulePath);
+            const host = ViewManager.getAppHost();
 
             if (isClassType) {
-                const TargetClass = pageModule.default || pageModule[Object.keys(pageModule)[0]];
-                const host = ViewManager.getAppHost();
-                const instance = new TargetClass(host);
+                const TargetClass = pageModule.RegisterPage || 
+                                    pageModule.LoginPage || 
+                                    pageModule.ForgotPasswordPage ||
+                                    pageModule.default || 
+                                    pageModule[Object.keys(pageModule)[0]];
+
+                const instance = typeof TargetClass === 'function' ? new TargetClass(host) : TargetClass;
                 await ViewManager.mountView(instance);
             } else {
-                const instance = pageModule.default || pageModule.coachPage || pageModule.personalityPage || pageModule;
-                await ViewManager.mountView(instance);
+                const targetInstance = pageModule.default || 
+                                       pageModule.coachPage || 
+                                       pageModule.homePage || 
+                                       pageModule.coachSelectionPage || 
+                                       pageModule.personalityPage || 
+                                       pageModule;
+                
+                if (typeof targetInstance === 'function') {
+                    await ViewManager.mountView(new targetInstance(host));
+                } else {
+                    await ViewManager.mountView(targetInstance);
+                }
             }
-        } catch (err) {
-            Core.Logger.error(`[Router] Failed to load dynamic page module '${filePath}': ${err.message}`);
-            ViewManager.renderErrorView(err);
+        } catch (mountErr) {
+            Core.Logger.error(`[Router] Error mounting page '${fileName}': ${mountErr.message}`);
+            ViewManager.renderErrorView(mountErr);
         }
     }
 
@@ -128,7 +163,6 @@ class RouterEngine {
     handleRoute() {
         let rawHash = window.location.hash.replace('#', '') || '/home';
 
-        // Support In-Page Smooth Scroll Anchors (#features, #cta)
         if (!rawHash.startsWith('/') && rawHash !== '') {
             const element = document.getElementById(rawHash);
             if (element) {
@@ -140,7 +174,7 @@ class RouterEngine {
         if (rawHash === '' || rawHash === '/') rawHash = '/home';
         const path = rawHash.startsWith('/') ? rawHash : `/${rawHash}`;
 
-        // SECURITY LAYER INTEGRATION: AuthRouteGuard Check
+        // Security Guard Check
         const guardDecision = AuthRouteGuard.check(path);
 
         if (!guardDecision.allowed) {
@@ -162,3 +196,4 @@ class RouterEngine {
 }
 
 export const Router = new RouterEngine();
+export default Router;

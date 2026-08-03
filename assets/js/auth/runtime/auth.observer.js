@@ -3,16 +3,17 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * File         : assets/js/auth/runtime/auth.observer.js
- * Layer        : Auth State Observer Layer (BUILD 095.2)
+ * Layer        : Auth State Observer Layer (BUILD 124.3)
  * Status       : ACTIVE
- * Version      : 1.0.0
+ * Version      : 1.2.0
  * Architecture : Development Constitution v1.1
  * Description  : Global reactive state hub managing state subscriptions,
- *                snapshot isolation, and event-driven updates for UI & Guards.
+ *                snapshot isolation, and event-driven continuation to pending routes.
  * -----------------------------------------------------------------
  */
 
 import Logger from "../../core/logger.js";
+import { Router } from "../../router/router.js";
 
 const AUTH_INITIALIZED_EVENT = "topcare:auth:initialized";
 const AUTH_CHANGED_EVENT = "topcare:auth:changed";
@@ -28,7 +29,6 @@ class AuthObserver {
         this.listeners = new Set();
         this.started = false;
 
-        // Bind event handlers to preserve context
         this._handleAuthEvent = this._handleAuthEvent.bind(this);
     }
 
@@ -43,6 +43,8 @@ class AuthObserver {
         }
 
         const detail = event.detail;
+        const wasAuthenticated = this.state.authenticated;
+
         this.state = {
             initialized: Boolean(detail.initialized),
             authenticated: Boolean(detail.authenticated),
@@ -51,6 +53,28 @@ class AuthObserver {
         };
 
         this._notifySubscribers();
+
+        // Continuation Flow: Execute pending route redirection when transitioning to authenticated
+        if (this.state.authenticated && !wasAuthenticated) {
+            this._executeContinuation();
+        }
+    }
+
+    /**
+     * Executes post-login navigation continuation.
+     * @private
+     */
+    _executeContinuation() {
+        if (typeof window === "undefined" || !window.sessionStorage) return;
+
+        const pendingRoute = sessionStorage.getItem("topcare.pending.route");
+        if (pendingRoute) {
+            sessionStorage.removeItem("topcare.pending.route");
+            Logger.info(`[AuthObserver] Navigating to pending destination: ${pendingRoute}`);
+            Router.navigate(pendingRoute);
+        } else {
+            Router.navigate("/home");
+        }
     }
 
     /**
@@ -113,14 +137,12 @@ class AuthObserver {
 
         this.listeners.add(listener);
 
-        // Immediately invoke with current snapshot so new subscriber doesn't wait
         try {
             listener(this.getState());
         } catch (error) {
             Logger.error("[AuthObserver] Error in immediate subscriber callback invocation:", error);
         }
 
-        // Return a handy unsubscribe function closure
         return () => {
             this.unsubscribe(listener);
         };

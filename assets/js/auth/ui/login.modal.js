@@ -3,10 +3,10 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * Layer        : Auth UI Layer
- * Status       : ACTIVE
- * Version      : 2.0.0
+ * Status       : ACTIVE (BUILD 124.3.2)
+ * Version      : 2.1.0
  * Architecture : Development Constitution v1.1
- * Description  : Hardened Login Modal UI Adapter
+ * Description  : Hardened Login Modal UI Adapter with Resilient Input Binding
  * -----------------------------------------------------------------
  */
 
@@ -32,10 +32,17 @@ export class LoginModal {
         this.previousFocus = document.activeElement;
         this.mount(container);
         document.addEventListener("keydown", this._keyboardHandler);
-        const emailInput = this.element.querySelector("#login-email");
-        if (emailInput) {
-            emailInput.focus();
-        }
+
+        setTimeout(() => {
+            const emailInput = this.element.querySelector("#login-email") || this.element.querySelector("#loginEmail");
+            const passwordInput = this.element.querySelector("#login-password") || this.element.querySelector("#loginPassword");
+
+            if (emailInput && !emailInput.value) {
+                emailInput.focus();
+            } else if (passwordInput) {
+                passwordInput.focus();
+            }
+        }, 50);
     }
 
     close() {
@@ -63,11 +70,12 @@ export class LoginModal {
                 <div class="modal-header">
                     <h3>Masuk ke TopCare AI</h3>
                 </div>
-                <form id="topcare-login-form">
+                <form id="topcare-login-form" autocomplete="on">
                     <div class="form-group">
                         <label for="login-email">Email</label>
                         <input
                             id="login-email"
+                            name="email"
                             type="email"
                             autocomplete="email"
                             required
@@ -78,6 +86,7 @@ export class LoginModal {
                         <label for="login-password">Password</label>
                         <input
                             id="login-password"
+                            name="password"
                             type="password"
                             autocomplete="current-password"
                             required
@@ -88,6 +97,7 @@ export class LoginModal {
                         <label>
                             <input
                                 id="login-remember"
+                                name="remember"
                                 type="checkbox"
                             />
                             Ingat Saya
@@ -122,7 +132,22 @@ export class LoginModal {
     }
 
     _bindEvents() {
-        const form = this.element.querySelector("#topcare-login-form");
+        const passwordInput = this.element.querySelector("#login-password") || this.element.querySelector("#loginPassword");
+        const emailInput = this.element.querySelector("#login-email") || this.element.querySelector("#loginEmail");
+
+        [emailInput, passwordInput].forEach(input => {
+            if (input) {
+                input.removeAttribute("disabled");
+                input.removeAttribute("readonly");
+                input.style.pointerEvents = "auto";
+                input.style.userSelect = "text";
+
+                input.addEventListener("click", (e) => e.stopPropagation());
+                input.addEventListener("keydown", (e) => e.stopPropagation());
+            }
+        });
+
+        const form = this.element.querySelector("#topcare-login-form") || this.element.querySelector("#loginForm");
         if (form) {
             form.addEventListener("submit", (event) => {
                 event.preventDefault();
@@ -147,7 +172,7 @@ export class LoginModal {
 
     _trapFocus(event) {
         const focusables = this.element.querySelectorAll(
-            "input, button, select, textarea, a[href]"
+            "input:not([disabled]), button:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]"
         );
         if (!focusables.length) {
             return;
@@ -166,8 +191,8 @@ export class LoginModal {
     }
 
     async _handleSubmit(event) {
-        const emailInput = this.element.querySelector("#login-email");
-        const passwordInput = this.element.querySelector("#login-password");
+        const emailInput = this.element.querySelector("#login-email") || this.element.querySelector("#loginEmail");
+        const passwordInput = this.element.querySelector("#login-password") || this.element.querySelector("#loginPassword");
         const rememberInput = this.element.querySelector("#login-remember");
         const errorBox = this.element.querySelector("#login-error-msg");
         const submitButton = this.element.querySelector("#login-submit-btn");

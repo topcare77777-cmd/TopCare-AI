@@ -1,144 +1,98 @@
 /**
  * TOPCARE AI PLATFORM V2 — LOGIN PAGE CONTROLLER
  * Path: assets/js/pages/auth/login.page.js
- * Status: ACTIVE - BUILD 138 (AUTHENTICATION RUNTIME BRIDGE)
- * SRP: Manages Login UI, delegates credentials to AuthService V2, and consumes Redirect Intent.
+ * Status: ACTIVE - MINIMAL WIRING FIX (BUILD 124.1)
+ * SRP: Handles login interactions and executes NavigationIntentService continuation.
  */
 
 import { AuthService } from '../../auth/auth.service.js';
-import { AuthRouteGuard } from '../../auth/guards/auth-route.guard.js';
+import { NavigationIntentService } from '../../runtime/navigation.intent.service.js';
 import { Router } from '../../router/router.js';
 import { Core } from '../../core/index.js';
 
 export class LoginPage {
-    constructor(hostContainer) {
-        this.host = hostContainer || document.getElementById('app-host') || document.body;
+    constructor(container) {
+        this.container = container || document.getElementById('app-host') || document.body;
         this.isMounted = false;
-        this._boundSubmitHandler = null;
     }
 
     async mount() {
-        if (this.isMounted) return;
+        this.render();
+        this.bindEvents();
+        this.isMounted = true;
+    }
 
-        // Render Clean V2 Login Template
-        this.host.innerHTML = `
-            <div class="tc-auth-container" style="max-width: 420px; margin: 60px auto; padding: 32px; background: #1E293B; border-radius: 12px; color: #F8FAFC; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+    render() {
+        this.container.innerHTML = `
+            <div class="tc-auth-page-container" style="max-width: 420px; margin: 80px auto; padding: 32px; background: #1E293B; border-radius: 16px; border: 1px solid #334155; color: #F8FAFC;">
                 <div style="text-align: center; margin-bottom: 24px;">
-                    <h2 style="color: #3B82F6; margin-bottom: 8px;">Masuk ke TopCare AI</h2>
-                    <p style="color: #94A3B8; font-size: 14px; margin: 0;">Akses AI Coach & Tes Kepribadian Anda</p>
+                    <h2 style="margin: 0 0 8px 0; font-size: 24px;">Masuk ke TopCare AI</h2>
+                    <p style="margin: 0; color: #94A3B8; font-size: 14px;">Masukan kredensial Anda untuk melanjutkan</p>
                 </div>
 
-                <div id="tc-auth-error" style="display: none; background: #991B1B; color: #FECACA; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 16px;"></div>
-
-                <form id="tc-login-form">
-                    <div style="margin-bottom: 16px;">
-                        <label style="display: block; font-size: 13px; color: #CBD5E1; margin-bottom: 6px;">Username / Email</label>
-                        <input type="text" id="tc-login-username" required placeholder="doctor@topcare.ai" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: #FFF; font-size: 14px; box-sizing: border-box;" />
+                <form id="login-form" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div>
+                        <label style="display: block; font-size: 13px; margin-bottom: 6px; color: #CBD5E1;">Username / Email</label>
+                        <input type="text" id="login-username" value="doctor" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 8px; color: white; box-sizing: border-box;" required />
                     </div>
 
-                    <div style="margin-bottom: 24px;">
-                        <label style="display: block; font-size: 13px; color: #CBD5E1; margin-bottom: 6px;">Kata Sandi</label>
-                        <input type="password" id="tc-login-password" required placeholder="••••••••" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 6px; color: #FFF; font-size: 14px; box-sizing: border-box;" />
+                    <div>
+                        <label style="display: block; font-size: 13px; margin-bottom: 6px; color: #CBD5E1;">Password</label>
+                        <input type="password" id="login-password" value="password" style="width: 100%; padding: 10px 12px; background: #0F172A; border: 1px solid #334155; border-radius: 8px; color: white; box-sizing: border-box;" required />
                     </div>
 
-                    <button type="submit" id="tc-login-submit-btn" style="width: 100%; padding: 12px; background: #3B82F6; color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 15px; cursor: pointer;">
+                    <div id="login-error" style="color: #EF4444; font-size: 13px; display: none;"></div>
+
+                    <button type="submit" id="btn-submit-login" style="background: #3B82F6; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 8px;">
                         Masuk Sekarang
                     </button>
                 </form>
-
-                <div style="margin-top: 20px; text-align: center; font-size: 13px; color: #94A3B8;">
-                    Belum punya akun? <a href="#/register" style="color: #3B82F6; text-decoration: none;">Daftar di sini</a>
-                </div>
             </div>
         `;
-
-        this.attachFormListeners();
-        this.isMounted = true;
-        Core.Logger.info('[LoginPage] Mounted successfully.');
     }
 
-    attachFormListeners() {
-        const form = this.host.querySelector('#tc-login-form');
+    bindEvents() {
+        const form = this.container.querySelector('#login-form');
         if (!form) return;
 
-        this._boundSubmitHandler = async (event) => {
-            event.preventDefault();
-            this.hideError();
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = this.container.querySelector('#login-username').value;
+            const password = this.container.querySelector('#login-password').value;
+            const errorEl = this.container.querySelector('#login-error');
 
-            const usernameInput = this.host.querySelector('#tc-login-username');
-            const passwordInput = this.host.querySelector('#tc-login-password');
-            const submitBtn = this.host.querySelector('#tc-login-submit-btn');
-
-            const username = usernameInput ? usernameInput.value.trim() : '';
-            const password = passwordInput ? passwordInput.value : '';
-
-            if (!username || !password) {
-                this.showError('Username dan Password wajib diisi.');
-                return;
-            }
+            errorEl.style.display = 'none';
 
             try {
-                if (submitBtn) {
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Memproses...';
-                }
+                const result = await AuthService.login(username, password);
+                if (result && result.success) {
+                    // Check if there is a pending navigation intent (e.g. /coach-selection)
+                    const pendingIntent = NavigationIntentService.restoreIntent();
+                    const targetRoute = pendingIntent && pendingIntent.route ? pendingIntent.route : '/coach-selection';
 
-                // 1. Execute Authentication V2 Pipeline via AuthService SSOT
-                const authResult = await AuthService.login(username, password);
-
-                if (authResult && (authResult.success || authResult.user || authResult.userDto)) {
-                    Core.Logger.info(`[LoginPage] Login successful for user: ${username}`);
-
-                    // 2. Consume Redirect Intent saved by AuthRouteGuard
-                    const targetRoute = AuthRouteGuard.consumeRedirectIntent();
-                    Core.Logger.info(`[LoginPage] Navigating to target route: ${targetRoute}`);
-
-                    // 3. Navigate user to target destination
+                    Core.Logger.info(`[LoginPage] Login successful. Continuing journey to: ${targetRoute}`);
                     Router.navigate(targetRoute);
                 } else {
-                    this.showError(authResult?.message || 'Gagal masuk. Periksa username dan password Anda.');
+                    errorEl.textContent = result.message || 'Gagal masuk. Periksa kembali akun Anda.';
+                    errorEl.style.display = 'block';
                 }
             } catch (err) {
-                Core.Logger.error(`[LoginPage] Login execution error: ${err.message}`);
-                this.showError(err.message || 'Terjadi kesalahan sistem saat mencoba masuk.');
-            } finally {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Masuk Sekarang';
-                }
+                Core.Logger.error(`[LoginPage] Login error: ${err.message}`);
+                errorEl.textContent = 'Terjadi kesalahan sistem.';
+                errorEl.style.display = 'block';
             }
-        };
-
-        form.addEventListener('submit', this._boundSubmitHandler);
+        });
     }
 
-    showError(msg) {
-        const errEl = this.host.querySelector('#tc-auth-error');
-        if (errEl) {
-            errEl.textContent = msg;
-            errEl.style.display = 'block';
-        }
-    }
-
-    hideError() {
-        const errEl = this.host.querySelector('#tc-auth-error');
-        if (errEl) {
-            errEl.style.display = 'none';
-            errEl.textContent = '';
-        }
+    async unmount() {
+        this.destroy();
     }
 
     destroy() {
-        const form = this.host.querySelector('#tc-login-form');
-        if (form && this._boundSubmitHandler) {
-            form.removeEventListener('submit', this._boundSubmitHandler);
-            this._boundSubmitHandler = null;
-        }
-        if (this.host) {
-            this.host.innerHTML = '';
+        if (this.container) {
+            this.container.innerHTML = '';
         }
         this.isMounted = false;
-        Core.Logger.info('[LoginPage] Destroyed.');
     }
 }
 

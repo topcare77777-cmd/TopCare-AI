@@ -3,28 +3,22 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * File         : assets/js/auth/runtime/auth.runtime.js
- * Layer        : Auth Runtime Bootstrap Orchestrator (BUILD 095.1 Final Locked)
+ * Layer        : Auth Runtime Bootstrap Orchestrator (BUILD 124.3)
  * Status       : ACTIVE
- * Version      : 1.2.0
+ * Version      : 1.4.0
  * Architecture : Development Constitution v1.1
  * Description  : Lightweight application startup orchestrator managing session
- *                restoration, consistent state snapshots, and deep-frozen events.
+ *                restoration, AuthObserver auto-start, and event dispatching.
  * -----------------------------------------------------------------
  */
 
 import sessionManagerInstance from "../session/session.manager.js";
+import authObserver from "./auth.observer.js";
 import Logger from "../../core/logger.js";
 
 const AUTH_INITIALIZED_EVENT = "topcare:auth:initialized";
 const AUTH_CHANGED_EVENT = "topcare:auth:changed";
 
-/**
- * Recursively freezes an object and its nested properties for strict immutability.
- * @private
- * @template T
- * @param {T} obj 
- * @returns {T}
- */
 function deepFreeze(obj) {
     if (obj && typeof obj === "object" && !Object.isFrozen(obj)) {
         Object.freeze(obj);
@@ -47,28 +41,21 @@ class AuthRuntime {
         this._initPromise = null;
     }
 
-    /**
-     * Publishes a runtime event safely with SSR guard and deep-frozen snapshot.
-     * @private
-     * @param {string} eventName 
-     * @param {Object} detail 
-     */
     _publishEvent(eventName, detail) {
         if (typeof window === "undefined" || typeof CustomEvent !== "function") {
             return;
         }
         window.dispatchEvent(
-            new CustomEvent(eventName, { 
-                detail: deepFreeze({ ...detail }) 
+            new CustomEvent(eventName, {
+                detail: deepFreeze({ ...detail })
             })
         );
     }
 
-    /**
-     * Starts the auth runtime bootstrap, restoring session exactly once.
-     * @returns {Promise<Object>} The runtime snapshot state.
-     */
     async start() {
+        // Ensure global authObserver is active and listening
+        authObserver.start();
+
         if (this.state.initialized) {
             return this.getState();
         }
@@ -81,12 +68,11 @@ class AuthRuntime {
             try {
                 Logger.info("[AuthRuntime] Starting authentication bootstrap...");
                 const session = await this.sessionManager.restore();
-                
+
                 this.state.restored = true;
 
                 if (session) {
                     this.state.authenticated = true;
-                    // Consistent safe user payload snapshot schema
                     this.state.user = {
                         id: session.userId || null,
                         username: session.username || null,
@@ -120,18 +106,10 @@ class AuthRuntime {
         return this._initPromise;
     }
 
-    /**
-     * Checks if the runtime has completed its initial bootstrap.
-     * @returns {boolean}
-     */
     isInitialized() {
         return this.state.initialized;
     }
 
-    /**
-     * Returns a cloned snapshot of the current runtime state with consistent schema.
-     * @returns {Object}
-     */
     getState() {
         return {
             initialized: this.state.initialized,
@@ -141,26 +119,18 @@ class AuthRuntime {
         };
     }
 
-    /**
-     * Returns the active user snapshot or null.
-     * @returns {Object|null}
-     */
     getUser() {
         return this.state.user ? { ...this.state.user } : null;
     }
 
-    /**
-     * Refreshes runtime state snapshot, maintaining consistent schema without side effects.
-     * @param {Object|null} userPayload 
-     */
     syncState(userPayload) {
-        if (userPayload && userPayload.id) {
+        if (userPayload && (userPayload.id || userPayload.userId)) {
             this.state.authenticated = true;
             this.state.user = {
-                id: userPayload.id || null,
+                id: userPayload.id || userPayload.userId || null,
                 username: userPayload.username || null,
                 email: userPayload.email || null,
-                issuedAt: userPayload.issuedAt || null,
+                issuedAt: userPayload.issuedAt || Date.now(),
                 expiresAt: userPayload.expiresAt || null
             };
         } else {
@@ -173,9 +143,6 @@ class AuthRuntime {
         return snapshot;
     }
 
-    /**
-     * Resets internal runtime state while preserving dependency references for reuse.
-     */
     destroy() {
         this.state = {
             initialized: false,

@@ -3,8 +3,8 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * Layer        : Layer 4.5 - Component
- * Status       : ACTIVE (BUILD AC-013R1)
- * Version      : 2.7.0
+ * Status       : ACTIVE (BUILD AC-013R1 / BUILD 124.3)
+ * Version      : 2.8.0
  * Architecture : Development Constitution v1.1
  * Pattern      : Adapter Component / ViewModel Builder
  * -----------------------------------------------------------------
@@ -13,6 +13,7 @@
 import { CoachWidget } from '../../widgets/home/coach.widget.js';
 import UserState from '../../user/user.state.js';
 import CoachService from '../../services/home/coach.service.js';
+import { Router } from '../../router/router.js';
 
 /**
  * Deep Freezes nested ViewModel DTOs recursively.
@@ -69,7 +70,6 @@ function buildCoachViewModel(identity, serviceData) {
             specialty: coach.specialty,
             bio: coach.bio
         })),
-        // Standardized Schema Readiness Nodes
         actions: [
             {
                 id: 'open-coach',
@@ -103,6 +103,23 @@ const CoachComponent = {
         }
     },
 
+    bindEvents() {
+        if (!this.container) return;
+
+        // Binds event listeners to Coach section buttons to store target route before auth
+        const coachButtons = this.container.querySelectorAll(
+            '[data-action="open-coach"], [data-action="get-started"], [data-action="select-coach"], #btn-coach-get-started, .coach-btn-primary'
+        );
+
+        coachButtons.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                sessionStorage.setItem("topcare.pending.route", "/coach-selection");
+                Router.navigate("/login");
+            });
+        });
+    },
+
     async mount(container) {
         if (!container) return;
 
@@ -124,6 +141,7 @@ const CoachComponent = {
             }
 
             this.isMounted = true;
+            this.bindEvents();
 
             if (typeof UserState.subscribe === 'function') {
                 this.unsubscribeState = UserState.subscribe((state) => {
@@ -141,35 +159,13 @@ const CoachComponent = {
         try {
             const serviceData = CoachService.getData();
             const viewModel = buildCoachViewModel(this.lastIdentityState, serviceData);
-            // Potongan DTO di dalam buildCoachViewModel():
-            const viewModelDTO = {
-                header: {
-                    badge: rawData.badge || 'Panduan AI Pakar',
-                    title: rawData.sectionTitle || 'Sesi Bimbingan AI Coach',
-                    greeting,
-                    user: {
-                        name,
-                        membershipTag: membership
-                    }
-                },
-                coaches: (rawData.coaches || []).map(coach => ({
-                    name: coach.name,
-                    specialty: coach.specialty,
-                    bio: coach.bio
-                })),
-                actions: [],
-                status: { ready: true },
-                telemetry: {
-                    version: "2.0",
-                    builtAt: new Date().toISOString()
-                }
-            };
 
             if (typeof CoachWidget.refresh === 'function') {
                 await CoachWidget.refresh(viewModel);
             } else if (typeof CoachWidget.render === 'function') {
                 await CoachWidget.render(this.container, viewModel);
             }
+            this.bindEvents();
         } catch (err) {
             console.error("[CoachComponent] update:", err);
         }

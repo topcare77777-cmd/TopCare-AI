@@ -1,5 +1,7 @@
 /**
  * file: assets/js/runtime/runtime.bootstrap.js
+ * Status: ACTIVE (BUILD 123.1)
+ * Role: Enterprise Core Infrastructure & Subsystem Bootstrap Orchestrator
  */
 
 import { Core } from '../core/index.js';
@@ -11,6 +13,7 @@ import { Router, History, RouteLoader, RouteGuard } from '../router/index.js';
 import { RuntimeRouter } from './runtime.router.service.js';
 import { FeatureRegistry, FeatureLoader } from '../features/index.js';
 import { ViewService, ViewMountService } from '../view/index.js';
+import { CapabilityBootstrap } from './capability.bootstrap.js';
 
 export class RuntimeBootstrap {
     static _initialized = false;
@@ -41,21 +44,24 @@ export class RuntimeBootstrap {
             // 2. Initialize Core Subsystems & Event Bus
             Core.Lifecycle.boot();
 
-            // 3. Load Feature Modules & Bind Feature Routes via FeatureLoader
+            // 3. Initialize Capability Engine & Bind Handlers (BUILD 123.1 Integration)
+            await CapabilityBootstrap.initialize();
+
+            // 4. Load Feature Modules & Bind Feature Routes via FeatureLoader
             await FeatureLoader.load();
 
-            // 4. Initialize Feature Modules via FeatureRegistry & View Adapter
+            // 5. Initialize Feature Modules via FeatureRegistry & View Adapter
             await FeatureRegistry.initializeAll();
 
-            // 5. Initialize Route Loader SSOT
+            // 6. Initialize Route Loader SSOT
             if (RouteLoader && typeof RouteLoader.initialize === 'function') {
                 RouteLoader.initialize();
             }
 
-            // 6. Initialize View Service Layer
+            // 7. Initialize View Service Layer
             await ViewService.initialize();
 
-            // 7. Start View Mount Service
+            // 8. Start View Mount Service
             const mountService = Container.resolve("ViewMountService");
             if (mountService && typeof mountService.initialize === 'function') {
                 mountService.initialize('#app');
@@ -63,13 +69,13 @@ export class RuntimeBootstrap {
                 mountService.start();
             }
 
-            // 8. Initialize Router Runtime Integration
+            // 9. Initialize Router Runtime Integration
             await RuntimeRouter.initialize();
 
-            // 9. Mark initialization flag as true (Idempotent Guard)
+            // 10. Mark initialization flag as true (Idempotent Guard)
             RuntimeBootstrap._initialized = true;
 
-            // 10. Emit Application Ready Event
+            // 11. Emit Application Ready Event
             Core.Event.emit(Core.Constants.get('events', 'READY') || 'app.ready', {
                 timestamp: Date.now(),
                 version: Core.version

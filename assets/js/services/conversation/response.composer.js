@@ -1,13 +1,14 @@
 /**
  * TOPCARE AI PLATFORM V2 — REFACTORED RESPONSE COMPOSER & SAMPLE PERSONAS
- * Path: assets/js/services/conversation/response.composer.js & assets/js/services/persona/implementations/
- * Status: ACTIVE (SPRINT C - LOCKED GOLDEN BASELINE)
+ * Path: assets/js/services/conversation/response.composer.js
+ * Status: ACTIVE (BUILD 125.2 — CONVERSATIONAL VS ACTION PLAN MODE)
+ * Role: Formats final user-facing response with persona styling & mode evaluation.
  */
 
-import PersonaRegistry from '../../../core/persona/persona.registry.js';
-import { deepFreezeDTO } from '../../../core/utils/dto.js';
+import PersonaRegistry from '../../core/persona/persona.registry.js';
+import { deepFreezeDTO } from '../../core/utils/dto.js';
 
-// 1. Sample Persona 1: Coach Kael (Executive & Career Mentor)
+// 1. Sample Persona 1: Coach Kael (Executive & Career Mentor - Alex)
 export const CoachKaelManifest = PersonaRegistry.register({
     id: 'coach-kael',
     version: '1.0.0',
@@ -28,7 +29,7 @@ export const CoachKaelManifest = PersonaRegistry.register({
     }
 });
 
-// 2. Sample Persona 2: Coach Sarah (Mental Wellness Coach)
+// 2. Sample Persona 2: Coach Sarah (Mental Wellness Coach - Maya)
 export const CoachSarahManifest = PersonaRegistry.register({
     id: 'coach-sarah',
     version: '1.0.0',
@@ -49,37 +50,72 @@ export const CoachSarahManifest = PersonaRegistry.register({
     }
 });
 
-// Lock Persona Registry after sample registration
-PersonaRegistry.lock();
+if (typeof PersonaRegistry.lock === 'function') {
+    PersonaRegistry.lock();
+}
 
-// 3. Refactored Pure Response Composer
 export const ResponseComposer = Object.freeze({
     /**
+     * Sanitizes raw content to strictly ensure clean natural language text.
+     * @private
+     */
+    _sanitizeToNaturalLanguage(rawContent) {
+        if (!rawContent) {
+            return "Halo! Ada yang bisa saya bantu terkait kesehatan atau target Anda hari ini?";
+        }
+
+        let text = String(rawContent).trim();
+
+        if (text === '{}' || text === 'null' || text === 'undefined' || text === '[object Object]') {
+            return "Halo! Ada yang bisa saya bantu hari ini?";
+        }
+
+        if (text.startsWith('{') && text.endsWith('}')) {
+            try {
+                const parsed = JSON.parse(text);
+                if (parsed.message) return String(parsed.message);
+                if (parsed.text) return String(parsed.text);
+                if (parsed.content) return String(parsed.content);
+                if (parsed.summary) return String(parsed.summary);
+                return "Tentu, saya siap membantu Anda.";
+            } catch (e) {
+                return text;
+            }
+        }
+
+        return text;
+    },
+
+    /**
      * Formats final response text based on ResponseModelDTO and PersonaContextDTO.
-     * Pure Presentation: Zero knowledge of specific Coach IDs or Business Logic.
+     * Differentiates between Conversational Mode (Default) and Action Plan Mode (Explicit).
      */
     composeResponse(responseModelDTO, personaContextDTO) {
-        const rawText = responseModelDTO.rawContent;
+        const rawText = this._sanitizeToNaturalLanguage(responseModelDTO ? responseModelDTO.rawContent : null);
+        const widgetHint = responseModelDTO ? responseModelDTO.uiWidgetHint : 'standard-card';
 
         let styledText = rawText;
 
-        // Presentation Formatting based purely on PersonaContextDTO
-        if (personaContextDTO.summaryStyle === 'action_items') {
-            styledText = `🎯 **Action Plan:**\n${rawText}`;
-        } else if (personaContextDTO.summaryStyle === 'reflective_narrative') {
-            styledText = `🌱 **Reflective Guidance:**\n${rawText}\n\n*Take all the time you need to digest this.*`;
+        // Action Plan Mode: Only trigger when widgetHint or explicit flag dictates action-plan
+        const isActionPlanMode = widgetHint === 'action-plan-card' ||
+            (personaContextDTO && personaContextDTO.isExplicitActionPlan);
+
+        if (isActionPlanMode) {
+            styledText = `🎯 **Rencana Aksi:**\n${rawText}`;
+        } else if (personaContextDTO && personaContextDTO.summaryStyle === 'reflective_narrative' && widgetHint === 'reflective-card') {
+            styledText = `🌱 **Panduan Reflektif:**\n${rawText}\n\n*Ambil waktu sejenak untuk memahami langkah ini.*`;
         }
 
-        if (personaContextDTO.emojiPolicy === 'expressive') {
+        if (personaContextDTO && personaContextDTO.emojiPolicy === 'expressive' && !styledText.startsWith('✨')) {
             styledText = `✨ ${styledText} ✨`;
         }
 
         return deepFreezeDTO({
-            conversationId: responseModelDTO.conversationId,
+            conversationId: responseModelDTO ? responseModelDTO.conversationId : `conv_${Date.now()}`,
             composedText: styledText,
-            uiWidgetHint: responseModelDTO.uiWidgetHint,
-            suggestedActions: responseModelDTO.suggestedActions,
-            personaApplied: personaContextDTO.personaId
+            uiWidgetHint: widgetHint,
+            suggestedActions: responseModelDTO ? responseModelDTO.suggestedActions : [],
+            personaApplied: personaContextDTO ? personaContextDTO.personaId : null
         });
     }
 });

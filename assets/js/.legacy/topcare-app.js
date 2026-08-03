@@ -2,7 +2,7 @@
 
 import { Router } from '../router/router.js';
 import { CoachController } from '../coach/coach.js';
-import { MobileMenu } from './mobile-menu.js';
+import { MobileMenu } from '../core/mobile-menu.js';
 
 
 export const TopCareApp = {

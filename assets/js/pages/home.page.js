@@ -4,11 +4,9 @@
  * -----------------------------------------------------------------
  * Layer        : Layer 4 - Page
  * Status       : ACTIVE
- * Version      : 2.4.1
+ * Version      : 2.4.2 (BUILD 124.2 - ROUTER COMPATIBILITY FIX)
  * Architecture : Development Constitution v1.1
  * Owner        : Home Page Conductor
- * Created      : Sprint 46A
- * Last Updated : Sprint 46A.10
  *
  * Pattern      : Page Conductor (Layer 4)
  * Compatible   : TopCare AI Runtime 2.x
@@ -38,20 +36,29 @@ const HomePage = {
         // Initialization hook for backward compatibility
     },
 
+    async beforeEnter() {
+        // Lifecycle hook for ViewManager & Router compatibility
+    },
+
+    async afterEnter() {
+        // Lifecycle hook for ViewManager & Router compatibility
+    },
+
     async mount(container) {
         return await this.render(container);
     },
 
     async render(container) {
-        if (!container) return;
+        const targetContainer = container || this.activeContainer || document.getElementById('app-host') || document.body;
+        if (!targetContainer) return;
 
-        if (this.isMounted && this.activeContainer === container) {
+        if (this.isMounted && this.activeContainer === targetContainer) {
             await this.update();
             return;
         }
 
-        if (this.activeContainer !== container) {
-            this.activeContainer = container;
+        if (this.activeContainer !== targetContainer) {
+            this.activeContainer = targetContainer;
         }
 
         try {
@@ -73,12 +80,12 @@ const HomePage = {
             const footerEl = this.activeContainer.querySelector('#footer-container');
 
             await Promise.all([
-                heroEl ? HeroComponent.mount(heroEl) : Promise.resolve(),
-                coachEl ? CoachComponent.mount(coachEl) : Promise.resolve(),
-                featureEl ? FeatureComponent.mount(featureEl) : Promise.resolve(),
-                aboutEl ? AboutComponent.mount(aboutEl) : Promise.resolve(),
-                ctaEl ? CTAComponent.mount(ctaEl) : Promise.resolve(),
-                footerEl ? FooterComponent.mount(footerEl) : Promise.resolve()
+                heroEl && HeroComponent && typeof HeroComponent.mount === 'function' ? HeroComponent.mount(heroEl) : Promise.resolve(),
+                coachEl && CoachComponent && typeof CoachComponent.mount === 'function' ? CoachComponent.mount(coachEl) : Promise.resolve(),
+                featureEl && FeatureComponent && typeof FeatureComponent.mount === 'function' ? FeatureComponent.mount(featureEl) : Promise.resolve(),
+                aboutEl && AboutComponent && typeof AboutComponent.mount === 'function' ? AboutComponent.mount(aboutEl) : Promise.resolve(),
+                ctaEl && CTAComponent && typeof CTAComponent.mount === 'function' ? CTAComponent.mount(ctaEl) : Promise.resolve(),
+                footerEl && FooterComponent && typeof FooterComponent.mount === 'function' ? FooterComponent.mount(footerEl) : Promise.resolve()
             ]);
 
             this.isMounted = true;
@@ -92,12 +99,12 @@ const HomePage = {
 
         try {
             await Promise.all([
-                HeroComponent.update(),
-                CoachComponent.update(),
-                FeatureComponent.update(),
-                AboutComponent.update(),
-                CTAComponent.update(),
-                FooterComponent.update()
+                HeroComponent && typeof HeroComponent.update === 'function' ? HeroComponent.update() : Promise.resolve(),
+                CoachComponent && typeof CoachComponent.update === 'function' ? CoachComponent.update() : Promise.resolve(),
+                FeatureComponent && typeof FeatureComponent.update === 'function' ? FeatureComponent.update() : Promise.resolve(),
+                AboutComponent && typeof AboutComponent.update === 'function' ? AboutComponent.update() : Promise.resolve(),
+                CTAComponent && typeof CTAComponent.update === 'function' ? CTAComponent.update() : Promise.resolve(),
+                FooterComponent && typeof FooterComponent.update === 'function' ? FooterComponent.update() : Promise.resolve()
             ]);
         } catch (err) {
             console.error("[HomePage] update error:", err);
@@ -106,14 +113,18 @@ const HomePage = {
 
     destroy() {
         try {
-            if (typeof HeroComponent.destroy === 'function') HeroComponent.destroy();
-            if (typeof CoachComponent.destroy === 'function') CoachComponent.destroy();
-            if (typeof FeatureComponent.destroy === 'function') FeatureComponent.destroy();
-            if (typeof AboutComponent.destroy === 'function') AboutComponent.destroy();
-            if (typeof CTAComponent.destroy === 'function') CTAComponent.destroy();
-            if (typeof FooterComponent.destroy === 'function') FooterComponent.destroy();
+            if (HeroComponent && typeof HeroComponent.destroy === 'function') HeroComponent.destroy();
+            if (CoachComponent && typeof CoachComponent.destroy === 'function') CoachComponent.destroy();
+            if (FeatureComponent && typeof FeatureComponent.destroy === 'function') FeatureComponent.destroy();
+            if (AboutComponent && typeof AboutComponent.destroy === 'function') AboutComponent.destroy();
+            if (CTAComponent && typeof CTAComponent.destroy === 'function') CTAComponent.destroy();
+            if (FooterComponent && typeof FooterComponent.destroy === 'function') FooterComponent.destroy();
         } catch (err) {
             console.error("[HomePage] destroy error:", err);
+        }
+
+        if (this.activeContainer) {
+            this.activeContainer.innerHTML = '';
         }
 
         this.isMounted = false;
@@ -122,12 +133,12 @@ const HomePage = {
 
     cleanup() {
         try {
-            if (typeof HeroComponent.cleanup === 'function') HeroComponent.cleanup();
-            if (typeof CoachComponent.cleanup === 'function') CoachComponent.cleanup();
-            if (typeof FeatureComponent.cleanup === 'function') FeatureComponent.cleanup();
-            if (typeof AboutComponent.cleanup === 'function') AboutComponent.cleanup();
-            if (typeof CTAComponent.cleanup === 'function') CTAComponent.cleanup();
-            if (typeof FooterComponent.cleanup === 'function') FooterComponent.cleanup();
+            if (HeroComponent && typeof HeroComponent.cleanup === 'function') HeroComponent.cleanup();
+            if (CoachComponent && typeof CoachComponent.cleanup === 'function') CoachComponent.cleanup();
+            if (FeatureComponent && typeof FeatureComponent.cleanup === 'function') FeatureComponent.cleanup();
+            if (AboutComponent && typeof AboutComponent.cleanup === 'function') AboutComponent.cleanup();
+            if (CTAComponent && typeof CTAComponent.cleanup === 'function') CTAComponent.cleanup();
+            if (FooterComponent && typeof FooterComponent.cleanup === 'function') FooterComponent.cleanup();
         } catch (err) {
             console.error("[HomePage] cleanup error:", err);
         }
@@ -137,4 +148,5 @@ const HomePage = {
     }
 };
 
+export const homePage = HomePage;
 export default HomePage;

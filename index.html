@@ -67,20 +67,10 @@
     <!-- SINGLE DYNAMIC MOUNT POINT FOR THE RUNTIME SHELL -->
     <main id="app" class="app-view-viewport" role="main"></main>
 
-    <!-- Script Sederhana Ringan untuk Toggle Mobile Menu & Bahasa -->
+    <!-- Script Sederhana Ringan untuk Toggle Bahasa -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const menuBtn = document.getElementById('mobile-menu-btn');
-            const mainNav = document.getElementById('main-nav');
             const langBtn = document.getElementById('lang-toggle-btn');
-
-            // Toggle Garis 3 HP/Tablet
-            if (menuBtn && mainNav) {
-                menuBtn.addEventListener('click', () => {
-                    const isOpen = mainNav.classList.toggle('is-open');
-                    menuBtn.setAttribute('aria-expanded', isOpen);
-                });
-            }
 
             // Toggle Bahasa (ID / EN)
             if (langBtn) {
