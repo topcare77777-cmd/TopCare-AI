@@ -1,0 +1,29 @@
+/**
+ * TOPCARE AI PLATFORM V2 — AI LEARNING LIST STYLESHEET
+ * Path: assets/css/components/ai-learning-list.css
+ * Status: APPROVED & LOCKED (BUILD 127.3)
+ * SRP: Styling for checklists and bullet learning points.
+ */
+
+.tc-learning-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.tc-learning-list li {
+    font-size: 0.825rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.tc-list-check {
+    color: #10b981;
+    font-weight: bold;
+    font-size: 0.75rem;
+}

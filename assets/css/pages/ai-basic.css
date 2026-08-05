@@ -1,0 +1,78 @@
+/**
+ * TOPCARE AI PLATFORM V2 — AI BASIC MASTER PAGE STYLESHEET
+ * Path: assets/css/pages/ai-basic.css
+ * Status: APPROVED & LOCKED (BUILD 127.3 — NO CSS @IMPORT STATEMENT)
+ * SRP: Master CSS Importer using components registered under components/learning/ai/.
+ */
+
+/* Layout Container Host */
+.tc-ai-basic-wrapper,
+.tc-lesson-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Lesson Reader Styling */
+.tc-lesson-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tc-lesson-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0.75rem 0 0.5rem 0;
+}
+
+.tc-lesson-meta {
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+
+.tc-lesson-body {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2.25rem;
+    color: #cbd5e1;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.tc-lesson-body h3 {
+    color: #f8fafc;
+    font-size: 1.35rem;
+    margin: 1.75rem 0 0.75rem 0;
+}
+
+.tc-lesson-body h4 {
+    color: #a78bfa;
+    font-size: 1.1rem;
+    margin: 1.25rem 0 0.5rem 0;
+}
+
+.tc-btn-back-module,
+.tc-btn-open-lesson {
+    background: none;
+    border: none;
+    color: #a78bfa;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s;
+}
+
+.tc-btn-back-module:hover,
+.tc-btn-open-lesson:hover {
+    color: #ffffff;
+}
+
+.tc-lesson-footer {
+    display: flex;
+    justify-content: flex-end;
+}

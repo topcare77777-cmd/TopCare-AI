@@ -1,2 +1,755 @@
-.learning { background: #f8fafc; }.learning-heading { display: flex; justify-content: space-between; gap: 2rem; align-items: end; }.learning-kicker { margin-bottom: .65rem; color: #2563eb; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }.learning-heading .subtitle { max-width: 680px; }.learning-stat { min-width: 108px; padding: 1rem; border-radius: 1rem; background: #e0e7ff; color: #3730a3; text-align: center; }.learning-stat strong, .learning-stat span { display: block; }.learning-stat strong { font-size: 1.5rem; }.learning-stat span { font-size: .78rem; }.learning-tools { display: flex; justify-content: space-between; gap: 1rem; margin: 2rem 0; }.learning-filters { display: flex; flex-wrap: wrap; gap: .5rem; }.learning-filter { padding: .65rem .9rem; border: 1px solid #cbd5e1; border-radius: 999px; background: #fff; color: #475569; cursor: pointer; font: inherit; font-size: .9rem; }.learning-filter:hover, .learning-filter.active { border-color: #2563eb; background: #2563eb; color: #fff; }.learning-search input { width: min(260px, 100%); padding: .7rem .9rem; border: 1px solid #cbd5e1; border-radius: .75rem; background: #fff; font: inherit; }.learning-search input:focus { outline: 2px solid rgb(37 99 235 / 20%); border-color: #2563eb; }.learning-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }.learning-card { display: flex; flex-direction: column; min-height: 100%; padding: 1.5rem; border: 1px solid #e2e8f0; border-radius: 1.25rem; background: #fff; box-shadow: 0 10px 22px rgb(15 23 42 / 4%); transition: transform .2s ease, box-shadow .2s ease; }.learning-card:hover { transform: translateY(-5px); box-shadow: 0 18px 30px rgb(15 23 42 / 9%); }.course-topline, .course-footer, .course-meta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }.course-icon { display: grid; width: 2.8rem; height: 2.8rem; place-items: center; border-radius: .9rem; font-size: 1.4rem; }.learning-card-blue .course-icon { background: #dbeafe; }.learning-card-green .course-icon { background: #dcfce7; }.learning-card-violet .course-icon { background: #ede9fe; }.course-level { color: #475569; font-size: .8rem; font-weight: 700; }.learning-card h3 { margin: 1.4rem 0 .7rem; font-size: 1.25rem; }.learning-card > p { flex: 1; margin: 0 0 1.25rem; color: #64748b; line-height: 1.6; }.course-meta { padding: .9rem 0; border-top: 1px solid #e2e8f0; color: #64748b; font-size: .8rem; }.course-rating { color: #b45309; font-size: .9rem; font-weight: 700; }.course-rating small { color: #64748b; font-weight: 400; }.course-footer .btn { padding: .7rem .85rem; font-size: .82rem; }.learning-empty, .learning-error { margin-top: 2rem; color: #64748b; text-align: center; }.learning-dialog { width: min(680px, calc(100% - 2rem)); max-height: min(720px, calc(100% - 2rem)); padding: 0; border: 0; border-radius: 1.25rem; box-shadow: 0 24px 60px rgb(15 23 42 / 30%); }.learning-dialog::backdrop { background: rgb(15 23 42 / 55%); }.learning-dialog > * { padding-left: 1.5rem; padding-right: 1.5rem; }.dialog-header { display: flex; justify-content: space-between; gap: 1rem; padding-top: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #e2e8f0; }.dialog-header h2 { margin: 0; font-size: 1.5rem; }.dialog-close { width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: #f1f5f9; color: #334155; cursor: pointer; font-size: 1.5rem; line-height: 1; }.dialog-description { margin: 1.25rem 0; color: #475569; line-height: 1.6; }.course-progress { padding: 1rem; border-radius: .85rem; background: #eff6ff; color: #1e3a8a; }.course-progress > div:first-child { display: flex; justify-content: space-between; gap: 1rem; font-size: .85rem; }.course-progress-track { height: .5rem; margin-top: .75rem; overflow: hidden; border-radius: 999px; background: #bfdbfe; }.course-progress-track span { display: block; height: 100%; border-radius: inherit; background: #2563eb; transition: width .2s ease; }.lesson-list { display: grid; gap: .75rem; margin: 1.25rem 0; padding: 0 1.5rem; }.lesson-list li { color: #475569; }.lesson-list label { display: flex; gap: .8rem; align-items: flex-start; cursor: pointer; }.lesson-list input { margin-top: .3rem; accent-color: #2563eb; }.lesson-list strong, .lesson-list small { display: block; }.lesson-list strong { color: #1e293b; }.lesson-list small { margin-top: .2rem; color: #64748b; }.dialog-note { padding-bottom: 1.5rem; color: #64748b; font-size: .8rem; }
-@media (max-width: 900px) { .learning-grid { grid-template-columns: 1fr; }.learning-heading { align-items: start; }.learning-card { min-height: auto; }}@media (max-width: 620px) { .learning-heading, .learning-tools { flex-direction: column; align-items: stretch; }.learning-stat { align-self: start; }.learning-search input { width: 100%; }.course-footer { align-items: flex-start; flex-direction: column; }.course-footer .btn { width: 100%; }.course-progress > div:first-child { flex-direction: column; gap: .3rem; } }
+/**
+ * TOPCARE AI PLATFORM V2 — LEARNING HUB DOMAIN STYLESHEET
+ * Path: assets/css/pages/learning.css
+ * Status: APPROVED & LOCKED (BUILD 128.4 — BACKGROUND PREVIEW EFFECT)
+ * Focus: Level Cards, AI Module Grid, & Background Preview Image Layering
+ */
+
+/* Container & Base */
+.tc-learning-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+}
+
+/* =====================================================================
+   BACKGROUND PREVIEW IMAGE LAYER (MODERN AMBIENT GLOW)
+   ==================================================================== */
+.tc-learning-bg-preview {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 900px;
+    height: 320px;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tc-image-bg-effect {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 80%);
+    -webkit-mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 80%);
+    filter: blur(1px) drop-shadow(0 0 30px rgba(139, 92, 246, 0.3));
+}
+
+/* Base Hero Layering */
+.tc-learning-hero {
+    text-align: center;
+    margin-bottom: 3.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-learning-hero.tc-hero-left {
+    text-align: left;
+    margin-bottom: 2.5rem;
+}
+
+.tc-learning-hero-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(11, 15, 25, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.tc-learning-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    border-radius: 999px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.tc-learning-title {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 0.75rem 0;
+}
+
+.tc-learning-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem;
+    color: #94a3b8;
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* AI Levels Grid (3 Level Cards) */
+.tc-ai-levels-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-ai-level-card {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tc-ai-level-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(59, 130, 246, 0.15);
+}
+
+.tc-level-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+}
+
+.tc-level-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.tc-level-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+}
+
+.tag-dasar {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.tag-menengah {
+    color: #60a5fa;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.tag-mahir {
+    color: #a78bfa;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+}
+
+.tc-ai-level-card h3 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 0.75rem 0;
+}
+
+.tc-ai-level-card p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0 0 1.5rem 0;
+}
+
+.tc-level-count {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.35rem 0.75rem;
+    border-radius: 8px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tc-btn-level-select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    color: #f8fafc;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tc-btn-level-select:hover {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* Hub Selection Cards */
+.tc-hub-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-hub-card {
+    background: rgba(17, 24, 39, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2.25rem;
+    backdrop-filter: blur(16px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tc-hub-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(139, 92, 246, 0.4);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 24px rgba(139, 92, 246, 0.15);
+}
+
+.tc-hub-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.tc-hub-icon {
+    font-size: 2.75rem;
+    line-height: 1;
+}
+
+.tc-hub-badge-status {
+    font-size: 0.75rem;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.tc-hub-card-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 0.85rem 0;
+}
+
+.tc-hub-card-desc {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0 0 2rem 0;
+}
+
+.tc-btn-hub-select {
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.tc-btn-ai {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+}
+
+.tc-btn-back-hub {
+    background: none;
+    border: none;
+    color: #a78bfa;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+}
+
+.tc-btn-back-hub:hover {
+    color: #ffffff;
+}
+
+/* AI Grid for Level Modules */
+.tc-ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-ai-card {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.5rem;
+    backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.tc-ai-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.35);
+}
+
+.tc-ai-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.85rem;
+}
+
+.tc-ai-icon {
+    font-size: 1.85rem;
+    line-height: 1;
+}
+
+.tc-ai-badge {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.tc-ai-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.5rem 0;
+}
+
+.tc-ai-desc {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin: 0 0 1rem 0;
+}
+
+.tc-ai-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.tc-ai-points li {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+}
+
+/* Personality Single Course Card */
+.tc-learning-single-grid {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-course-card {
+    background: rgba(17, 24, 39, 0.75);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    border-radius: 20px;
+    padding: 2.25rem;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+}
+
+.tc-card-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.tc-card-icon-lg {
+    font-size: 2.5rem;
+    background: rgba(139, 92, 246, 0.12);
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.tc-card-header-text h2 {
+    font-size: 1.5rem;
+    color: #f8fafc;
+    margin: 0 0 0.25rem 0;
+}
+
+.tc-card-author {
+    font-size: 0.875rem;
+    color: #a78bfa;
+    margin: 0;
+}
+
+.tc-card-description {
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+.tc-chapter-preview {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.tc-preview-title {
+    font-size: 0.95rem;
+    color: #f1f5f9;
+    margin: 0 0 0.875rem 0;
+}
+
+.tc-chapter-list-preview {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.tc-chapter-list-preview li {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tc-chapter-num {
+    color: #10b981;
+    font-weight: bold;
+}
+
+.tc-btn-start {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    font-size: 1rem;
+}
+
+/* Reader View System */
+.tc-reader-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 5rem 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tc-reader-sidebar {
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.25rem;
+    height: fit-content;
+}
+
+.tc-btn-back {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 1.25rem;
+    transition: color 0.2s;
+}
+
+.tc-btn-back:hover {
+    color: #ffffff;
+}
+
+.tc-sidebar-title {
+    font-size: 1.1rem;
+    color: #f8fafc;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tc-chapter-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tc-chapter-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tc-chapter-nav-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #f1f5f9;
+}
+
+.tc-chapter-nav-btn.active {
+    background: rgba(139, 92, 246, 0.15);
+    border-color: rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    font-weight: 600;
+}
+
+.tc-nav-step {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    flex-shrink: 0;
+}
+
+.tc-chapter-nav-btn.active .tc-nav-step {
+    background: #8b5cf6;
+    color: #ffffff;
+}
+
+.tc-reader-main {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 2.25rem;
+}
+
+.tc-reader-progress-label {
+    font-size: 0.825rem;
+    color: #8b5cf6;
+    font-weight: 600;
+}
+
+.tc-reader-chapter-title {
+    font-size: 1.75rem;
+    color: #f8fafc;
+    margin: 0.35rem 0 1.75rem 0;
+}
+
+.tc-reader-body {
+    color: #cbd5e1;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+}
+
+.tc-reader-body h3 {
+    color: #f1f5f9;
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.85rem 0;
+}
+
+.tc-reader-body h4 {
+    color: #e2e8f0;
+    font-size: 1.05rem;
+    margin: 1.25rem 0 0.6rem 0;
+}
+
+.tc-reader-body p {
+    margin: 0 0 1.15rem 0;
+}
+
+.tc-reader-body ul {
+    margin: 0 0 1.25rem 1.25rem;
+    padding: 0;
+}
+
+.tc-reader-body li {
+    margin-bottom: 0.5rem;
+}
+
+.tc-quote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    background: rgba(139, 92, 246, 0.08);
+    border-left: 3px solid #8b5cf6;
+    border-radius: 0 8px 8px 0;
+    color: #ddd6fe;
+    font-style: italic;
+}
+
+.tc-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.tc-summary-box {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    font-size: 0.9rem;
+}
+
+.tc-reader-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.tc-btn-nav-prev,
+.tc-btn-nav-next {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.875rem;
+}
+
+.tc-btn-nav-prev {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #e2e8f0;
+    border-radius: 999px;
+    cursor: pointer;
+}
+
+.tc-btn-nav-prev:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Quiz Styles */
+.tc-quiz-fieldset {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.tc-quiz-question {
+    color: #f1f5f9;
+    font-weight: 600;
+    padding: 0 0.5rem;
+}
+
+.tc-quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: 0.85rem;
+}
+
+.tc-quiz-option {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    color: #cbd5e1;
+    font-size: 0.925rem;
+}
+
+.tc-quiz-result-box {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 12px;
+    color: #a7f3d0;
+}
+
+.tc-quiz-result-box h4 {
+    margin: 0 0 0.5rem 0;
+    color: #34d399;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+    .tc-hub-selection-grid,
+    .tc-ai-levels-grid,
+    .tc-ai-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 868px) {
+    .tc-reader-container {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-summary-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .tc-hub-selection-grid,
+    .tc-ai-levels-grid,
+    .tc-ai-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-learning-container {
+        padding: 1.5rem 1rem 3.5rem 1rem;
+    }
+
+    .tc-learning-title {
+        font-size: 1.85rem;
+    }
+
+    .tc-learning-bg-preview {
+        height: 220px;
+    }
+}

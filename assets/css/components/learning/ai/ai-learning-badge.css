@@ -1,0 +1,47 @@
+/**
+ * TOPCARE AI PLATFORM V2 — AI LEARNING BADGE STYLESHEET
+ * Path: assets/css/components/ai-learning-badge.css
+ * Status: APPROVED & LOCKED (BUILD 127.3)
+ * SRP: Styling for category, level, and status badges.
+ */
+
+.tc-ai-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    border-radius: 999px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.tc-ai-badge-level {
+    font-size: 0.75rem;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 0.25rem 0.65rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.tc-ai-badge-status {
+    font-size: 0.725rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 4px;
+}
+
+.status-active {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.status-coming {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.12);
+}

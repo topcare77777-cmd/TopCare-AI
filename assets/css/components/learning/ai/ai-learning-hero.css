@@ -1,0 +1,45 @@
+/**
+ * TOPCARE AI PLATFORM V2 — AI LEARNING HERO STYLESHEET
+ * Path: assets/css/components/ai-learning-hero.css
+ * Status: APPROVED & LOCKED (BUILD 127.3)
+ * SRP: Styling for Hero section, background glow, and hero typography.
+ */
+
+.tc-ai-basic-hero {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 3.5rem auto;
+    position: relative;
+}
+
+.tc-ai-hero-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(11, 15, 25, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.tc-ai-hero-title {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 0.875rem 0;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+}
+
+.tc-ai-hero-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 1.05rem;
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
+}

@@ -1,38 +1,329 @@
-/* ==================================================
-ABOUT PAGE STYLES
-================================================== */
+/**
+ * TOPCARE AI PLATFORM V2 — ABOUT US DOMAIN STYLESHEET
+ * Path: assets/css/pages/about.css
+ * Status: APPROVED & LOCKED (BUILD 127.0)
+ * Focus: High-Precision Design System Layout (Desktop, Tablet, Mobile)
+ */
 
-.about-page {
-padding: 5rem 2rem;
-max-width: var(--container-width);
-margin: 0 auto;
+.tc-about-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    box-sizing: border-box;
 }
 
-.about-header {
-text-align: center;
-margin-bottom: 4rem;
+/* Hero Section */
+.tc-about-hero {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 4rem auto;
+    position: relative;
 }
 
-.about-content {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 4rem;
-align-items: center;
+.tc-about-hero-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 340px;
+    height: 190px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.22) 0%, rgba(11, 15, 25, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
 }
 
-.about-text h3 {
-font-size: 1.75rem;
-margin-bottom: 1rem;
+.tc-about-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    color: #a78bfa;
+    border-radius: 999px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.02em;
 }
 
-.about-text p {
-margin-bottom: 1.5rem;
-line-height: 1.7;
+.tc-about-title {
+    position: relative;
+    z-index: 1;
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
 }
 
-@media (max-width: 768px) {
-.about-content {
-grid-template-columns: 1fr;
-gap: 2rem;
+.tc-about-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 1.1rem;
+    color: #94a3b8;
+    line-height: 1.7;
+    margin: 0;
 }
+
+/* Vision Card */
+.tc-vision-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.12) 0%, rgba(17, 24, 39, 0.7) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    padding: 2.25rem;
+    margin-bottom: 3.5rem;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.tc-vision-card h2 {
+    font-size: 1.5rem;
+    color: #f8fafc;
+    margin: 0 0 0.75rem 0;
+    font-weight: 700;
+}
+
+.tc-vision-card p {
+    font-size: 1.05rem;
+    color: #cbd5e1;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Section Header */
+.tc-about-section {
+    margin-bottom: 4rem;
+}
+
+.tc-about-section-header {
+    margin-bottom: 2rem;
+}
+
+.tc-about-section-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.4rem 0;
+    letter-spacing: -0.01em;
+}
+
+.tc-about-section-header p {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Grids */
+.tc-about-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.tc-grid-missions {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tc-grid-learn {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tc-grid-values {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tc-grid-duo {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+/* Card Base */
+.tc-about-card {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.65rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.tc-about-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+.tc-mission-icon,
+.tc-learn-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.tc-about-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.5rem 0;
+}
+
+.tc-about-card p {
+    font-size: 0.885rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Timeline Steps */
+.tc-steps-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.tc-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.35rem;
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.35rem;
+    transition: border-color 0.2s ease;
+}
+
+.tc-step-item:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.tc-step-num {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #a78bfa;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.tc-step-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.35rem 0;
+}
+
+.tc-step-content p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Info Cards (Duo) */
+.tc-info-card {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.75rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.tc-info-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.75rem 0;
+}
+
+.tc-info-card p {
+    font-size: 0.925rem;
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Closing Section */
+.tc-about-closing {
+    text-align: center;
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 3rem 2rem;
+    margin-top: 2rem;
+}
+
+.tc-about-closing h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.75rem 0;
+}
+
+.tc-about-closing p {
+    font-size: 1.05rem;
+    color: #94a3b8;
+    max-width: 680px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+
+    .tc-grid-missions,
+    .tc-grid-learn,
+    .tc-grid-values {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-grid-duo {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-about-title {
+        font-size: 2.15rem;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .tc-grid-missions,
+    .tc-grid-learn,
+    .tc-grid-values {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-about-wrapper {
+        padding: 1.75rem 1rem 3.5rem 1rem;
+    }
+
+    .tc-about-title {
+        font-size: 1.75rem;
+    }
+
+    .tc-about-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .tc-step-item {
+        gap: 1rem;
+        padding: 1.1rem;
+    }
+
+    .tc-vision-card {
+        padding: 1.5rem;
+    }
 }

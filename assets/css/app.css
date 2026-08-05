@@ -1,7 +1,7 @@
 /* =====================================================================
    TOPCARE AI PLATFORM V2 — APP.CSS (Master Entry Point SSOT)
    Path Location : assets/css/app.css
-   Status        : 100% AUDITED & VERIFIED AGAINST PHYSICAL FILE TREE
+   Status        : 100% AUDITED, CLEANED & LOCKED (BUILD 127.3)
    ==================================================================== */
 
 /* --- 00. TOKENS & DESIGN SYSTEM --- */
@@ -61,7 +61,6 @@
 
 /* --- 04. FEATURE & DOMAIN STYLES --- */
 @import url('features/personality.css');
-@import url('features/personality-print.css');
 @import url('features/community/community.css');
 
 /* --- 05. PERSONALITY ENGINE DOMAIN --- */
@@ -90,21 +89,15 @@
 @import url('pages/home/product-experience.css');
 
 /* --- 07. AUTHENTICATION & OTHER PAGES --- */
-
+@import url('pages/auth/auth.css');
 @import url('pages/auth/login.css');
-
+@import url('pages/auth/register.css');
 @import url('pages/auth/forgot-password.css');
+
 @import url('pages/dashboard.css');
 @import url('pages/creator.css');
 @import url('pages/learning.css');
 @import url('pages/about.css');
 @import url('pages/assistant.css');
 @import url('pages/faq.css');
-
-@import url('pages/assistant.css');
-@import url('pages/home/coach.css');
-@import url('pages/home/features.css');
-
-/* ✅ PATH YANG BENAR: */
-@import url('pages/auth/auth.css');
-@import url('pages/auth/register.css');
+@import url('pages/ai-basic.css');

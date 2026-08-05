@@ -1,15 +1,49 @@
 /**
- * TopCare AI Platform V2.0.0
- * Learning Page Controller
+ * TOPCARE AI PLATFORM V2 — LEARNING PAGE SPA VIEW CONTROLLER
  * Path: assets/js/pages/learning.page.js
+ * Status: APPROVED & LOCKED (BUILD 127.2 — STABLE ENTRY)
+ * SRP: Dynamic SPA entry point mounting the Learning Controller into the #app viewport.
  */
-import Logger from '../core/logger.js';
-const LearningPage = {
-    init() {}, mount() {},
-    async render(container) {
-        Logger.info("[LearningPage] Rendering");
-        container.innerHTML = `<div style="padding: 10rem 2rem; text-align: center; color: white;"><h1 style="font-size:3rem; margin-bottom:1rem;">Belajar AI</h1><p style="color:#9ca3af; font-size:1.125rem;">Ratusan kursus AI berkualitas untuk tingkatkan skill Anda.</p></div>`;
-    },
-    destroy() { Logger.info("[LearningPage] Destroyed"); }
-};
+
+import { LearningController } from '../learning/learning.controller.js';
+
+export class LearningPage {
+    constructor(container) {
+        this.container = typeof container === 'string' 
+            ? document.querySelector(container) 
+            : container;
+        this.controllerInstance = null;
+    }
+
+    /**
+     * SPA Page Lifecycle Mount
+     */
+    async mount() {
+        if (!this.container) {
+            this.container = document.getElementById('app');
+        }
+
+        if (!this.container) {
+            console.error('[LearningPage] Host container #app not found.');
+            return;
+        }
+
+        // Initialize Learning Domain Controller
+        this.controllerInstance = new LearningController(this.container);
+        this.controllerInstance.init();
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /**
+     * SPA Page Lifecycle Destroy Cleanup
+     */
+    destroy() {
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
+        this.controllerInstance = null;
+    }
+}
+
 export default LearningPage;

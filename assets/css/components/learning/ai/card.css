@@ -1,0 +1,73 @@
+.tc-ai-learning-card {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.65rem;
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tc-ai-learning-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+.tc-card-top-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.tc-card-icon {
+    font-size: 2.25rem;
+    line-height: 1;
+}
+
+.tc-card-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.6rem 0;
+}
+
+.tc-card-description {
+    font-size: 0.885rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0 0 1.25rem 0;
+}
+
+.tc-card-points-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.tc-points-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    display: block;
+    margin-bottom: 0.6rem;
+}
+
+.tc-card-footer-info {
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tc-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.775rem;
+    color: #94a3b8;
+}

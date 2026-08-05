@@ -21,14 +21,16 @@ export const ConversationOrchestrator = Object.freeze({
 
     _ensureDefaultHandlersRegistered() {
         if (typeof CapabilityHandlerRegistry.has === 'function' && !CapabilityHandlerRegistry.has('default-general-capability')) {
-            const defaultHandler = async (entities, context) => {
-                return {
-                    outputs: {
-                        message: "Halo! Saya siap mendampingi dan berdiskusi mengenai kesehatan serta target Anda.",
-                        status: "SUCCESS"
-                    }
-                };
-            };
+            const defaultHandler = Object.freeze({
+                async execute(inputs, contextDTO, pipelineExecution) {
+                    return {
+                        outputs: {
+                            message: "Halo! Saya siap mendampingi dan berdiskusi mengenai kesehatan serta target Anda.",
+                            status: "SUCCESS"
+                        }
+                    };
+                }
+            });
 
             if (typeof CapabilityHandlerRegistry.register === 'function') {
                 CapabilityHandlerRegistry.register('default-general-capability', defaultHandler);
@@ -190,8 +192,11 @@ export const ConversationOrchestrator = Object.freeze({
                 } catch (err) {
                     execOutputs = null;
                 }
-            } else if (typeof handler === 'function') {
-                const rawRes = await handler(dialogueState ? dialogueState.collectedEntities : {}, contextSnapshotDTO);
+            } else if (
+                handler &&
+                typeof handler.execute === 'function'
+            ) {
+                const rawRes = await handler.execute(dialogueState ? dialogueState.collectedEntities : {}, contextSnapshotDTO);
                 execOutputs = rawRes ? rawRes.outputs || rawRes : null;
             }
 

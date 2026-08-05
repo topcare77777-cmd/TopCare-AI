@@ -1,0 +1,44 @@
+/**
+ * TOPCARE AI PLATFORM V2 — AI LEARNING GRID STYLESHEET
+ * Path: assets/css/components/ai-learning-grid.css
+ * Status: APPROVED & LOCKED (BUILD 127.3)
+ * SRP: Grid systems for Level Overview and Modules.
+ */
+
+.tc-ai-levels-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.tc-level-tab {
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tc-level-tab.active {
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.tc-level-tab.disabled {
+    opacity: 0.65;
+}
+
+.tc-level-tab-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.tc-ai-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}

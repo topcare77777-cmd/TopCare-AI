@@ -1,0 +1,83 @@
+/**
+ * TOPCARE AI PLATFORM V2 — REUSABLE IMAGE UTILITIES STYLESHEET
+ * Path: assets/css/components/image-utilities.css
+ * Status: APPROVED & LOCKED (BUILD 128.3 — VISUAL & BOUNDS STABILIZATION)
+ * SRP: Strict layout bounding box, object-fit constraints, and responsive aspect scaling.
+ */
+
+/* Responsive Image Base */
+.tc-image-cover {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+}
+
+/* Card Image Bounding Box */
+.tc-image-card {
+    border-radius: 12px;
+    width: 100%;
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
+
+/* Hero/Banner Image Bounding Box */
+.tc-image-banner {
+    border-radius: 16px;
+    width: 100%;
+    max-width: 320px; /* Membatasi ukuran maksimal SVG agar tidak membengkak */
+    height: auto;
+    max-height: 200px;
+    margin: 0 auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(139, 92, 246, 0.25));
+}
+
+/* Avatar Utilities */
+.tc-image-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(139, 92, 246, 0.4);
+    flex-shrink: 0;
+}
+
+/* Glassmorphism Box Wrapper untuk Gambar Showcase/Banner */
+.tc-about-showcase-box,
+.tc-about-team-box,
+.tc-comm-banner-box,
+.tc-hub-banner-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 520px; /* Batas pembungkus kontainer di layar desktop */
+    margin: 1.5rem auto 2.5rem auto;
+    padding: 1.25rem;
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(16px);
+    box-sizing: border-box;
+}
+
+/* Media Query Adjustments */
+@media (max-width: 640px) {
+    .tc-about-showcase-box,
+    .tc-about-team-box,
+    .tc-comm-banner-box,
+    .tc-hub-banner-preview {
+        max-width: 100%;
+        padding: 0.85rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .tc-image-banner {
+        max-width: 240px;
+        max-height: 160px;
+    }
+}

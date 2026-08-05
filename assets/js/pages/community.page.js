@@ -1,15 +1,41 @@
 /**
- * TopCare AI Platform V2.0.0
- * Community Page Controller
+ * TOPCARE AI PLATFORM V2 — COMMUNITY PAGE SPA VIEW CONTROLLER
  * Path: assets/js/pages/community.page.js
+ * Status: APPROVED & LOCKED (GOLDEN BASELINE)
+ * SRP: Dynamic SPA entry point mounting the Community Controller into the #app viewport.
  */
-import Logger from '../core/logger.js';
-const CommunityPage = {
-    init() {}, mount() {},
-    async render(container) {
-        Logger.info("[CommunityPage] Rendering");
-        container.innerHTML = `<div style="padding: 10rem 2rem; text-align: center; color: white;"><h1 style="font-size:3rem; margin-bottom:1rem;">Community Hub</h1><p style="color:#9ca3af; font-size:1.125rem;">Bergabung dengan puluhan ribu praktisi AI global.</p></div>`;
-    },
-    destroy() { Logger.info("[CommunityPage] Destroyed"); }
-};
+
+import { CommunityController } from '../community/community.controller.js';
+
+export class CommunityPage {
+    constructor(container) {
+        this.container = typeof container === 'string' 
+            ? document.querySelector(container) 
+            : container;
+        this.controllerInstance = null;
+    }
+
+    async mount() {
+        if (!this.container) {
+            this.container = document.getElementById('app');
+        }
+
+        if (!this.container) {
+            console.error('[CommunityPage] Host container #app not found.');
+            return;
+        }
+
+        this.controllerInstance = new CommunityController(this.container);
+        this.controllerInstance.init();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    destroy() {
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
+        this.controllerInstance = null;
+    }
+}
+
 export default CommunityPage;

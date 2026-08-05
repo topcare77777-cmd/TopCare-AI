@@ -1,15 +1,50 @@
 /**
- * TopCare AI Platform V2.0.0
- * Creator Page Controller
+ * TOPCARE AI PLATFORM V2 — CREATOR PAGE LIFECYCLE
  * Path: assets/js/pages/creator.page.js
+ * Status: APPROVED & LOCKED (BUILD 128.6)
+ * SRP: Page lifecycle manager for Creator Domain & Sub-states.
  */
-import Logger from '../core/logger.js';
-const CreatorPage = {
-    init() {}, mount() {},
-    async render(container) {
-        Logger.info("[CreatorPage] Rendering");
-        container.innerHTML = `<div style="padding: 10rem 2rem; text-align: center; color: white;"><h1 style="font-size:3rem; margin-bottom:1rem;">Creator Platform</h1><p style="color:#9ca3af; font-size:1.125rem;">Monetisasi karya, course, dan prompt Anda bersama TopCare AI.</p></div>`;
-    },
-    destroy() { Logger.info("[CreatorPage] Destroyed"); }
-};
+
+import { CreatorController } from '../creator/creator.controller.js';
+
+export class CreatorPage {
+    constructor() {
+        this.container = null;
+        this.controller = null;
+    }
+
+    async beforeEnter() {
+        // Lifecycle hook sebelum halaman dirender
+    }
+
+    mount(hostElement) {
+        this.container = hostElement || document.getElementById('app');
+        if (!this.container) return;
+
+        this.controller = new CreatorController(this.container);
+        
+        // Deteksi sub-state dari URL Hash jika diakses langsung via Header
+        const hash = window.location.hash.replace(/^#\/?/, '').trim().toLowerCase();
+        if (hash === 'ebook') {
+            this.controller.viewState = 'EBOOK';
+        } else if (hash === 'artikel') {
+            this.controller.viewState = 'ARTIKEL';
+        } else if (hash === 'prompt') {
+            this.controller.viewState = 'PROMPT';
+        } else {
+            this.controller.viewState = 'HUB';
+        }
+
+        this.controller.init();
+    }
+
+    unmount() {
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
+        this.container = null;
+        this.controller = null;
+    }
+}
+
 export default CreatorPage;

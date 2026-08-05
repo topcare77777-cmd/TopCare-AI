@@ -1,0 +1,62 @@
+.tc-ai-overview-section,
+.tc-ai-modules-section {
+    margin-bottom: 3.5rem;
+}
+
+.tc-ai-section-header {
+    margin-bottom: 1.75rem;
+}
+
+.tc-ai-section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.35rem 0;
+}
+
+.tc-ai-section-header p {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+.tc-ai-levels-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-top: 1rem;
+}
+
+.tc-level-tab {
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.tc-level-tab.active {
+    border-color: rgba(139, 92, 246, 0.4);
+    background: rgba(139, 92, 246, 0.08);
+}
+
+.tc-level-tab.disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.tc-level-tab-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #f8fafc;
+}
+
+.tc-ai-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}

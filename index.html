@@ -4,16 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TopCare AI — Platform Coach AI untuk Kepribadian</title>
+    <title>TopCare AI — Platform AI untuk Belajar & Berkembang</title>
 
     <!-- Favicon Integration -->
     <link rel="icon" type="image/svg+xml" href="assets/images/icons/topcare-logo.svg">
 
-    <!-- SINGLE SOURCE OF TRUTH MASTER STYLESHEET BUNDLE (SSOT) -->
+    <!-- MASTER STYLESHEET BUNDLE -->
     <link rel="stylesheet" href="assets/css/app.css">
-
-    <!-- Di bagian Header index.html -->
-
+    <link rel="stylesheet" href="assets/css/components/navbar/navbar.css">
+    <link rel="stylesheet" href="assets/css/components/image-utilities.css">
+    <link rel="stylesheet" href="assets/css/pages/learning.css">
+    <link rel="stylesheet" href="assets/css/pages/community.css">
+    <link rel="stylesheet" href="assets/css/pages/premium.css">
 </head>
 
 <body class="app-shell">
@@ -21,29 +23,56 @@
     <a href="#app" class="skip-link">Lewati ke konten utama</a>
 
     <!-- Global Application Header Navigation -->
-    <header class="header-section" role="banner">
+    <header class="header-section" role="banner" id="site-header">
         <div class="header-container">
             <!-- Brand Logo -->
             <a href="#/home" class="header-brand" aria-label="TopCare AI Beranda">
                 <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Logo" class="header-logo">
             </a>
 
-            <!-- Navigasi Utama (Bahasa Indonesia) -->
+            <!-- Navigasi Utama Terstruktur SSOT -->
             <nav class="header-nav" id="main-nav" aria-label="Navigasi Utama">
-                <a href="#/home" class="header-nav-link active">Beranda</a>
-                <a href="#features" class="header-nav-link">AI Coach</a>
-                <a href="#/personality" class="header-nav-link">Tes Kepribadian</a>
-                <a href="#/learning" class="header-nav-link">Belajar</a>
-                <a href="#/prompt" class="header-nav-link">Prompt AI</a>
-                <a href="#/community" class="header-nav-link">Komunitas</a>
-                <a href="#/premium" class="header-nav-link">Premium</a>
-                <a href="#/about" class="header-nav-link">Tentang Kami</a>
+                <a href="#/home" class="header-nav-link active" data-route="home">Beranda</a>
+                <a href="#/learning" class="header-nav-link" data-route="learning">Belajar</a>
+
+                <!-- DROPDOWN SUBMENU CREATOR -->
+                <div class="tc-dropdown" id="creator-dropdown">
+                    <a href="#/creator" class="header-nav-link tc-dropdown-trigger" data-route="creator">
+                        Creator <span class="tc-dropdown-arrow">▼</span>
+                    </a>
+                    <div class="tc-dropdown-menu" role="menu">
+                        <a href="#/prompt" class="tc-dropdown-item" data-route="prompt">
+                            <span class="tc-item-icon">🤖</span>
+                            <div class="tc-item-text">
+                                <strong>Prompt AI</strong>
+                                <small>Koleksi prompt produktivitas</small>
+                            </div>
+                        </a>
+                        <a href="#/ebook" class="tc-dropdown-item" data-route="ebook">
+                            <span class="tc-item-icon">📘</span>
+                            <div class="tc-item-text">
+                                <strong>E-book</strong>
+                                <small>Panduan digital komprehensif</small>
+                            </div>
+                        </a>
+                        <a href="#/artikel" class="tc-dropdown-item" data-route="artikel">
+                            <span class="tc-item-icon">📰</span>
+                            <div class="tc-item-text">
+                                <strong>Artikel</strong>
+                                <small>Wawasan AI & kepribadian</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#/community" class="header-nav-link" data-route="community">Komunitas</a>
+                <a href="#/marketplace" class="header-nav-link" data-route="marketplace">Marketplace</a>
+                <a href="#/premium" class="header-nav-link" data-route="premium">Premium</a>
+                <a href="#/about" class="header-nav-link" data-route="about">Tentang Kami</a>
             </nav>
 
             <!-- Aksi & Pemilih Bahasa -->
-
             <div class="header-actions">
-                <!-- Tombol Pemilih Bahasa -->
                 <div class="lang-selector">
                     <button class="lang-btn" id="lang-toggle-btn" aria-label="Pilih Bahasa">
                         <span>🇮🇩 ID</span>
@@ -54,9 +83,8 @@
                 <a href="#/register" class="btn-primary" data-i18n="nav_register">Mulai Gratis</a>
             </div>
 
-            <!-- Tombol Garis 3 untuk HP / Tablet -->
-            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi"
-                aria-expanded="false">
+            <!-- Tombol Garis 3 untuk Mobile Navigation -->
+            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi" aria-expanded="false">
                 <span class="hamburger-bar"></span>
                 <span class="hamburger-bar"></span>
                 <span class="hamburger-bar"></span>
@@ -64,24 +92,8 @@
         </div>
     </header>
 
-    <!-- SINGLE DYNAMIC MOUNT POINT FOR THE RUNTIME SHELL -->
+    <!-- SINGLE DYNAMIC MOUNT POINT -->
     <main id="app" class="app-view-viewport" role="main"></main>
-
-    <!-- Script Sederhana Ringan untuk Toggle Bahasa -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const langBtn = document.getElementById('lang-toggle-btn');
-
-            // Toggle Bahasa (ID / EN)
-            if (langBtn) {
-                let currentLang = 'ID';
-                langBtn.addEventListener('click', () => {
-                    currentLang = currentLang === 'ID' ? 'EN' : 'ID';
-                    langBtn.querySelector('span').textContent = currentLang === 'ID' ? '🇮🇩 ID' : '🇬🇧 EN';
-                });
-            }
-        });
-    </script>
 
     <!-- Native ES Module Bootstrapper -->
     <script type="module" src="assets/js/index.js"></script>

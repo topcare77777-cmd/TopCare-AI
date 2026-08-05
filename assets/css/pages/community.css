@@ -1,0 +1,334 @@
+/**
+ * TOPCARE AI PLATFORM V2 — COMMUNITY DOMAIN STYLESHEET
+ * Path: assets/css/pages/community.css
+ * Status: APPROVED & LOCKED (GOLDEN BASELINE)
+ * Focus: High-Precision Design System Layout (Desktop, Tablet, Mobile)
+ */
+
+.tc-community-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+    box-sizing: border-box;
+}
+
+/* Hero Section */
+.tc-comm-hero {
+    text-align: center;
+    max-width: 780px;
+    margin: 0 auto 4rem auto;
+    position: relative;
+}
+
+.tc-comm-hero-glow {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 320px;
+    height: 180px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(11, 15, 25, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.tc-comm-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.28);
+    color: #a78bfa;
+    border-radius: 999px;
+    font-size: 0.825rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.02em;
+}
+
+.tc-comm-title {
+    position: relative;
+    z-index: 1;
+    font-size: 2.65rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 1rem 0;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+}
+
+.tc-comm-subtitle {
+    position: relative;
+    z-index: 1;
+    font-size: 1.1rem;
+    color: #94a3b8;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* Section Header */
+.tc-comm-section {
+    margin-bottom: 4rem;
+}
+
+.tc-comm-section-header {
+    margin-bottom: 2rem;
+}
+
+.tc-comm-section-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.4rem 0;
+    letter-spacing: -0.01em;
+}
+
+.tc-comm-section-header p {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 0;
+}
+
+/* Grid Layouts */
+.tc-comm-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.tc-grid-topics {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tc-grid-groups {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tc-grid-coming {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* Cards Base */
+.tc-comm-card {
+    background: rgba(17, 24, 39, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 1.65rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.tc-comm-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(139, 92, 246, 0.35);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+/* Topic Cards */
+.tc-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.tc-topic-icon {
+    font-size: 2.25rem;
+    line-height: 1;
+}
+
+.tc-topic-tag {
+    font-size: 0.75rem;
+    color: #cbd5e1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.tc-topic-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.5rem 0;
+}
+
+.tc-topic-desc {
+    font-size: 0.885rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Group Cards */
+.tc-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.tc-group-icon {
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.tc-status-badge {
+    font-size: 0.75rem;
+    color: #fbbf24;
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.tc-group-name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 0 0 0.5rem 0;
+}
+
+.tc-group-desc {
+    font-size: 0.885rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Guidelines List */
+.tc-comm-guidelines-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+}
+
+.tc-guideline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.35rem;
+    background: rgba(17, 24, 39, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.35rem;
+    transition: border-color 0.2s ease;
+}
+
+.tc-guideline-item:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.tc-guideline-num {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #a78bfa;
+    background: rgba(139, 92, 246, 0.12);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.tc-guideline-content h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.35rem 0;
+}
+
+.tc-guideline-content p {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Coming Soon Cards */
+.tc-card-coming {
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tc-coming-icon {
+    font-size: 2.25rem;
+    margin-bottom: 0.85rem;
+}
+
+.tc-card-coming h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin: 0 0 0.4rem 0;
+}
+
+.tc-card-coming p {
+    font-size: 0.825rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0 0 1.25rem 0;
+}
+
+.tc-coming-badge {
+    font-size: 0.725rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+
+    .tc-grid-topics,
+    .tc-grid-groups {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-grid-coming {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tc-comm-title {
+        font-size: 2.15rem;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .tc-grid-topics,
+    .tc-grid-groups,
+    .tc-grid-coming {
+        grid-template-columns: 1fr;
+    }
+
+    .tc-comm-wrapper {
+        padding: 1.75rem 1rem 3.5rem 1rem;
+    }
+
+    .tc-comm-title {
+        font-size: 1.75rem;
+    }
+
+    .tc-comm-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .tc-guideline-item {
+        gap: 1rem;
+        padding: 1.1rem;
+    }
+}

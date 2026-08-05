@@ -1,6 +1,6 @@
 /**
  * file: assets/js/router/router.js
- * Version: 124.3.0 (BUILD 124.3.0 — STRICT DYNAMIC PATH RESOLUTION FIX)
+ * Version: 124.3.1 (BUILD 124.3.1 — EXACT DOMAIN PATH RESOLUTION FIX)
  * Status: APPROVED & LOCKED
  * SRP: Dynamic Route Loader, Explicit Path Resolver & Guard Dispatcher.
  */
@@ -26,16 +26,17 @@ class RouterEngine {
     }
 
     _registerRoutes() {
-        // 1. Explicit Auth Pages (Mapped to pages/auth/)
-        this.register('/login', () => this._dispatchPage('login.page.js', true, true));
-        this.register('/register', () => this._dispatchPage('register.page.js', true, true));
-        this.register('/forgot-password', () => this._dispatchPage('forgot-password.page.js', true, true));
+        // 1. Explicit Auth Pages (Mapped strictly to pages/auth/)
+        this.register('/login', () => this._dispatchAuthPage('login.page.js'));
+        this.register('/register', () => this._dispatchAuthPage('register.page.js'));
+        this.register('/forgot-password', () => this._dispatchAuthPage('forgot-password.page.js'));
 
-        // 2. Explicit Core Application Pages (Mapped to pages/)
-        this.register('/home', () => this._dispatchPage('home.page.js', false, false));
-        this.register('/coach', () => this._dispatchPage('coach.page.js', false, false));
-        this.register('/coach-selection', () => this._dispatchPage('coach-selection.page.js', false, false));
-        this.register('/personality', () => this._dispatchPage('personality.page.js', false, false));
+        // 2. Explicit Core Application Pages (Mapped strictly to pages/)
+        this.register('/home', () => this._dispatchCorePage('home.page.js'));
+        this.register('/coach', () => this._dispatchCorePage('coach.page.js'));
+        this.register('/coach-selection', () => this._dispatchCorePage('coach-selection.page.js'));
+        this.register('/personality', () => this._dispatchCorePage('personality.page.js'));
+        this.register('/learning', () => this._dispatchCorePage('learning.page.js'));
 
         // 3. Protected Personality Test Sandbox
         this.register('/personality-test', async () => {
@@ -56,7 +57,7 @@ class RouterEngine {
                 });
             } catch (err) {
                 Core.Logger.error(`[Router] Failed to load Personality Test: ${err.message}`);
-                await this._dispatchPage('personality.page.js', false, false);
+                await this._dispatchCorePage('personality.page.js');
             }
         });
 
@@ -76,74 +77,59 @@ class RouterEngine {
             Core.Logger.info("[Router] Navigating to Workspace AI Coach Runtime...");
 
             try {
-                await this._dispatchPage('coach.page.js', false, false);
+                await this._dispatchCorePage('coach.page.js');
             } catch (err) {
                 Core.Logger.error(`[Router] Failed to load Workspace AI Coach: ${err.message}`);
                 ViewManager.renderErrorView(err);
             }
         });
 
-        // 6. Manifest Dynamic Application Pages (Mapped to pages/)
-        const manifestPages = ['about', 'learning', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace'];
+        // 6. Manifest Dynamic Application Pages (Mapped strictly to pages/)
+        const manifestPages = ['about', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace'];
         manifestPages.forEach(page => {
-            this.register(`/${page}`, () => this._dispatchPage(`${page}.page.js`, false, false));
+            this.register(`/${page}`, () => this._dispatchCorePage(`${page}.page.js`));
         });
     }
 
-    async _dispatchPage(fileName, isClassType = false, isAuthPage = false) {
-        let pageModule = null;
-
-        // Strict explicit path targeting based on page domain
-        const candidatePaths = isAuthPage
-            ? [`../pages/auth/${fileName}`, `../pages/${fileName}`]
-            : [`../pages/${fileName}`, `../pages/auth/${fileName}`];
-
-        let lastError = null;
-
-        for (const path of candidatePaths) {
-            try {
-                pageModule = await import(path);
-                if (pageModule) break;
-            } catch (err) {
-                lastError = err;
-            }
-        }
-
-        if (!pageModule) {
-            Core.Logger.error(`[Router] Failed to load dynamic page module '${fileName}': ${lastError?.message}`);
-            ViewManager.renderErrorView(lastError || new Error(`Module ${fileName} not found.`));
-            return;
-        }
-
+    async _dispatchAuthPage(fileName) {
         try {
+            const pageModule = await import(`../pages/auth/${fileName}`);
+            const host = ViewManager.getAppHost();
+            const TargetClass = pageModule.RegisterPage || 
+                                pageModule.LoginPage || 
+                                pageModule.ForgotPasswordPage ||
+                                pageModule.default || 
+                                pageModule[Object.keys(pageModule)[0]];
+
+            const instance = typeof TargetClass === 'function' ? new TargetClass(host) : TargetClass;
+            await ViewManager.mountView(instance);
+        } catch (err) {
+            Core.Logger.error(`[Router] Failed to load auth page module '${fileName}': ${err.message}`);
+            ViewManager.renderErrorView(err);
+        }
+    }
+
+    async _dispatchCorePage(fileName) {
+        try {
+            const pageModule = await import(`../pages/${fileName}`);
             const host = ViewManager.getAppHost();
 
-            if (isClassType) {
-                const TargetClass = pageModule.RegisterPage || 
-                                    pageModule.LoginPage || 
-                                    pageModule.ForgotPasswordPage ||
-                                    pageModule.default || 
-                                    pageModule[Object.keys(pageModule)[0]];
+            const targetInstance = pageModule.default || 
+                                   pageModule.LearningPage ||
+                                   pageModule.coachPage || 
+                                   pageModule.homePage || 
+                                   pageModule.coachSelectionPage || 
+                                   pageModule.personalityPage || 
+                                   pageModule;
 
-                const instance = typeof TargetClass === 'function' ? new TargetClass(host) : TargetClass;
-                await ViewManager.mountView(instance);
+            if (typeof targetInstance === 'function') {
+                await ViewManager.mountView(new targetInstance(host));
             } else {
-                const targetInstance = pageModule.default || 
-                                       pageModule.coachPage || 
-                                       pageModule.homePage || 
-                                       pageModule.coachSelectionPage || 
-                                       pageModule.personalityPage || 
-                                       pageModule;
-                
-                if (typeof targetInstance === 'function') {
-                    await ViewManager.mountView(new targetInstance(host));
-                } else {
-                    await ViewManager.mountView(targetInstance);
-                }
+                await ViewManager.mountView(targetInstance);
             }
-        } catch (mountErr) {
-            Core.Logger.error(`[Router] Error mounting page '${fileName}': ${mountErr.message}`);
-            ViewManager.renderErrorView(mountErr);
+        } catch (err) {
+            Core.Logger.error(`[Router] Failed to load core page module '${fileName}': ${err.message}`);
+            ViewManager.renderErrorView(err);
         }
     }
 
