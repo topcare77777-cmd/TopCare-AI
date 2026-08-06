@@ -1,9 +1,12 @@
 /**
  * @file personality-result.css
- * @description Strictly isolated Result Mode stylesheet overriding all viewport-locking rules to allow natural full-page vertical scrolling.
+ * @description Strictly isolated Result Mode stylesheet maintaining Desktop/Laptop perfection while fixing mobile layout & contrast.
  * @module Personality/CSS/Result
  */
 
+/* =====================================================================
+   01. DESKTOP & LAPTOP STYLES (PRESERVED 100% ORIGINAL)
+   ===================================================================== */
 .personality-test:has(.test-result-dashboard) {
     width: 100%;
     height: auto !important;
@@ -297,3 +300,82 @@
     text-align: center;
     margin: 1.5rem 0 1rem 0;
 }
+
+/* =====================================================================
+   02. MOBILE & TABLET STYLING ONLY (ANDROID / IPHONE: <= 768px)
+   ===================================================================== */
+@media (max-width: 768px) {
+    .personality-test:has(.test-result-dashboard) {
+        padding: 1.25rem 0.75rem 4rem 0.75rem !important;
+    }
+
+    .personality-test:has(.test-result-dashboard) .test-shell {
+        padding: 1.25rem 1rem !important;
+        border-radius: 16px;
+    }
+
+    /* Kartu Utama Hasil Temperamen */
+    .result-header-card {
+        padding: 1.5rem 1.25rem !important;
+        text-align: center;
+    }
+
+    .result-header-content-wrapper {
+        flex-direction: column-reverse; /* Menggeser avatar ke atas teks pada HP */
+        align-items: center;
+        gap: 1.25rem;
+    }
+
+    .result-header-text {
+        text-align: center;
+        width: 100%;
+    }
+
+    .result-avatar-container {
+        width: 110px !important;
+        height: 110px !important;
+        margin: 0 auto;
+    }
+
+    .result-badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.75rem;
+        background: rgba(0, 0, 0, 0.3) !important;
+        color: #ffffff !important;
+    }
+
+    .result-title-row {
+        justify-content: center;
+        margin-bottom: 0.75rem;
+    }
+
+    .result-header-card h1 {
+        font-size: 1.65rem !important;
+        color: #ffffff !important;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Perbaikan utama: memperjelas warna teks deskripsi agar terbaca terang di HP */
+    .result-summary,
+    .result-header-card p {
+        font-size: 0.875rem !important;
+        line-height: 1.6 !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+        font-weight: 500 !important;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Kartu Sekunder & Seksi Penjelas */
+    .result-secondary-banner,
+    .result-card-section,
+    .result-card {
+        padding: 1.15rem 1rem !important;
+    }
+
+    .result-grid-two,
+    .recommendation-grid-details {
+        grid-template-columns: 1fr !important;
+        gap: 1rem;
+    }
+}s

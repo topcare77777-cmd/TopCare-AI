@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — ENTERPRISE ASSETS REGISTRY (SSOT)
  * Path: assets/js/core/registries/assets.registry.js
- * Status: APPROVED & LOCKED (BUILD 128.7 HOTFIX FIXED 404)
+ * Status: APPROVED & LOCKED (BUILD 128.0 — SAFE EXTENSION)
  * SRP: Single Source of Truth for all visual asset path mappings across domains.
  */
 
@@ -27,9 +27,9 @@ export const AssetsRegistry = Object.freeze({
             security: 'assets/images/features/feature-learning.svg'
         }),
         about: Object.freeze({
-            team: 'assets/images/features/feature-community.svg',
+            team: 'assets/images/icons/neural-network.svg',
             showcase: 'assets/images/features/feature-learning.svg',
-            founder: 'assets/images/features/feature-personality.svg'
+            founder: 'assets/images/profile/founder.webp'
         }),
         community: Object.freeze({
             banner: 'assets/images/features/feature-community.svg'
@@ -66,10 +66,8 @@ export const AssetsRegistry = Object.freeze({
             p4: 'assets/images/projects/project4.jpg'
         }),
         coach: Object.freeze({
-            aria: 'assets/images/coach/coach-aria.webp',
-            kael: 'assets/images/coach/coach-kael.webp',
-            alex: 'assets/images/coach/alex.png',
-            maya: 'assets/images/coach/maya.png'
+            avatar: 'assets/images/coaches/coach-topcare-ai.webp',
+            default: 'assets/images/features/feature-learning.svg'
         }),
         temperaments: Object.freeze({
             koleris: 'assets/images/personality/koleris.webp',

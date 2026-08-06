@@ -29,3 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+import { AssessmentEventListener } from './coach/listeners/assessment.listener.js';
+
+// Boot Application
+AssessmentEventListener.init();

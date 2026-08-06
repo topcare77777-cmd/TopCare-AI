@@ -1,77 +1,43 @@
 /**
- * TOPCARE AI PLATFORM V2 — COACH PAGE CONTROLLER
+ * TOPCARE AI PLATFORM V2 — COACH PAGE LIFECYCLE
  * Path: assets/js/pages/coach.page.js
- * Status: DIAGNOSTIC TRACE BUILD 124.2.5
+ * Status: APPROVED & LOCKED (BUILD 128 — UPGRADE)
+ * SRP: Conductor for Unified Coach TopCare AI Companion View.
  */
 
-import { Core } from '../core/index.js';
-import { CoachContext } from '../runtime/coach.context.js';
-import WorkspaceRuntime from '../ui/workspace/workspace.runtime.js';
+import { CoachRenderer } from '../coach/coach.renderer.js';
 
-export const coachPage = {
-    activeContainer: null,
-    isMounted: false,
-
-    async beforeEnter() {
-        console.log('[TRACE 1] [CoachPage] Lifecycle: beforeEnter executed.');
-    },
-
-    async mount(container) {
-        console.log('[TRACE 1.1] [CoachPage] Lifecycle: mount called.');
-        return await this.render(container);
-    },
-
-    async render(container) {
-        console.log('[TRACE 1.2] [CoachPage] Lifecycle: render called.');
-        this.activeContainer = container || document.getElementById('app-host') || document.body;
-
-        this.activeContainer.innerHTML = `<div id="app-workspace" class="tc-workspace-host"></div>`;
-
-        const selectedCoach = (CoachContext && typeof CoachContext.getCoach === 'function')
-            ? CoachContext.getCoach()
-            : 'maya';
-
-        console.log(`[TRACE 1.3] [CoachPage] Selected Coach: '${selectedCoach}'. Delegating to WorkspaceRuntime...`);
-
-        if (WorkspaceRuntime && typeof WorkspaceRuntime.mountCoach === 'function') {
-            await WorkspaceRuntime.mountCoach(selectedCoach);
-        } else if (WorkspaceRuntime && typeof WorkspaceRuntime.mountWorkspace === 'function') {
-            await WorkspaceRuntime.mountWorkspace('coach', selectedCoach);
-        }
-
-        this.isMounted = true;
-    },
-
-    async afterEnter() {
-        console.log('[TRACE 1.4] [CoachPage] Lifecycle: afterEnter executed.');
-    },
-
-    async update() {
-        if (!this.isMounted) return;
-        const selectedCoach = (CoachContext && typeof CoachContext.getCoach === 'function')
-            ? CoachContext.getCoach()
-            : 'maya';
-
-        if (WorkspaceRuntime && typeof WorkspaceRuntime.mountCoach === 'function') {
-            await WorkspaceRuntime.mountCoach(selectedCoach);
-        }
-    },
-
-    destroy() {
-        console.log('[TRACE 1.5] [CoachPage] Lifecycle: destroy called.');
-        if (!this.isMounted) return;
-
-        if (WorkspaceRuntime && typeof WorkspaceRuntime.destroy === 'function') {
-            WorkspaceRuntime.destroy();
-        }
-
-        if (this.activeContainer) {
-            this.activeContainer.innerHTML = '';
-        }
-
-        this.activeContainer = null;
-        this.isMounted = false;
+export class CoachPage {
+    constructor() {
+        this.container = null;
     }
-};
 
-export default coachPage;
+    async beforeEnter() {}
+
+    mount(hostElement) {
+        this.container = hostElement || document.getElementById('app');
+        if (!this.container) return;
+
+        this.container.innerHTML = `
+            <div class="tc-coach-page-wrapper">
+                <header class="tc-coach-page-header">
+                    <span class="tc-coach-page-badge">AI Companion Platform</span>
+                    <h1 class="tc-coach-page-title">Coach TopCare AI</h1>
+                    <p class="tc-coach-page-desc">Pendamping pribadi Anda dalam memahami potensi kepribadian dan menavigasi jalur belajar Artificial Intelligence.</p>
+                </header>
+                ${CoachRenderer.renderCard()}
+            </div>
+        `;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    unmount() {
+        if (this.container) {
+            this.container.innerHTML = '';
+        }
+        this.container = null;
+    }
+}
+
+export default CoachPage;

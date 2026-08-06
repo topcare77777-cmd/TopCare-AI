@@ -1,9 +1,11 @@
 /**
- * @file personality-selector.css
- * @description Age category selector cards stylesheet for Personality Test V2.
- * @module Personality/CSS/Selector
+ * TOPCARE AI PLATFORM V2 — PERSONALITY SELECTOR STYLESHEET
+ * Path: assets/css/features/personality/personality-selector.css
+ * Status: APPROVED & LOCKED (BUILD 128.1 — MOBILE RESPONSIVE STABILIZATION)
+ * SRP: Desktop-preserved Age Selector Grid with full vertical scroll support on Mobile.
  */
 
+/* DESKTOP LAYOUT (PRESERVED) */
 .age-selector-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -56,18 +58,38 @@
     margin: 0;
 }
 
-/* Perbaikan Kontainer Pilihan Umur */
+/* =====================================================================
+   MOBILE & TABLET OVERRIDES (ANDROID / IPHONE: <= 868px)
+   ===================================================================== */
 .tc-sandbox-host,
-.tc-age-selection-container {
+.tc-age-selection-container,
+.personality-selector-container {
     height: auto !important;
-    min-height: 100vh;
-    padding-bottom: 80px !important;
-    /* Memberi ruang aman di bawah agar tidak terpotong tombol browser */
+    min-height: 100dvh !important;
+    max-height: none !important;
     overflow-y: auto !important;
+    padding: 2rem 1rem 6rem 1rem !important;
+    box-sizing: border-box;
 }
 
-.tc-age-card {
-    margin-bottom: 16px;
-    padding: 16px !important;
-    /* Kurangi padding kartu di HP agar lebih hemat ruang */
+@media (max-width: 868px) {
+    .age-selector-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .age-card,
+    .tc-age-card {
+        min-height: auto;
+        padding: 1.25rem 1rem !important;
+        margin-bottom: 0;
+    }
+
+    .age-card h3 {
+        font-size: 1rem;
+    }
+
+    .age-card p {
+        font-size: 0.8rem;
+    }
 }

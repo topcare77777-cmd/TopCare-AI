@@ -1,8 +1,8 @@
 /**
- * TOPCARE AI PLATFORM V2 — NAVBAR COMPONENT
+ * TOPCARE AI PLATFORM V2 — NAVBAR COMPONENT (ACTIVE STATE SYNC)
  * Path: assets/js/components/navbar/navbar.component.js
  * Status: APPROVED & LOCKED
- * SRP: Pure Navbar View Manager supporting Marketplace, Premium, Glass Dropdown & Active Cascade State.
+ * SRP: Navbar view manager with accurate route active cascade state.
  */
 
 export class NavbarComponent {
@@ -37,10 +37,11 @@ export class NavbarComponent {
         const currentRoute = this.getActiveRoute();
         const isCreatorSubmenu = ['creator', 'prompt', 'ebook', 'artikel'].includes(currentRoute);
 
-        // Update top-level nav links
+        // Update Top Nav Links
         const navLinks = document.querySelectorAll('.header-nav-link, .tc-navbar-link');
         navLinks.forEach(link => {
-            const route = link.getAttribute('data-route');
+            const route = link.getAttribute('data-route') || link.getAttribute('href')?.replace(/^#\/?/, '').trim().toLowerCase();
+
             if (route === currentRoute || (route === 'creator' && isCreatorSubmenu)) {
                 link.classList.add('active');
             } else {
@@ -48,10 +49,10 @@ export class NavbarComponent {
             }
         });
 
-        // Update dropdown sub-items
+        // Update Dropdown Items
         const dropdownItems = document.querySelectorAll('.tc-dropdown-item');
         dropdownItems.forEach(item => {
-            const route = item.getAttribute('data-route');
+            const route = item.getAttribute('data-route') || item.getAttribute('href')?.replace(/^#\/?/, '').trim().toLowerCase();
             if (route === currentRoute) {
                 item.classList.add('active');
             } else {

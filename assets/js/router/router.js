@@ -1,6 +1,6 @@
 /**
  * file: assets/js/router/router.js
- * Version: 124.3.1 (BUILD 124.3.1 — EXACT DOMAIN PATH RESOLUTION FIX)
+ * Version: 124.3.2 (BUILD 128.0 — MARKETPLACE ROUTE FIX)
  * Status: APPROVED & LOCKED
  * SRP: Dynamic Route Loader, Explicit Path Resolver & Guard Dispatcher.
  */
@@ -37,6 +37,7 @@ class RouterEngine {
         this.register('/coach-selection', () => this._dispatchCorePage('coach-selection.page.js'));
         this.register('/personality', () => this._dispatchCorePage('personality.page.js'));
         this.register('/learning', () => this._dispatchCorePage('learning.page.js'));
+        this.register('/marketplace', () => this._dispatchCorePage('home.page.js'));
 
         // 3. Protected Personality Test Sandbox
         this.register('/personality-test', async () => {
@@ -85,7 +86,7 @@ class RouterEngine {
         });
 
         // 6. Manifest Dynamic Application Pages (Mapped strictly to pages/)
-        const manifestPages = ['about', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace'];
+        const manifestPages = ['about', 'prompt', 'community', 'premium', 'faq', 'ebook', 'assistant', 'workspace', 'marketplace', 'artikel'];
         manifestPages.forEach(page => {
             this.register(`/${page}`, () => this._dispatchCorePage(`${page}.page.js`));
         });

@@ -1,11 +1,12 @@
 /**
  * TOPCARE AI PLATFORM V2 — NAVBAR STYLESHEET
  * Path: assets/css/components/navbar/navbar.css
- * Status: APPROVED & LOCKED (BUILD 128.3 — DESIGN SYSTEM INTEGRATED)
- * SRP: Styling for Sticky Header, Dynamic Active States, and Accent Glow.
+ * Status: APPROVED & LOCKED (BUILD 128.1 — MOBILE RESPONSIVE STABILIZATION)
+ * SRP: Desktop-preserved navigation styling with dedicated Android/iOS/Tablet responsive drawer.
  */
 
-.tc-navbar-header {
+.tc-navbar-header,
+.header-section {
     position: sticky;
     top: 0;
     left: 0;
@@ -18,7 +19,8 @@
     transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.tc-navbar-container {
+.tc-navbar-container,
+.header-container {
     max-width: 1240px;
     margin: 0 auto;
     padding: 0.85rem 1.5rem;
@@ -27,7 +29,8 @@
     justify-content: space-between;
 }
 
-.tc-navbar-brand {
+.tc-navbar-brand,
+.header-brand {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -35,20 +38,23 @@
     font-size: 1.25rem;
     font-weight: 800;
     color: #f8fafc;
+    z-index: 1002;
 }
 
 .tc-brand-accent {
     color: #8b5cf6;
 }
 
-.tc-navbar-menu {
+.tc-navbar-menu,
+.header-nav {
     display: flex;
     align-items: center;
     gap: 0.35rem;
 }
 
-/* NAVBAR LINKS & ACTIVE INDICATOR DESIGN */
-.tc-nav-link {
+/* DESKTOP NAVBAR LINKS & ACTIVE INDICATORS */
+.tc-nav-link,
+.header-nav-link {
     position: relative;
     padding: 0.5rem 0.9rem;
     color: #94a3b8;
@@ -59,12 +65,14 @@
     transition: color 0.2s ease, background 0.2s ease;
 }
 
-.tc-nav-link:hover {
+.tc-nav-link:hover,
+.header-nav-link:hover {
     color: #f1f5f9;
     background: rgba(255, 255, 255, 0.05);
 }
 
-.tc-nav-link.active {
+.tc-nav-link.active,
+.header-nav-link.active {
     color: #a78bfa;
     font-weight: 600;
     background: rgba(139, 92, 246, 0.12);
@@ -103,8 +111,72 @@
     box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
 }
 
+/* HAMBURGER BUTTON (HIDDEN ON DESKTOP) */
+.mobile-menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 34px;
+    height: 34px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 6px;
+    z-index: 1002;
+    box-sizing: border-box;
+}
+
+.hamburger-bar {
+    width: 100%;
+    height: 2px;
+    background-color: #f8fafc;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* =====================================================================
+   MOBILE & TABLET OVERRIDES (ANDROID / IPHONE / IPAD: <= 868px)
+   ===================================================================== */
 @media (max-width: 868px) {
-    .tc-navbar-menu {
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .tc-navbar-menu,
+    .header-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 82%;
+        max-width: 320px;
+        height: 100dvh;
+        background: rgba(11, 15, 25, 0.98);
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 5rem 1.5rem 2.5rem 1.5rem;
+        gap: 1rem;
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+        overflow-y: auto;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .tc-navbar-menu.mobile-open,
+    .header-nav.mobile-open {
+        right: 0;
+    }
+
+    .tc-nav-link,
+    .header-nav-link {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        box-sizing: border-box;
+    }
+
+    .header-actions {
         display: none;
     }
 }

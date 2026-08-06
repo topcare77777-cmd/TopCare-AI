@@ -1,0 +1,274 @@
+/**
+ * TOPCARE AI PLATFORM V2 — COACH UNIFIED DESIGN SYSTEM
+ * Path: assets/css/components/coach/coach-unified.css
+ * Status: APPROVED & LOCKED (BUILD 128)
+ * SRP: Component styling for Unified Coach TopCare AI & Companion Dashboard.
+ */
+
+.tc-coach-page-wrapper {
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem 5rem 1.5rem;
+}
+
+.tc-coach-page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.tc-coach-page-badge {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: #a78bfa;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.tc-coach-page-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #f8fafc;
+    margin: 0 0 0.5rem 0;
+}
+
+.tc-coach-page-desc {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* CARDS & COMPANION CONTAINER */
+.tc-coach-card-container {
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.tc-coach-header {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.tc-coach-avatar-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #8b5cf6;
+    flex-shrink: 0;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.tc-coach-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tc-coach-identity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.tc-coach-badge {
+    font-size: 0.75rem;
+    color: #a78bfa;
+    background: rgba(139, 92, 246, 0.15);
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.tc-coach-badge.active {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.12);
+}
+
+.tc-coach-name {
+    font-size: 1.35rem;
+    color: #f8fafc;
+    font-weight: 700;
+    margin: 0;
+}
+
+.tc-coach-welcome {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* STATS GRID */
+.tc-coach-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.tc-coach-stat-card {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+}
+
+.tc-stat-label {
+    font-size: 0.75rem;
+    color: #a78bfa;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.tc-stat-value {
+    font-size: 1.25rem;
+    color: #f8fafc;
+    margin: 0.3rem 0 0.15rem 0;
+    font-weight: 800;
+}
+
+.tc-stat-sub {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+/* INSIGHT BOX */
+.tc-coach-insight-box {
+    background: rgba(139, 92, 246, 0.1);
+    border-left: 4px solid #8b5cf6;
+    padding: 1.25rem;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 1.75rem;
+}
+
+.tc-insight-title {
+    color: #c4b5fd;
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.tc-insight-text {
+    color: #e2e8f0;
+    font-size: 0.9rem;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.6;
+}
+
+.tc-companion-scope {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.tc-companion-scope li {
+    font-size: 0.825rem;
+    color: #cbd5e1;
+}
+
+/* LEARNING GRID */
+.tc-coach-learning-section {
+    margin-top: 1.5rem;
+}
+
+.tc-learning-title {
+    color: #f8fafc;
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.tc-learning-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.tc-learning-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.15rem;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tc-module-tag {
+    font-size: 0.725rem;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.12);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    width: fit-content;
+    font-weight: 600;
+}
+
+.tc-module-title {
+    font-size: 0.95rem;
+    color: #f8fafc;
+    margin: 0.5rem 0 0.25rem 0;
+}
+
+.tc-module-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-bottom: 0.85rem;
+}
+
+.tc-module-link {
+    color: #a78bfa;
+    font-size: 0.825rem;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* CTA STATE FOR UNASSESSED */
+.tc-coach-cta-box {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.tc-btn-coach-primary {
+    display: inline-block;
+    padding: 0.8rem 1.6rem;
+    background: #8b5cf6;
+    color: #ffffff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.tc-btn-coach-primary:hover {
+    background: #7c3aed;
+}
+
+@media (max-width: 768px) {
+
+    .tc-coach-dashboard-grid,
+    .tc-learning-grid,
+    .tc-companion-scope {
+        grid-template-columns: 1fr;
+    }
+}

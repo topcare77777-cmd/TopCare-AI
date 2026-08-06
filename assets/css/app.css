@@ -14,6 +14,7 @@
 @import url('tokens/gradient.css');
 
 /* --- 01. CORE & FOUNDATION BASE --- */
+
 @import url('core/design.tokens.css');
 @import url('core/animation.css');
 @import url('core/components.css');
@@ -29,6 +30,12 @@
 @import url('foundation/section.css');
 
 /* --- 02. REUSABLE UI COMPONENTS --- */
+/* --- 02. REUSABLE UI COMPONENTS --- */
+/* --- 02. REUSABLE UI COMPONENTS --- */
+@import url('components/coach/coach-unified.css');
+@import url('components/coach/coach-card.css');
+@import url('components/coach/coach-dashboard.css');
+
 @import url('components/button.css');
 @import url('components/badge/badge.css');
 @import url('components/card/card.css');

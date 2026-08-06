@@ -1,150 +1,245 @@
 /**
  * TOPCARE AI PLATFORM V2 — HOME DOMAIN RENDERER
  * Path: assets/js/home/home.renderer.js
- * Status: APPROVED & LOCKED (BUILD 128.8 - HERO CTA UPDATE)
- * SRP: Pure View Generator for Home Ecosystem Landing Page.
+ * Status: APPROVED & LOCKED (BUILD 128.9 - COACH INTEGRATED & DEFENSIVE MAPS)
+ * SRP: Pure UI Component templates generator with Coach TopCare AI & Safe Array Handlers.
  */
 
 import AssetsRegistry from '../core/registries/assets.registry.js';
 import { HOME_DATA } from './home.data.js';
+import { CoachRenderer } from '../coach/coach.renderer.js';
 
 export const HomeRenderer = {
     renderPage() {
-        const d = HOME_DATA;
-        const heroImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/feature-learning.svg';
+        const d = HOME_DATA || {};
+        const mainImg = AssetsRegistry.images.features.learning || 'assets/images/features/feature-learning.svg';
+
+        // Defensive Guards: Menjamin variabel selalu bernilai Array sebelum pemanggilan .map()
+        const partners = Array.isArray(d.partners) ? d.partners : [];
+        const features = Array.isArray(d.features) ? d.features : [];
+        const stats = Array.isArray(d.stats) ? d.stats : [];
+        const articles = Array.isArray(d.articles) ? d.articles : [];
 
         return `
-            <div class="tc-home-container">
+            <div class="tc-home-wrapper">
                 <!-- HERO SECTION -->
-                <section class="tc-home-hero">
-                    <div class="tc-home-hero-grid">
-                        <div class="tc-home-hero-text">
-                            <span class="tc-home-badge">${d.hero.badge}</span>
-                            <h1 class="tc-home-title">${d.hero.title}</h1>
-                            <p class="tc-home-subtitle">${d.hero.subtitle}</p>
-                            <div class="tc-home-hero-actions">
-                                <a href="#/learning" class="tc-btn-hero-primary">Mulai Belajar Sekarang →</a>
+                <section class="tc-hero-section">
+                    <div class="tc-hero-glow-bg"></div>
+                    <div class="tc-hero-content-grid">
+                        <div class="tc-hero-text">
+                            <span class="tc-hero-badge">${d.hero?.badge || 'Platform AI #1 untuk Belajar & Berkembang'}</span>
+                            <h1 class="tc-hero-title">${d.hero?.title || 'Bangun Potensi Dirimu Bersama TopCare AI'}</h1>
+                            <p class="tc-hero-subtitle">${d.hero?.subtitle || 'Platform AI untuk belajar, mengenal diri, dan membangun masa depan.'}</p>
+                            <div class="tc-hero-actions">
+                                <a href="#/register" class="tc-btn-hero-primary">Mulai Gratis Sekarang →</a>
                                 <a href="#/personality" class="tc-btn-hero-secondary">Tes Kepribadian</a>
                             </div>
-                        </div>
-                        <div class="tc-home-hero-media">
-                            <div class="tc-hero-img-box">
-                                <img src="${heroImg}" alt="TopCare AI Platform Visual" class="tc-image-cover">
+                            <div class="tc-hero-members">
+                                <div class="tc-member-avatars">
+                                    <span class="avatar">👨‍💻</span>
+                                    <span class="avatar">👩‍💼</span>
+                                    <span class="avatar">👨‍🎨</span>
+                                    <span class="avatar">👩‍🔬</span>
+                                </div>
+                                <div class="tc-member-info">
+                                    <strong>${d.hero?.memberCount || '10.000+ Member Aktif'}</strong>
+                                    <small>${d.hero?.memberNote || 'Bergabung dan mulai perjalananmu hari ini'}</small>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="tc-hero-visual">
+                            <div class="tc-visual-center-box">
+                                <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img">
+                                <div class="tc-floating-badge badge-top-left">
+                                    <span>🤖 AI Assistant</span>
+                                    <small>24/7</small>
+                                </div>
+                                <div class="tc-floating-badge badge-top-right">
+                                    <span>🧠 Personality</span>
+                                    <small>4 Tipe</small>
+                                </div>
+                                <div class="tc-floating-badge badge-bottom-left">
+                                    <span>🎓 Learning Center</span>
+                                    <small>100+ Kursus</small>
+                                </div>
+                                <div class="tc-floating-badge badge-bottom-right">
+                                    <span>🌐 Komunitas</span>
+                                    <small>Global</small>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
-                <!-- OVERVIEW DOMAINS SECTION -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Apa itu TopCare AI?</h2>
-                        <p>Satu platform terintegrasi untuk mendukung transformasi pengetahuan dan produktivitas Anda.</p>
-                    </div>
-                    <div class="tc-domains-grid">
-                        ${d.overviewDomains.map(item => `
-                            <article class="tc-domain-card">
-                                <div class="tc-domain-icon">${item.icon}</div>
-                                <h3>${item.title}</h3>
-                                <p>${item.desc}</p>
-                            </article>
-                        `).join('')}
-                    </div>
+                <!-- SECTION COACH TOPCARE AI UNIFIED (BUILD 128.0) -->
+                <section class="tc-section tc-coach-section" style="padding-top: 0;">
+                    ${CoachRenderer.renderCard()}
                 </section>
 
-                <!-- LEARNING CENTER HIGHLIGHT -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Pusat Pembelajaran Utama</h2>
-                        <p>Pilih jalur edukasi yang sesuai dengan fokus pengembangan Anda.</p>
-                    </div>
-                    <div class="tc-learning-cards-grid">
-                        ${d.learningCenterCards.map(c => `
-                            <article class="tc-learning-card">
-                                <span class="tc-card-tag">${c.badge}</span>
-                                <h3>${c.title}</h3>
-                                <p>${c.desc}</p>
-                                <a href="${c.link}" class="tc-card-link">Masuk Ke Modul →</a>
-                            </article>
-                        `).join('')}
-                    </div>
-                </section>
-
-                <!-- CREATOR CENTER HIGHLIGHT -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Creator Ecosystem</h2>
-                        <p>Akses pustaka resource digital terstruktur untuk mendukung hasil kerja Anda.</p>
-                    </div>
-                    <div class="tc-creator-highlights-grid">
-                        ${d.creatorHighlights.map(cr => `
-                            <article class="tc-creator-highlight-card">
-                                <div class="tc-highlight-icon">${cr.icon}</div>
-                                <h3>${cr.title}</h3>
-                                <p>${cr.desc}</p>
-                            </article>
-                        `).join('')}
-                    </div>
-                </section>
-
-                <!-- FEATURED MODULES GRID -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Modul Pembelajaran Unggulan</h2>
-                        <p>Materi pilihan yang disiapkan untuk Anda.</p>
-                    </div>
-                    <div class="tc-modules-grid">
-                        ${d.featuredModules.map(m => `
-                            <div class="tc-module-box">
-                                <span class="tc-module-cat">${m.category}</span>
-                                <h4>${m.title}</h4>
-                                <span class="tc-module-level">${m.level}</span>
+                <!-- PARTNER LOGOS -->
+                <section class="tc-partners-section">
+                    <p class="tc-partners-title">Dipercaya oleh Komunitas & Partner Global</p>
+                    <div class="tc-partners-logos">
+                        ${partners.map(p => `
+                            <div class="tc-partner-item">
+                                <span class="partner-text">${p.name}</span>
                             </div>
                         `).join('')}
                     </div>
                 </section>
 
-                <!-- PLATFORM ROADMAP -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Platform Ecosystem Roadmap</h2>
-                        <p>Alur perkembangan platform TopCare AI dari masa ke masa.</p>
+                <!-- FEATURES SECTION -->
+                <section class="tc-section tc-features-section">
+                    <div class="tc-section-header text-center">
+                        <h2>Jelajahi Fitur Unggulan Kami</h2>
                     </div>
-                    <div class="tc-home-roadmap-grid">
-                        ${d.platformRoadmap.map((r, i) => `
-                            <div class="tc-roadmap-step">
-                                <span class="tc-step-num">${i + 1}</span>
-                                <h4>${r.phase}</h4>
-                                <p>${r.desc}</p>
+                    <div class="tc-features-grid">
+                        ${features.map(f => `
+                            <article class="tc-feature-card">
+                                <div class="tc-feature-icon">${f.icon}</div>
+                                <h3>${f.title}</h3>
+                                <p>${f.desc}</p>
+                            </article>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <!-- STATS COUNTER STRIP -->
+                <section class="tc-stats-strip">
+                    <div class="tc-stats-container">
+                        ${stats.map(s => `
+                            <div class="tc-stat-item">
+                                <span class="tc-stat-icon">${s.icon}</span>
+                                <div class="tc-stat-text">
+                                    <strong>${s.num}</strong>
+                                    <small>${s.label}</small>
+                                </div>
                             </div>
                         `).join('')}
                     </div>
                 </section>
 
-                <!-- FAQ SECTION -->
-                <section class="tc-home-section">
-                    <div class="tc-home-section-header text-center">
-                        <h2>Pertanyaan Umum</h2>
+                <!-- ARTICLES & PREMIUM SECTION -->
+                <section class="tc-section tc-articles-section">
+                    <div class="tc-section-header flex-between">
+                        <h2>Artikel Terbaru</h2>
+                        <a href="#/artikel" class="tc-link-more">Lihat Semua Artikel →</a>
                     </div>
-                    <div class="tc-home-faq-wrapper">
-                        ${d.faqs.map(f => `
-                            <details class="tc-home-faq-item">
-                                <summary class="tc-home-faq-q">
-                                    <span>${f.q}</span>
-                                    <span>▼</span>
-                                </summary>
-                                <div class="tc-home-faq-a"><p>${f.a}</p></div>
-                            </details>
-                        `).join('')}
+                    <div class="tc-articles-grid-wrapper">
+                        <!-- ARTICLES LIST -->
+                        <div class="tc-articles-list">
+                            ${articles.map(a => `
+                                <article class="tc-article-card">
+                                    <div class="tc-article-thumb-box">
+                                        <span class="tc-article-badge">${a.category}</span>
+                                    </div>
+                                    <div class="tc-article-body">
+                                        <h3>${a.title}</h3>
+                                        <p>${a.desc}</p>
+                                        <div class="tc-article-meta">
+                                            <span>${a.date}</span> • <span>${a.readTime}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            `).join('')}
+                        </div>
+
+                        <!-- PREMIUM PROMO CARD -->
+                        <div class="tc-premium-promo-card">
+                            <span class="crown-icon">👑</span>
+                            <h3>Upgrade ke Premium</h3>
+                            <p>Dapatkan akses tak terbatas ke semua kursus premium, ebook eksklusif, dan fitur AI advanced.</p>
+                            <ul class="tc-promo-list">
+                                <li>✓ Akses semua kursus premium</li>
+                                <li>✓ Ebook eksklusif setiap bulan</li>
+                                <li>✓ AI Assistant priority</li>
+                                <li>✓ Sertifikat digital</li>
+                            </ul>
+                            <a href="#/premium" class="tc-btn-promo">Mulai Premium</a>
+                        </div>
                     </div>
                 </section>
 
-                <!-- CTA -->
-                <section class="tc-home-cta">
-                    <h2>Mulai Perjalanan Anda Bersama TopCare AI</h2>
-                    <p>Bergabunglah bersama komunitas pengguna global dan jelajahi ekosistem pembelajaran modern hari ini.</p>
-                    <a href="#/learning" class="tc-btn-cta">Mulai Sekarang — Gratis</a>
+                <!-- CTA BANNER -->
+                <section class="tc-cta-banner-section">
+                    <div class="tc-cta-banner-content">
+                        <h2>Siap Mengembangkan Potensi Terbaikmu?</h2>
+                        <p>Bergabunglah dengan ribuan member TopCare AI dan mulai perjalanan transformasimu hari ini.</p>
+                    </div>
+                    <a href="#/register" class="tc-btn-cta-banner">Mulai Gratis Sekarang →</a>
                 </section>
+
+                <!-- FOOTER -->
+                <footer class="tc-main-footer">
+                    <div class="tc-footer-container">
+                        <!-- BRAND INFO -->
+                        <div class="tc-footer-col col-brand">
+                            <div class="tc-brand-logo">
+                                <span class="tc-brand-icon">✨</span>
+                                <span>TopCare <strong>AI</strong></span>
+                            </div>
+                            <p class="tc-brand-desc">Platform AI untuk belajar, berkembang, mengenal diri, dan membangun masa depan.</p>
+                            <div class="tc-social-icons">
+                                <a href="#" aria-label="Facebook">f</a>
+                                <a href="#" aria-label="Instagram">📷</a>
+                                <a href="#" aria-label="YouTube">▶</a>
+                                <a href="#" aria-label="LinkedIn">in</a>
+                                <a href="#" aria-label="TikTok">♪</a>
+                            </div>
+                        </div>
+
+                        <!-- PLATFORM -->
+                        <div class="tc-footer-col">
+                            <h4>Platform</h4>
+                            <a href="#/learning">Belajar AI</a>
+                            <a href="#/personality">Personality Test</a>
+                            <a href="#/ebook">Ebook & Library</a>
+                            <a href="#/prompt">Prompt Marketplace</a>
+                        </div>
+
+                        <!-- KOMUNITAS -->
+                        <div class="tc-footer-col">
+                            <h4>Komunitas</h4>
+                            <a href="#/community">Community Hub</a>
+                            <a href="#/creator">Creator Platform</a>
+                            <a href="#/community">Event & Webinar</a>
+                            <a href="#/community">Forum Diskusi</a>
+                        </div>
+
+                        <!-- PERUSAHAAN -->
+                        <div class="tc-footer-col">
+                            <h4>Perusahaan</h4>
+                            <a href="#/about">Tentang Kami</a>
+                            <a href="#/about">Visi & Misi</a>
+                            <a href="#/about">Karir</a>
+                            <a href="#/about">Kontak</a>
+                        </div>
+
+                        <!-- BANTUAN -->
+                        <div class="tc-footer-col">
+                            <h4>Bantuan</h4>
+                            <a href="#/faq">FAQ</a>
+                            <a href="#/faq">Panduan</a>
+                            <a href="#/about">Kebijakan Privasi</a>
+                            <a href="#/about">Syarat & Ketentuan</a>
+                        </div>
+
+                        <!-- NEWSLETTER -->
+                        <div class="tc-footer-col col-newsletter">
+                            <h4>Newsletter</h4>
+                            <p>Dapatkan update terbaru dari TopCare AI langsung ke email Anda.</p>
+                            <div class="tc-newsletter-form">
+                                <input type="email" placeholder="Masukkan email Anda" aria-label="Masukkan email Anda">
+                                <button type="button" aria-label="Kirim Email">→</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tc-footer-bottom">
+                        <p>© 2026 TopCare AI. All rights reserved.</p>
+                    </div>
+                </footer>
             </div>
         `;
     }
