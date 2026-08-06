@@ -1,0 +1,47 @@
+/**
+ * TOPCARE AI PLATFORM V2 — FORM INPUT COMPONENT STYLESHEET
+ * Path: assets/css/form/input.css
+ * Status: APPROVED & LOCKED (BUILD 128.2 — UI STANDARDIZATION)
+ * SRP: Form Controls, Inputs, Textareas, Checkboxes, and Touch-Safe Radios.
+ */
+
+.tc-newsletter-form input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    width: 100%;
+    min-height: var(--tc-touch-target-min, 44px);
+    padding: 0.65rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.12));
+    border-radius: var(--tc-radius-sm, 8px);
+    color: var(--tc-color-text-main, #ffffff);
+    font-size: 0.875rem;
+    font-family: inherit;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--tc-color-primary, #8b5cf6);
+    box-shadow: var(--tc-focus-ring, 0 0 0 3px rgba(139, 92, 246, 0.5));
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--tc-color-text-subtle, #64748b);
+}
+
+/* RADIO & CHECKBOX TOUCH TARGETS */
+input[type="radio"],
+input[type="checkbox"] {
+    min-width: 20px;
+    min-height: 20px;
+    accent-color: var(--tc-color-primary, #8b5cf6);
+    cursor: pointer;
+}

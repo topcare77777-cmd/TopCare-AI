@@ -10,8 +10,13 @@ export { FeatureLifecycleRegistry } from './feature.lifecycle.registry.js';
 export { FeatureLifecycleService } from './feature.lifecycle.service.js';
 export { FeatureManifestRegistry } from './feature.manifest.registry.js';
 export { FeatureLoaderService } from './feature.loader.service.js';
+
 export { DependencyGraphRegistry } from './dependency.graph.registry.js';
 export { DependencyGraphService } from './dependency.graph.service.js';
+
+export { ManifestValidationResult } from './manifest.validation.result.js';
+export { SemVerParser } from './semver.parser.js';
+
 export { FEATURE_EVENTS } from './feature.types.js';
 export { FEATURE_LIFECYCLE_EVENTS, FEATURE_STATES } from './feature.lifecycle.types.js';
 export { LOADER_STATES } from './feature.loader.types.js';

@@ -5,6 +5,8 @@
  * SRP: Static DTO Content Data for Home Ecosystem Landing Page.
  */
 
+import AssetsRegistry from '../core/registries/assets.registry.js';
+
 export const HOME_DATA = {
     hero: {
         badge: '✨ TopCare AI Platform V2.0',
@@ -94,21 +96,24 @@ export const HOME_DATA = {
             title: 'Mengenal AI Generatif untuk Pemula',
             desc: 'Pelajari dasar-dasar AI generatif dan bagaimana teknologi ini membantu produktivitas.',
             date: '20 Mei 2026',
-            readTime: '5 min read'
+            readTime: '5 min read',
+            image: AssetsRegistry?.images?.articles?.ai || 'assets/images/articles/article-ai.webp'
         },
         {
             category: 'Personal Development',
             title: '4 Tipe Kepribadian dan Cara Mengembangkannya',
             desc: 'Memahami kepribadian diri adalah kunci untuk mencapai potensi maksimal.',
             date: '18 Mei 2026',
-            readTime: '6 min read'
+            readTime: '6 min read',
+            image: AssetsRegistry?.images?.articles?.personality || 'assets/images/articles/article-personality.webp'
         },
         {
             category: 'Productivity',
             title: 'Prompt Engineering untuk Hasil Maksimal',
             desc: 'Teknik menulis prompt yang efektif untuk mendapatkan hasil AI yang lebih baik.',
             date: '17 Mei 2026',
-            readTime: '7 min read'
+            readTime: '7 min read',
+            image: AssetsRegistry?.images?.articles?.prompt || 'assets/images/articles/article-prompt.webp'
         }
     ],
 

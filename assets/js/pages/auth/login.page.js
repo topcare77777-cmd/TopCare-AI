@@ -1,13 +1,13 @@
 /**
  * TOPCARE AI PLATFORM V2 — LOGIN PAGE CONTROLLER
  * Path: assets/js/pages/auth/login.page.js
- * Status: ACTIVE - MINIMAL WIRING FIX (BUILD 124.1)
+ * Status: ACTIVE - ROUTER SERVICE MIGRATION (BUILD 129.0)
  * SRP: Handles login interactions and executes NavigationIntentService continuation.
  */
 
 import { AuthService } from '../../auth/auth.service.js';
 import { NavigationIntentService } from '../../runtime/navigation.intent.service.js';
-import { Router } from '../../router/router.js';
+import { Router } from '../../router/index.js';
 import { Core } from '../../core/index.js';
 
 export class LoginPage {

@@ -1,13 +1,30 @@
-import Router from "./router.js";
+/**
+ * TOPCARE AI PLATFORM V2 — DASHBOARD REGISTRY SERVICE
+ * Path: assets/js/dashboard/registry.js
+ * Status: APPROVED & LOCKED (BUILD 129.0)
+ * SRP: Central Dashboard Module Registration & Enterprise Router Binding.
+ */
 
-import Dashboard from "../modules/dashboard.js";
+import { Router } from '../router/index.js';
 
-Router.register(
+export class DashboardRegistry {
+    constructor() {
+        this.modules = new Map();
+    }
 
-"/dashboard",
+    register(name, moduleInstance) {
+        if (!name || !moduleInstance) return;
+        this.modules.set(name, moduleInstance);
+    }
 
-Dashboard
+    navigateToModule(moduleName) {
+        if (this.modules.has(moduleName)) {
+            Router.navigate(`/dashboard/${moduleName}`);
+        } else {
+            Router.navigate('/dashboard');
+        }
+    }
+}
 
-);
-
-export default Router;
+export const dashboardRegistry = new DashboardRegistry();
+export default dashboardRegistry;

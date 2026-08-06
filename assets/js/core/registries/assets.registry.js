@@ -14,17 +14,17 @@ export const AssetsRegistry = Object.freeze({
         }),
         home: Object.freeze({
             heroMain: 'assets/images/features/feature-learning.svg',
-            heroIllustration: 'assets/images/features/feature-learning.svg',
+            heroIllustration: 'assets/images/features/topcareai_home.png',
             heroGlow: 'assets/images/features/feature-learning.svg'
         }),
         features: Object.freeze({
             personality: 'assets/images/features/feature-personality.svg',
             learning: 'assets/images/features/feature-learning.svg',
             community: 'assets/images/features/feature-community.svg',
-            aiAssistant: 'assets/images/features/feature-learning.svg',
-            analytics: 'assets/images/features/feature-learning.svg',
-            prompt: 'assets/images/features/feature-learning.svg',
-            security: 'assets/images/features/feature-learning.svg'
+            aiAssistant: 'assets/images/features/feature-ai-assistant_512.svg',
+            analytics: 'assets/images/features/feature-analytics.svg',
+            prompt: 'assets/images/features/feature-prompt.svg',
+            security: 'assets/images/features/feature-security.svg'
         }),
         about: Object.freeze({
             team: 'assets/images/icons/neural-network.svg',

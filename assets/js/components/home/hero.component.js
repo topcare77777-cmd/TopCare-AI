@@ -4,7 +4,7 @@
  * -----------------------------------------------------------------
  * Layer        : Layer 4.5 - Component
  * Status       : ACTIVE
- * Version      : 2.4.2 (HOTFIX BUILD 124.2.1 - ROUTER IMPORT PATH FIX)
+ * Version      : 2.5.0 (BUILD 129.0 — ROUTER SERVICE MIGRATION)
  * Owner        : Home Module
  * Architecture : Development Constitution v1.1
  * Pattern      : Conductor Component
@@ -13,7 +13,7 @@
  */
 
 import { HeroWidget } from '../../widgets/home/hero.widget.js';
-import { Router } from '../../router/router.js';
+import { Router } from '../../router/index.js';
 
 const HeroComponent = {
     container: null,

@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "depcheck": "^1.4.7",
+    "knip": "^6.32.0",
+    "madge": "^8.0.0"
+  }
+}

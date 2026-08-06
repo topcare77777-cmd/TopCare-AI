@@ -1,0 +1,120 @@
+/**
+ * TOPCARE AI PLATFORM V2 — NEWSLETTER COMPONENT STYLESHEET
+ * Path: assets/css/newsletter/newsletter.css
+ * Architecture: Scoped BEM Component Styles
+ * Status: APPROVED & LOCKED (BUILD 129.3)
+ * SRP: Styling for Newsletter Widget Controls, States, and Dark Mode Themes.
+ */
+
+.tc-newsletter-container {
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.tc-newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.tc-newsletter-input-group {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tc-newsletter-input {
+    flex: 1;
+    min-height: var(--tc-ext-touch-target-min, 44px);
+    padding: 0.65rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.12));
+    border-radius: var(--tc-radius-sm, 8px);
+    color: var(--tc-color-text-main, #ffffff);
+    font-size: 0.875rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tc-newsletter-input:focus-visible {
+    border-color: var(--tc-color-primary, #8b5cf6);
+    box-shadow: var(--tc-ext-focus-ring, 0 0 0 3px rgba(139, 92, 246, 0.5));
+}
+
+.tc-newsletter-input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.tc-newsletter-btn {
+    min-width: 110px;
+    min-height: var(--tc-ext-touch-target-min, 44px);
+    padding: 0 1.25rem;
+    background: var(--tc-color-secondary, #3b82f6);
+    border: none;
+    border-radius: var(--tc-radius-sm, 8px);
+    color: #ffffff;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.1s ease;
+    box-sizing: border-box;
+}
+
+.tc-newsletter-btn:hover:not(:disabled) {
+    background: var(--tc-color-secondary-hover, #2563eb);
+}
+
+.tc-newsletter-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.tc-newsletter-btn-spinner {
+    animation: tc-newsletter-spin 1s linear infinite;
+    display: inline-block;
+}
+
+.tc-newsletter-feedback {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    padding: 0.4rem 0.25rem;
+    border-radius: 4px;
+    display: none;
+}
+
+.tc-newsletter-feedback--success {
+    color: #34d399;
+}
+
+.tc-newsletter-feedback--error {
+    color: #f87171;
+}
+
+@keyframes tc-newsletter-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 480px) {
+    .tc-newsletter-input-group {
+        flex-direction: column;
+    }
+
+    .tc-newsletter-btn {
+        width: 100%;
+    }
+}

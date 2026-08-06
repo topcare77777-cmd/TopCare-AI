@@ -1,29 +1,62 @@
 /**
- * file: assets/js/features/feature.loader.js
+ * TOPCARE AI PLATFORM V2 — FEATURE LOADER
+ * Path: assets/js/features/feature.loader.js
+ * Version: 130.0.0 (BUILD 130 — MANIFEST-DRIVEN PIPELINE)
+ * Status: APPROVED & LOCKED
+ * SRP: Manifest-driven dynamic feature importer with safe optional fallback.
  */
 
+import { FeatureManifestRegistry } from './feature.manifest.registry.js';
+import { FeatureRegistry } from './feature.registry.js';
 import { Core } from '../core/index.js';
-import { FeatureRegistry } from './index.js';
-import { FeatureRouteLoader } from './feature.route.loader.js';
-import { PersonalityFeature } from './personality/personality.feature.js';
 
-export const FeatureLoader = Object.freeze({
-    async load() {
-        Core.Logger.info("FeatureLoader starting automated feature registration & route binding...");
-
-        try {
-            // 1. Register Feature Modules into FeatureRegistry
-            FeatureRegistry.register("personality", PersonalityFeature);
-            Core.Logger.info("FeatureLoader registered: personality");
-
-            // 2. Extract and Register Feature Routes into RouteLoader SSOT
-            FeatureRouteLoader.loadRoutes();
-
-            Core.Logger.info("FeatureLoader successfully loaded all enterprise feature modules and routes.");
-            return true;
-        } catch (error) {
-            Core.Logger.error(`FeatureLoader load failed: ${error.message}`);
-            throw error;
-        }
+export class FeatureLoaderEngine {
+    constructor() {
+        this._isLoaded = false;
+        Object.seal(this);
     }
-});
+
+    /**
+     * Dynamically imports all feature modules specified in FeatureManifestRegistry.
+     */
+    async loadAll() {
+        if (this._isLoaded) return;
+
+        Core.Logger.info('[FeatureLoader] Bootstrapping manifest-driven feature loading...');
+
+        const manifests = FeatureManifestRegistry.getManifests();
+
+        for (const item of manifests) {
+            try {
+                // Dynamic import driven purely by manifest relative module path
+                const pageMod = await import(item.modulePath);
+
+                // Extract Exported View (Default export or named Class/Object)
+                const targetView = pageMod.default ||
+                    pageMod[`${item.id}Page`] ||
+                    pageMod.LoginPage ||
+                    pageMod.RegisterPage ||
+                    pageMod.ForgotPasswordPage ||
+                    pageMod;
+
+                FeatureRegistry.register(item.id, {
+                    id: item.id,
+                    path: item.path,
+                    view: targetView,
+                    isProtected: item.isProtected,
+                    aliases: item.aliases || []
+                });
+
+            } catch (error) {
+                // Graceful Degradation for Optional Features / Missing Page Files
+                Core.Logger.warn(`[FeatureLoader] Optional feature module '${item.id}' failed to load from path '${item.modulePath}': ${error.message}`);
+            }
+        }
+
+        this._isLoaded = true;
+        Core.Logger.info('[FeatureLoader] Manifest-driven feature loading completed.');
+    }
+}
+
+export const FeatureLoader = new FeatureLoaderEngine();
+export default FeatureLoader;

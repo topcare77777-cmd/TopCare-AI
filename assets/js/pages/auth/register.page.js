@@ -1,13 +1,13 @@
 /**
  * TOPCARE AI PLATFORM V2 — REGISTER PAGE CONTROLLER
  * Path: assets/js/pages/auth/register.page.js
- * Status: APPROVED & LOCKED
+ * Status: APPROVED & LOCKED (BUILD 129.0)
  * SRP: Isolated User Registration Controller with Simplified Password Validation (Min 8 Chars)
  */
 
 import { AuthService } from '../../auth/auth.service.js';
 import { NavigationIntentService } from '../../runtime/navigation.intent.service.js';
-import { Router } from '../../router/router.js';
+import { Router } from '../../router/index.js';
 import { Core } from '../../core/index.js';
 
 export class RegisterPage {

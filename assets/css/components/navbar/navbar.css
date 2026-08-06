@@ -1,8 +1,8 @@
 /**
  * TOPCARE AI PLATFORM V2 — NAVBAR STYLESHEET
  * Path: assets/css/components/navbar/navbar.css
- * Status: APPROVED & LOCKED (BUILD 128.1 — MOBILE RESPONSIVE STABILIZATION)
- * SRP: Desktop-preserved navigation styling with dedicated Android/iOS/Tablet responsive drawer.
+ * Status: APPROVED & LOCKED (BUILD 128.2 — UI STANDARDIZATION)
+ * SRP: Sticky Header, Brand Identity, Nav Links, Dropdowns, and Touch-Friendly Drawer.
  */
 
 .tc-navbar-header,
@@ -12,21 +12,26 @@
     left: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(11, 15, 25, 0.88);
-    backdrop-filter: blur(16px);
+    height: 64px;
+    background: var(--tc-color-bg-glass, rgba(11, 15, 25, 0.88));
+    backdrop-filter: var(--tc-backdrop-blur, blur(16px));
     -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.08));
     transition: background 0.3s ease, border-color 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .tc-navbar-container,
 .header-container {
     max-width: 1240px;
+    height: 100%;
     margin: 0 auto;
-    padding: 0.85rem 1.5rem;
+    padding: 0 1.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    box-sizing: border-box;
 }
 
 .tc-navbar-brand,
@@ -37,12 +42,15 @@
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 800;
-    color: #f8fafc;
+    color: var(--tc-color-text-main, #f8fafc);
+    min-height: var(--tc-touch-target-min, 44px);
     z-index: 1002;
 }
 
-.tc-brand-accent {
-    color: #8b5cf6;
+.header-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
 }
 
 .tc-navbar-menu,
@@ -52,22 +60,25 @@
     gap: 0.35rem;
 }
 
-/* DESKTOP NAVBAR LINKS & ACTIVE INDICATORS */
+/* NAVIGATION LINKS & ACTIVE STATES */
 .tc-nav-link,
 .header-nav-link {
     position: relative;
     padding: 0.5rem 0.9rem;
-    color: #94a3b8;
+    color: var(--tc-color-text-muted, #94a3b8);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    border-radius: 8px;
+    border-radius: var(--tc-radius-sm, 8px);
+    min-height: var(--tc-touch-target-min, 44px);
+    display: inline-flex;
+    align-items: center;
     transition: color 0.2s ease, background 0.2s ease;
 }
 
 .tc-nav-link:hover,
 .header-nav-link:hover {
-    color: #f1f5f9;
+    color: var(--tc-color-text-main, #f8fafc);
     background: rgba(255, 255, 255, 0.05);
 }
 
@@ -75,19 +86,20 @@
 .header-nav-link.active {
     color: #a78bfa;
     font-weight: 600;
-    background: rgba(139, 92, 246, 0.12);
+    background: var(--tc-color-primary-light, rgba(139, 92, 246, 0.15));
 }
 
-.tc-nav-link.active::after {
+.tc-nav-link.active::after,
+.header-nav-link.active::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -1px;
     left: 50%;
     transform: translateX(-50%);
     width: 22px;
     height: 3px;
-    background: #8b5cf6;
-    border-radius: 99px;
+    background: var(--tc-color-primary, #8b5cf6);
+    border-radius: var(--tc-radius-full, 9999px);
     box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
 }
 
@@ -95,34 +107,36 @@
     padding: 0.45rem 1.1rem;
     font-size: 0.875rem;
     font-weight: 600;
-    color: #f8fafc;
+    color: var(--tc-color-text-main, #f8fafc);
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    border: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.12));
+    border-radius: var(--tc-radius-sm, 8px);
     text-decoration: none;
+    min-height: var(--tc-touch-target-min, 44px);
+    display: inline-flex;
+    align-items: center;
     transition: all 0.2s ease;
 }
 
-.tc-btn-nav-login:hover,
-.tc-btn-nav-login.active {
-    background: #8b5cf6;
-    border-color: #8b5cf6;
+.tc-btn-nav-login:hover {
+    background: var(--tc-color-primary, #8b5cf6);
+    border-color: var(--tc-color-primary, #8b5cf6);
     color: #ffffff;
     box-shadow: 0 4px 14px rgba(139, 92, 246, 0.35);
 }
 
-/* HAMBURGER BUTTON (HIDDEN ON DESKTOP) */
+/* HAMBURGER TOGGLE BUTTON */
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
     justify-content: space-around;
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    border: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.12));
+    border-radius: var(--tc-radius-sm, 8px);
     cursor: pointer;
-    padding: 6px;
+    padding: 10px;
     z-index: 1002;
     box-sizing: border-box;
 }
@@ -130,14 +144,12 @@
 .hamburger-bar {
     width: 100%;
     height: 2px;
-    background-color: #f8fafc;
+    background-color: var(--tc-color-text-main, #f8fafc);
     border-radius: 2px;
     transition: all 0.3s ease;
 }
 
-/* =====================================================================
-   MOBILE & TABLET OVERRIDES (ANDROID / IPHONE / IPAD: <= 868px)
-   ===================================================================== */
+/* MOBILE & TABLET DRAWER (<= 868px) */
 @media (max-width: 868px) {
     .mobile-menu-toggle {
         display: flex;
@@ -151,8 +163,8 @@
         width: 82%;
         max-width: 320px;
         height: 100dvh;
-        background: rgba(11, 15, 25, 0.98);
-        border-left: 1px solid rgba(255, 255, 255, 0.12);
+        background: var(--tc-color-bg-main, #0b0f19);
+        border-left: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.12));
         flex-direction: column;
         align-items: flex-start;
         padding: 5rem 1.5rem 2.5rem 1.5rem;

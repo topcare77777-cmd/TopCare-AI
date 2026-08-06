@@ -1,12 +1,145 @@
 /**
- * TopCare AI
- * BUILD 108.5
- *
- * Legacy Footer Compatibility Layer
- *
- * All footer styling has been migrated to:
- * assets/css/layout/footer-match.css
- *
- * Do not add new styles here.
- * This file is intentionally kept as a compatibility placeholder.
+ * TOPCARE AI PLATFORM V2 — FOOTER LAYOUT STYLESHEET
+ * Path: assets/css/layout/footer.css
+ * Status: APPROVED & LOCKED (BUILD 128.2 — UI STANDARDIZATION)
+ * SRP: Responsive Multi-Column Footer Layout, Social Links, and Newsletter Form.
  */
+
+.tc-main-footer {
+    background: #070a12;
+    border-top: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.08));
+    padding: var(--tc-spacing-section-desktop, 4rem) 2rem 2rem 2rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.tc-footer-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 0.9fr) 1.5fr;
+    gap: 1.75rem;
+    margin-bottom: 3rem;
+}
+
+.tc-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--tc-color-text-main, #f8fafc);
+    margin-bottom: 0.85rem;
+}
+
+.tc-brand-logo strong {
+    color: var(--tc-color-primary, #8b5cf6);
+}
+
+.tc-brand-desc {
+    color: var(--tc-color-text-muted, #94a3b8);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+}
+
+.tc-social-icons {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.tc-social-icons a {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.1));
+    color: var(--tc-color-text-muted, #94a3b8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.tc-social-icons a:hover {
+    background: var(--tc-color-primary, #8b5cf6);
+    color: #ffffff;
+}
+
+.tc-footer-col h4 {
+    font-size: 0.95rem;
+    color: var(--tc-color-text-main, #f8fafc);
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+}
+
+.tc-footer-col a {
+    display: block;
+    color: var(--tc-color-text-muted, #94a3b8);
+    text-decoration: none;
+    font-size: 0.85rem;
+    margin-bottom: 0.65rem;
+    transition: color 0.2s ease;
+}
+
+.tc-footer-col a:hover {
+    color: var(--tc-color-accent-cyan, #38bdf8);
+}
+
+.tc-footer-col p {
+    color: var(--tc-color-text-muted, #94a3b8);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.tc-newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+}
+
+.tc-newsletter-form button {
+    min-width: 44px;
+    min-height: 44px;
+    background: var(--tc-color-secondary, #3b82f6);
+    border: none;
+    border-radius: var(--tc-radius-sm, 8px);
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.tc-newsletter-form button:hover {
+    background: var(--tc-color-secondary-hover, #2563eb);
+}
+
+.tc-footer-bottom {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--tc-color-border-glass, rgba(255, 255, 255, 0.06));
+    text-align: center;
+    color: var(--tc-color-text-subtle, #64748b);
+    font-size: 0.8rem;
+}
+
+@media (max-width: 1024px) {
+    .tc-footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .tc-main-footer {
+        padding: var(--tc-spacing-section-mobile, 2.5rem) 1.25rem 1.5rem 1.25rem;
+    }
+
+    .tc-footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

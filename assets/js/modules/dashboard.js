@@ -1,51 +1,26 @@
 import Widget from "../dashboard/widget.js";
-
 import Layout from "../dashboard/layout.js";
 
-class DashboardModule{
+class DashboardModule {
+    mount() {
+        Layout.setTitle("Dashboard");
 
-async mount(){
+        const stats = {
+            members: 0,
+            creators: 0,
+            ebooks: 0,
+            revenue: "Rp0"
+        };
 
-Layout.setTitle("Dashboard");
+        const html = [
+            Widget.card("Members", stats.members),
+            Widget.card("Creators", stats.creators),
+            Widget.card("Ebooks", stats.ebooks),
+            Widget.card("Revenue", stats.revenue)
+        ].join("");
 
-let html="";
-
-html+=Widget.card(
-
-"Members",
-
-0
-
-);
-
-html+=Widget.card(
-
-"Creators",
-
-0
-
-);
-
-html+=Widget.card(
-
-"Ebooks",
-
-0
-
-);
-
-html+=Widget.card(
-
-"Revenue",
-
-"Rp0"
-
-);
-
-Layout.content(html);
-
-}
-
+        Layout.content(html);
+    }
 }
 
 export default new DashboardModule();

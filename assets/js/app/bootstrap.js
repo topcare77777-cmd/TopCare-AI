@@ -1,12 +1,11 @@
 /**
  * file: assets/js/app/bootstrap.js
- * Version: 136.0.0 (BUILD 126.1 — ENTERPRISE CAPABILITY BOOTSTRAP INTEGRATION)
+ * Version: 137.0.0 (BUILD 129.0 — ROUTER SERVICE COMPATIBILITY MIGRATION)
  * Status: APPROVED & LOCKED
- * SRP: Orchestrates TopCare App startup, initializes Capabilities, Router, Mobile Menu, and Event bindings.
+ * SRP: Orchestrates TopCare App startup and backward compatibility features.
  */
 
 import { Core } from '../core/index.js';
-import { Router } from '../router/router.js';
 import { MobileMenu } from '../core/mobile-menu.js';
 import { CapabilityBootstrap } from '../core/capability/capability.bootstrap.js';
 
@@ -23,15 +22,7 @@ export async function bootstrap() {
         MobileMenu.init();
     }
 
-    // 3. Initialize Single Page Application Router & Hash Listeners
-    if (Router && typeof Router.init === 'function') {
-        Router.init();
-    } else if (Router && typeof Router.handleRoute === 'function') {
-        Router.handleRoute();
-        window.addEventListener('hashchange', () => Router.handleRoute());
-    }
-
-    Core.Logger.info('[Bootstrap] TopCare AI Platform V2 Successfully Bootstrapped.');
+    Core.Logger.info('[Bootstrap] TopCare AI Platform V2 Compatibility Layer Successfully Bootstrapped.');
 }
 
 export default bootstrap;

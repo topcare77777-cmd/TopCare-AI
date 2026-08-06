@@ -1,12 +1,12 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH SELECTION PAGE
  * Path: assets/js/pages/coach-selection.page.js
- * Status: ACTIVE (BUILD 124.3.5 — COMPATIBILITY FIX)
+ * Status: ACTIVE (BUILD 129.0 — ROUTER SERVICE MIGRATION)
  * Role: Renders post-login Coach Selection UI and directs user to Workspace.
  */
 
 import { CoachContext } from '../runtime/coach.context.js';
-import { Router } from '../router/router.js';
+import { Router } from '../router/index.js';
 
 const CoachSelectionPage = {
     activeContainer: null,

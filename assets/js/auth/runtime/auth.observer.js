@@ -3,9 +3,9 @@
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
  * File         : assets/js/auth/runtime/auth.observer.js
- * Layer        : Auth State Observer Layer (BUILD 124.3)
+ * Layer        : Auth State Observer Layer (BUILD 129.0)
  * Status       : ACTIVE
- * Version      : 1.2.0
+ * Version      : 1.3.0
  * Architecture : Development Constitution v1.1
  * Description  : Global reactive state hub managing state subscriptions,
  *                snapshot isolation, and event-driven continuation to pending routes.
@@ -13,7 +13,7 @@
  */
 
 import Logger from "../../core/logger.js";
-import { Router } from "../../router/router.js";
+import { Router } from "../../router/index.js";
 
 const AUTH_INITIALIZED_EVENT = "topcare:auth:initialized";
 const AUTH_CHANGED_EVENT = "topcare:auth:changed";

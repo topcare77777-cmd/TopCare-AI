@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TopCare AI — Platform AI untuk Belajar & Berkembang</title>
+    <link rel="icon" href="assets/images/favicon.ico">
 
     <!-- Favicon Integration -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/icons/topcare-logo.svg">
-
     <!-- MASTER STYLESHEET BUNDLE -->
     <link rel="stylesheet" href="assets/css/app.css">
-    <link rel="stylesheet" href="assets/css/components/navbar/navbar.css">
     <link rel="stylesheet" href="assets/css/components/image-utilities.css">
-    <link rel="stylesheet" href="assets/css/pages/learning.css">
     <link rel="stylesheet" href="assets/css/pages/community.css">
     <link rel="stylesheet" href="assets/css/pages/premium.css">
 </head>
@@ -79,12 +76,17 @@
                     </button>
                 </div>
 
+                <div class="tc-article-thumb-box">
+                    <span class="tc-article-badge">${a.category}</span>
+                </div>
+
                 <a href="#/login" class="header-nav-link" data-i18n="nav_login">Masuk</a>
                 <a href="#/register" class="btn-primary" data-i18n="nav_register">Mulai Gratis</a>
             </div>
 
             <!-- Tombol Garis 3 untuk Mobile Navigation -->
-            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi" aria-expanded="false">
+            <button class="mobile-menu-toggle" id="mobile-menu-btn" aria-label="Buka Menu Navigasi"
+                aria-expanded="false">
                 <span class="hamburger-bar"></span>
                 <span class="hamburger-bar"></span>
                 <span class="hamburger-bar"></span>

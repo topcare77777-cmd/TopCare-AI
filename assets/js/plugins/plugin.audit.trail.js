@@ -1,57 +1,89 @@
 /**
- * file: assets/js/plugins/plugin.audit.trail.js
- * Comprehensive Audit Trail mencakup seluruh tindakan siklus hidup & kegagalan keamanan.
+ * TOPCARE AI PLATFORM V2 — INSTALLATION AUDIT TRAIL PLUGIN
+ * Path: assets/js/plugins/plugin.audit.trail.js
+ * Version: 123.2.4 (BUILD 123.2 — NAMED EXPORT SYNCHRONIZATION)
+ * Status: APPROVED & LOCKED
+ * SRP: Tracks and records installation audit actions and hash navigation events.
  */
+
 import { Core } from '../core/index.js';
-import { CryptoEngine } from './plugin.crypto.engine.js';
 
-export const AUDIT_ACTIONS = Object.freeze({
-    INSTALL: 'INSTALL',
-    UPDATE: 'UPDATE',
-    ROLLBACK: 'ROLLBACK',
-    ENABLE: 'ENABLE',
-    DISABLE: 'DISABLE',
-    DELETE: 'DELETE',
-    SIGNATURE_FAILURE: 'SIGNATURE_FAILURE',
-    CHECKSUM_FAILURE: 'CHECKSUM_FAILURE'
-});
-
-class InstallationAuditTrailBase {
+export class InstallationAuditTrailBase {
     constructor() {
-        this._auditLogs = [];
-        this._lastHash = 'GENESIS_HASH';
+        this._lastHash = typeof window !== 'undefined' ? (window.location.hash || '#/home') : '#/home';
+        this._auditLog = [];
+        this._isInitialized = false;
+
         Object.seal(this);
     }
 
-    async recordAction(action, pluginId, meta = {}) {
-        const timestamp = Core.Utils.now ? Core.Utils.now() : Date.now();
-        const rawPayload = `${action}:${pluginId}:${timestamp}:${this._lastHash}`;
+    /**
+     * Initializes the audit trail plugin and registers hash change listeners.
+     */
+    init() {
+        if (this._isInitialized) return;
 
-        const sequenceEncoder = new TextEncoder();
-        const sequenceBuffer = sequenceEncoder.encode(rawPayload).buffer;
-        const entryHash = await CryptoEngine.computeSHA256(sequenceBuffer);
+        if (typeof window !== 'undefined') {
+            window.addEventListener('hashchange', () => {
+                const currentHash = window.location.hash || '#/home';
+                this.recordAction('NAVIGATE', { from: this._lastHash, to: currentHash });
+            });
+        }
 
-        const auditEntry = Object.freeze({
-            sequenceId: this._auditLogs.length + 1,
-            action,
-            pluginId,
-            details: meta,
-            timestamp,
-            prevHash: this._lastHash,
-            entryHash
-        });
-
-        this._lastHash = entryHash;
-        this._auditLogs.push(auditEntry);
-
-        Core.Logger.info(`[Audit Log] #${auditEntry.sequenceId} [${action}] for plugin: ${pluginId}`);
-        Core.Event.emit('plugin.audit.recorded', auditEntry);
-        return auditEntry;
+        this._isInitialized = true;
+        if (Core && Core.Logger) {
+            Core.Logger.info('[AuditTrail] Installation Audit Trail Plugin initialized.');
+        }
     }
 
-    getAuditLogs() {
-        return Core.Utils.clone(this._auditLogs).map(entry => Object.freeze(entry));
+    /**
+     * Records an action event into audit trail history.
+     * @param {string} actionType 
+     * @param {Object} details 
+     */
+    recordAction(actionType, details = {}) {
+        const currentHash = typeof window !== 'undefined' ? (window.location.hash || '#/home') : '#/home';
+
+        const auditEntry = Object.freeze({
+            timestamp: new Date().toISOString(),
+            action: actionType,
+            hash: currentHash,
+            details: { ...details }
+        });
+
+        this._auditLog.push(auditEntry);
+        this._lastHash = currentHash;
+
+        if (Core && Core.Logger) {
+            Core.Logger.info(`[AuditTrail] Action Recorded: [${actionType}] -> ${currentHash}`);
+        }
+    }
+
+    /**
+     * Returns a snapshot copy of current audit log entries.
+     * @returns {Array<Object>}
+     */
+    getLogs() {
+        return [...this._auditLog];
+    }
+
+    /**
+     * Clears all recorded audit logs.
+     */
+    clearLogs() {
+        this._auditLog = [];
     }
 }
 
-export const InstallationAuditTrail = Object.freeze(new InstallationAuditTrailBase());
+// -----------------------------------------------------------------------------
+// COMPATIBILITY EXPORTS
+// -----------------------------------------------------------------------------
+
+// Explicit Named Export for InstallationAuditTrail
+export const InstallationAuditTrail = InstallationAuditTrailBase;
+
+// Singleton Instance Export
+export const auditTrailInstance = new InstallationAuditTrailBase();
+
+// Default Export
+export default InstallationAuditTrailBase;

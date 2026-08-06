@@ -1,0 +1,76 @@
+/**
+ * TOPCARE AI PLATFORM V2 — UI HARMONIZATION EXTENSION
+ * Path: assets/css/core/ui-harmonization.css
+ * Status: APPROVED & LOCKED (BUILD 128.2A — FINAL REFINED EXTENSION)
+ * SRP: Additive namespaced rules matching EXISTING component classes.
+ */
+
+/* TOUCH TARGET & ACCESSIBILITY ENHANCEMENTS (EXISTING CLASSES ONLY) */
+.tc-btn-hero-primary,
+.tc-btn-hero-secondary,
+.tc-btn-cta,
+.tc-btn-cta-banner,
+.tc-btn-promo,
+.tc-btn-nav-login,
+.tc-nav-link,
+.header-nav-link,
+.mobile-menu-toggle {
+    min-height: var(--tc-ext-touch-target-min, 44px);
+    box-sizing: border-box;
+}
+
+/* ACCESSIBLE FOCUS RING (EXISTING CLASSES & CONTROLS ONLY) */
+.tc-btn-hero-primary:focus-visible,
+.tc-btn-hero-secondary:focus-visible,
+.tc-btn-cta:focus-visible,
+.tc-btn-cta-banner:focus-visible,
+.tc-btn-promo:focus-visible,
+.tc-btn-nav-login:focus-visible,
+.tc-nav-link:focus-visible,
+.header-nav-link:focus-visible,
+.tc-newsletter-form input:focus-visible,
+input[type="text"]:focus-visible,
+input[type="email"]:focus-visible,
+input[type="password"]:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: none;
+    box-shadow: var(--tc-ext-focus-ring, 0 0 0 3px rgba(139, 92, 246, 0.5)) !important;
+}
+
+/* CARDS HARMONIZATION USING EXISTING NAMESPACES */
+.tc-domain-card,
+.tc-feature-card,
+.tc-learning-card,
+.tc-creator-highlight-card,
+.tc-module-box,
+.tc-article-card {
+    border-radius: var(--tc-ext-radius-card, 16px);
+    box-sizing: border-box;
+}
+
+/* FORM HARMONIZATION USING EXISTING FORM SELECTORS */
+.tc-newsletter-form input,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select,
+textarea {
+    min-height: var(--tc-ext-touch-target-min, 44px);
+    box-sizing: border-box;
+}
+
+/* MOBILE & TABLET HARMONIZATION (<= 868px) */
+@media (max-width: 868px) {
+
+    .tc-section,
+    .tc-home-section {
+        padding-top: var(--tc-ext-mobile-spacing, 2.5rem);
+        padding-bottom: var(--tc-ext-mobile-spacing, 2.5rem);
+    }
+
+    .tc-footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

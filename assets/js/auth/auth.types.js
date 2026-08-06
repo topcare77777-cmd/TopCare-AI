@@ -1,7 +1,15 @@
 /**
  * file: assets/js/auth/auth.types.js
+ *
+ * TOPCARE AI PLATFORM V2
+ * Layer      : Authentication Domain Types
+ * Version    : BUILD 138.4 Compatibility
+ * SRP        : Authentication constants and state contracts.
  */
+
+
 export const AUTH_EVENTS = Object.freeze({
+
     LOGIN_BEGIN: 'auth.login.begin',
     LOGIN_SUCCESS: 'auth.login.success',
     LOGIN_FAILED: 'auth.login.failed',
@@ -19,4 +27,20 @@ export const AUTH_EVENTS = Object.freeze({
     PASSWORD_CHANGED: 'auth.password.changed',
     ACCOUNT_LOCKED: 'auth.account.locked',
     UNAUTHORIZED: 'auth.unauthorized.access'
+});
+
+
+export const USER_STATUS = Object.freeze({
+
+    GUEST: 'guest',
+
+    ACTIVE: 'active',
+
+    INACTIVE: 'inactive',
+
+    SUSPENDED: 'suspended',
+
+    LOCKED: 'locked',
+
+    PENDING: 'pending'
 });

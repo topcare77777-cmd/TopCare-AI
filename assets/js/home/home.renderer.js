@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — HOME DOMAIN RENDERER
  * Path: assets/js/home/home.renderer.js
- * Status: APPROVED & LOCKED (BUILD 128.9 - COACH INTEGRATED & DEFENSIVE MAPS)
+ * Status: APPROVED & LOCKED (BUILD 128.9 - ARTICLE IMAGE FIX)
  * SRP: Pure UI Component templates generator with Coach TopCare AI & Safe Array Handlers.
  */
 
@@ -12,7 +12,7 @@ import { CoachRenderer } from '../coach/coach.renderer.js';
 export const HomeRenderer = {
     renderPage() {
         const d = HOME_DATA || {};
-        const mainImg = AssetsRegistry.images.features.learning || 'assets/images/features/feature-learning.svg';
+        const mainImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/topcareai_home.png';
 
         // Defensive Guards: Menjamin variabel selalu bernilai Array sebelum pemanggilan .map()
         const partners = Array.isArray(d.partners) ? d.partners : [];
@@ -131,13 +131,14 @@ export const HomeRenderer = {
                         <div class="tc-articles-list">
                             ${articles.map(a => `
                                 <article class="tc-article-card">
-                                    <div class="tc-article-thumb-box">
-                                        <span class="tc-article-badge">${a.category}</span>
+                                    <div class="tc-article-thumb-box" style="position: relative; overflow: hidden; height: 160px; border-radius: 12px; margin-bottom: 1rem;">
+                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.svg'">
+                                        <span class="tc-article-badge" style="position: absolute; top: 12px; left: 12px; z-index: 2;">${a.category}</span>
                                     </div>
                                     <div class="tc-article-body">
                                         <h3>${a.title}</h3>
                                         <p>${a.desc}</p>
-                                        <div class="tc-article-meta">
+                                        <div class="tc-article-meta" style="margin-top: 0.75rem; font-size: 0.8rem; color: #64748b;">
                                             <span>${a.date}</span> • <span>${a.readTime}</span>
                                         </div>
                                     </div>

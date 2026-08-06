@@ -1,0 +1,15 @@
+/**
+ * TOPCARE AI PLATFORM V2 — DESIGN SYSTEM TOKENS EXTENSION
+ * Path: assets/css/core/design.tokens-ext.css
+ * Status: APPROVED & LOCKED (BUILD 128.2A — FINAL REFINED EXTENSION)
+ * SRP: Additive CSS variables using dedicated extension prefixes (--tc-ext-*).
+ */
+
+:root {
+    /* EXTENSION TOKENS (NO REDEFINITION OF EXISTING TOKENS) */
+    --tc-ext-touch-target-min: 44px;
+    --tc-ext-focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.5);
+    --tc-ext-radius-card: 16px;
+    --tc-ext-glass-backdrop: blur(16px);
+    --tc-ext-mobile-spacing: 2.5rem;
+}

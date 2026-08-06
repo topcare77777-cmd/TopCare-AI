@@ -1,7 +1,7 @@
 /* =====================================================================
    TOPCARE AI PLATFORM V2 — APP.CSS (Master Entry Point SSOT)
    Path Location : assets/css/app.css
-   Status        : 100% AUDITED, CLEANED & LOCKED (BUILD 127.3)
+   Status        : 100% AUDITED & LOCKED (BUILD 128.2)
    ==================================================================== */
 
 /* --- 00. TOKENS & DESIGN SYSTEM --- */
@@ -15,10 +15,13 @@
 
 /* --- 01. CORE & FOUNDATION BASE --- */
 
-@import url('core/design.tokens.css');
 @import url('core/animation.css');
 @import url('core/components.css');
 @import url('core/enterprise-polish.css');
+
+/* --- 08. BUILD 128.2A DESIGN SYSTEM EXTENSION & HARMONIZATION --- */
+@import url('core/design.tokens-ext.css');
+@import url('core/ui-harmonization.css');
 
 @import url('foundation/base/reset.css');
 @import url('foundation/base/variables.css');
@@ -30,16 +33,10 @@
 @import url('foundation/section.css');
 
 /* --- 02. REUSABLE UI COMPONENTS --- */
-/* --- 02. REUSABLE UI COMPONENTS --- */
-/* --- 02. REUSABLE UI COMPONENTS --- */
-@import url('components/coach/coach-unified.css');
-@import url('components/coach/coach-card.css');
-@import url('components/coach/coach-dashboard.css');
-
 @import url('components/button.css');
 @import url('components/badge/badge.css');
 @import url('components/card/card.css');
-@import url('components/input.css');
+@import url('form/input.css');
 @import url('components/modal/modal.css');
 @import url('components/navbar/navbar.css');
 @import url('components/dropdown.css');
@@ -59,6 +56,7 @@
 @import url('components/alert/alert.css');
 @import url('components/auth/auth.components.css');
 @import url('components/language/language.css');
+@import url('components/coach/coach-unified.css');
 
 /* --- 03. LAYOUT & SHELL ARCHITECTURE --- */
 @import url('layout/application-shell.css');

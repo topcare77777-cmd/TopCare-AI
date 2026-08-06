@@ -1,13 +1,13 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH RUNTIME CONTROLLER
  * Path: assets/js/coach/coach.runtime.js
- * Status: ACTIVE - SPRINT 1A CANONICAL RELEASE
+ * Status: ACTIVE - SPRINT 1A CANONICAL RELEASE (BUILD 129.0)
  * Role: Host-Bound Controller (Fail-Fast, Zero Global Listener, SSOT Persistence)
  */
 
 import { CoachStore } from './coach.store.js';
 import { CoachModal } from './coach.modal.js';
-import { Router } from '../router/router.js';
+import { Router } from '../router/index.js';
 
 export const CoachRuntime = (() => {
     let _initialized = false;

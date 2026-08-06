@@ -1,79 +1,53 @@
 /**
- * TopCare AI Platform V2.0.0
- * Design Tokens
+ * TOPCARE AI PLATFORM V2 — ENTERPRISE DESIGN TOKENS (SSOT)
  * Path: assets/css/core/design.tokens.css
+ * Status: APPROVED & LOCKED (BUILD 128.2 — UI STANDARDIZATION)
+ * SRP: Master CSS Variables for Colors, Radius, Spacing, Elevation, and Touch-Targets.
  */
+
 :root {
-    --color-bg-primary: #030712;
-    --color-bg-secondary: #0b0f19;
-    --color-bg-tertiary: #111827;
-    --color-bg-card: rgba(17, 24, 39, 0.7);
-    --color-bg-glass: rgba(255, 255, 255, 0.03);
+    /* COLOR SYSTEM TOKENS */
+    --tc-color-bg-main: #0b0f19;
+    --tc-color-bg-card: rgba(17, 24, 39, 0.75);
+    --tc-color-bg-glass: rgba(17, 24, 39, 0.85);
+    --tc-color-border-glass: rgba(255, 255, 255, 0.08);
+    --tc-color-border-hover: rgba(139, 92, 246, 0.4);
+
+    --tc-color-primary: #8b5cf6;
+    --tc-color-primary-hover: #7c3aed;
+    --tc-color-primary-light: rgba(139, 92, 246, 0.15);
     
-    --color-text-main: #f9fafb;
-    --color-text-muted: #9ca3af;
-    --color-text-subtle: #6b7280;
+    --tc-color-secondary: #3b82f6;
+    --tc-color-secondary-hover: #2563eb;
     
-    --color-accent-primary: #6366f1;
-    --color-accent-secondary: #a855f7;
-    --color-accent-cyan: #06b6d4;
-    --color-accent-glow: rgba(99, 102, 241, 0.35);
-    
-    --gradient-primary: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
-    --gradient-glow: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(3, 7, 18, 0) 70%);
-    --gradient-border: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.02));
-    
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 0.75rem;
-    --space-4: 1rem;
-    --space-6: 1.5rem;
-    --space-8: 2rem;
-    --space-12: 3rem;
-    --space-16: 4rem;
-    --space-24: 6rem;
-    
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 20px;
-    --radius-full: 9999px;
-    
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.4);
-    --shadow-float: 0 20px 40px -15px rgba(99, 102, 241, 0.3);
-    --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.4);
-    
-    --blur-sm: blur(8px);
-    --blur-md: blur(16px);
-    --blur-lg: blur(24px);
-    
-    --border-glass: 1px solid rgba(255, 255, 255, 0.08);
-    --border-glass-hover: 1px solid rgba(99, 102, 241, 0.4);
-    
-    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
-    
-    --duration-fast: 150ms;
-    --duration-normal: 300ms;
-    --duration-slow: 500ms;
-    
-    --container-max: 1280px;
-    
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-md: 1rem;
-    --font-size-lg: 1.125rem;
-    --font-size-xl: 1.25rem;
-    --font-size-2xl: 1.5rem;
-    --font-size-3xl: 2rem;
-    --font-size-4xl: 2.75rem;
-    --font-size-5xl: 3.5rem;
-    
-    --z-dropdown: 1000;
-    --z-sticky: 1020;
-    --z-fixed: 1030;
-    --z-modal-backdrop: 1040;
-    --z-modal: 1050;
-    --z-tooltip: 1060;
+    --tc-color-text-main: #f8fafc;
+    --tc-color-text-muted: #94a3b8;
+    --tc-color-text-subtle: #64748b;
+    --tc-color-accent-cyan: #38bdf8;
+    --tc-color-accent-green: #34d399;
+
+    /* RADIUS SYSTEM TOKENS */
+    --tc-radius-sm: 8px;
+    --tc-radius-md: 12px;
+    --tc-radius-lg: 16px;
+    --tc-radius-xl: 20px;
+    --tc-radius-full: 9999px;
+
+    /* SPACING TOKENS */
+    --tc-spacing-xs: 0.25rem;
+    --tc-spacing-sm: 0.5rem;
+    --tc-spacing-md: 1rem;
+    --tc-spacing-lg: 1.5rem;
+    --tc-spacing-xl: 2rem;
+    --tc-spacing-section-desktop: 4rem;
+    --tc-spacing-section-mobile: 2.5rem;
+
+    /* ACCESSIBILITY & TOUCH TARGET TOKENS */
+    --tc-touch-target-min: 44px;
+    --tc-focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.5);
+
+    /* ELEVATION & BLUR TOKENS */
+    --tc-backdrop-blur: blur(16px);
+    --tc-shadow-card: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --tc-shadow-dropdown: 0 15px 35px rgba(0, 0, 0, 0.5);
 }

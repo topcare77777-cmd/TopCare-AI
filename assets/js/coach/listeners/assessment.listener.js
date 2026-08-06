@@ -1,12 +1,12 @@
 /**
  * TOPCARE AI PLATFORM V2 — ASSESSMENT EVENT LISTENER
  * Path: assets/js/coach/listeners/assessment.listener.js
- * Status: APPROVED & LOCKED (BUILD 128)
+ * Status: APPROVED & LOCKED (BUILD 129.0)
  * SRP: Loose-coupling event listener bridge for Assessment Runtime events.
  */
 
 import CoachMemory from '../coach.memory.js';
-import { Router } from '../../router/router.js';
+import { Router } from '../../router/index.js';
 
 export class AssessmentEventListener {
     static init() {
@@ -21,7 +21,7 @@ export class AssessmentEventListener {
         // Synchronize to CoachMemory without coupling Personality Controller to Coach Domain
         CoachMemory.saveAssessmentResult(resultDTO);
 
-        // Transition via Router Engine
+        // Transition via Enterprise Router Service
         Router.navigate('/coach');
     }
 }
