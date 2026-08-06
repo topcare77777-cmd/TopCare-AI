@@ -67,6 +67,7 @@
 /* --- 04. FEATURE & DOMAIN STYLES --- */
 @import url('features/personality.css');
 @import url('features/community/community.css');
+@import url('features/marketplace.css');
 
 /* --- 05. PERSONALITY ENGINE DOMAIN --- */
 @import url('features/personality/personality-test.css');

@@ -1,6 +1,6 @@
 /**
  * file: assets/js/core/view-manager.js
- * Version: 137.0.0
+ * Version: 133.1.2 (BUILD 133.1.2 — ROBUST VIEW LIFECYCLE MANAGER)
  * Status: APPROVED & LOCKED
  * SRP: Agnostic Lifecycle Manager handling page unmounting, mounting, and transition sequences.
  */

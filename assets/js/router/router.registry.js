@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — ROUTER REGISTRY
  * Path: assets/js/router/router.registry.js
- * Version: 130.0.0 (BUILD 130.0 — CANONICAL ROUTE REGISTRY MIGRATION)
+ * Version: 133.1.1 (BUILD 133.1.1 — GENERIC CONTRACT ROUTE REGISTRY)
  * Status: APPROVED & LOCKED
  * SRP: Central Route Definitions, Dynamic Page Loaders, Guard Execution & Route Dispatching.
  */
@@ -38,7 +38,7 @@ export class RouterRegistry {
         Router.register('/coach-selection', () => this._dispatchCorePage('coach-selection.page.js'));
         Router.register('/personality', () => this._dispatchCorePage('personality.page.js'));
         Router.register('/learning', () => this._dispatchCorePage('learning.page.js'));
-        Router.register('/marketplace', () => this._dispatchCorePage('home.page.js'));
+        Router.register('/marketplace', () => this._dispatchCorePage('marketplace.page.js'));
 
         // ---------------------------------------------------------------------
         // 3. Protected Personality Test Sandbox Domain
@@ -66,16 +66,16 @@ export class RouterRegistry {
         });
 
         // ---------------------------------------------------------------------
-        // 4. Smooth Scroll Landing Anchor Redirect
+        // 4. Smooth Scroll Landing Anchor Redirect (Deterministic rAF Execution)
         // ---------------------------------------------------------------------
         Router.register('/features', () => {
             window.location.hash = '#/home';
-            setTimeout(() => {
+            requestAnimationFrame(() => {
                 const featuresEl = document.getElementById('features') || document.getElementById('services');
                 if (featuresEl) {
                     featuresEl.scrollIntoView({ behavior: 'smooth' });
                 }
-            }, 100);
+            });
         });
 
         // ---------------------------------------------------------------------
@@ -115,7 +115,7 @@ export class RouterRegistry {
     }
 
     /**
-     * Dispatches Auth Pages safely with dynamic module loading.
+     * Dispatches Auth Pages using standardized Default Export Protocol.
      * @private
      * @param {string} fileName 
      */
@@ -125,11 +125,7 @@ export class RouterRegistry {
         try {
             const pageModule = await import(`../pages/auth/${fileName}`);
             const host = ViewManager.getAppHost();
-            const TargetClass = pageModule.RegisterPage ||
-                pageModule.LoginPage ||
-                pageModule.ForgotPasswordPage ||
-                pageModule.default ||
-                pageModule[Object.keys(pageModule)[0]];
+            const TargetClass = pageModule.default || pageModule[Object.keys(pageModule)[0]];
 
             const instance = typeof TargetClass === 'function' ? new TargetClass(host) : TargetClass;
             await ViewManager.mountView(instance);
@@ -140,7 +136,7 @@ export class RouterRegistry {
     }
 
     /**
-     * Dispatches Core Application Pages safely with dynamic module loading.
+     * Dispatches Core Application Pages using standardized Default Export Protocol.
      * @private
      * @param {string} fileName 
      */
@@ -152,18 +148,13 @@ export class RouterRegistry {
             const pageModule = await import(`../pages/${fileName}`);
             const host = ViewManager.getAppHost();
 
-            const targetInstance = pageModule.default ||
-                pageModule.LearningPage ||
-                pageModule.coachPage ||
-                pageModule.homePage ||
-                pageModule.coachSelectionPage ||
-                pageModule.personalityPage ||
-                pageModule;
+            // Generic Default Export Contract Matching
+            const TargetClass = pageModule.default || pageModule[Object.keys(pageModule)[0]];
 
-            if (typeof targetInstance === 'function') {
-                await ViewManager.mountView(new targetInstance(host));
+            if (typeof TargetClass === 'function') {
+                await ViewManager.mountView(new TargetClass(host));
             } else {
-                await ViewManager.mountView(targetInstance);
+                await ViewManager.mountView(TargetClass);
             }
         } catch (err) {
             Core.Logger.error(`[RouterRegistry] Failed to load core page module '${fileName}': ${err.message}`);
