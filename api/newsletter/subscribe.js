@@ -11,11 +11,11 @@ import {
     processEmailInput,
     normalizeSource,
     executeNewsletterSubscription
-} from './gateway.js';
+} from '../../server/newsletter/gateway.js';
 
-import { Logger } from './logger.js';
-import { GatewayError } from './errors/GatewayError.js';
-import { ValidationError } from './errors/ValidationError.js';
+import { Logger } from '../../server/newsletter/logger.js';
+import { GatewayError } from '../../server/newsletter/errors/GatewayError.js';
+import { ValidationError } from '../../server/newsletter/errors/ValidationError.js';
 
 export default async function handler(req, res) {
     const requestId = resolveCorrelationId(req);

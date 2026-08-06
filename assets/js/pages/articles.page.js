@@ -1,9 +1,11 @@
 /**
  * TOPCARE AI PLATFORM V2 — ARTIKEL PAGE CONTROLLER
- * Path: assets/js/pages/artikel.page.js
- * Version: 130.1.0 (BUILD 130.1 — PAGE CONTROLLER)
- * Status: APPROVED & LOCKED
- * SRP: Renders Articles & Knowledge Base Catalog Page.
+ /**
+ * Path: assets/js/pages/articles.page.js
+ */
+ * Version: 130.1.0(BUILD 130.1 — PAGE CONTROLLER)
+    * Status: APPROVED & LOCKED
+        * SRP: Renders Articles & Knowledge Base Catalog Page.
  */
 
 import { ViewManager } from '../core/view-manager.js';
@@ -58,4 +60,4 @@ export class ArtikelPage {
 }
 
 export const artikelPage = new ArtikelPage();
-export default ArtikelPage;s
+export default ArtikelPage; s

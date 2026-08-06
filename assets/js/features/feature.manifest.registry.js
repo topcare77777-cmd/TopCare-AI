@@ -125,7 +125,7 @@ export const FEATURE_MANIFEST = Object.freeze([
     {
         id: 'artikel',
         path: '/artikel',
-        modulePath: '../pages/artikel.page.js',
+        modulePath: '../pages/articles.page.js',
         isProtected: false,
         aliases: []
     },
