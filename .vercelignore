@@ -1,0 +1,10 @@
+assets/images/original-backup/
+assets/images/optimized-v2/
+assets/images/optimization-test/
+
+*.txt
+migration-before.txt
+image-inventory.txt
+image-reference-audit.txt
+js-audit.txt
+css-audit.txt
