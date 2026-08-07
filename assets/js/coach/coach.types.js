@@ -14,7 +14,7 @@ export const COACH_REGISTRY = Object.freeze({
         label: 'Coach Alex',
         subtitle: 'Mentor Analitis',
         description: 'Fokus pada struktur, data, logika, dan penyelesaian masalah secara sistematis.',
-        avatar: 'assets/images/avatars/coach-alex.svg'
+       avatar: 'assets/images/optimized-v3/coaches/coach-placeholder.webp'
     }),
     MAYA: Object.freeze({
         id: 'maya',
@@ -22,7 +22,7 @@ export const COACH_REGISTRY = Object.freeze({
         label: 'Coach Maya',
         subtitle: 'Mentor Empatis',
         description: 'Fokus pada motivasi, dukungan emosional, komunikasi hangat, dan pengembangan diri.',
-        avatar: 'assets/images/avatars/coach-maya.svg'
+        avatar: 'assets/images/optimized-v3/coaches/coach-placeholder.webp'
     })
 });
 

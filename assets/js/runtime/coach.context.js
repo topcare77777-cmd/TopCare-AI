@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH CONTEXT SERVICE
  * Path: assets/js/runtime/coach.context.js
- * Status: ACTIVE (BUILD 125 — HARDENED PERSISTENT CONTEXT)
+ * Status: ACTIVE (BUILD 137 — ASSET V3 MIGRATION)
  * Role: Single Source of Truth for Selected AI Coach State
  */
 
@@ -12,90 +12,82 @@ class CoachContextService {
         }
 
         this._storageKey = 'topcare_selected_coach_id';
+        this._defaultCoach = 'maya';
+
         CoachContextService._instance = this;
     }
 
-    /**
-     * Sets active coach ID and persists to Session / Local Storage.
-     * @param {string|Object} coach
-     */
     setCoach(coach) {
-        let coachId = 'maya';
+        let coachId = this._defaultCoach;
 
         if (typeof coach === 'string') {
             coachId = coach.toLowerCase().trim();
-        } else if (coach && typeof coach === 'object' && coach.id) {
+        }
+
+        if (coach && typeof coach === 'object' && coach.id) {
             coachId = String(coach.id).toLowerCase().trim();
         }
 
-        const validId = (coachId === 'alex') ? 'alex' : 'maya';
+        const validId = ['alex', 'maya'].includes(coachId)
+            ? coachId
+            : this._defaultCoach;
 
         try {
-            if (typeof window !== 'undefined' && window.sessionStorage) {
-                sessionStorage.setItem(this._storageKey, validId);
-            }
-        } catch (e) {
-            console.warn('[CoachContext] Storage write error:', e);
+            sessionStorage.setItem(this._storageKey, validId);
+        } catch (error) {
+            console.warn('[CoachContext] Storage unavailable');
         }
     }
 
-    /**
-     * Returns string coach ID ('maya' | 'alex')
-     * @returns {string}
-     */
     getCoach() {
         try {
-            if (typeof window !== 'undefined' && window.sessionStorage) {
-                const saved = sessionStorage.getItem(this._storageKey);
-                if (saved && (saved === 'maya' || saved === 'alex')) {
-                    return saved;
-                }
+            const saved = sessionStorage.getItem(this._storageKey);
+
+            if (['alex', 'maya'].includes(saved)) {
+                return saved;
             }
-        } catch (e) {
-            // Ignore storage errors
-        }
-        return 'maya';
+
+        } catch (error) { }
+
+        return this._defaultCoach;
     }
 
-    /**
-     * Returns full profile metadata object for UI/Persona
-     * @returns {Object}
-     */
     getCoachProfile() {
+
         const id = this.getCoach();
-        if (id === 'alex') {
-            return {
-                id: 'alex',
-                name: 'Alex',
-                label: 'AI Coach Alex',
-                title: 'Strategic AI Coach',
-                avatar: 'assets/images/coaches/alex.png',
-                personaId: 'coach-kael',
-                summaryStyle: 'action_items',
-                emojiPolicy: 'minimal'
-            };
-        }
 
         return {
-            id: 'maya',
-            name: 'Maya',
-            label: 'AI Coach Maya',
-            title: 'Empathetic AI Coach',
-            avatar: 'assets/images/coaches/maya.png',
-            personaId: 'coach-sarah',
-            summaryStyle: 'reflective_narrative',
-            emojiPolicy: 'expressive'
+            id,
+            name: id === 'alex' ? 'Alex' : 'Maya',
+            label: `AI Coach ${id}`,
+            title: id === 'alex'
+                ? 'Strategic AI Coach'
+                : 'Empathetic AI Coach',
+
+            avatar:
+                'assets/images/optimized-v3/coaches/coach-placeholder.webp',
+
+            personaId:
+                id === 'alex'
+                    ? 'coach-kael'
+                    : 'coach-sarah',
+
+            summaryStyle:
+                id === 'alex'
+                    ? 'action_items'
+                    : 'reflective_narrative',
+
+            emojiPolicy:
+                id === 'alex'
+                    ? 'minimal'
+                    : 'expressive'
         };
     }
 
     clearCoach() {
         try {
-            if (typeof window !== 'undefined' && window.sessionStorage) {
-                sessionStorage.removeItem(this._storageKey);
-            }
-        } catch (e) {
-            // Ignore storage errors
-        }
+            sessionStorage.removeItem(this._storageKey);
+        } catch (error) { }
     }
 }
 
