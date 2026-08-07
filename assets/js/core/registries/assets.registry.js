@@ -8,66 +8,66 @@
 export const AssetsRegistry = Object.freeze({
     images: Object.freeze({
         brand: Object.freeze({
-            logo: 'assets/images/icons/topcare-logo.svg',
-            favicon: 'assets/images/icons/topcare-logo.svg',
+            logo: 'assets/images/icons/topcare-logo.webp',
+            favicon: 'assets/images/icons/topcare-logo.webp',
             premiumBg: 'assets/images/icons/premium-bg.webp'
         }),
         home: Object.freeze({
-            heroMain: 'assets/images/features/feature-learning.svg',
-            heroIllustration: 'assets/images/features/topcareai_home.png',
-            heroGlow: 'assets/images/features/feature-learning.svg'
+            heroMain: 'assets/images/features/feature-learning.webp',
+            heroIllustration: 'assets/images/features/topcareai_home.webp',
+            heroGlow: 'assets/images/features/feature-learning.webp'
         }),
         features: Object.freeze({
-            personality: 'assets/images/features/feature-personality.svg',
-            learning: 'assets/images/features/feature-learning.svg',
-            community: 'assets/images/features/feature-community.svg',
-            aiAssistant: 'assets/images/features/feature-ai-assistant_512.svg',
-            analytics: 'assets/images/features/feature-analytics.svg',
-            prompt: 'assets/images/features/feature-prompt.svg',
-            security: 'assets/images/features/feature-security.svg'
+            personality: 'assets/images/features/feature-personality.webp',
+            learning: 'assets/images/features/feature-learning.webp',
+            community: 'assets/images/features/feature-community.webp',
+            aiAssistant: 'assets/images/features/feature-ai-assistant_512.webp',
+            analytics: 'assets/images/features/feature-analytics.webp',
+            prompt: 'assets/images/features/feature-prompt.webp',
+            security: 'assets/images/features/feature-security.webp'
         }),
         about: Object.freeze({
-            team: 'assets/images/icons/neural-network.svg',
-            showcase: 'assets/images/features/feature-learning.svg',
+            team: 'assets/images/icons/neural-network.webp',
+            showcase: 'assets/images/features/feature-learning.webp',
             founder: 'assets/images/profile/founder.webp'
         }),
         community: Object.freeze({
-            banner: 'assets/images/features/feature-community.svg'
+            banner: 'assets/images/features/feature-community.webp'
         }),
         learning: Object.freeze({
-            center: 'assets/images/dashboard/dashboard-learning.png',
-            personalityTest: 'assets/images/dashboard/dashboard-personality.png'
+            center: 'assets/images/dashboard/dashboard-learning.webp',
+            personalityTest: 'assets/images/dashboard/dashboard-personality.webp'
         }),
         dashboard: Object.freeze({
-            home: 'assets/images/dashboard/dashboard-home.png',
-            learning: 'assets/images/dashboard/dashboard-learning.png',
-            library: 'assets/images/dashboard/dashboard-library.png',
-            community: 'assets/images/dashboard/dashboard-community.png',
-            personality: 'assets/images/dashboard/dashboard-personality.png',
-            preview: 'assets/images/dashboard/dashboard-preview.png',
-            mobilePreview: 'assets/images/dashboard/mobile-preview.png'
+            home: 'assets/images/dashboard/dashboard-home.webp',
+            learning: 'assets/images/dashboard/dashboard-learning.webp',
+            library: 'assets/images/dashboard/dashboard-library.webp',
+            community: 'assets/images/dashboard/dashboard-community.webp',
+            personality: 'assets/images/dashboard/dashboard-personality.webp',
+            preview: 'assets/images/dashboard/dashboard-preview.webp',
+            mobilePreview: 'assets/images/dashboard/mobile-preview.webp'
         }),
         articles: Object.freeze({
             ai: 'assets/images/articles/article-ai.webp',
             learning: 'assets/images/articles/article-learning.webp',
             personality: 'assets/images/articles/article-personality.webp',
             prompt: 'assets/images/articles/article-prompt.webp',
-            career: 'assets/images/articles/career.png',
-            startup: 'assets/images/articles/startup.png'
+            career: 'assets/images/articles/career.webp',
+            startup: 'assets/images/articles/startup.webp'
         }),
         creator: Object.freeze({
-            image1: 'assets/images/creator/image1.png',
-            image2: 'assets/images/creator/image2.png'
+            image1: 'assets/images/creator/image1.webp',
+            image2: 'assets/images/creator/image2.webp'
         }),
         project: Object.freeze({
-            p1: 'assets/images/projects/project1.jpg',
-            p2: 'assets/images/projects/project2.jpg',
-            p3: 'assets/images/projects/project3.jpg',
-            p4: 'assets/images/projects/project4.jpg'
+            p1: 'assets/images/projects/project1.webp',
+            p2: 'assets/images/projects/project2.webp',
+            p3: 'assets/images/projects/project3.webp',
+            p4: 'assets/images/projects/project4.webp'
         }),
         coach: Object.freeze({
-    avatar: 'assets/images/optimized-v3/coaches/coach-placeholder.webp',
-    default: 'assets/images/features/feature-learning.svg'
+            avatar: 'assets/images/optimized-v3/coaches/coach-placeholder.webp',
+            default: 'assets/images/features/feature-learning.webp'
         }),
         temperaments: Object.freeze({
             koleris: 'assets/images/personality/koleris.webp',

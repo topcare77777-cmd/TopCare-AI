@@ -36,12 +36,12 @@ export const WIDTH_CLASS_MAP = Object.freeze({
  * Enterprise Icon Registry (Maps semantic string identifiers to clean asset paths)
  */
 export const ICON_REGISTRY = Object.freeze({
-    rocket: 'assets/images/icons/icon-ai.png',
-    robot: 'assets/images/icons/icon-chat.png',
-    arrowRight: 'assets/images/icons/icon-dashboard.png',
-    login: 'assets/images/icons/icon-profile.png',
-    dashboard: 'assets/images/icons/icon-dashboard.png',
-    plus: 'assets/images/icons/icon-event.png'
+    rocket: 'assets/images/icons/icon-ai.webp',
+    robot: 'assets/images/icons/icon-chat.webp',
+    arrowRight: 'assets/images/icons/icon-dashboard.webp',
+    login: 'assets/images/icons/icon-profile.webp',
+    dashboard: 'assets/images/icons/icon-dashboard.webp',
+    plus: 'assets/images/icons/icon-event.webp'
 });
 
 /**

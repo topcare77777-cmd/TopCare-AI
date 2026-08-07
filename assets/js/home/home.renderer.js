@@ -12,7 +12,7 @@ import { CoachRenderer } from '../coach/coach.renderer.js';
 export const HomeRenderer = {
     renderPage() {
         const d = HOME_DATA || {};
-        const mainImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/topcareai_home.png';
+        const mainImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/topcareai_home.webp';
 
         // Defensive Guards: Menjamin variabel selalu bernilai Array sebelum pemanggilan .map()
         const partners = Array.isArray(d.partners) ? d.partners : [];
@@ -132,7 +132,7 @@ export const HomeRenderer = {
                             ${articles.map(a => `
                                 <article class="tc-article-card">
                                     <div class="tc-article-thumb-box" style="position: relative; overflow: hidden; height: 160px; border-radius: 12px; margin-bottom: 1rem;">
-                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.svg'">
+                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.webp'">
                                         <span class="tc-article-badge" style="position: absolute; top: 12px; left: 12px; z-index: 2;">${a.category}</span>
                                     </div>
                                     <div class="tc-article-body">
