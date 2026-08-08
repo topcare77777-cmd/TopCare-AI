@@ -22,6 +22,7 @@ const AssetsRegistry = {
         preview: "assets/images/dashboard/dashboard-preview.webp",
         mobilePreview: "assets/images/dashboard/mobile-preview.webp",
         heroPeople: "assets/images/dashboard/hero-people.webp"
+
     },
     articles: {
         ai: "assets/images/articles/article-ai.webp",

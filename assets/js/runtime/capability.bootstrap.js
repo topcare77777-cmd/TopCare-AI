@@ -1,48 +1,27 @@
 /**
- * TOPCARE AI PLATFORM V2 — CAPABILITY BOOTSTRAPPER
+ * TOPCARE AI PLATFORM V2 — CAPABILITY BOOTSTRAP REGISTRY
  * Path: assets/js/runtime/capability.bootstrap.js
- * Status: ACTIVE (BUILD 123.1 - REVISION 2)
- * Role: Orchestrates Capability Manifest Registrations and Handler Binding Initialization
+ * Version: 137.0.0 (BUILD 137.0 — CAPABILITY INTEGRATION)
+ * Status: APPROVED & LOCKED
+ * SRP: Bootstraps enterprise capability modules during ApplicationEntry initialization.
  */
 
-import { Core } from '../core/index.js';
-import CapabilityRegistry from '../core/capability/capability.registry.js';
-import CapabilityHandlerRegistry from '../core/capability/capability.handler.registry.js';
-import { initializeResumeOptimizerCapability } from '../services/capability/implementations/resume.optimizer.capability.js';
+import { DownloadCenterModule } from '../features/download-center/download-center.module.js';
 
 export class CapabilityBootstrap {
-    static _initialized = false;
-
-    static async initialize() {
-        if (CapabilityBootstrap._initialized) {
-            Core.Logger.info('[CapabilityBootstrap] Already initialized. Skipping execution.');
-            return true;
-        }
-
-        Core.Logger.info('[CapabilityBootstrap] Bootstrapping Enterprise Capability Subsystems...');
-
+    /**
+     * Called automatically by runtime/application.entry.service.js during startup
+     */
+    static initialize() {
         try {
-            // 1. Initialize and register Capability Implementations (Manifests + Handlers)
-            initializeResumeOptimizerCapability();
+            // Install Download Center Capability
+            DownloadCenterModule.install();
 
-            // 2. Lock Capability Registries SSOT safely using existing contract APIs
-            if (typeof CapabilityRegistry.lock === 'function') {
-                const state = typeof CapabilityRegistry.getState === 'function' ? CapabilityRegistry.getState() : null;
-                if (!state || !state.isLocked) {
-                    CapabilityRegistry.lock();
-                }
+            if (window.TopCare && window.TopCare.Logger) {
+                window.TopCare.Logger.info('[CapabilityBootstrap] DownloadCenterModule successfully attached to native Runtime Engine.');
             }
-
-            if (typeof CapabilityHandlerRegistry.lock === 'function' && !CapabilityHandlerRegistry.isLocked()) {
-                CapabilityHandlerRegistry.lock();
-            }
-
-            CapabilityBootstrap._initialized = true;
-            Core.Logger.info('[CapabilityBootstrap] Enterprise Capabilities successfully registered and locked.');
-            return true;
-        } catch (error) {
-            Core.Logger.error(`[CapabilityBootstrap] Capability initialization failed: ${error.message}`);
-            throw error;
+        } catch (err) {
+            console.error('[CapabilityBootstrap] Error attaching DownloadCenterModule:', err);
         }
     }
 }

@@ -1,10 +1,12 @@
 /**
  * TOPCARE AI PLATFORM V2 — MARKETPLACE EVENT ADAPTER
  * Path: assets/js/features/marketplace/core/marketplace.event-adapter.js
- * Version: 133.1.3 (BUILD 133.1.3 — RENDER PIPELINE REPAIR)
+ * Version: 134.1.0 (BUILD 134.1 — CONFIGURATION-DRIVEN ARCHITECTURE)
  * Status: APPROVED & LOCKED
- * SRP: DOM Event Listener Adapter and Dispatcher with dynamic button re-binding.
+ * SRP: Event Delegation Adapter ensuring free products NEVER redirect to WhatsApp.
  */
+
+import { Core } from '../../../core/index.js';
 
 export class MarketplaceEventAdapter {
     constructor(callbacks = {}) {
@@ -13,10 +15,12 @@ export class MarketplaceEventAdapter {
         this._onCategoryClick = this._onCategoryClick.bind(this);
         this._onPriceChange = this._onPriceChange.bind(this);
         this._onResetClick = this._onResetClick.bind(this);
+        this._onDownloadClick = this._onDownloadClick.bind(this);
     }
 
     bind(cache) {
         if (!cache) return;
+        const root = cache.get("root");
         const searchInput = cache.get("searchInput");
         const categoryList = cache.get("categoryList");
         const priceFilter = cache.get("priceFilter");
@@ -29,6 +33,12 @@ export class MarketplaceEventAdapter {
         }
         if (priceFilter) {
             priceFilter.addEventListener("change", this._onPriceChange);
+        }
+
+        // Delegate Download Clicks
+        if (root) {
+            root.removeEventListener("click", this._onDownloadClick);
+            root.addEventListener("click", this._onDownloadClick);
         }
 
         this.bindResetButton(cache);
@@ -45,6 +55,7 @@ export class MarketplaceEventAdapter {
 
     unbind(cache) {
         if (!cache) return;
+        const root = cache.get("root");
         const searchInput = cache.get("searchInput");
         const categoryList = cache.get("categoryList");
         const priceFilter = cache.get("priceFilter");
@@ -54,6 +65,7 @@ export class MarketplaceEventAdapter {
         if (categoryList) categoryList.removeEventListener("click", this._onCategoryClick);
         if (priceFilter) priceFilter.removeEventListener("change", this._onPriceChange);
         if (resetBtn) resetBtn.removeEventListener("click", this._onResetClick);
+        if (root) root.removeEventListener("click", this._onDownloadClick);
     }
 
     _onSearchInput(e) {
@@ -78,6 +90,27 @@ export class MarketplaceEventAdapter {
     _onResetClick() {
         if (typeof this._callbacks.onReset === "function") {
             this._callbacks.onReset();
+        }
+    }
+
+    _onDownloadClick(e) {
+        const downloadBtn = e.target.closest('[data-action="download"]');
+        if (!downloadBtn) return;
+
+        const productId = downloadBtn.getAttribute("data-product-id");
+        const downloadUrl = downloadBtn.getAttribute("data-download-url");
+
+        Core.Logger.info(`[MarketplaceEventAdapter] Free product action triggered for ID: ${productId}`);
+
+        if (typeof this._callbacks.onDownload === "function") {
+            this._callbacks.onDownload({ productId, downloadUrl });
+        } else {
+            // Free product navigation without WhatsApp redirect
+            if (downloadUrl && downloadUrl.startsWith("#")) {
+                window.location.hash = downloadUrl;
+            } else if (downloadUrl) {
+                window.open(downloadUrl, "_blank", "noopener,noreferrer");
+            }
         }
     }
 }

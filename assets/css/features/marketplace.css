@@ -190,3 +190,58 @@
         transform: rotate(360deg);
     }
 }
+
+/* Price Group Layout */
+.tc-mp-price-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.tc-mp-price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.tc-mp-price {
+    font-weight: 700;
+    color: #38bdf8;
+    font-size: 1rem;
+}
+
+.tc-mp-price-free {
+    color: #34d399;
+    font-weight: 800;
+    font-size: 1.1rem;
+}
+
+.tc-mp-price-original {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+/* Discount Badge (-50%) */
+.tc-mp-badge-discount {
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #f87171 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    font-size: 0.7rem;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+}
+
+/* Free Download Button */
+.tc-mp-btn-download {
+    background-color: #10b981 !important;
+    color: #ffffff !important;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.tc-mp-btn-download:hover {
+    background-color: #059669 !important;
+}

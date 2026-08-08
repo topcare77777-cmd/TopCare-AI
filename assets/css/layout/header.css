@@ -1,11 +1,27 @@
 /**
- * TOPCARE AI PLATFORM V2 — GLASS HEADER STYLESHEET (PURE DESKTOP LAYOUT)
+ * TOPCARE AI PLATFORM V2 — GLASS HEADER STYLESHEET
  * Path Location : assets/css/layout/header.css
- * Version: 131.6.0 (BUILD 131.6 — PURE DESKTOP HEADER PRESENTATION)
- * Status: APPROVED & PERMANENTLY LOCKED
- * SRP: Dedicated strictly to Header Container Layout, Glassmorphism backdrop,
- *      Brand logo presentation, and Action CTA Buttons. Zero navbar/drawer rules.
+ * Version: 131.7.0
+ * BUILD 131.7 — ISOLATED BRAND LOGO SCALING
+ *
+ * Status: APPROVED
+ *
+ * SRP:
+ * - Header container layout
+ * - Glassmorphism backdrop
+ * - Brand/logo presentation
+ * - Header action CTA buttons
+ *
+ * Boundary:
+ * - Zero navbar rules
+ * - Zero navigation menu rules
+ * - Zero drawer rules
+ * - Logo scaling must not resize navigation layout
  */
+
+/* =========================================================
+   HEADER SHELL
+   ========================================================= */
 
 .header-section,
 .site-header {
@@ -17,45 +33,81 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
 }
 
+/* =========================================================
+   HEADER CONTAINER
+   Fixed visual height prevents logo scaling from
+   changing the navbar/header height.
+   ========================================================= */
+
 .header-container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    height: 80px;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 0.75rem 1.25rem;
+    padding: 0 1.05rem;
     box-sizing: border-box;
 }
 
+/* =========================================================
+   BRAND WRAPPER
+   ========================================================= */
+
 .header-brand,
 .brand-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 230px;
+    height: 100%;
+    flex: 0 0 230px;
     text-decoration: none;
-    flex-shrink: 0;
+    z-index: 2;
+    left: -35px;
 }
+
+/* =========================================================
+   BRAND LOGO
+   Logo can visually extend beyond the fixed header
+   without increasing header/menu height.
+   ========================================================= */
 
 .header-logo,
 .brand-logo-img {
-    height: 38px;
-    width: auto;
-    max-width: 220px;
-    object-fit: contain;
     display: block;
+    width: auto;
+    height: 250px;
+    max-width: 230px;
+    object-fit: contain;
+    object-position: left center;
+    flex-shrink: 0;
 }
+
+/* =========================================================
+   HEADER ACTIONS
+   ========================================================= */
 
 .header-actions,
 .auth-actions {
     display: flex;
     align-items: center;
     gap: 0.875rem;
+    flex-shrink: 0;
 }
 
-/* Language Selector Badge */
+/* =========================================================
+   LANGUAGE SELECTOR BADGE
+   ========================================================= */
+
 .lang-selector {
     position: relative;
     display: inline-flex;
@@ -63,18 +115,21 @@
 }
 
 .lang-btn {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #e2e8f0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.4rem 0.75rem;
-    border-radius: 8px;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.35rem;
-    transition: all 0.2s ease;
+    padding: 0.4rem 0.75rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #e2e8f0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
 }
 
 .lang-btn:hover {
@@ -83,24 +138,32 @@
     border-color: rgba(139, 92, 246, 0.4);
 }
 
-/* Primary Button Gradient */
+/* =========================================================
+   PRIMARY CTA BUTTON
+   ========================================================= */
+
 .btn-primary,
 .btn-primary-custom {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.55rem 1.25rem;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background: linear-gradient(135deg,
+            #4f46e5 0%,
+            #7c3aed 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 9999px;
     color: #ffffff !important;
     font-size: 0.875rem;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 9999px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    white-space: nowrap;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
-    transition: all 0.2s ease;
-    white-space: nowrap;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 .btn-primary:hover,
@@ -110,13 +173,30 @@
     box-shadow: 0 6px 20px rgba(124, 58, 237, 0.5);
 }
 
-/* Responsive Desktop-to-Mobile Boundary Adjustments */
+/* =========================================================
+   RESPONSIVE DESKTOP-TO-MOBILE BOUNDARY
+   ========================================================= */
+
 @media (max-width: 992px) {
     .header-container {
-        padding: 0.65rem 1rem;
+        height: 72px;
+        padding: 0 1rem;
     }
 
-    .btn-primary {
+    .header-brand,
+    .brand-wrapper {
+        width: 190px;
+        flex-basis: 190px;
+    }
+
+    .header-logo,
+    .brand-logo-img {
+        height: 64px;
+        max-width: 190px;
+    }
+
+    .btn-primary,
+    .btn-primary-custom {
         padding: 0.45rem 0.85rem;
         font-size: 0.8rem;
     }

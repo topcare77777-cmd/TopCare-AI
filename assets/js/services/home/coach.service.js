@@ -5,7 +5,7 @@
  */
 
 const COACH_AVATAR =
-    "assets/images/optimized-v3/coaches/coach-placeholder.webp";
+    "assets/images/coaches/coach-placeholder.webp";
 
 
 const CoachService = {

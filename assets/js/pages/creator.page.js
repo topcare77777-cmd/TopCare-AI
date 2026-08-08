@@ -25,7 +25,7 @@ export class CreatorPage {
 
     render() {
         this.container.innerHTML = `
-            <div class="tc-creator-page-wrapper" style="max-width: 1000px; margin: 40px auto; padding: 24px; color: #F8FAFC;">
+            <div class="tc-creator-page-wrapper" style="max-width: 1000px; margin: 0px auto; padding: 24px; color: #F8FAFC;">
                 <div style="margin-bottom: 32px; text-align: center;">
                     <span style="font-size: 13px; font-weight: 600; color: #3B82F6; text-transform: uppercase; letter-spacing: 1px;">TopCare AI Creator Studio</span>
                     <h1 style="margin: 8px 0; font-size: 32px; color: #FFFFFF;">Creator Platform & Assets</h1>

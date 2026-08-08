@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — ROUTER REGISTRY
  * Path: assets/js/router/router.registry.js
- * Version: 133.1.1 (BUILD 133.1.1 — GENERIC CONTRACT ROUTE REGISTRY)
+ * Version: 137.3.0 (BUILD 137.3 — PREMIUM DOWNLOAD CENTER INTEGRATION)
  * Status: APPROVED & LOCKED
  * SRP: Central Route Definitions, Dynamic Page Loaders, Guard Execution & Route Dispatching.
  */
@@ -41,7 +41,17 @@ export class RouterRegistry {
         Router.register('/marketplace', () => this._dispatchCorePage('marketplace.page.js'));
 
         // ---------------------------------------------------------------------
-        // 3. Protected Personality Test Sandbox Domain
+        // 3. Download Center Delivery Domain (BUILD 137.3 Native Route Mapping)
+        // ---------------------------------------------------------------------
+        Router.register('/download-center', () => this._dispatchCorePage('download-center.page.js'));
+        Router.register('/downloads', () => {
+            if (typeof Router.navigate === 'function') {
+                Router.navigate('/download-center');
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // 4. Protected Personality Test Sandbox Domain
         // ---------------------------------------------------------------------
         Router.register('/personality-test', async () => {
             Core.Logger.info('[RouterRegistry] Navigating to Personality Test Sandbox...');
@@ -66,7 +76,7 @@ export class RouterRegistry {
         });
 
         // ---------------------------------------------------------------------
-        // 4. Smooth Scroll Landing Anchor Redirect (Deterministic rAF Execution)
+        // 5. Smooth Scroll Landing Anchor Redirect (Deterministic rAF Execution)
         // ---------------------------------------------------------------------
         Router.register('/features', () => {
             window.location.hash = '#/home';
@@ -79,7 +89,7 @@ export class RouterRegistry {
         });
 
         // ---------------------------------------------------------------------
-        // 5. Workspace AI Coach Runtime Route
+        // 6. Workspace AI Coach Runtime Route
         // ---------------------------------------------------------------------
         Router.register('/workspace/coach', async () => {
             Core.Logger.info('[RouterRegistry] Navigating to Workspace AI Coach Runtime...');
@@ -92,7 +102,7 @@ export class RouterRegistry {
         });
 
         // ---------------------------------------------------------------------
-        // 6. Dynamic Application Pages Manifest (Mapped strictly to pages/)
+        // 7. Dynamic Application Pages Manifest (Mapped strictly to pages/)
         // ---------------------------------------------------------------------
         const manifestPages = [
             'about',

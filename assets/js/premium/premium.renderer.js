@@ -1,8 +1,8 @@
 /**
  * TOPCARE AI PLATFORM V2 — PREMIUM CENTER RENDERER
  * Path: assets/js/premium/premium.renderer.js
- * Status: APPROVED & LOCKED (BUILD 128.3)
- * SRP: Pure UI View Generator for Premium Center.
+ * Status: APPROVED & LOCKED (BUILD 137.3 — PREMIUM DOWNLOAD CENTER INTEGRATION)
+ * SRP: Pure UI View Generator for Premium Center with Integrated Resource & Download Hub.
  */
 
 import AssetsRegistry from '../core/registries/assets.registry.js';
@@ -29,7 +29,50 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 2: MENGAPA PREMIUM -->
+                <!-- SECTION 2: PREMIUM RESOURCE & DOWNLOAD CENTER (INTEGRATED ENTRY POINT) -->
+                <section class="tc-premium-section tc-premium-download-entry">
+                    <div class="tc-section-header text-center">
+                        <h2>📦 Premium Resource & Download Center</h2>
+                        <p>Pusat akses dan pengunduhan berkas produk digital, materi edukasi, serta aset eksklusif Anda.</p>
+                    </div>
+
+                    <div class="tc-download-hub-card">
+                        <div class="tc-download-hub-header">
+                            <span class="tc-download-hub-icon">📦</span>
+                            <div>
+                                <h3 class="tc-download-hub-title">TopCare AI Download Center</h3>
+                                <p class="tc-download-hub-subtitle">Unduh berkas gratis dan paket premium berlisensi secara langsung dalam satu tempat.</p>
+                            </div>
+                        </div>
+
+                        <div class="tc-download-hub-grid">
+                            <div class="tc-download-hub-column">
+                                <h4>🎁 Free Resources (Siap Unduh)</h4>
+                                <ul class="tc-download-hub-list">
+                                    <li>✓ Starter Prompt Personality Kit</li>
+                                    <li>✓ Panduan Dasar Pembelajaran AI</li>
+                                    <li>✓ Lembar Kerja Evaluasi Kepribadian</li>
+                                </ul>
+                            </div>
+                            <div class="tc-download-hub-column">
+                                <h4>💎 Premium Packages (Akses Eksklusif)</h4>
+                                <ul class="tc-download-hub-list">
+                                    <li>🔒 Master Prompt AI Bundle (Commercial License)</li>
+                                    <li>🔒 E-Book Strategi AI Agent Professional</li>
+                                    <li>🔒 Template Dashboard UI/UX & Aset Kreator</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tc-download-hub-action">
+                            <a href="#/download-center" class="tc-btn tc-btn-primary tc-btn-lg">
+                                🚀 Buka Download Center
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SECTION 3: MENGAPA PREMIUM -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Mengapa TopCare AI Premium?</h2>
@@ -46,7 +89,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 3: ROADMAP DEVELOPMENTS -->
+                <!-- SECTION 4: ROADMAP DEVELOPMENTS -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Roadmap Pengembangan Premium</h2>
@@ -68,7 +111,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 4: PREMIUM PLANS (CATALOG & FUTURE ROADMAP) -->
+                <!-- SECTION 5: PREMIUM PLANS (CATALOG & FUTURE ROADMAP) -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Rencana Paket Layanan</h2>
@@ -93,7 +136,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 5: PREMIUM FEATURES CATALOG -->
+                <!-- SECTION 6: PREMIUM FEATURES CATALOG -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Katalog Fitur Masa Depan</h2>
@@ -109,7 +152,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 6: FAQ SECTION -->
+                <!-- SECTION 7: FAQ SECTION -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Pertanyaan Umum (FAQ)</h2>
@@ -130,7 +173,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 7: CTA FOOTER NOTE -->
+                <!-- SECTION 8: CTA FOOTER NOTE -->
                 <section class="tc-premium-cta">
                     <div class="tc-cta-box">
                         <h2>Siap Menjadi Bagian dari Perkembangan TopCare AI?</h2>

@@ -65,7 +65,7 @@ class CoachContextService {
                 : 'Empathetic AI Coach',
 
             avatar:
-                'assets/images/optimized-v3/coaches/coach-placeholder.webp',
+                'assets/images/coaches/coach-placeholder.webp',
 
             personaId:
                 id === 'alex'

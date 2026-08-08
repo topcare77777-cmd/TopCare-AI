@@ -19,7 +19,7 @@ const FeaturesRenderer = {
             { icon: AssetsRegistry.features.aiAssistant, title: "AI Assistant", desc: "Pendamping cerdas untuk belajar dan produktivitas Anda." },
             { icon: AssetsRegistry.features.personality, title: "Personality Test", desc: "Kenali tipe temperamen dasar dan kembangkan dirimu." },
             { icon: AssetsRegistry.features.learning, title: "Learning Center", desc: "Ratusan kursus berkualitas untuk tingkatkan skill Anda." },
-            { icon: AssetsRegistry.features.prompt, title: "Prompt Marketplace", desc: "Temukan prompt terbaik untuk berbagai kebutuhan AI." },
+            { icon: AssetsRegistry.features.prompt, title: "Marketplace", desc: "Temukan prompt terbaik untuk berbagai kebutuhan AI." },
             { icon: AssetsRegistry.features.analytics, title: "E-Library & Ebook", desc: "Koleksi ebook premium dan gratis untuk Anda." },
             { icon: AssetsRegistry.features.community, title: "Community Hub", desc: "Bergabung dengan komunitas positif dan inspiratif." },
             { icon: AssetsRegistry.features.security, title: "Creator Platform", desc: "Jadi kreator dan bagikan karya & ilmu Anda." }

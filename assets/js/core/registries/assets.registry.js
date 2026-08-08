@@ -66,7 +66,7 @@ export const AssetsRegistry = Object.freeze({
             p4: 'assets/images/projects/project4.webp'
         }),
         coach: Object.freeze({
-            avatar: 'assets/images/optimized-v3/coaches/coach-placeholder.webp',
+            avatar: 'assets/images/coaches/coach-placeholder.webp',
             default: 'assets/images/features/feature-learning.webp'
         }),
         temperaments: Object.freeze({
