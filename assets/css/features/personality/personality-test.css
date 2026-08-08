@@ -1,39 +1,33 @@
 /**
+ * TOPCARE AI PLATFORM V2
+ * BUILD 138.1 — MOBILE AGE SELECTOR FIT & BACKDROP REMOVAL
  * @file personality-test.css
- * @description Core wrapper layout and base container stylesheet for Personality Test V2.
- * @module Personality/CSS/Core
+ * @description Core wrapper layout for Personality Test V2.
  */
 
-.personality-test {
+/* =========================================
+   1. Base Section & Layout Wrapper
+========================================= */
+.personality-test,
+.personality-test.section {
     width: 100%;
-    min-height: 100vh;
-    box-sizing: border-box;
+    min-height: auto;
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-color: #030712;
+    align-items: flex-start;
+    background: transparent !important;
+    /* Membuang background kotak gelap besar */
+    overflow: visible;
+    box-sizing: border-box;
+    padding: 0 1.5rem;
     color: #f9fafb;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    padding: 1.5rem;
-    overflow-x: hidden;
 }
 
-.personality-test:has(.test-question-fieldset) {
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-    padding: 1rem;
-}
-
-.personality-test:has(.test-question-fieldset) .test-shell {
-    height: calc(100vh - 2rem);
-    max-height: calc(100vh - 2rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    overflow: hidden;
-}
-
+/* =========================================
+   2. The Test Shell (Kartu Utama)
+========================================= */
+.personality-test .test-shell,
 .test-shell {
     width: 100%;
     max-width: 860px;
@@ -41,12 +35,51 @@
     background: rgba(17, 24, 39, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
-    padding: 2rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    padding: 1.5rem 2rem;
+    box-shadow: none !important;
+    /* Membuang bayangan kaku di belakang */
     backdrop-filter: blur(12px);
     box-sizing: border-box;
+    transform: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
+/* =========================================
+   3. Mode Pertanyaan (Question Mode)
+========================================= */
+.personality-test:has(.test-question-fieldset),
+.personality-test.section:has(.test-question-fieldset) {
+    height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    align-items: flex-start;
+}
+
+.personality-test:has(.test-question-fieldset) .test-shell {
+    margin-top: 0.25rem !important;
+    padding: 1.25rem 2rem;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   4. Mode Hasil (Result View - Scrollable)
+========================================= */
+.personality-test:has(.test-result-wrapper),
+.personality-test:has(.test-result-dashboard),
+.personality-test.section:has(.test-result-wrapper) {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 4rem;
+}
+
+/* =========================================
+   5. Typography & Utilities
+========================================= */
 .text-center {
     text-align: center;
 }
@@ -57,22 +90,22 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #60a5fa;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.25rem;
 }
 
-.test-title, 
+.test-title,
 .test-shell h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
     font-weight: 800;
     color: #ffffff;
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 0.35rem 0;
 }
 
 .test-intro {
     color: #9ca3af;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    margin: 0 0 2rem 0;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0 0 1rem 0;
 }
 
 .center-actions {
@@ -82,21 +115,62 @@
     flex-wrap: wrap;
 }
 
-.test-loading-box {
-    padding: 3rem 1.5rem;
-}
+/* =========================================
+   6. Mobile Responsive Fixes (HP <= 768px)
+========================================= */
+@media (max-width: 768px) {
 
-.spinner {
-    width: 42px;
-    height: 42px;
-    border: 4px solid rgba(59, 130, 246, 0.2);
-    border-top-color: #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 1.25rem auto;
-}
+    .personality-test,
+    .personality-test.section,
+    .personality-test:has(.test-question-fieldset) {
+        height: auto !important;
+        min-height: 100dvh !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+        padding: 0.75rem 0.75rem 3rem 0.75rem !important;
+        background: transparent !important;
+    }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    .personality-test .test-shell,
+    .test-shell {
+        padding: 1.25rem 0.85rem !important;
+        margin-top: 0 !important;
+        border-radius: 16px !important;
+        background: rgba(17, 24, 39, 0.95) !important;
+    }
+
+    .test-title,
+    .test-shell h1 {
+        font-size: 1.35rem !important;
+    }
+
+    .test-intro {
+        font-size: 0.825rem !important;
+        margin-bottom: 0.85rem !important;
+    }
+
+    .mobile-menu-toggle {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 21px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 1001;
+    }
+
+    .hamburger-bar {
+        width: 100%;
+        height: 3px;
+        background-color: #ffffff;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .header-nav,
+    .header-actions .header-nav-link {
+        display: none;
+    }
 }

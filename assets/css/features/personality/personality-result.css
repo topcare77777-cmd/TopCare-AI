@@ -1,11 +1,11 @@
 /**
  * @file personality-result.css
- * @description Strictly isolated Result Mode stylesheet maintaining Desktop/Laptop perfection while fixing mobile layout & contrast.
+ * @description Strictly isolated Result Mode stylesheet maintaining Desktop perfection while fixing mobile layout & contrast.
  * @module Personality/CSS/Result
  */
 
 /* =====================================================================
-   01. DESKTOP & LAPTOP STYLES (PRESERVED 100% ORIGINAL)
+   01. DESKTOP & LAPTOP STYLES (PRESERVED)
    ===================================================================== */
 .personality-test:has(.test-result-dashboard) {
     width: 100%;
@@ -14,10 +14,10 @@
     max-height: none !important;
     overflow-y: auto !important;
     display: block !important;
-    background-color: #030712;
+    background-color: transparent !important;
     color: #f9fafb;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    padding: 3rem 1.5rem;
+    padding: 2rem 1.5rem;
     box-sizing: border-box;
 }
 
@@ -27,11 +27,11 @@
     height: auto !important;
     max-height: none !important;
     margin: 0 auto;
-    background: rgba(17, 24, 39, 0.85);
+    background: rgba(17, 24, 39, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     padding: 2.5rem;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: none !important;
     backdrop-filter: blur(12px);
     box-sizing: border-box;
     display: block !important;
@@ -302,80 +302,92 @@
 }
 
 /* =====================================================================
-   02. MOBILE & TABLET STYLING ONLY (ANDROID / IPHONE: <= 768px)
+   02. MOBILE & TABLET STYLING FIX (HP: <= 768px)
    ===================================================================== */
 @media (max-width: 768px) {
     .personality-test:has(.test-result-dashboard) {
-        padding: 1.25rem 0.75rem 4rem 0.75rem !important;
+        padding: 0.5rem 0.5rem 3rem 0.5rem !important;
+        background-color: transparent !important;
     }
 
     .personality-test:has(.test-result-dashboard) .test-shell {
-        padding: 1.25rem 1rem !important;
+        padding: 1rem 0.75rem !important;
         border-radius: 16px;
+        background: rgba(17, 24, 39, 0.95) !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
-    /* Kartu Utama Hasil Temperamen */
+    /* Perbaikan Kartu Hasil Utama di HP agar Pas di Dalam Box */
     .result-header-card {
-        padding: 1.5rem 1.25rem !important;
+        padding: 1.25rem 1rem !important;
         text-align: center;
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        margin-bottom: 1rem !important;
     }
 
     .result-header-content-wrapper {
-        flex-direction: column-reverse; /* Menggeser avatar ke atas teks pada HP */
-        align-items: center;
-        gap: 1.25rem;
+        flex-direction: column !important;
+        /* Susun vertikal: Avatar di atas, teks di bawah */
+        align-items: center !important;
+        gap: 1rem !important;
+        width: 100% !important;
     }
 
     .result-header-text {
-        text-align: center;
-        width: 100%;
+        text-align: center !important;
+        width: 100% !important;
     }
 
     .result-avatar-container {
-        width: 110px !important;
-        height: 110px !important;
-        margin: 0 auto;
+        width: 100px !important;
+        height: 100px !important;
+        margin: 0 auto !important;
     }
 
     .result-badge {
-        font-size: 0.7rem;
-        padding: 0.25rem 0.75rem;
+        font-size: 0.65rem !important;
+        padding: 0.2rem 0.6rem !important;
         background: rgba(0, 0, 0, 0.3) !important;
         color: #ffffff !important;
     }
 
     .result-title-row {
-        justify-content: center;
-        margin-bottom: 0.75rem;
+        justify-content: center !important;
+        margin-bottom: 0.5rem !important;
     }
 
     .result-header-card h1 {
-        font-size: 1.65rem !important;
+        font-size: 1.4rem !important;
         color: #ffffff !important;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        word-break: break-word !important;
     }
 
-    /* Perbaikan utama: memperjelas warna teks deskripsi agar terbaca terang di HP */
     .result-summary,
     .result-header-card p {
-        font-size: 0.875rem !important;
-        line-height: 1.6 !important;
+        font-size: 0.825rem !important;
+        line-height: 1.5 !important;
         color: #ffffff !important;
         opacity: 1 !important;
-        font-weight: 500 !important;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        font-weight: 400 !important;
+        padding: 0 0.25rem !important;
     }
 
-    /* Kartu Sekunder & Seksi Penjelas */
     .result-secondary-banner,
     .result-card-section,
     .result-card {
-        padding: 1.15rem 1rem !important;
+        padding: 1rem 0.85rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     .result-grid-two,
     .recommendation-grid-details {
         grid-template-columns: 1fr !important;
-        gap: 1rem;
+        gap: 0.85rem !important;
     }
-}s
+}
