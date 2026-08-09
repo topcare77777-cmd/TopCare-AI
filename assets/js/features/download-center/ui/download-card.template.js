@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — DOWNLOAD CARD TEMPLATE (MULTI-ASSET INTEGRATION)
  * Path: assets/js/features/download-center/ui/download-card.template.js
- * Version: 135.1.0 (BUILD 135.1 — MULTI-ASSET PACKAGE ARCHITECTURE)
+ * Version: 137.7.0 (BUILD 137.7 — ASSET PATH RECONCILIATION)
  * Status: APPROVED & LOCKED
  * SRP: Renders Download Cards with package summary counters and Product Detail Panel triggers.
  */
@@ -19,7 +19,7 @@ export class DownloadCardTemplate {
         return `
             <article class="tc-dl-card" data-package-id="${pkg.packageId}" aria-labelledby="title-${pkg.packageId}">
                 <div class="tc-dl-card-media">
-                    <img src="assets/images/icons/topcare-logo.svg" alt="" class="tc-dl-card-img" width="64" height="64" loading="lazy" />
+                    <img src="assets/images/logos/topcare-logo.svg" alt="" class="tc-dl-card-img" width="64" height="64" loading="lazy" />
                     <div class="tc-dl-badge-group">
                         <span class="tc-dl-badge ${badgeClass}">${statusLabel}</span>
                         ${pkg.isFree ? '<span class="tc-dl-badge tc-dl-badge-available">FREE</span>' : ''}

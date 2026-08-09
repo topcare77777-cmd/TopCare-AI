@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — SIDEBAR NAVIGATION SHELL
  * Path: assets/js/core/ui/sidebar-navigation.js
- * Version: 136.0.0 (BUILD 136.0 — RUNTIME INTEGRATION)
+ * Version: 137.7.0 (BUILD 137.7 — ASSET PATH RECONCILIATION)
  * Status: APPROVED & LOCKED
  * SRP: Renders and manages primary application sidebar navigation and active state highlighting.
  */
@@ -23,7 +23,7 @@ export class SidebarNavigationShell {
         this._container.innerHTML = `
             <nav class="tc-sidebar-nav" aria-label="Main Navigation">
                 <div class="tc-sidebar-brand">
-                    <img src="assets/images/icons/topcare-logo.svg" alt="TopCare AI Logo" width="32" height="32" />
+                    <img src="assets/images/logos/topcare-logo.svg" alt="TopCare AI Logo" width="32" height="32" />
                     <span class="tc-brand-title">TopCare AI <small>v2</small></span>
                 </div>
                 <ul class="tc-nav-list">
