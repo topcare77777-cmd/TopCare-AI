@@ -1,155 +1,125 @@
 /**
- * file: assets/js/features/feature.loader.base.js
+ * TOPCARE AI PLATFORM V2 — FEATURE LOADER BASE
+ * Path: assets/js/features/feature.loader.base.js
+ * Version: 131.1.0 (BUILD 131 — RECONCILED CANONICAL LAZY LOADER)
+ * Status: PENDING LOCK
  */
 
-import { Core } from '../core/index.js';
 import { FeatureManifestRegistry } from './feature.manifest.registry.js';
-import { FeatureBootstrap } from './feature.bootstrap.js';
+import { FeatureRegistry } from './feature.registry.js';
 import { DependencyGraphService } from './dependency.graph.service.js';
-import { FeatureLoaderInterface } from './feature.loader.interface.js';
-import { LOADER_STATES } from './feature.loader.types.js';
+import { FeatureBootstrap } from './feature.bootstrap.js';
+import { Core } from '../core/index.js';
 
-export class FeatureLoaderBase extends FeatureLoaderInterface {
-    constructor(ttlMs = 30 * 60 * 1000, maxCacheSize = 50) {
-        super();
+export class FeatureLoaderBaseEngine {
+    constructor() {
         this._states = new Map();
         this._cache = new Map();
-        this._loading = new Map();
-        this._ttlMs = ttlMs;
-        this._maxCacheSize = maxCacheSize;
+        this._loading = new Map(); // SATU-SATUNYA authoritative pending Promise cache
+        this.TTL = 3600000;
+        this.maxCacheSize = 50;
         Object.seal(this);
     }
 
-    _setState(featureId, state) {
-        this._states.set(featureId, state);
+    isLoaded(featureId) {
+        return this._states.get(featureId) === 'LOADED' || FeatureRegistry.has(featureId);
     }
 
     getState(featureId) {
-        return this._states.get(featureId) || LOADER_STATES.NOT_LOADED;
-    }
-
-    isLoaded(featureId) {
-        const cached = this._cache.get(featureId);
-        if (!cached) return false;
-
-        if (Date.now() - cached.timestamp > this._ttlMs) {
-            Core.Logger.info(`Feature cache expired due to TTL: ${featureId}`);
-            this._evict(featureId);
-            return false;
-        }
-        return true;
-    }
-
-    _evict(featureId) {
-        this._cache.delete(featureId);
-        this._states.set(featureId, LOADER_STATES.NOT_LOADED);
-    }
-
-    _enforceCacheLimit() {
-        if (this._cache.size >= this._maxCacheSize) {
-            let oldestKey = null;
-            let oldestTime = Infinity;
-
-            for (const [id, entry] of this._cache.entries()) {
-                if (entry.timestamp < oldestTime) {
-                    oldestTime = entry.timestamp;
-                    oldestKey = id;
-                }
-            }
-
-            if (oldestKey) {
-                this._evict(oldestKey);
-            }
-        }
-    }
-
-    async prefetch(featureId) {
-        if (this.isLoaded(featureId) || this._loading.has(featureId)) {
-            return;
-        }
-
-        const manifest = FeatureManifestRegistry.get(featureId);
-        if (!manifest) return;
-
-        try {
-            this._setState(featureId, LOADER_STATES.PREFETCHED);
-            await this.load(featureId);
-        } catch (e) {
-            Core.Logger.warn(`Prefetch failed for feature '${featureId}': ${e.message}`);
-        }
+        return this._states.get(featureId) || 'UNINITIALIZED';
     }
 
     async load(featureId) {
-        if (!featureId || typeof featureId !== 'string') {
-            throw new TypeError("Feature load requires a valid feature ID string.");
+        if (!featureId) throw new Error('[FeatureLoaderBase] featureId is required.');
+
+        const normalizedId = featureId.toLowerCase();
+
+        // 1. Cache hit (berhasil dimuat sebelumnya)
+        if (this.isLoaded(normalizedId)) {
+            return this._cache.get(normalizedId) || FeatureRegistry.resolve(normalizedId);
         }
 
-        if (this.isLoaded(featureId)) {
-            const entry = this._cache.get(featureId);
-            entry.timestamp = Date.now();
-            entry.accessCount++;
-            return entry.definition;
+        // 2. Promise Deduplication (Concurrent request sharing)
+        if (this._loading.has(normalizedId)) {
+            return this._loading.get(normalizedId);
         }
 
-        if (this._loading.has(featureId)) {
-            return await this._loading.get(featureId);
-        }
+        this._states.set(normalizedId, 'LOADING');
 
-        const manifest = FeatureManifestRegistry.get(featureId);
+        // 3. Initiate Load Pipeline
+        const loadPromise = this._executeLoad(normalizedId).finally(() => {
+            // Hapus dari pending map terlepas dari sukses/gagal agar bisa di-retry
+            this._loading.delete(normalizedId);
+        });
+
+        this._loading.set(normalizedId, loadPromise);
+
+        return loadPromise;
+    }
+
+    async prefetch(featureId) {
+        try {
+            await this.load(featureId);
+        } catch (e) {
+            Core.Logger.warn(`[FeatureLoaderBase] Prefetch failed for ${featureId}, silenced.`);
+        }
+    }
+
+    async _executeLoad(featureId) {
+        // MENGGUNAKAN API ACTUAL: getById()
+        const manifest = FeatureManifestRegistry.getById(featureId);
         if (!manifest) {
-            throw new Error(`Feature manifest not found for ID: ${featureId}`);
+            this._states.set(featureId, 'FAILED');
+            throw new Error(`[FeatureLoaderBase] Manifest not found for feature: '${featureId}'`);
         }
 
-        const loadPromise = (async () => {
-            this._setState(featureId, LOADER_STATES.LOADING);
-            Core.Logger.info(`Dynamically downloading feature module: ${featureId} (v${manifest.version})...`);
+        // Jalankan dependency graph eksisting jika ada
+        if (DependencyGraphService && typeof DependencyGraphService.resolveDependencies === 'function') {
+            await DependencyGraphService.resolveDependencies(featureId);
+        }
 
-            try {
-                // DependencyGraphService.resolveOrder handles ensureBuilt, caching, and lazy builds cleanly
-                const loadOrder = DependencyGraphService.resolveOrder(featureId);
+        let pageMod;
 
-                for (const depId of loadOrder) {
-                    if (!this.isLoaded(depId)) {
-                        const depManifest = FeatureManifestRegistry.get(depId);
-                        if (!depManifest) {
-                            throw new Error(`Missing dependency manifest for '${depId}' required by '${featureId}'`);
-                        }
+        // BACKWARD COMPATIBILITY: Dukung loader() DAN modulePath
+        if (typeof manifest.loader === 'function') {
+            pageMod = await manifest.loader();
+        } else if (manifest.modulePath) {
+            pageMod = await import(manifest.modulePath);
+        } else {
+            this._states.set(featureId, 'FAILED');
+            throw new Error(`[FeatureLoaderBase] Manifest for '${featureId}' lacks modulePath or loader function.`);
+        }
 
-                        if (depId === featureId) {
-                            const moduleExport = await depManifest.loader();
-                            const featureDef = moduleExport.default || moduleExport[Object.keys(moduleExport)[0]];
+        // Feature Extraction
+        const targetView = pageMod.default ||
+            pageMod[`${manifest.id}Page`] ||
+            pageMod.LoginPage ||
+            pageMod.RegisterPage ||
+            pageMod;
 
-                            if (!featureDef || typeof featureDef !== 'object') {
-                                throw new Error(`Loaded module for feature '${depId}' did not export a valid feature definition.`);
-                            }
+        const featureDefinition = {
+            id: manifest.id,
+            path: manifest.path,
+            view: targetView,
+            isProtected: Boolean(manifest.isProtected),
+            aliases: manifest.aliases || []
+        };
 
-                            this._enforceCacheLimit();
-                            this._cache.set(depId, {
-                                definition: featureDef,
-                                timestamp: Date.now(),
-                                accessCount: 1
-                            });
-                            this._setState(depId, LOADER_STATES.CACHED);
-                            
-                            await FeatureBootstrap.bootAndInitializeFeature(depId, featureDef);
-                            this._setState(depId, LOADER_STATES.LOADED);
-                        } else {
-                            await this.load(depId);
-                        }
-                    }
-                }
+        // Feature Bootstrap Integration
+        if (FeatureBootstrap && typeof FeatureBootstrap.initialize === 'function') {
+            await FeatureBootstrap.initialize(featureDefinition);
+        }
 
-                this._loading.delete(featureId);
-                return this._cache.get(featureId).definition;
-            } catch (error) {
-                this._setState(featureId, LOADER_STATES.FAILED);
-                this._loading.delete(featureId);
-                Core.Logger.error(`Failed loading dynamic feature '${featureId}': ${error.message}`);
-                throw error;
-            }
-        })();
+        // Final Registration (ViewRegistry syncs via FeatureRegistry)
+        FeatureRegistry.register(manifest.id, featureDefinition);
 
-        this._loading.set(featureId, loadPromise);
-        return await loadPromise;
+        this._cache.set(featureId, featureDefinition);
+        this._states.set(featureId, 'LOADED');
+
+        Core.Logger.info(`[FeatureLoaderBase] Lazily loaded: '${featureId}'`);
+        return featureDefinition;
     }
 }
+
+export const FeatureLoaderBase = FeatureLoaderBaseEngine;
+export default FeatureLoaderBase;

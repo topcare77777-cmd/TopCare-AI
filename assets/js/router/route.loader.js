@@ -1,68 +1,46 @@
 /**
  * TOPCARE AI PLATFORM V2 — ROUTE LOADER
  * Path: assets/js/router/route.loader.js
- * Version: 130.0.0 (BUILD 130 — MANIFEST-DRIVEN ROUTE BINDING)
- * Status: APPROVED & LOCKED
- * SRP: Converts Feature Registry definitions into consistent Route Metadata for Router.
+ * Version: 131.1.0 (BUILD 131 — MANIFEST-FIRST METADATA)
+ * Status: PENDING LOCK
  */
 
-import { FeatureRegistry } from '../features/feature.registry.js';
+import { FeatureManifestRegistry } from '../features/feature.manifest.registry.js';
 import { Router } from './router.service.js';
-import { ViewMount } from '../view/view.mount.service.js';
 import { Core } from '../core/index.js';
 
 export class RouteLoaderEngine {
     constructor() {
-        this._isLoaded = false;
         Object.seal(this);
     }
 
-    /**
-     * Binds all feature-based route metadata to the Router Service.
-     */
     loadRoutes() {
-        if (this._isLoaded) return;
+        // Menggunakan array manifest mentah tanpa memicu module import
+        const manifests = FeatureManifestRegistry.getManifests();
 
-        Core.Logger.info('[RouteLoader] Mapping Feature Manifest to Router Service...');
-
-        const features = FeatureRegistry.getAllFeatures();
-
-        features.forEach((feature) => {
-            const routeMetadata = {
-                path: feature.path,
-                name: feature.id,
-                viewId: feature.id,
-                feature: feature.id,
-                handler: async () => {
-                    await ViewMount.mount(routeMetadata);
-                }
+        manifests.forEach(manifest => {
+            const routeMeta = {
+                path: manifest.path,
+                name: manifest.id,
+                featureId: manifest.id,
+                isProtected: Boolean(manifest.isProtected)
             };
 
-            // Register primary path
-            Router.register(routeMetadata.path, routeMetadata.handler);
+            // Register canonical route
+            Router.register(manifest.path, routeMeta);
 
-            // Bind route aliases derived strictly from manifest
-            if (Array.isArray(feature.aliases)) {
-                feature.aliases.forEach((aliasPath) => {
-                    const formattedAlias = aliasPath.startsWith('/') ? aliasPath : `/${aliasPath}`;
-                    const aliasRoute = {
-                        ...routeMetadata,
-                        path: formattedAlias
-                    };
-                    Router.register(aliasRoute.path, aliasRoute.handler);
+            // Register aliases resolving back to the canonical featureId
+            if (Array.isArray(manifest.aliases)) {
+                manifest.aliases.forEach(alias => {
+                    Router.register(alias, {
+                        ...routeMeta,
+                        path: alias
+                    });
                 });
             }
         });
 
-        // Default Root Fallback Navigation
-        if (!Router.has('/')) {
-            Router.register('/', async () => {
-                Router.navigate('/home');
-            });
-        }
-
-        this._isLoaded = true;
-        Core.Logger.info('[RouteLoader] Manifest route mapping execution completed.');
+        Core.Logger.info(`[RouteLoader] Registered route metadata from Manifest.`);
     }
 }
 

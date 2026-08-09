@@ -1,123 +1,100 @@
 /**
  * TOPCARE AI PLATFORM V2 — ROUTER SERVICE
  * Path: assets/js/router/router.service.js
- * Status: APPROVED & LOCKED
- * SRP: Central Single Page Application Router Engine maintaining hash routing & route lookup.
+ * Version: 131.1.0 (BUILD 131 — ORCHESTRATION & SEQUENCE VALIDATION)
+ * Status: PENDING LOCK
  */
 
-import { Core } from '../core/index.js';
 import { AuthRouteGuard } from '../auth/guards/auth-route.guard.js';
+import { FeatureLoaderRegistry } from '../features/feature.loader.registry.js';
+import { ViewMount } from '../view/view.mount.service.js';
+import { Core } from '../core/index.js';
 
-export class RouterServiceEngine {
+class RouterEngine {
     constructor() {
-        this.routes = new Map();
-        this._isStarted = false;
-        this._handleHashChange = this._handleHashChange.bind(this);
+        this._routes = new Map();
+        this._currentPath = null;
+        this._navigationSequence = 0; // Monotonic counter for deterministic race safety
         Object.seal(this);
     }
 
-    /**
-     * Registers a route path with its execution handler.
-     * @param {string} path 
-     * @param {Function} handler 
-     */
-    register(path, handler) {
-        if (!path || typeof handler !== 'function') return;
-        const normalizedPath = this.normalizePath(path);
-        this.routes.set(normalizedPath, handler);
+    register(path, metadata) {
+        this._routes.set(this.normalizePath(path), metadata);
     }
 
-    /**
-     * Normalizes route path.
-     * @param {string} path 
-     * @returns {string}
-     */
     normalizePath(path) {
-        if (!path || typeof path !== 'string') return '/home';
-        const trimmed = path.trim().replace(/^#/, '');
-        if (trimmed === '' || trimmed === '/') return '/home';
-        return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
+        if (!path) return '/';
+        const clean = path.split('?')[0].replace(/\/+$/, '');
+        return clean === '' ? '/' : clean;
     }
 
-    /**
-     * Checks if a route path is registered.
-     * @param {string} path 
-     * @returns {boolean}
-     */
-    has(path) {
-        return this.routes.has(this.normalizePath(path));
+    async start() {
+        window.addEventListener('hashchange', () => this._handleHashChange());
+        await this._handleHashChange();
     }
 
-    /**
-     * Starts listening to hash navigation events.
-     */
-    start() {
-        if (this._isStarted) return;
-        window.addEventListener('hashchange', this._handleHashChange);
-        this._isStarted = true;
-        Core.Logger.info('[RouterService] Started hash navigation listener.');
-        this._handleHashChange(); // Handle initial route
-    }
-
-    /**
-     * Programmatically navigates to a target route path.
-     * @param {string} path 
-     */
     navigate(path) {
-        const normalized = this.normalizePath(path);
-        const targetHash = `#${normalized}`;
-
-        if (window.location.hash !== targetHash) {
-            window.location.hash = targetHash;
-        } else {
-            this.dispatch(normalized);
-        }
+        window.location.hash = path;
     }
 
-    /**
-     * Dispatches navigation for a normalized path.
-     * @param {string} path 
-     */
-    async dispatch(path) {
-        const normalizedPath = this.normalizePath(path);
+    async _handleHashChange() {
+        const rawHash = window.location.hash.slice(1) || '/';
+        const path = this.normalizePath(rawHash);
 
-        Core.Logger.info(`[RouterService] Dispatching route: '${normalizedPath}'`);
+        if (path === this._currentPath) return;
+        this._currentPath = path;
 
-        // Execute Security Route Guards
-        if (AuthRouteGuard && typeof AuthRouteGuard.check === 'function') {
-            const guardDecision = AuthRouteGuard.check(normalizedPath);
-            if (!guardDecision.allowed) {
-                Core.Logger.warn(`[RouterService] Guard blocked navigation to '${normalizedPath}'.`);
-                if (guardDecision.redirect) {
-                    this.navigate(guardDecision.redirect);
+        const sequence = ++this._navigationSequence;
+        await this.dispatch(path, sequence);
+    }
+
+    async dispatch(path, sequence) {
+        Core.Logger.info(`[Router] Dispatching: '${path}'`);
+
+        // ROOT FALLBACK
+        if (path === '/' && this._routes.has('/home')) {
+            this.navigate('/home');
+            return;
+        }
+
+        const routeMeta = this._routes.get(path);
+
+        if (!routeMeta) {
+            Core.Logger.error(`[Router] Path '${path}' not mapped.`);
+            return;
+        }
+
+        // AUTH GUARD CHECK (Contract compliance: expects Object return)
+        if (routeMeta.isProtected) {
+            const decision = AuthRouteGuard.check(path);
+            if (!decision.allowed) {
+                Core.Logger.warn(`[Router] AuthGuard blocked: ${decision.reason || 'UNAUTHORIZED'}`);
+                if (decision.redirect) {
+                    this.navigate(decision.redirect);
                 }
                 return;
             }
         }
 
-        const handler = this.routes.get(normalizedPath);
-
-        if (handler) {
-            try {
-                await handler();
-            } catch (err) {
-                Core.Logger.error(`[RouterService] Error executing handler for '${normalizedPath}': ${err.message}`);
-            }
-        } else {
-            Core.Logger.warn(`[RouterService] Unregistered route '${normalizedPath}'. Falling back to '/home'.`);
-            this.navigate('/home');
+        // LAZY FEATURE LOAD via Canonical Pipeline
+        try {
+            await FeatureLoaderRegistry.load(routeMeta.featureId);
+        } catch (error) {
+            Core.Logger.error(`[Router] Lazy load failed for '${routeMeta.featureId}': ${error.message}`);
+            return;
         }
-    }
 
-    /**
-     * Hash change event callback.
-     * @private
-     */
-    _handleHashChange() {
-        const rawHash = window.location.hash.replace('#', '');
-        this.dispatch(rawHash);
+        // SEQUENCE VALIDATION (Race Condition Safety)
+        if (sequence !== this._navigationSequence) {
+            Core.Logger.warn(`[Router] Stale navigation aborted for '${path}'`);
+            return;
+        }
+
+        // VIEW MOUNT (Lifecycle compatibility check passed)
+        await ViewMount.mount(routeMeta.featureId);
     }
 }
 
-export const Router = new RouterServiceEngine();
+// Ensure correct export name based on actual repository imports
+export const Router = new RouterEngine();
 export default Router;

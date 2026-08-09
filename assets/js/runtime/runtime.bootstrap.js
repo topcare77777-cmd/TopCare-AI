@@ -1,12 +1,10 @@
 /**
  * TOPCARE AI PLATFORM V2 — RUNTIME BOOTSTRAP
  * Path: assets/js/runtime/runtime.bootstrap.js
- * Version: 130.0.0 (BUILD 130 — MANIFEST RUNTIME BOOTSTRAP)
- * Status: APPROVED & LOCKED
- * SRP: Sequentially initializes Feature Manifest Loader, View Registry, Route Loader, and Router Engine.
+ * Version: 131.1.0 (BUILD 131 — LAZY INITIAL BOOT)
+ * Status: PENDING LOCK
  */
 
-import { FeatureLoader } from '../features/feature.loader.js';
 import { RouteLoader } from '../router/route.loader.js';
 import { Router } from '../router/router.service.js';
 import { Core } from '../core/index.js';
@@ -17,33 +15,19 @@ export class RuntimeBootstrapEngine {
         Object.seal(this);
     }
 
-    /**
-     * Executes single canonical pipeline bootstrap driven by FeatureManifestRegistry.
-     */
     async initialize() {
-        if (this._isInitialized) {
-            Core.Logger.warn('[RuntimeBootstrap] Bootstrap already completed. Skipping.');
-            return;
-        }
+        if (this._isInitialized) return;
 
-        Core.Logger.info('[RuntimeBootstrap] Starting Manifest-Driven Single Pipeline Bootstrapping...');
+        Core.Logger.info('[RuntimeBootstrap] Starting boot pipeline (Manifest First)...');
 
-        try {
-            // STEP 1: Dynamically load modules from FeatureManifestRegistry & populate ViewRegistry
-            await FeatureLoader.loadAll();
+        // 1. Pendaftaran route mentah, tanpa loading module
+        RouteLoader.loadRoutes();
 
-            // STEP 2: Map loaded feature manifests to RouteLoader & Router
-            RouteLoader.loadRoutes();
+        // 2. Start Router (Akan mentrigger lazy load saat menemukan hash active)
+        await Router.start();
 
-            // STEP 3: Start Router Engine Hash Listener & Dispatch Initial Route
-            Router.start();
-
-            this._isInitialized = true;
-            Core.Logger.info('[RuntimeBootstrap] TopCare AI Platform Bootstrapped Successfully.');
-        } catch (error) {
-            Core.Logger.error(`[RuntimeBootstrap] Critical Boot Failure: ${error.message}`);
-            throw error;
-        }
+        this._isInitialized = true;
+        Core.Logger.info('[RuntimeBootstrap] Pipeline initialized.');
     }
 }
 
