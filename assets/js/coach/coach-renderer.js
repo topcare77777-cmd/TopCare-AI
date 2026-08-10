@@ -1,189 +1,146 @@
 /**
- * TOPCARE AI PLATFORM V2 — UNIFIED COACH RENDERER
+ * TOPCARE AI PLATFORM V2 — INTEGRATED DYNAMIC COACH RENDERER & ENGINE
  * Path: assets/js/coach/coach.renderer.js
- * Status: APPROVED & LOCKED (BUILD 142 - LIGHTWEIGHT PREMIUM CHAT UI)
- * SRP: Pure View Generator using Design System Classes.
+ * Status: FIXED & ACTIVE (DYNAMIC RESPONSE + INDONESIAN TTS VOICE)
  */
 
-import COACH_IDENTITY from './coach.identity.js';
-import CoachMemory from './coach.memory.js';
-import { PERSONALITY_RECOMMENDATIONS_DATA } from './coach.recommendation.data.js';
-// Ketergantungan pada Orchestrator yang berat DIHAPUS agar web statis secepat kilat.
+export class CoachRenderer {
+    constructor() {
+        this.synth = window.speechSynthesis || null;
+    }
 
-export const CoachRenderer = {
-    renderCard() {
-        const memory = CoachMemory.getMemory() || {};
+    // 1. Ambil Tipe Kepribadian User dari localStorage
+    getPersonality() {
+        return localStorage.getItem('user_personality') || 'Melankolis';
+    }
 
-        if (!memory.hasAssessed) {
-            return `
-                <div class="tc-coach-card-container">
-                    <div class="tc-coach-header">
-                        <div class="tc-coach-avatar-box">
-                            <img src="${COACH_IDENTITY.avatar}" alt="${COACH_IDENTITY.name}" class="tc-coach-avatar-img" onerror="this.src='${COACH_IDENTITY.fallbackAvatar}'">
-                        </div>
-                        <div class="tc-coach-identity-info">
-                            <span class="tc-coach-badge">${COACH_IDENTITY.title}</span>
-                            <h3 class="tc-coach-name">${COACH_IDENTITY.name}</h3>
-                            <p class="tc-coach-welcome">${COACH_IDENTITY.welcomeMessage}</p>
-                        </div>
-                    </div>
-                    <div class="tc-coach-cta-box">
-                        <p class="tc-coach-welcome" style="margin-bottom: 1.25rem;">Selesaikan Personality Assessment untuk membuka pendampingan AI cerdas.</p>
-                        <a href="#/personality" class="tc-btn-coach-primary">Mulai Personality Assessment →</a>
-                    </div>
-                </div>
-            `;
+    // 2. Fitur Suara (Text-to-Speech Bahasa Indonesia)
+    speak(text) {
+        if (!this.synth) return;
+        this.synth.cancel(); // Hentikan suara jika sedang berjalan
+
+        const cleanText = text.replace(/<[^>]*>?/gm, '');
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'id-ID';
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+
+        this.synth.speak(utterance);
+    }
+
+    // 3. Generator Balasan Dinamis Kontekstual
+    generateDynamicResponse(userInput) {
+        const query = (userInput || '').toLowerCase().trim();
+        const pType = this.getPersonality();
+
+        if (!query) {
+            return `Silakan ketikkan pertanyaan Anda. Sebagai pendamping berkarakter ${pType}, saya siap membantu.`;
         }
 
-        const dominant = memory.dominantPersonality || "Koleris";
-        const recs = PERSONALITY_RECOMMENDATIONS_DATA[dominant] || PERSONALITY_RECOMMENDATIONS_DATA.Sanguinis;
+        // Sapaan / Kabar
+        if (query.includes('hallo') || query.includes('halo') || query.includes('khabar') || query.includes('kabar') || query.includes('hai')) {
+            return `Halo! Kabar saya sangat baik. Sebagai Coach berorientasi ${pType}, saya siap mendampingi Anda belajar AI dan pengembangan diri hari ini. Apa yang ingin Anda tanyakan?`;
+        }
 
-        const spokenGreeting = `Halo. Saya Coach TopCare AI. Berdasarkan tipe dominan ${dominant}, mari kita mulai diskusi hari ini.`;
+        // Minta Bantuan / Bertanya
+        if (query.includes('bantu') || query.includes('nanya') || query.includes('tanya')) {
+            return `Tentu saja! Saya dengan senang hati membantu Anda. Sebagai tipe ${pType}, pembahasan terstruktur seperti apa yang sedang Anda butuhkan?`;
+        }
 
-        // INJEKSI SCRIPT LOGIKA CHAT MANDIRI & TTS
+        // Pembahasan Belajar & Modul AI
+        if (query.includes('belajar') || query.includes('modul') || query.includes('kursus') || query.includes('materi') || query.includes('academy')) {
+            return `Untuk tipe kepribadian ${pType}, saya merekomendasikan Anda memulai dari modul 'Dasar Artificial Intelligence' di menu Belajar.`;
+        }
+
+        // Pembahasan Kepribadian
+        if (query.includes('kepribadian') || query.includes('melankolis') || query.includes('koleris') || query.includes('sanguinis') || query.includes('plegmatis')) {
+            return `Karakter Anda adalah ${pType}. Tipe ini memberi Anda daya analitis dan ketelitian yang tinggi dalam menguasai teknologi AI secara mendalam.`;
+        }
+
+        // Fallback Acak agar jawaban tidak pernah monoton/berulang
+        const fallbacks = [
+            `Mengenai "${userInput}", sebagai seorang ${pType}, Anda pasti menyukai analisis yang mendalam dan terstruktur. Mari kita bedah topik ini bersama.`,
+            `Topik "${userInput}" sangat menarik! Pendekatan ${pType} yang Anda miliki sangat cocok untuk mengeksplorasi hal ini di modul TopCare AI.`,
+            `Terima kasih sudah bertanya tentang "${userInput}". Saya siap memandu Anda memahami langkah-langkahnya secara sistematis.`
+        ];
+
+        return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+
+    // 4. Inisialisasi Handler Event pada DOM Chat UI
+    attachEvents() {
         setTimeout(() => {
-            if (window.CoachVoiceService && typeof window.CoachVoiceService.speak === 'function') {
-                window.CoachVoiceService.speak(spokenGreeting);
-            }
+            const inputEl = document.querySelector('input[placeholder*="Ketik pesan"]') || document.querySelector('.tc-chat-input');
+            const btnSend = document.querySelector('.tc-chat-container button') || document.querySelector('.tc-chat-box button') || Array.from(document.querySelectorAll('button')).find(b => b.textContent.trim() === 'Kirim');
 
-            const chatForm = document.getElementById('coach-chat-form');
-            if (chatForm && !window._chatFormBound) {
-                window._chatFormBound = true;
-                chatForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const input = document.getElementById('coach-chat-input');
-                    const msg = input.value.trim();
-                    if (!msg) return;
+            if (!btnSend || btnSend.dataset.engineBound) return;
+            btnSend.dataset.engineBound = 'true';
 
-                    const history = document.getElementById('coach-chat-history');
+            const processSend = () => {
+                const text = inputEl ? inputEl.value.trim() : '';
+                if (!text) return;
 
-                    // Render Pesan User (Premium Bubble)
-                    history.innerHTML += `
-                        <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
-                            <div style="background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; padding: 12px 16px; border-radius: 16px 16px 0 16px; max-width: 80%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); font-size: 0.95rem; line-height: 1.5;">
-                                ${msg}
-                            </div>
-                        </div>
-                    `;
-                    input.value = '';
-                    history.scrollTop = history.scrollHeight;
+                // A. Render bubble pesan user
+                this.renderUserBubble(text);
+                inputEl.value = '';
 
-                    // Indikator Mengetik
-                    const typingId = 'typing-' + Date.now();
-                    history.innerHTML += `
-                        <div id="${typingId}" style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px;">
-                            <img src="${COACH_IDENTITY.avatar}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #334155;">
-                            <div style="background: #1E293B; color: #94A3B8; padding: 12px 16px; border-radius: 0 16px 16px 16px; font-size: 0.85rem; font-style: italic;">
-                                Coach sedang berpikir...
-                            </div>
-                        </div>
-                    `;
-                    history.scrollTop = history.scrollHeight;
+                // B. Buat balasan dinamis + Suarakan TTS
+                setTimeout(() => {
+                    const reply = this.generateDynamicResponse(text);
+                    this.renderCoachBubble(reply);
+                    this.speak(reply);
+                }, 300);
+            };
 
-                    // Balasan Mandiri & Cerdas Tanpa Orchestrator
-                    setTimeout(() => {
-                        document.getElementById(typingId).remove();
+            btnSend.addEventListener('click', (e) => {
+                e.preventDefault();
+                processSend();
+            });
 
-                        let aiReply = "Maaf, saya sedang menyusun respons terbaik untuk Anda.";
-                        if (dominant === "Koleris") aiReply = "Sebagai seorang Koleris, saya tahu Anda berorientasi pada target nyata. Mari kita langsung fokus pada eksekusi cepat modul yang relevan.";
-                        else if (dominant === "Sanguinis") aiReply = "Wah, semangat yang luar biasa! Sebagai Sanguinis, mari kita buat proses belajar AI ini menjadi sangat menyenangkan.";
-                        else if (dominant === "Melankolis") aiReply = "Tentu. Dengan pendekatan analitis Anda yang Melankolis, mari kita bedah topik ini secara mendetail dan terstruktur.";
-                        else if (dominant === "Plegmatis") aiReply = "Saya mengerti. Mari kita ambil langkah yang tenang dan konsisten. Tidak perlu terburu-buru, kita pelajari ini selangkah demi selangkah.";
-
-                        // Render Pesan AI
-                        history.innerHTML += `
-                            <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px;">
-                                <img src="${COACH_IDENTITY.avatar}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #3B82F6;">
-                                <div style="background: #1E293B; color: #F8FAFC; padding: 12px 16px; border-radius: 0 16px 16px 16px; max-width: 80%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); font-size: 0.95rem; line-height: 1.6; border: 1px solid #334155;">
-                                    ${aiReply}
-                                </div>
-                            </div>
-                        `;
-                        history.scrollTop = history.scrollHeight;
-
-                        if (window.CoachVoiceService) window.CoachVoiceService.speak(aiReply);
-                    }, 1200); // Simulasi delay 1.2 detik agar terlihat natural
+            if (inputEl) {
+                inputEl.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        processSend();
+                    }
                 });
             }
-        }, 800);
+        }, 200);
+    }
 
-        return `
-            <div class="tc-coach-card-container">
-                <div class="tc-coach-header">
-                    <div class="tc-coach-avatar-box">
-                        <img src="${COACH_IDENTITY.avatar}" alt="${COACH_IDENTITY.name}" class="tc-coach-avatar-img" onerror="this.src='${COACH_IDENTITY.fallbackAvatar}'">
-                    </div>
-                    <div class="tc-coach-identity-info">
-                        <span class="tc-coach-badge active">Personal Companion Active</span>
-                        <h3 class="tc-coach-name">Halo, ${memory.userName || 'Member TopCare'} 👋</h3>
-                        <p class="tc-coach-welcome">Saya <strong>${COACH_IDENTITY.name}</strong>. Selamat, Anda telah menyelesaikan Personality Assessment!</p>
-                    </div>
-                </div>
+    renderUserBubble(text) {
+        const chatBox = document.querySelector('.tc-chat-messages') || document.querySelector('.tc-chat-box') || document.querySelector('.tc-chat-container') || document.querySelector('#coach-chat-area');
+        if (!chatBox) return;
 
-                <div class="tc-coach-dashboard-grid">
-                    <div class="tc-coach-stat-card">
-                        <span class="tc-stat-label">Tipe Kepribadian</span>
-                        <h4 class="tc-stat-value">${dominant}</h4>
-                        <small class="tc-stat-sub">Insight terpersonalisasi aktif</small>
-                    </div>
-                    <div class="tc-coach-stat-card">
-                        <span class="tc-stat-label">Progress AI Academy</span>
-                        <h4 class="tc-stat-value">${memory.currentLevel || 'Level Dasar'}</h4>
-                        <small class="tc-stat-sub">${memory.academyProgress || '0'}% Selesai</small>
-                    </div>
-                </div>
-
-                <div class="tc-coach-insight-box">
-                    <h5 class="tc-insight-title">💡 Insight Pendampingan Kepribadian</h5>
-                    <p class="tc-insight-text">Berdasarkan tipe dominan <strong>${dominant}</strong>, gaya belajar AI ideal Anda adalah <em>"${recs.studyStyle}"</em>.</p>
-                    <strong style="font-size: 0.85rem; color: #a78bfa;">Saya akan menjadi pendamping Anda untuk:</strong>
-                    <ul class="tc-companion-scope">
-                        <li>✓ Memahami kekuatan karakter (${recs.strengths ? recs.strengths[0] : '-'})</li>
-                        <li>✓ Mengembangkan potensi & gaya komunikasi</li>
-                        <li>✓ Memilih jalur belajar AI yang sesuai (${recs.recommendedPath || '-'})</li>
-                        <li>✓ Memberikan rekomendasi modul AI Academy</li>
-                    </ul>
-                </div>
-
-                <div class="tc-coach-learning-section">
-                    <h5 class="tc-learning-title">📚 Rekomendasi Modul AI Academy Terpilih:</h5>
-                    <div class="tc-learning-grid">
-                        ${recs.academyModules ? recs.academyModules.map(m => `
-                            <div class="tc-learning-card">
-                                <div>
-                                    <span class="tc-module-tag">${m.level}</span>
-                                    <h6 class="tc-module-title">${m.title}</h6>
-                                </div>
-                                <a href="${m.link}" class="tc-module-link">Pelajari Modul →</a>
-                            </div>
-                        `).join('') : '<p>Memuat modul...</p>'}
-                    </div>
-                </div>
-
-                <!-- PREMIUM CHAT UI INTERFACE -->
-                <div class="tc-coach-chat-section" style="margin-top: 2.5rem; border-top: 1px solid #334155; padding-top: 2rem;">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem;">
-                        <span style="font-size: 1.5rem;">💬</span>
-                        <h4 style="margin: 0; color: #F8FAFC; font-size: 1.25rem; font-weight: 700;">Diskusi dengan Coach TopCare AI</h4>
-                    </div>
-                    
-                    <div id="coach-chat-history" style="height: 320px; background: #0B1120; border-radius: 16px; padding: 1.5rem; overflow-y: auto; margin-bottom: 1rem; border: 1px solid #1E293B; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);">
-                        <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px;">
-                            <img src="${COACH_IDENTITY.avatar}" style="width: 32px; height: 32px; border-radius: 50%; border: 2px solid #3B82F6;">
-                            <div style="background: #1E293B; color: #F8FAFC; padding: 12px 16px; border-radius: 0 16px 16px 16px; max-width: 80%; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2); font-size: 0.95rem; line-height: 1.6; border: 1px solid #334155;">
-                                Halo! Saya sudah membaca profil <strong>${dominant}</strong> Anda. Ada pertanyaan spesifik yang ingin didiskusikan hari ini?
-                            </div>
-                        </div>
-                    </div>
-
-                    <form id="coach-chat-form" style="display: flex; gap: 12px; background: #0F172A; padding: 8px; border-radius: 12px; border: 1px solid #334155;">
-                        <input type="text" id="coach-chat-input" placeholder="Ketik pesan Anda di sini..." autocomplete="off" style="flex: 1; padding: 12px 16px; border-radius: 8px; border: none; background: transparent; color: white; font-size: 1rem; outline: none;">
-                        <button type="submit" style="background: #3B82F6; color: white; border: none; padding: 0 24px; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: background 0.2s;">Kirim</button>
-                    </form>
+        const html = `
+            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem; width: 100%;">
+                <div style="background: #2563eb; color: #ffffff; padding: 0.85rem 1.25rem; border-radius: 14px 14px 2px 14px; max-width: 75%; font-size: 0.95rem; line-height: 1.5; box-shadow: 0 4px 12px rgba(37,99,235,0.2);">
+                    ${text}
                 </div>
             </div>
         `;
+        chatBox.insertAdjacentHTML('beforeend', html);
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
-};
 
-export default CoachRenderer;
+    renderCoachBubble(text) {
+        const chatBox = document.querySelector('.tc-chat-messages') || document.querySelector('.tc-chat-box') || document.querySelector('.tc-chat-container') || document.querySelector('#coach-chat-area');
+        if (!chatBox) return;
+
+        const html = `
+            <div style="display: flex; justify-content: flex-start; margin-bottom: 1rem; width: 100%;">
+                <div style="background: #1e293b; color: #f8fafc; padding: 0.85rem 1.25rem; border-radius: 14px 14px 14px 2px; max-width: 75%; font-size: 0.95rem; line-height: 1.5; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+                    ${text}
+                </div>
+            </div>
+        `;
+        chatBox.insertAdjacentHTML('beforeend', html);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+}
+
+// Auto-attach event listener saat modul dimuat
+const coachRendererInstance = new CoachRenderer();
+coachRendererInstance.attachEvents();
+
+export default coachRendererInstance;

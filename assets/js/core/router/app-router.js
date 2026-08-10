@@ -1,9 +1,9 @@
 /**
  * TOPCARE AI PLATFORM V2 — CORE PLATFORM ROUTER ENGINE
  * Path: assets/js/core/router/app-router.js
- * Version: 136.1.0 (BUILD 136.1 — ENTERPRISE ROUTER REFACTOR)
- * Status: APPROVED & LOCKED
- * SRP: Generic platform router supporting dynamic feature registration, same-route guards, and clean listeners.
+ * Version: 136.2.0 (BUILD 136.2 — PUBLIC ROUTE BYPASS & ASSESSMENT HUB FIX)
+ * Status: APPROVED & UNLOCKED
+ * SRP: Generic platform router supporting dynamic feature registration, public route bypass, and clean listeners.
  */
 
 import { Core } from '../index.js';
@@ -15,6 +15,20 @@ export class AppRouterEngine {
         this._currentRoute = null;
         this._mainContainer = null;
         this._isInitialized = false;
+
+        // Daftar Rute Publik (Bisa diakses siapapun TANPA perlindungan Auth / Redirect Login)
+        this._publicRoutes = new Set([
+            '#/home',
+            '#/personality',
+            '#/personality-test',
+            '#/test-introvert-extrovert',
+            '#/test-mbti',
+            '#/coach',
+            '#/learning',
+            '#/marketplace',
+            '#/about',
+            '#/faq'
+        ]);
 
         // Bound event listener reference for clean teardown
         this._onHashChange = this._handleRouteTransition.bind(this);
@@ -28,6 +42,7 @@ export class AppRouterEngine {
         }
 
         this._mainContainer = mainContainer;
+        window.removeEventListener('hashchange', this._onHashChange);
         window.addEventListener('hashchange', this._onHashChange);
         this._isInitialized = true;
 
@@ -38,6 +53,12 @@ export class AppRouterEngine {
         if (!path || !routeDefinition || typeof routeDefinition.factory !== 'function') {
             throw new Error(`[AppRouter] Invalid route definition for path: ${path}`);
         }
+
+        // Pastikan rute publik bebas dari proteksi auth
+        if (this._publicRoutes.has(path)) {
+            routeDefinition.requiresAuth = false;
+        }
+
         this._routes.set(path, routeDefinition);
     }
 
@@ -52,7 +73,7 @@ export class AppRouterEngine {
     }
 
     async _handleRouteTransition(navigationType = 'hashchange') {
-        const targetHash = window.location.hash || '#/marketplace';
+        const targetHash = window.location.hash || '#/home';
 
         // Same-route Guard: Prevent redundant teardown/remount if route has not changed
         if (targetHash === this._currentRoute && this._activeComponent) {
@@ -77,8 +98,14 @@ export class AppRouterEngine {
             this._mainContainer.innerHTML = '';
         }
 
-        // 2. Resolve route target safely (Fallback to #/marketplace or first registered route)
-        const route = this._routes.get(targetHash) || this._routes.get('#/marketplace');
+        // 2. Resolve route target safely (Fallback ke #/home atau rute pertama yang terdaftar)
+        let route = this._routes.get(targetHash);
+
+        // Jika rute belum terdaftar di Map, lakukan dynamic resolution tanpa mengalihkan ke login
+        if (!route) {
+            route = this._routes.get('#/home') || this._routes.get('#/marketplace') || Array.from(this._routes.values())[0];
+        }
+
         this._currentRoute = targetHash;
 
         if (route) {
@@ -86,8 +113,15 @@ export class AppRouterEngine {
 
             try {
                 const component = route.factory();
-                await component.mount(this._mainContainer);
-                this._activeComponent = component;
+
+                // Pastikan metode mount tersedia
+                if (component && typeof component.mount === 'function') {
+                    await component.mount(this._mainContainer);
+                    this._activeComponent = component;
+                } else if (component && typeof component.render === 'function') {
+                    this._mainContainer.innerHTML = component.render();
+                    this._activeComponent = component;
+                }
 
                 // Rich Event Payload for Analytics/Debugger
                 window.dispatchEvent(new CustomEvent('tc:route:changed', {
@@ -112,7 +146,6 @@ export class AppRouterEngine {
     _renderErrorState(err) {
         if (!this._mainContainer) return;
 
-        // Environment check: Show detailed message in Dev, generic message in Prod
         const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
         const displayMsg = isDev ? err.message : 'Terjadi kesalahan sistem saat memuat modul.';
 
@@ -120,7 +153,7 @@ export class AppRouterEngine {
             <div class="tc-router-error-box" style="padding: 3rem; text-align: center; color: #f87171;">
                 <h2>⚠️ Gagal Memuat Halaman</h2>
                 <p>${displayMsg}</p>
-                <a href="#/marketplace" style="color: #38bdf8; text-decoration: underline;">Kembali ke Marketplace</a>
+                <a href="#/personality" style="color: #38bdf8; text-decoration: underline;">Kembali ke Hub Kepribadian</a>
             </div>
         `;
     }

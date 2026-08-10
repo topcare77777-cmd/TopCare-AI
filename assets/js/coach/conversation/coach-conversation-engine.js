@@ -1,77 +1,63 @@
-// assets/js/coach/conversation/coach-conversation-engine.js
 /**
- * @file coach-conversation-engine.js
- * @description Orchestrates active conversation flows by combining transient session context and granular style intelligence into a cohesive response strategy.
- * @module Coach/Conversation/Engine
+ * TOPCARE AI PLATFORM V2 — CONVERSATION ENGINE
+ * Path: assets/js/coach/conversation/coach-conversation-engine.js
+ * Status: APPROVED & FULLY DYNAMIC WITH PERSONALITY CONTEXT
  */
 
-import { CoachConversationContext } from './coach-conversation-context.js';
-import { CoachConversationStyle } from './coach-conversation-style.js';
-
-export const CoachConversationEngine = {
-    processInteraction(inputTopic = null, userAction = "continue") {
-        // 1. Update session context if a topic or interaction is provided
-        let currentSession = null;
-        try {
-            if (inputTopic) {
-                CoachConversationContext.update({
-                    lastTopic: inputTopic,
-                    incrementDepth: true
-                });
-            }
-            currentSession = CoachConversationContext.getSession();
-        } catch (e) {
-            currentSession = { sessionId: "sess_fallback", conversationDepth: 0 };
-        }
-
-        // 2. Resolve communication style configuration
-        let resolvedStyle = null;
-        try {
-            resolvedStyle = CoachConversationStyle.resolveStyle();
-        } catch (e) {
-            resolvedStyle = {
-                tone: "friendly",
-                responseLength: "medium",
-                explanationStyle: "example_based",
-                interactionApproach: "interactive",
-                encouragementLevel: "medium"
-            };
-        }
-
-        // 3. Derive response strategy based on style and session depth
-        const tone = resolvedStyle.tone || "friendly";
-        const explanationStyle = resolvedStyle.explanationStyle || "example_based";
-        const depth = currentSession.conversationDepth || 0;
-
-        let openingText = "Mari kita lanjutkan pembahasan ini bersama.";
-        if (explanationStyle === "structured") {
-            openingText = "Berikut rincian langkah-langkah yang perlu kita perhatikan:";
-        } else if (explanationStyle === "story_based") {
-            openingText = "Wah, ini topik yang seru! Mari kita bedah bersama.";
-        } else if (explanationStyle === "action_based") {
-            openingText = "Mari kita fokus langsung pada target aksi utama kita.";
-        } else if (explanationStyle === "simple") {
-            openingText = "Kita pelajari secara bertahap dan santai ya.";
-        }
-
-        const guidanceLevel = depth > 4 ? "high" : "medium";
-        const followUpRequired = userAction !== "complete";
-
-        return {
-            sessionId: currentSession.sessionId || "sess_unknown",
-            topic: currentSession.lastTopic || inputTopic || "General Guidance",
-            style: {
-                tone: resolvedStyle.tone,
-                responseLength: resolvedStyle.responseLength,
-                explanationStyle: resolvedStyle.explanationStyle,
-                interactionApproach: resolvedStyle.interactionApproach
-            },
-            responseStrategy: {
-                opening: openingText,
-                guidanceLevel: guidanceLevel,
-                followUpRequired: followUpRequired
-            },
-            generatedAt: new Date().toISOString()
-        };
+export class CoachConversationEngine {
+    constructor() {
+        this.personalityType = localStorage.getItem('user_personality') || 'Melankolis';
     }
-};
+
+    /**
+     * Memproses input user dan menghasilkan respon yang dinamis & kontekstual
+     */
+    processInput(userInput) {
+        const query = (userInput || '').toLowerCase().trim();
+        // Ambil update terbaru jika user baru saja menyelesaikan tes
+        this.personalityType = localStorage.getItem('user_personality') || 'Melankolis';
+        const pType = this.personalityType;
+
+        if (!query) {
+            return `Silakan ketikkan pertanyaan Anda, saya siap memandu Anda sebagai pendamping berkarakter ${pType}.`;
+        }
+
+        // 1. Detections Sapaan / Kabar
+        if (query.includes('apa kabar') || query.includes('halo') || query.includes('hai') || query.includes('pagi') || query.includes('malam')) {
+            return `Halo! Kabar saya sangat baik. Sebagai pendamping dengan pendekatan ${pType}, saya siap membantu Anda belajar AI dan mengembangkan potensi diri hari ini. Apa yang ingin Anda diskusikan?`;
+        }
+
+        // 2. Pertanyaan / Minta Bantuan
+        if (query.includes('bisa bantu') || query === 'bisa bantu aku?' || query.includes('bantu saya') || query.includes('mau nanya')) {
+            return `Tentu saja, saya sangat senang bisa membantu Anda! Sebagai seorang ${pType}, Anda menyukai langkah yang terstruktur. Apa topik atau kendala AI yang ingin kita selesaikan bersama?`;
+        }
+
+        // 3. Diskusi Kepribadian / Temperamen
+        if (query.includes('kepribadian') || query.includes('sifat') || query.includes('karakter') || query.includes('temperamen') || query.includes('melankolis') || query.includes('koleris') || query.includes('sanguinis') || query.includes('plegmatis')) {
+            const personalityGuide = {
+                'Koleris': 'Sebagai seorang Koleris, Anda berjiwa pemimpin dan berorientasi pada target. Fokuslah pada penerapan AI untuk efisiensi dan akselerasi proyek.',
+                'Sanguinis': 'Sebagai seorang Sanguinis, Anda sangat kreatif dan penuh antusiasme. Gunakan AI Generatif untuk memvisualisasikan ide-ide unik Anda!',
+                'Melankolis': 'Sebagai seorang Melankolis, Anda tekun, analitis, dan memiliki standar kualitas tinggi. Modul riset data dan etika AI sangat cocok untuk ketelitian Anda.',
+                'Plegmatis': 'Sebagai seorang Plegmatis, Anda tenang, diplomatis, dan pengamat yang baik. Pembelajaran AI bertahap dengan ritme santai akan membuat Anda nyaman.'
+            };
+            return personalityGuide[pType] || `Tipe kepribadian Anda terdeteksi sebagai ${pType}. Ini memberi Anda keunggulan khas dalam memahami konsep AI secara mendalam.`;
+        }
+
+        // 4. Diskusi Belajar / Modul AI
+        if (query.includes('belajar') || query.includes('modul') || query.includes('kursus') || query.includes('materi') || query.includes('akademi') || query.includes('academy')) {
+            return `Untuk tipe ${pType}, saya merekomendasikan Anda memulai dari modul 'Dasar Artificial Intelligence' di menu Belajar, lalu beralih ke praktik Prompt Engineering.`;
+        }
+
+        // 5. Fallback Dinamis (Acak agar jawaban tidak pernah monoton)
+        const dynamicFallbacks = [
+            `Pertanyaan yang menarik tentang "${userInput}". Dari sudut pandang karakter ${pType}, hal ini bisa kita analisis lebih rinci melalui modul pembelajaran TopCare AI.`,
+            `Membedah topik "${userInput}" membutuhkan pendekatan yang sistematis. Sebagai seorang ${pType}, Anda pasti menyukai solusi yang rinci dan terstruktur.`,
+            `Terima kasih sudah berbagi! Menganalisis "${userInput}" akan sangat efektif jika dipadukan dengan alat AI Generatif yang ada di platform TopCare AI.`
+        ];
+
+        const randomIndex = Math.floor(Math.random() * dynamicFallbacks.length);
+        return dynamicFallbacks[randomIndex];
+    }
+}
+
+export default new CoachConversationEngine();

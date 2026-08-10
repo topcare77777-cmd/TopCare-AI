@@ -1,135 +1,158 @@
-.personality {
+/**
+ * TOPCARE AI PLATFORM V2
+ * BUILD 138.2 — MOBILE FULL SCREEN FIT (EDGE-TO-EDGE)
+ * @file personality-test.css
+ * @description Core wrapper layout for Personality Test V2.
+ */
 
-    background: var(--gray-50);
-
-}
-
-.personality-card {
-
-    text-align: center;
-
-    padding: 42px 30px;
-
-}
-
-.personality-icon {
-
-    width: 90px;
-
-    height: 90px;
-
-    margin: auto;
-
-    margin-bottom: 24px;
-
-    border-radius: 50%;
-
+/* =========================================
+   1. Base Section & Layout Wrapper
+========================================= */
+.personality-test,
+.personality-test.section {
+    width: 100%;
+    min-height: auto;
     display: flex;
-
     justify-content: center;
-
-    align-items: center;
-
-    color: #fff;
-
-    font-size: 36px;
-
-    font-weight: 700;
-
-    box-shadow: var(--shadow-md);
-
-}
-
-.personality-card h3 {
-
-    margin-bottom: 16px;
-
-    font-size: 26px;
-
-}
-
-.personality-card p {
-
-    margin-bottom: 28px;
-
-    color: var(--text-light);
-
-    line-height: 1.8;
-
-    min-height: 70px;
-
-}
-
-.personality-card:hover {
-
-    transform: translateY(-10px);
-
+    align-items: flex-start;
+    background: transparent !important;
+    overflow: visible;
+    box-sizing: border-box;
+    padding: 0 1.5rem;
+    color: #f9fafb;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* =========================================
-   Personality Test Full Screen Mode
-   BUILD 112 Fix
+   2. The Test Shell (Kartu Utama)
 ========================================= */
-
-.personality-test.section {
-    min-height: calc(100vh - 80px);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-}
-
-
-.personality-test .test-shell {
+.personality-test .test-shell,
+.test-shell {
     width: 100%;
-    max-height: calc(100vh - 120px);
+    max-width: 860px;
+    margin: 0 auto;
+    background: rgba(17, 24, 39, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 1.5rem 2rem;
+    box-shadow: none !important;
+    backdrop-filter: blur(12px);
+    box-sizing: border-box;
+    transform: none;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
-
-.test-question-fieldset {
-    margin: 1rem 0;
+/* =========================================
+   3. Mode Pertanyaan (Question Mode)
+========================================= */
+.personality-test:has(.test-question-fieldset),
+.personality-test.section:has(.test-question-fieldset) {
+    height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
+    overflow: hidden;
+    padding: 0.75rem 1.5rem;
+    align-items: flex-start;
 }
 
-
-.test-options-stack {
-    display: grid;
-    gap: 0.75rem;
+.personality-test:has(.test-question-fieldset) .test-shell {
+    margin-top: 0.25rem !important;
+    padding: 1.25rem 2rem;
+    box-shadow: none !important;
 }
 
-
-.test-option-row {
-    padding: 0.75rem 1rem;
+/* =========================================
+   4. Mode Hasil (Result View - Scrollable)
+========================================= */
+.personality-test:has(.test-result-wrapper),
+.personality-test:has(.test-result-dashboard),
+.personality-test.section:has(.test-result-wrapper) {
+    height: auto !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-bottom: 4rem;
 }
 
-.test-actions {
-    margin-top: auto;
-    padding-top: 1rem;
+/* =========================================
+   5. Typography & Utilities
+========================================= */
+.text-center {
+    text-align: center;
+}
+
+.test-kicker {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #60a5fa;
+    margin-bottom: 0.25rem;
+}
+
+.test-title,
+.test-shell h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.35rem 0;
+}
+
+.test-intro {
+    color: #9ca3af;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin: 0 0 1rem 0;
+}
+
+.center-actions {
     display: flex;
     justify-content: center;
     gap: 1rem;
+    flex-wrap: wrap;
 }
 
-@media (min-width: 1024px) {
+/* =========================================
+   6. Mobile Responsive Fixes (HP <= 768px)
+========================================= */
+@media (max-width: 768px) {
 
-    .personality-test .test-question-fieldset {
-        transform: scale(0.95);
+    .personality-test,
+    .personality-test.section,
+    .personality-test:has(.test-question-fieldset) {
+        height: auto !important;
+        min-height: 100dvh !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+        /* FULL LAYAR: Buang padding kiri dan kanan agar layar terekspos penuh */
+        padding: 0 !important;
+        background: #0b0f19 !important;
     }
 
-    .test-option-row {
-        padding: 10px 14px;
+    .personality-test .test-shell,
+    .test-shell {
+        /* FULL LAYAR: Paksa box menjadi 100%, buang border radius dan border garisnya */
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 1.5rem 1rem !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
     }
 
     .test-title,
-    .test-legend-bold {
-        margin-bottom: 10px;
+    .test-shell h1 {
+        font-size: 1.35rem !important;
     }
 
-}
+    .test-intro {
+        font-size: 0.825rem !important;
+        margin-bottom: 0.85rem !important;
+    }
 
-@media (max-width: 768px) {
-    /* 1. Tampilkan Tombol Hamburger di HP */
     .mobile-menu-toggle {
         display: flex !important;
         flex-direction: column;
@@ -150,13 +173,8 @@
         transition: all 0.3s ease;
     }
 
-    /* 2. Sembunyikan Navigasi Desktop & Ubah ke Mode Overlay/Drawer */
-    .header-nav {
-        display: none; /* Muncul hanya jika kelas .active ditambahkan lewat JS */
-    }
-
-    /* 3. Ringkaskan Aksi Header agar tidak memenuhi baris */
+    .header-nav,
     .header-actions .header-nav-link {
-        display: none; /* Sembunyikan tombol Masuk teks biasa di header HP */
+        display: none;
     }
 }

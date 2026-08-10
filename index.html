@@ -3,17 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>TopCare AI — Platform AI untuk Belajar & Berkembang</title>
+
+    <!-- OPTIMASI PERFORMANCE HP: Preconnect & Font Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" href="assets/images/favicon.ico">
 
-    <!-- Favicon Integration -->
     <!-- MASTER STYLESHEET BUNDLE -->
     <link rel="stylesheet" href="assets/css/app.css">
-
-    <!-- FIX 1: Panggil navbar.css agar aturan tombol Hamburger dirender browser -->
     <link rel="stylesheet" href="assets/css/components/navbar/navbar.css">
-
     <link rel="stylesheet" href="assets/css/components/image-utilities.css">
     <link rel="stylesheet" href="assets/css/pages/community.css">
     <link rel="stylesheet" href="assets/css/pages/premium.css">
@@ -28,7 +28,8 @@
         <div class="header-container">
             <!-- Brand Logo -->
             <a href="#/home" class="header-brand" aria-label="TopCare AI Beranda">
-                <img src="assets/images/logos/logo-utama.webp" alt="TopCare AI Logo" class="header-logo">
+                <img src="assets/images/logos/logo-utama.webp" alt="TopCare AI Logo" class="header-logo" width="140"
+                    height="40" decoding="async">
             </a>
 
             <!-- Navigasi Utama Terstruktur SSOT -->
@@ -37,35 +38,8 @@
                 <a href="#/learning" class="header-nav-link" data-route="learning">Belajar</a>
 
                 <!-- DROPDOWN SUBMENU CREATOR -->
-                <div class="tc-dropdown" id="creator-dropdown">
-                    <a href="#/creator" class="header-nav-link tc-dropdown-trigger" data-route="creator">
-                        Creator <span class="tc-dropdown-arrow">▼</span>
-                    </a>
-                    <div class="tc-dropdown-menu" role="menu">
-                        <a href="#/prompt" class="tc-dropdown-item" data-route="prompt">
-                            <span class="tc-item-icon">🤖</span>
-                            <div class="tc-item-text">
-                                <strong>Prompt AI</strong>
-                                <small>Koleksi prompt produktivitas</small>
-                            </div>
-                        </a>
-                        <a href="#/ebook" class="tc-dropdown-item" data-route="ebook">
-                            <span class="tc-item-icon">📘</span>
-                            <div class="tc-item-text">
-                                <strong>E-book</strong>
-                                <small>Panduan digital komprehensif</small>
-                            </div>
-                        </a>
-                        <a href="#/artikel" class="tc-dropdown-item" data-route="artikel">
-                            <span class="tc-item-icon">📰</span>
-                            <div class="tc-item-text">
-                                <strong>Artikel</strong>
-                                <small>Wawasan AI & kepribadian</small>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
+                <!-- Cukup gunakan link biasa agar langsung membuka halaman Creator -->
+                <a href="#/creator" class="header-nav-link" data-route="creator">Creator</a>
                 <a href="#/community" class="header-nav-link" data-route="community">Komunitas</a>
                 <a href="#/marketplace" class="header-nav-link" data-route="marketplace">Marketplace</a>
                 <a href="#/premium" class="header-nav-link" data-route="premium">Premium</a>
@@ -97,27 +71,36 @@
     <!-- SINGLE DYNAMIC MOUNT POINT -->
     <main id="app" class="app-view-viewport" role="main"></main>
 
-    <!-- Native ES Module Bootstrapper -->
-    <script type="module" src="assets/js/index.js"></script>
-
-    <!-- FIX 2: Logika Interaksi Mobile Menu Navbar -->
+    <!-- VAKSIN ANTI-CACHE & LIGHTWEIGHT INITIALIZER -->
     <script>
+        // Unregister SW Async tanpa memblokir thread render utama HP
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.getRegistrations().then((registrations) => {
+                    for (let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+                if (window.caches) {
+                    caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
+                }
+            });
+        }
+
+        // Fast Mobile Menu Navigation Handler
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('mobile-menu-btn');
             const mainNav = document.getElementById('main-nav');
 
             if (menuBtn && mainNav) {
                 menuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Mencegah klik bocor ke elemen bawahnya
+                    e.stopPropagation();
                     const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-
-                    // Toggle status class CSS (is-active untuk animasi silang X, is-open untuk slide)
                     menuBtn.classList.toggle('is-active');
                     mainNav.classList.toggle('is-open');
                     menuBtn.setAttribute('aria-expanded', !isExpanded);
                 });
 
-                // Opsional: Tutup menu otomatis jika user mengklik sembarang tempat di luar menu
                 document.addEventListener('click', (e) => {
                     if (mainNav.classList.contains('is-open') && !mainNav.contains(e.target) && !menuBtn.contains(e.target)) {
                         menuBtn.classList.remove('is-active');
@@ -128,23 +111,8 @@
             }
         });
     </script>
-    <!-- VAKSIN ANTI-CACHE: Membunuh paksa Service Worker yang menahan file lama -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                for (let registration of registrations) {
-                    registration.unregister();
-                    console.log("Mematikan cache lama...");
-                }
-            });
-        }
-        if (window.caches) {
-            caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
-        }
-    </script>
-    <!-- AKHIR VAKSIN -->
 
-    <!-- Native ES Module Bootstrapper -->
+    <!-- Native ES Module Bootstrapper (Cukup Dipanggil 1 Kali) -->
     <script type="module" src="assets/js/index.js"></script>
 </body>
 

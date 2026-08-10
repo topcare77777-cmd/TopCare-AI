@@ -1,71 +1,62 @@
-// assets/js/coach/ui/coach-interaction-handler.js
 /**
- * @file coach-interaction-handler.js
- * @description Handles user interaction events triggered from the AI Coach widget, routing actions to appropriate platform views.
- * @module Coach/UI/InteractionHandler
+ * TOPCARE AI PLATFORM V2 — INTERACTION HANDLER
+ * Path: assets/js/coach/ui/coach-interaction-handler.js
  */
 
-import { CoachRuntimeGateway } from '../runtime/coach-runtime-gateway.js';
+import adaptiveEngine from '../personalization/coach-adaptive-response-engine.js';
 
-export const CoachInteractionHandler = {
-    handleAction(actionType, eventContext = null) {
-        const type = actionType || "UNKNOWN_ACTION";
-        let gatewayData = null;
+export class CoachInteractionHandler {
+    init() {
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('button');
+            if (btn && (btn.textContent.trim() === 'Kirim' || btn.classList.contains('tc-chat-send-btn'))) {
+                e.preventDefault();
+                this.handleSend();
+            }
+        });
 
-        try {
-            gatewayData = CoachRuntimeGateway.getFrontendExperience();
-        } catch (e) {
-            gatewayData = { gatewayStatus: "fallback" };
-        }
-
-        let routeTarget = "#/home";
-        let responseMessage = "Memproses permintaan Anda...";
-
-        switch (type) {
-            case "OPEN_CHAT":
-                routeTarget = "#/learning";
-                responseMessage = "Membuka sesi tanya jawab AI Coach...";
-                break;
-            case "VIEW_INSIGHT":
-                routeTarget = "#/personality";
-                responseMessage = "Menyiapkan insight kepribadian dan analisis...";
-                break;
-            case "VIEW_PROGRESS":
-                routeTarget = "#/profile";
-                responseMessage = "Memuat data progres pembelajaran Anda...";
-                break;
-            default:
-                routeTarget = "#/home";
-                responseMessage = "Aksi tidak dikenali.";
-                break;
-        }
-
-        // Execute navigation if hash router is supported
-        if (typeof window !== "undefined" && routeTarget) {
-            window.location.hash = routeTarget;
-        }
-
-        return {
-            actionType: type,
-            status: "success",
-            payload: {
-                targetRoute: routeTarget,
-                message: responseMessage,
-                gatewaySnapshot: gatewayData
-            },
-            triggeredAt: new Date().toISOString()
-        };
-    },
-
-    bindWidgetEvents(containerElement) {
-        if (!containerElement) return;
-
-        containerElement.addEventListener('click', (e) => {
-            const button = e.target.closest('[data-action]');
-            if (button) {
-                const actionType = button.getAttribute('data-action');
-                this.handleAction(actionType, e);
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && e.target.matches('input[placeholder*="Ketik pesan"]')) {
+                e.preventDefault();
+                this.handleSend();
             }
         });
     }
-};
+
+    handleSend() {
+        const inputEl = document.querySelector('input[placeholder*="Ketik pesan"]');
+        if (!inputEl || !inputEl.value.trim()) return;
+
+        const userText = inputEl.value.trim();
+        inputEl.value = '';
+
+        // Render Bubble User
+        this.appendBubble(userText, 'user');
+
+        // Render Bubble Coach Dinamis + Voice
+        setTimeout(() => {
+            const coachReply = adaptiveEngine.generateResponse(userText);
+            this.appendBubble(coachReply, 'coach');
+        }, 300);
+    }
+
+    appendBubble(text, sender) {
+        const chatContainer = document.querySelector('.tc-chat-messages') || document.querySelector('.tc-chat-box') || document.querySelector('#coach-chat-area');
+        if (!chatContainer) return;
+
+        const isUser = sender === 'user';
+        const html = `
+            <div style="display: flex; justify-content: ${isUser ? 'flex-end' : 'flex-start'}; margin-bottom: 1rem; width: 100%;">
+                <div style="background: ${isUser ? '#2563eb' : '#1e293b'}; color: #ffffff; padding: 0.85rem 1.25rem; border-radius: 12px; max-width: 80%; border: 1px solid ${isUser ? '#3b82f6' : 'rgba(255,255,255,0.1)'}; line-height: 1.5;">
+                    ${text}
+                </div>
+            </div>
+        `;
+        chatContainer.insertAdjacentHTML('beforeend', html);
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+}
+
+const handler = new CoachInteractionHandler();
+handler.init();
+export default handler;

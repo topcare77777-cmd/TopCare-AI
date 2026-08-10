@@ -1,20 +1,21 @@
 /**
  * TOPCARE AI PLATFORM V2 — HOME DOMAIN RENDERER
- * Path: assets/js/home/home.renderer.js
- * Status: APPROVED & LOCKED (BUILD 139.0 - STABLE CLEAN IMPORT)
- * SRP: Pure UI Component templates generator with Coach TopCare AI & Safe Array Handlers.
+ * Path: assets/js/pages/home.renderer.js
+ * Status: APPROVED & UPDATED (INTERACTIVE FLOATING BADGES NAVIGATION)
+ * SRP: Pure UI Component templates generator with Safe Array Handlers & Fail-safe Imports.
  */
 
-import AssetsRegistry from '../core/registries/assets.registry.js';
+import AssetsRegistry from '../config/assets.registry.js';
 import { HOME_DATA } from './home.data.js';
-
-// Cache Buster dihapus agar Live Server VS Code tidak kebingungan
-import { CoachRenderer } from '../coach/coach.renderer.js';
 
 export const HomeRenderer = {
     renderPage() {
         const d = HOME_DATA || {};
-        const mainImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/topcareai_home.webp';
+
+        // Ambil ilustrasi utama dengan fallback aman
+        const mainImg = (AssetsRegistry && AssetsRegistry.images && AssetsRegistry.images.home && AssetsRegistry.images.home.heroIllustration)
+            ? AssetsRegistry.images.home.heroIllustration
+            : 'assets/images/features/topcareai_home.webp';
 
         const partners = Array.isArray(d.partners) ? d.partners : [];
         const features = Array.isArray(d.features) ? d.features : [];
@@ -40,7 +41,6 @@ export const HomeRenderer = {
                                     <span class="avatar">👨‍💻</span>
                                     <span class="avatar">👩‍💼</span>
                                     <span class="avatar">👨‍🎨</span>
-                                    <span class="avatar">👩‍🔬</span>
                                 </div>
                                 <div class="tc-member-info">
                                     <strong>${d.hero?.memberCount || '10.000+ Member Aktif'}</strong>
@@ -49,33 +49,37 @@ export const HomeRenderer = {
                             </div>
                         </div>
 
+                        <!-- INTERACTIVE HERO VISUAL WITH CLICKABLE BADGES -->
                         <div class="tc-hero-visual">
                             <div class="tc-visual-center-box">
-                                <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img" width="400" height="400" fetchpriority="high" loading="eager">
-                                <div class="tc-floating-badge badge-top-left">
+                                <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img" width="400" height="400" fetchpriority="high" loading="eager" onerror="this.onerror=null; this.src='assets/images/logos/logo-utama.webp';">
+                                
+                                <!-- 1. AI Assistant -> Coach AI Chat -->
+                                <a href="#/coach" class="tc-floating-badge badge-top-left" style="text-decoration: none; cursor: pointer;">
                                     <span>🤖 AI Assistant</span>
                                     <small>24/7</small>
-                                </div>
-                                <div class="tc-floating-badge badge-top-right">
+                                </a>
+
+                                <!-- 2. Personality -> Hub Tes Kepribadian -->
+                                <a href="#/personality" class="tc-floating-badge badge-top-right" style="text-decoration: none; cursor: pointer;">
                                     <span>🧠 Personality</span>
                                     <small>4 Tipe</small>
-                                </div>
-                                <div class="tc-floating-badge badge-bottom-left">
-                                    <span>🎓 Learning Center</span>
-                                    <small>100+ Kursus</small>
-                                </div>
-                                <div class="tc-floating-badge badge-bottom-right">
-                                    <span>🌐 Komunitas</span>
-                                    <small>Global</small>
-                                </div>
+                                </a>
+
+                                <!-- 3. Marketplace -> Halaman Marketplace -->
+                                <a href="#/marketplace" class="tc-floating-badge badge-bottom-left" style="text-decoration: none; cursor: pointer;">
+                                    <span>🛒 Marketplace</span>
+                                    <small>Prompt & Asset</small>
+                                </a>
+
+                                <!-- 4. Premium -> Halaman Premium VIP -->
+                                <a href="#/premium" class="tc-floating-badge badge-bottom-right" style="text-decoration: none; cursor: pointer;">
+                                    <span>👑 Premium</span>
+                                    <small>Akses VIP</small>
+                                </a>
                             </div>
                         </div>
                     </div>
-                </section>
-
-                <!-- SECTION COACH TOPCARE AI UNIFIED (BUILD 128.0) -->
-                <section class="tc-section tc-coach-section" style="padding-top: 0;">
-                    ${CoachRenderer.renderCard()}
                 </section>
 
                 <!-- PARTNER LOGOS -->
@@ -133,7 +137,7 @@ export const HomeRenderer = {
                             ${articles.map(a => `
                                 <article class="tc-article-card">
                                     <div class="tc-article-thumb-box" style="position: relative; overflow: hidden; height: 160px; border-radius: 12px; margin-bottom: 1rem;">
-                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" width="340" height="160" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.webp'">
+                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" width="340" height="160" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='assets/images/features/feature-learning.webp';">
                                         <span class="tc-article-badge" style="position: absolute; top: 12px; left: 12px; z-index: 2;">${a.category}</span>
                                     </div>
                                     <div class="tc-article-body">
@@ -175,7 +179,6 @@ export const HomeRenderer = {
                 <!-- FOOTER -->
                 <footer class="tc-main-footer">
                     <div class="tc-footer-container">
-                        <!-- BRAND INFO -->
                         <div class="tc-footer-col col-brand">
                             <div class="tc-brand-logo">
                                 <span class="tc-brand-icon">✨</span>

@@ -1,18 +1,16 @@
-import { CoachRenderer } from './coach.renderer.js';
+import { CoachConversationEngine } from './conversation/coach-conversation-engine.js';
+import { CoachVoiceEngine } from './coach-voice-engine.js';
 
-export class CoachController {
-    constructor(container) {
-        this.container = container;
-    }
+const conversationEngine = new CoachConversationEngine();
+const voiceEngine = new CoachVoiceEngine();
 
-    init() {
-        if (!this.container) return;
-        this.render();
-    }
+export function onUserSendMessage(userMessageText) {
+    // 1. Dapatkan jawaban dinamis dari Conversation Engine
+    const coachReply = conversationEngine.processInput(userMessageText);
 
-    render() {
-        this.container.innerHTML = CoachRenderer.renderCard();
-    }
+    // 2. Tampilkan pesan di layar (Append Bubble UI)
+    renderCoachBubbleToUI(coachReply);
+
+    // 3. Suarakan teks balasan Coach!
+    voiceEngine.speak(coachReply);
 }
-
-export default CoachController;

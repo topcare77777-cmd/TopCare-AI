@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — PERSONALITY SELECTOR STYLESHEET
  * Path: assets/css/features/personality/personality-selector.css
- * Status: APPROVED & LOCKED (BUILD 128.1 — MOBILE RESPONSIVE STABILIZATION)
+ * Status: APPROVED & LOCKED (BUILD 128.2 — MOBILE FULL WIDTH)
  * SRP: Desktop-preserved Age Selector Grid with full vertical scroll support on Mobile.
  */
 
@@ -73,9 +73,17 @@
 }
 
 @media (max-width: 868px) {
+
+    .tc-sandbox-host,
+    .tc-age-selection-container,
+    .personality-selector-container {
+        /* FULL LAYAR: Perkecil batas kiri kanan agar konten bisa merentang lebar */
+        padding: 1.5rem 0.5rem 4rem 0.5rem !important;
+    }
+
     .age-selector-grid {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 12px;
     }
 
     .age-card,
@@ -83,13 +91,15 @@
         min-height: auto;
         padding: 1.25rem 1rem !important;
         margin-bottom: 0;
+        border-radius: 12px;
+        /* Disesuaikan agar lebih rapi di HP */
     }
 
     .age-card h3 {
-        font-size: 1rem;
+        font-size: 1.05rem;
     }
 
     .age-card p {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
     }
 }
