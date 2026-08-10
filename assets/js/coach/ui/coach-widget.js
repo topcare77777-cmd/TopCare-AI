@@ -3,6 +3,7 @@
  * @file coach-widget.js
  * @description Renders a lightweight, fast, and mobile-friendly AI Coach widget for the Home Page and manages DOM rendering ownership using enterprise CSS classes.
  * @module Coach/UI/Widget
+ * @status UPDATED (BUILD 138.7 — TEXT-TO-SPEECH TRIGGER INTEGRATION)
  */
 
 import { CoachRuntimeGateway } from '../runtime/coach-runtime-gateway.js';
@@ -79,6 +80,14 @@ export const CoachWidget = {
                 </div>
             </div>
         `;
+
+        // TRIGGER SUARA: Membaca pesan sapaan secara otomatis setelah UI dirender
+        if (window.CoachVoiceService && typeof window.CoachVoiceService.speak === 'function') {
+            // Memberikan jeda waktu (delay) sangat singkat agar DOM selesai merender sebelum API Suara dipanggil
+            setTimeout(() => {
+                window.CoachVoiceService.speak(data.message);
+            }, 300);
+        }
     }
 };
 

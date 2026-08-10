@@ -1,37 +1,26 @@
 /**
- * TOPCARE AI PLATFORM V2 — DOWNLOAD CENTER MODULE REGISTRY
+ * TOPCARE AI PLATFORM V2 — DOWNLOAD CENTER MODULE
  * Path: assets/js/features/download-center/download-center.module.js
- * Version: 137.1.0 (BUILD 137.1 — ROUTER REGISTRY COMPATIBLE)
- * Status: APPROVED & LOCKED
- * SRP: Registers Download Center routes matching RouterRegistry native dispatch pattern.
+ * Status: COMPATIBILITY MODE (BUILD 137.4)
+ * Note: Manual routing has been stripped. Route mapping is now handled 
+ * natively by FeatureManifestRegistry via the RouteLoader.
  */
 
-import { Router } from '../../router/router.service.js';
+import { Core } from '../../core/index.js';
 
-export class DownloadCenterModule {
+export const DownloadCenterModule = {
     /**
-     * Registers route paths using native RouterRegistry pattern
-     * @param {Object} registryInstance Reference to RouterRegistry
+     * Legacy install method.
+     * Retained as a NO-OP to prevent "is not a function" crash errors 
+     * if any orphan dependency still attempts to invoke it.
      */
-    static register(registryInstance) {
-        if (!registryInstance || typeof registryInstance._dispatchCorePage !== 'function') {
-            console.warn("[DownloadCenterModule] RouterRegistry instance missing or invalid. Falling back to global Router registration.");
-        }
+    install(config = {}) {
+        Core.Logger.info('[DownloadCenterModule] Legacy install() bypassed. Routing is now declarative via Manifest.');
+    },
 
-        // Primary Route
-        Router.register('/download-center', () => {
-            if (registryInstance && typeof registryInstance._dispatchCorePage === 'function') {
-                registryInstance._dispatchCorePage('download-center.page.js');
-            }
-        });
-
-        // Alias Route Navigation
-        Router.register('/downloads', () => {
-            if (typeof Router.navigate === 'function') {
-                Router.navigate('/download-center');
-            }
-        });
+    initialize() {
+        Core.Logger.info('[DownloadCenterModule] Initialized in compatibility mode.');
     }
-}
+};
 
 export default DownloadCenterModule;

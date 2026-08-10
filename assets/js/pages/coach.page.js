@@ -1,18 +1,33 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH PAGE LIFECYCLE
  * Path: assets/js/pages/coach.page.js
- * Status: APPROVED & LOCKED (BUILD 128 — UPGRADE)
+ * Status: APPROVED & LOCKED (BUILD 130 — STABLE IMPORT)
  * SRP: Conductor for Unified Coach TopCare AI Companion View.
  */
 
 import { CoachRenderer } from '../coach/coach.renderer.js';
+import CoachMemory from '../coach/coach.memory.js';
 
 export class CoachPage {
     constructor() {
         this.container = null;
     }
 
-    async beforeEnter() {}
+    async beforeEnter() {
+        try {
+            if (CoachMemory && typeof CoachMemory.setMemory === 'function') {
+                CoachMemory.setMemory({
+                    hasAssessed: true,
+                    dominantPersonality: 'Koleris',
+                    userName: 'Member TopCare',
+                    currentLevel: 'Level 1',
+                    academyProgress: 15
+                });
+            }
+        } catch (e) {
+            console.warn("Gagal sinkronisasi memori", e);
+        }
+    }
 
     mount(hostElement) {
         this.container = hostElement || document.getElementById('app');

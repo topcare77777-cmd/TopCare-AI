@@ -1,12 +1,14 @@
 /**
  * TOPCARE AI PLATFORM V2 — HOME DOMAIN RENDERER
  * Path: assets/js/home/home.renderer.js
- * Status: APPROVED & LOCKED (BUILD 128.9 - ARTICLE IMAGE FIX)
+ * Status: APPROVED & LOCKED (BUILD 139.0 - STABLE CLEAN IMPORT)
  * SRP: Pure UI Component templates generator with Coach TopCare AI & Safe Array Handlers.
  */
 
 import AssetsRegistry from '../core/registries/assets.registry.js';
 import { HOME_DATA } from './home.data.js';
+
+// Cache Buster dihapus agar Live Server VS Code tidak kebingungan
 import { CoachRenderer } from '../coach/coach.renderer.js';
 
 export const HomeRenderer = {
@@ -14,7 +16,6 @@ export const HomeRenderer = {
         const d = HOME_DATA || {};
         const mainImg = AssetsRegistry.images.home.heroIllustration || 'assets/images/features/topcareai_home.webp';
 
-        // Defensive Guards: Menjamin variabel selalu bernilai Array sebelum pemanggilan .map()
         const partners = Array.isArray(d.partners) ? d.partners : [];
         const features = Array.isArray(d.features) ? d.features : [];
         const stats = Array.isArray(d.stats) ? d.stats : [];
@@ -50,7 +51,7 @@ export const HomeRenderer = {
 
                         <div class="tc-hero-visual">
                             <div class="tc-visual-center-box">
-                                <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img">
+                                <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img" width="400" height="400" fetchpriority="high" loading="eager">
                                 <div class="tc-floating-badge badge-top-left">
                                     <span>🤖 AI Assistant</span>
                                     <small>24/7</small>
@@ -132,7 +133,7 @@ export const HomeRenderer = {
                             ${articles.map(a => `
                                 <article class="tc-article-card">
                                     <div class="tc-article-thumb-box" style="position: relative; overflow: hidden; height: 160px; border-radius: 12px; margin-bottom: 1rem;">
-                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.webp'">
+                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" width="340" height="160" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='assets/images/features/feature-learning.webp'">
                                         <span class="tc-article-badge" style="position: absolute; top: 12px; left: 12px; z-index: 2;">${a.category}</span>
                                     </div>
                                     <div class="tc-article-body">
@@ -189,8 +190,6 @@ export const HomeRenderer = {
                                 <a href="#" aria-label="TikTok">♪</a>
                             </div>
                         </div>
-
-                        <!-- PLATFORM -->
                         <div class="tc-footer-col">
                             <h4>Platform</h4>
                             <a href="#/learning">Belajar AI</a>
@@ -198,8 +197,6 @@ export const HomeRenderer = {
                             <a href="#/ebook">Ebook & Library</a>
                             <a href="#/prompt">Prompt Marketplace</a>
                         </div>
-
-                        <!-- KOMUNITAS -->
                         <div class="tc-footer-col">
                             <h4>Komunitas</h4>
                             <a href="#/community">Community Hub</a>
@@ -207,8 +204,6 @@ export const HomeRenderer = {
                             <a href="#/community">Event & Webinar</a>
                             <a href="#/community">Forum Diskusi</a>
                         </div>
-
-                        <!-- PERUSAHAAN -->
                         <div class="tc-footer-col">
                             <h4>Perusahaan</h4>
                             <a href="#/about">Tentang Kami</a>
@@ -216,8 +211,6 @@ export const HomeRenderer = {
                             <a href="#/about">Karir</a>
                             <a href="#/about">Kontak</a>
                         </div>
-
-                        <!-- BANTUAN -->
                         <div class="tc-footer-col">
                             <h4>Bantuan</h4>
                             <a href="#/faq">FAQ</a>
@@ -225,8 +218,6 @@ export const HomeRenderer = {
                             <a href="#/about">Kebijakan Privasi</a>
                             <a href="#/about">Syarat & Ketentuan</a>
                         </div>
-
-                        <!-- NEWSLETTER -->
                         <div class="tc-footer-col col-newsletter">
                             <h4>Newsletter</h4>
                             <p>Dapatkan update terbaru dari TopCare AI langsung ke email Anda.</p>
@@ -236,7 +227,6 @@ export const HomeRenderer = {
                             </div>
                         </div>
                     </div>
-
                     <div class="tc-footer-bottom">
                         <p>© 2026 TopCare AI. All rights reserved.</p>
                     </div>

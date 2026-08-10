@@ -192,7 +192,8 @@
     .personality-test:has(.test-question-fieldset) {
         height: auto !important;
         min-height: 100dvh;
-        padding: 0.5rem 0.75rem 3rem 0.75rem !important;
+        /* REVISI ANDROID: Buang jarak atas dan tipiskan margin samping menjadi 0.25rem */
+        padding: 0 0.25rem 3rem 0.25rem !important;
         align-items: flex-start !important;
         overflow: visible !important;
     }
@@ -200,8 +201,10 @@
     .personality-test:has(.test-question-fieldset) .test-shell {
         height: auto !important;
         max-height: none !important;
-        margin-top: 0.5rem !important;
-        padding: 1.25rem 1rem !important;
+        /* REVISI ANDROID: Tempelkan persis di bawah header */
+        margin-top: 0 !important;
+        /* REVISI ANDROID: Perlebar ruang opsi dengan menipiskan padding dalam shell */
+        padding: 1rem 0.75rem !important;
         overflow: visible !important;
         display: block !important;
     }
@@ -224,7 +227,8 @@
 
     .test-option-row,
     .option-card {
-        padding: 0.75rem 0.85rem;
+        /* REVISI ANDROID: Buat tombol radio opsi kuis lebih rapat & rapi ke tepi layar */
+        padding: 0.65rem 0.75rem;
         position: relative !important;
         float: none !important;
     }

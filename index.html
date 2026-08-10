@@ -10,6 +10,10 @@
     <!-- Favicon Integration -->
     <!-- MASTER STYLESHEET BUNDLE -->
     <link rel="stylesheet" href="assets/css/app.css">
+
+    <!-- FIX 1: Panggil navbar.css agar aturan tombol Hamburger dirender browser -->
+    <link rel="stylesheet" href="assets/css/components/navbar/navbar.css">
+
     <link rel="stylesheet" href="assets/css/components/image-utilities.css">
     <link rel="stylesheet" href="assets/css/pages/community.css">
     <link rel="stylesheet" href="assets/css/pages/premium.css">
@@ -24,7 +28,7 @@
         <div class="header-container">
             <!-- Brand Logo -->
             <a href="#/home" class="header-brand" aria-label="TopCare AI Beranda">
-                <img src="assets\images\logos\logo-utama.webp" alt="TopCare AI Logo" class="header-logo">
+                <img src="assets/images/logos/logo-utama.webp" alt="TopCare AI Logo" class="header-logo">
             </a>
 
             <!-- Navigasi Utama Terstruktur SSOT -->
@@ -96,6 +100,52 @@
     <!-- Native ES Module Bootstrapper -->
     <script type="module" src="assets/js/index.js"></script>
 
+    <!-- FIX 2: Logika Interaksi Mobile Menu Navbar -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mainNav = document.getElementById('main-nav');
+
+            if (menuBtn && mainNav) {
+                menuBtn.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Mencegah klik bocor ke elemen bawahnya
+                    const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
+
+                    // Toggle status class CSS (is-active untuk animasi silang X, is-open untuk slide)
+                    menuBtn.classList.toggle('is-active');
+                    mainNav.classList.toggle('is-open');
+                    menuBtn.setAttribute('aria-expanded', !isExpanded);
+                });
+
+                // Opsional: Tutup menu otomatis jika user mengklik sembarang tempat di luar menu
+                document.addEventListener('click', (e) => {
+                    if (mainNav.classList.contains('is-open') && !mainNav.contains(e.target) && !menuBtn.contains(e.target)) {
+                        menuBtn.classList.remove('is-active');
+                        mainNav.classList.remove('is-open');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
+    </script>
+    <!-- VAKSIN ANTI-CACHE: Membunuh paksa Service Worker yang menahan file lama -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function (registrations) {
+                for (let registration of registrations) {
+                    registration.unregister();
+                    console.log("Mematikan cache lama...");
+                }
+            });
+        }
+        if (window.caches) {
+            caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
+        }
+    </script>
+    <!-- AKHIR VAKSIN -->
+
+    <!-- Native ES Module Bootstrapper -->
+    <script type="module" src="assets/js/index.js"></script>
 </body>
 
 </html>

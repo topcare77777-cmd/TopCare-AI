@@ -3,11 +3,12 @@
  * @description Enterprise authentication UI component managing DOM mounting, state synchronization,
  * event binding, and delegation to AuthModule. Implements leak-free listener cleanup and secure form handling.
  * @module Components/AuthComponent
- * @version 3.0.0
+ * @version 3.0.1
  * @status Production Ready
  */
 
-import { authRenderer } from '../renderers/auth.renderer.js';
+// FIX: Gunakan Named Import dengan alias untuk mencocokkan kapitalisasi export dari auth.renderer.js
+import { AuthRenderer as authRenderer } from '../renderers/auth.renderer.js';
 import { authModule } from '../modules/auth.module.js';
 
 export class AuthComponent {
@@ -44,11 +45,18 @@ export class AuthComponent {
 
         let html = '';
         if (this.#currentView === 'login') {
-            html = authRenderer.renderLogin(this.#state);
+            // Fallback rendering method mapping in case of legacy names
+            html = typeof authRenderer.renderLogin === 'function'
+                ? authRenderer.renderLogin(this.#state)
+                : authRenderer.renderLoginModal(this.#state);
         } else if (this.#currentView === 'register') {
-            html = authRenderer.renderRegister(this.#state);
+            html = typeof authRenderer.renderRegister === 'function'
+                ? authRenderer.renderRegister(this.#state)
+                : authRenderer.renderRegisterModal ? authRenderer.renderRegisterModal(this.#state) : '';
         } else if (this.#currentView === 'forgot') {
-            html = authRenderer.renderForgotPassword(this.#state);
+            html = typeof authRenderer.renderForgotPassword === 'function'
+                ? authRenderer.renderForgotPassword(this.#state)
+                : authRenderer.renderForgotModal ? authRenderer.renderForgotModal(this.#state) : '';
         }
 
         this.#rootElement.innerHTML = html;
@@ -66,7 +74,7 @@ export class AuthComponent {
             return;
         }
 
-        const loginForm = this.#rootElement.querySelector('#loginForm');
+        const loginForm = this.#rootElement.querySelector('#loginForm') || this.#rootElement.querySelector('#topcare-login-form');
         if (loginForm) {
             const loginHandler = (e) => this.#handleLoginSubmit(e);
             loginForm.addEventListener('submit', loginHandler);
@@ -105,6 +113,14 @@ export class AuthComponent {
             link.addEventListener('click', linkHandler);
             this.#listeners.push({ element: link, event: 'click', handler: linkHandler });
         });
+
+        // Bind cancel buttons if any
+        const cancelBtn = this.#rootElement.querySelector('#login-cancel-btn');
+        if (cancelBtn) {
+            const cancelHandler = () => { window.location.hash = '#/home'; };
+            cancelBtn.addEventListener('click', cancelHandler);
+            this.#listeners.push({ element: cancelBtn, event: 'click', handler: cancelHandler });
+        }
     }
 
     /**
