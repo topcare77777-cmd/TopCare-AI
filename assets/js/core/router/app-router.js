@@ -1,12 +1,10 @@
 /**
  * TOPCARE AI PLATFORM V2 — CORE PLATFORM ROUTER ENGINE
  * Path: assets/js/core/router/app-router.js
- * Version: 136.2.0 (BUILD 136.2 — PUBLIC ROUTE BYPASS & ASSESSMENT HUB FIX)
- * Status: APPROVED & UNLOCKED
- * SRP: Generic platform router supporting dynamic feature registration, public route bypass, and clean listeners.
+ * Status: APPROVED & REPAIRED (SAFE CONTAINER INJECTION FOR PAGE CONSTRUCTORS)
  */
 
-import { Core } from '../index.js';
+import { ROUTES_REGISTRY } from './routes.registry.js';
 
 export class AppRouterEngine {
     constructor() {
@@ -16,21 +14,6 @@ export class AppRouterEngine {
         this._mainContainer = null;
         this._isInitialized = false;
 
-        // Daftar Rute Publik (Bisa diakses siapapun TANPA perlindungan Auth / Redirect Login)
-        this._publicRoutes = new Set([
-            '#/home',
-            '#/personality',
-            '#/personality-test',
-            '#/test-introvert-extrovert',
-            '#/test-mbti',
-            '#/coach',
-            '#/learning',
-            '#/marketplace',
-            '#/about',
-            '#/faq'
-        ]);
-
-        // Bound event listener reference for clean teardown
         this._onHashChange = this._handleRouteTransition.bind(this);
         Object.seal(this);
     }
@@ -38,7 +21,7 @@ export class AppRouterEngine {
     init(mainContainer) {
         if (this._isInitialized) return;
         if (!mainContainer) {
-            throw new Error("[AppRouter] Main container element is required for router initialization.");
+            mainContainer = document.getElementById('app') || document.body;
         }
 
         this._mainContainer = mainContainer;
@@ -49,126 +32,117 @@ export class AppRouterEngine {
         this._handleRouteTransition('initial');
     }
 
+    /**
+     * Mendaftarkan Rute ke dalam Router Engine
+     */
     registerRoute(path, routeDefinition) {
-        if (!path || !routeDefinition || typeof routeDefinition.factory !== 'function') {
-            throw new Error(`[AppRouter] Invalid route definition for path: ${path}`);
-        }
+        if (!path || !routeDefinition) return;
 
-        // Pastikan rute publik bebas dari proteksi auth
-        if (this._publicRoutes.has(path)) {
-            routeDefinition.requiresAuth = false;
-        }
-
-        this._routes.set(path, routeDefinition);
-    }
-
-    unregisterRoute(path) {
-        if (this._routes.has(path)) {
-            this._routes.delete(path);
-        }
-    }
-
-    hasRoute(path) {
-        return this._routes.has(path);
+        const normalizedPath = path.startsWith('#') ? path : `#/${path.replace(/^\//, '')}`;
+        this._routes.set(normalizedPath, routeDefinition);
     }
 
     async _handleRouteTransition(navigationType = 'hashchange') {
         const targetHash = window.location.hash || '#/home';
 
-        // Same-route Guard: Prevent redundant teardown/remount if route has not changed
         if (targetHash === this._currentRoute && this._activeComponent) {
             return;
         }
 
-        const previousRoute = this._currentRoute;
-
-        // 1. Teardown active component cleanly
+        // 1. Teardown komponen lama
         if (this._activeComponent && typeof this._activeComponent.destroy === 'function') {
             try {
                 this._activeComponent.destroy();
             } catch (err) {
-                if (Core && Core.Logger) {
-                    Core.Logger.error("[AppRouter] Component teardown error:", err);
-                }
+                console.warn("[AppRouter] Component destroy error:", err);
             }
-            this._activeComponent = null;
+        }
+
+        this._activeComponent = null;
+
+        if (!this._mainContainer) {
+            this._mainContainer = document.getElementById('app') || document.body;
         }
 
         if (this._mainContainer) {
             this._mainContainer.innerHTML = '';
         }
 
-        // 2. Resolve route target safely (Fallback ke #/home atau rute pertama yang terdaftar)
+        // 2. Cari rute terdaftar atau dari ROUTES_REGISTRY
         let route = this._routes.get(targetHash);
-
-        // Jika rute belum terdaftar di Map, lakukan dynamic resolution tanpa mengalihkan ke login
-        if (!route) {
-            route = this._routes.get('#/home') || this._routes.get('#/marketplace') || Array.from(this._routes.values())[0];
-        }
+        const routeKey = targetHash.replace(/^#\//, '').replace(/^#/, '') || 'home';
 
         this._currentRoute = targetHash;
 
-        if (route) {
-            document.title = route.title || 'TopCare AI Platform';
+        try {
+            let component = null;
 
-            try {
-                const component = route.factory();
+            if (route && typeof route.factory === 'function') {
+                const result = route.factory();
+                component = typeof result.mount === 'function' ? result : await result;
+            } else if (ROUTES_REGISTRY[routeKey]) {
+                const module = await ROUTES_REGISTRY[routeKey]();
+                const ExportedClass = module.default ||
+                    module.MarketplacePage ||
+                    module.CoachPage ||
+                    module.HomePage ||
+                    module;
 
-                // Pastikan metode mount tersedia
-                if (component && typeof component.mount === 'function') {
-                    await component.mount(this._mainContainer);
-                    this._activeComponent = component;
-                } else if (component && typeof component.render === 'function') {
-                    this._mainContainer.innerHTML = component.render();
-                    this._activeComponent = component;
-                }
-
-                // Rich Event Payload for Analytics/Debugger
-                window.dispatchEvent(new CustomEvent('tc:route:changed', {
-                    detail: {
-                        previousRoute,
-                        currentRoute: targetHash,
-                        title: route.title,
-                        timestamp: Date.now(),
-                        navigationType
+                // FIX 3: Injeksi aman this._mainContainer ke constructor untuk CoachPage & MarketplacePage
+                if (typeof ExportedClass === 'function') {
+                    try {
+                        component = new ExportedClass(this._mainContainer);
+                    } catch (e) {
+                        component = new ExportedClass();
                     }
-                }));
-
-            } catch (err) {
-                if (Core && Core.Logger) {
-                    Core.Logger.error(`[AppRouter] Failed to mount route ${targetHash}:`, err);
+                } else {
+                    component = ExportedClass;
                 }
-                this._renderErrorState(err);
             }
+
+            // 3. Mounting ke DOM (Mendukung mount Async & Standalone Render)
+            if (component && typeof component.mount === 'function') {
+                await component.mount(this._mainContainer);
+                this._activeComponent = component;
+            } else if (component && typeof component.renderPage === 'function') {
+                this._mainContainer.innerHTML = component.renderPage();
+                this._activeComponent = component;
+            } else if (component && typeof component.renderCard === 'function') {
+                this._mainContainer.innerHTML = component.renderCard();
+                this._activeComponent = component;
+            } else if (component && typeof component.render === 'function') {
+                const html = await component.render();
+                if (html) this._mainContainer.innerHTML = html;
+                this._activeComponent = component;
+            }
+
+            document.title = (route && route.title) ? route.title : 'TopCare AI Platform';
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        } catch (err) {
+            console.error(`[AppRouter] Error loading route [${targetHash}]:`, err);
+            this._renderErrorState(err);
         }
     }
 
     _renderErrorState(err) {
         if (!this._mainContainer) return;
 
-        const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        const displayMsg = isDev ? err.message : 'Terjadi kesalahan sistem saat memuat modul.';
-
         this._mainContainer.innerHTML = `
-            <div class="tc-router-error-box" style="padding: 3rem; text-align: center; color: #f87171;">
+            <div style="padding: 4rem 1.5rem; text-align: center; color: #f87171;">
                 <h2>⚠️ Gagal Memuat Halaman</h2>
-                <p>${displayMsg}</p>
-                <a href="#/personality" style="color: #38bdf8; text-decoration: underline;">Kembali ke Hub Kepribadian</a>
+                <p style="color: #94a3b8; margin: 1rem 0;">${err.message}</p>
+                <a href="#/home" onclick="window.location.reload()" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600;">
+                    ← Kembali ke Beranda
+                </a>
             </div>
         `;
     }
 
     destroy() {
         if (!this._isInitialized) return;
-
         window.removeEventListener('hashchange', this._onHashChange);
-
-        if (this._activeComponent && typeof this._activeComponent.destroy === 'function') {
-            this._activeComponent.destroy();
-            this._activeComponent = null;
-        }
-
-        this._routes.clear();
         this._mainContainer = null;
         this._isInitialized = false;
     }

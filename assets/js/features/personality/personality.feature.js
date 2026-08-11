@@ -1,5 +1,6 @@
 /**
  * file: assets/js/features/personality/personality.feature.js
+ * Status: APPROVED & FIXED (REGISTERED ALL 4 PERSONALITY ROUTES & VIEWS)
  */
 
 class PersonalityPageComponent {
@@ -39,7 +40,7 @@ class PersonalityPageComponent {
         return wrapper;
     }
 
-    unmount() {}
+    unmount() { }
 }
 
 export const PersonalityFeature = {
@@ -57,14 +58,31 @@ export const PersonalityFeature = {
     async unmount() { return true; },
     async destroy() { return true; },
 
+    // PENDAFTARAN SELURUH VIEW DARI HUB & MODUL TES
     views: {
-        personality: PersonalityPageComponent
+        personality: PersonalityPageComponent,
+        'personality-test': PersonalityPageComponent,
+        'test-introvert-extrovert': PersonalityPageComponent,
+        'test-mbti': PersonalityPageComponent
     },
 
+    // PENDAFTARAN SELURUH RUTE KE ROUTER PLATFORM
     routes: [
         {
             path: '/personality',
             name: 'personality'
+        },
+        {
+            path: '/personality-test',
+            name: 'personality-test'
+        },
+        {
+            path: '/test-introvert-extrovert',
+            name: 'test-introvert-extrovert'
+        },
+        {
+            path: '/test-mbti',
+            name: 'test-mbti'
         }
     ]
 };

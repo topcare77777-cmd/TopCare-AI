@@ -272,3 +272,55 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* MOBILE CHAT INPUT FIX */
+@media (max-width: 768px) {
+    .tc-coach-chat-container {
+        padding: 0.75rem !important;
+        height: auto !important;
+        min-height: calc(100dvh - 90px) !important;
+    }
+
+    .tc-coach-input-group,
+    .tc-chat-bottom-bar {
+        display: flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 0.5rem !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .tc-coach-input-field,
+    #coach-user-input {
+        flex: 1 !important;
+        font-size: 0.95rem !important;
+        padding: 0.75rem 1rem !important;
+        border-radius: 12px !important;
+        min-height: 46px !important;
+        background: rgba(30, 41, 59, 0.9) !important;
+        color: #ffffff !important;
+    }
+
+    .tc-coach-mic-btn,
+    #coach-mic-btn {
+        width: 46px !important;
+        height: 46px !important;
+        min-width: 46px !important;
+        border-radius: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.2rem !important;
+        background: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .tc-coach-send-btn,
+    #coach-send-btn {
+        padding: 0.75rem 1.25rem !important;
+        height: 46px !important;
+        border-radius: 12px !important;
+        font-weight: 700 !important;
+        font-size: 0.9rem !important;
+    }
+}

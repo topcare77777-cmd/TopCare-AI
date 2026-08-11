@@ -1,93 +1,89 @@
 /**
  * TOPCARE AI PLATFORM V2 — PREMIUM CENTER STYLESHEET
  * Path: assets/css/pages/premium.css
- * Status: APPROVED & LOCKED (BUILD 128.3)
- * SRP: Styles for Hero Image Background, Timeline, Plans Grid, Catalog, and FAQ Accordion.
+ * Status: APPROVED & OPTIMIZED (CLEAN HERO + MODERN DOWNLOAD CENTER CARD)
  */
 
 .tc-premium-container {
-    max-width: 1140px;
+    max-width: 1280px;
     margin: 0 auto;
-    padding: 1.5rem 1.5rem 5rem 1.5rem;
+    padding: 1rem 1.5rem 4rem 1.5rem; /* Rapatkan padding atas ke menu bar */
     box-sizing: border-box;
 }
 
-/* HERO WITH BACKGROUND IMAGE */
+/* =====================================================================
+   HERO SECTION (CLEAN BACKGROUND & ELEVATED POSITION)
+   ==================================================================== */
 .tc-premium-hero {
     position: relative;
     border-radius: 24px;
-    overflow: hidden;
-    padding: 4rem 2rem;
+    padding: 2.5rem 2rem 3rem 2rem; /* Dikurangi agar terangkat naik */
     text-align: center;
-    margin-bottom: 4rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    margin-bottom: 2.5rem;
+    background: rgba(17, 24, 39, 0.6);
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+    overflow: hidden;
 }
 
-.tc-premium-bg-wrapper {
+/* Efek Cahaya Purple Glow di Belakang Teks Hero */
+.tc-premium-hero::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 0;
-}
-
-.tc-premium-bg-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.35;
-    filter: blur(1px);
-}
-
-.tc-premium-overlay {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(139, 92, 246, 0.25) 0%, rgba(11, 15, 25, 0.9) 85%);
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.2) 0%, rgba(11, 15, 25, 0) 75%);
+    pointer-events: none;
 }
 
 .tc-premium-hero-content {
     position: relative;
     z-index: 1;
-    max-width: 800px;
+    max-width: 820px;
     margin: 0 auto;
 }
 
 .tc-premium-badge {
     display: inline-block;
-    padding: 0.4rem 1rem;
-    background: rgba(139, 92, 246, 0.2);
-    border: 1px solid rgba(139, 92, 246, 0.4);
+    padding: 0.35rem 0.9rem;
+    background: rgba(139, 92, 246, 0.15);
+    border: 1px solid rgba(139, 92, 246, 0.35);
     color: #c4b5fd;
     border-radius: 999px;
-    font-size: 0.85rem;
+    font-size: 0.825rem;
     font-weight: 600;
-    margin-bottom: 1.25rem;
+    margin-bottom: 0.85rem; /* Didekatkan ke judul */
 }
 
 .tc-premium-title {
-    font-size: 2.75rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    color: #f8fafc;
-    margin: 0 0 1rem 0;
+    color: #ffffff;
+    margin: 0 0 0.75rem 0;
     line-height: 1.2;
+    letter-spacing: -0.02em;
 }
 
 .tc-premium-subtitle {
-    font-size: 1.1rem;
-    color: #cbd5e1;
+    font-size: 1rem;
+    color: #94a3b8;
     line-height: 1.6;
     margin: 0;
 }
 
-/* SECTION HEADERS */
+/* =====================================================================
+   SECTION 2: PREMIUM RESOURCE & DOWNLOAD CENTER (MODERN CARD DESIGN)
+   ==================================================================== */
 .tc-premium-section {
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
 }
 
 .tc-section-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
 }
 
 .tc-section-header.text-center {
@@ -95,7 +91,7 @@
 }
 
 .tc-section-header h2 {
-    font-size: 2rem;
+    font-size: 1.85rem;
     font-weight: 800;
     color: #f8fafc;
     margin: 0 0 0.5rem 0;
@@ -103,11 +99,134 @@
 
 .tc-section-header p {
     color: #94a3b8;
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin: 0;
 }
 
-/* BENEFITS GRID */
+/* KARTU EKSKLUSIF DOWNLOAD CENTER */
+.tc-download-hub-card {
+    background: rgba(17, 24, 39, 0.75);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 20px;
+    padding: 2.25rem;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    max-width: 960px;
+    margin: 0 auto;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.tc-download-hub-card:hover {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.tc-download-hub-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 1.5rem;
+}
+
+.tc-download-hub-icon {
+    font-size: 2.5rem;
+    background: rgba(139, 92, 246, 0.12);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    flex-shrink: 0;
+}
+
+.tc-download-hub-title {
+    font-size: 1.35rem;
+    color: #ffffff;
+    font-weight: 800;
+    margin: 0 0 0.25rem 0;
+}
+
+.tc-download-hub-subtitle {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin: 0;
+    line-height: 1.45;
+}
+
+/* GRID 2 KOLOM UNDUHAN (FREE VS PREMIUM) */
+.tc-download-hub-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.tc-download-hub-column {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 1.25rem;
+}
+
+.tc-download-hub-column h4 {
+    font-size: 0.95rem;
+    color: #f8fafc;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tc-download-hub-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.tc-download-hub-list li {
+    font-size: 0.875rem;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* TOMBOL AKSI UTAMA DOWNLOAD CENTER */
+.tc-download-hub-action {
+    text-align: center;
+}
+
+.tc-btn-download-hub {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.tc-btn-download-hub:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+/* =====================================================================
+   BENEFITS, ROADMAP, PLANS & FAQ (TETAP SAMA & RAPI)
+   ==================================================================== */
 .tc-benefits-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -140,7 +259,6 @@
     margin: 0;
 }
 
-/* TIMELINE ROADMAP */
 .tc-timeline-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -197,7 +315,6 @@
     color: #cbd5e1;
 }
 
-/* PLANS GRID */
 .tc-plans-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -275,7 +392,6 @@
     font-weight: 600;
 }
 
-/* CATALOG GRID */
 .tc-catalog-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
@@ -302,7 +418,6 @@
     font-weight: 500;
 }
 
-/* FAQ ACCORDION */
 .tc-faq-wrapper {
     display: flex;
     flex-direction: column;
@@ -349,7 +464,6 @@
     line-height: 1.5;
 }
 
-/* CTA */
 .tc-premium-cta {
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
     border: 1px solid rgba(139, 92, 246, 0.3);
@@ -372,9 +486,8 @@
     line-height: 1.6;
 }
 
-/* RESPONSIVE */
+/* RESPONSIVE BREAKPOINTS */
 @media (max-width: 1024px) {
-
     .tc-benefits-grid,
     .tc-plans-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -386,7 +499,8 @@
 }
 
 @media (max-width: 768px) {
-    .tc-timeline-container {
+    .tc-timeline-container,
+    .tc-download-hub-grid {
         grid-template-columns: 1fr;
     }
 
@@ -396,7 +510,6 @@
 }
 
 @media (max-width: 640px) {
-
     .tc-benefits-grid,
     .tc-plans-grid,
     .tc-catalog-grid {
@@ -404,6 +517,6 @@
     }
 
     .tc-premium-title {
-        font-size: 2rem;
+        font-size: 1.85rem;
     }
 }

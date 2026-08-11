@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — PERSONALITY ASSESSMENT HUB
  * Path: assets/js/pages/personality.page.js
- * Status: APPROVED & FIXED (MOBILE TOP PADDING OPTIMIZED)
+ * Status: APPROVED & FIXED (STABLE BOOTSTRAP TRIGGER & RESET ON MOUNT)
  */
 
 import { PersonalityBootstrap } from '../personality/personality.bootstrap.js';
@@ -13,7 +13,6 @@ export class PersonalityHubPage {
 
     renderHub() {
         return `
-            <!-- FIX: Padding menggunakan 'clamp' agar jarak mepet (1rem) di HP, tapi tetap luas (3rem) di laptop -->
             <div class="tc-personality-hub-wrapper" style="padding: clamp(1rem, 4vh, 3rem) 1rem; max-width: 1100px; margin: 0 auto; color: #f8fafc;">
                 <!-- HEADER HUB -->
                 <div class="tc-hub-header" style="text-align: center; margin-bottom: clamp(1.5rem, 4vh, 2.5rem);">
@@ -43,8 +42,8 @@ export class PersonalityHubPage {
                         </a>
                     </div>
 
-                    <!-- MENU 2: 4 TEMPERAMEN KEPRIBADIAN (MENGGUNAKAN BUTTON UNTUK IN-PAGE SWITCHER) -->
-                    <div class="tc-hub-card" style="background: rgba(30, 41, 59, 0.9); border: 1px solid #3b82f6; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative;">
+                    <!-- MENU 2: 4 TEMPERAMEN KEPRIBADIAN (LEGACY BOOTSTRAP ENGINE) -->
+                    <div class="tc-hub-card" style="background: rgba(30, 41, 59, 0.9); border: 1px solid #3b82f6; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);">
                         <span style="position: absolute; top: -10px; right: 20px; background: #2563eb; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 700;">Rekomendasi Utama</span>
                         <div>
                             <div style="font-size: 2.25rem; margin-bottom: 1rem;">🎭</div>
@@ -67,6 +66,7 @@ export class PersonalityHubPage {
                             Mulai Tes MBTI →
                         </a>
                     </div>
+
                 </div>
             </div>
         `;
@@ -76,38 +76,40 @@ export class PersonalityHubPage {
         const app = container || document.getElementById('app');
         if (!app) return;
 
-        // JIKA VIEW ADALAH HUB: Render 3 Menu
-        if (this.currentView === 'hub') {
-            app.innerHTML = this.renderHub();
-            
-            // Daftarkan aksi tombol Mulai Tes
-            const btnStart = document.getElementById('btn-start-real-test');
-            if (btnStart) {
-                btnStart.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    this.currentView = 'real_test';
-                    await this.mount(app); // Muat ulang container dengan Tes Asli V1
-                });
-            }
-        } 
-        // JIKA VIEW ADALAH TES ASLI: Panggil Legacy Engine V1
-        else if (this.currentView === 'real_test') {
-            app.innerHTML = ''; // Bersihkan container Hub
-            
-            try {
-                // Memanggil engine tes kepribadian asli milik Anda secara langsung
-                await PersonalityBootstrap.bootstrap(app);
-            } catch (err) {
-                console.error('[PersonalityHubPage] Gagal memuat engine asli V1:', err);
-                app.innerHTML = `
-                    <div style="text-align: center; color: #f8fafc; padding: 3rem;">
-                        <h3>⚠️ Gagal memuat modul tes kepribadian.</h3>
-                        <p>Pastikan file engine legacy V1 Anda tersedia.</p>
-                        <button onclick="window.location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #2563eb; color: #fff; border: none; border-radius: 8px; cursor: pointer;">Muat Ulang Halaman</button>
-                    </div>
-                `;
-            }
+        // SELALU RESET STATE KE 'HUB' KETIKA HALAMAN DI-MOUNT ULANG
+        this.currentView = 'hub';
+        app.innerHTML = this.renderHub();
+
+        // Bind event tombol Menu ke-2
+        const btnStart = document.getElementById('btn-start-real-test');
+        if (btnStart) {
+            btnStart.addEventListener('click', async (e) => {
+                e.preventDefault();
+                app.innerHTML = '';
+                try {
+                    if (PersonalityBootstrap && typeof PersonalityBootstrap.bootstrap === 'function') {
+                        await PersonalityBootstrap.bootstrap(app);
+                    } else if (PersonalityBootstrap && typeof PersonalityBootstrap.init === 'function') {
+                        await PersonalityBootstrap.init(app);
+                    }
+                } catch (err) {
+                    console.error('[PersonalityHubPage] Gagal memuat engine V1:', err);
+                    app.innerHTML = `
+                        <div style="text-align: center; color: #f8fafc; padding: 3rem;">
+                            <h3>⚠️ Gagal memuat modul tes 4 temperamen.</h3>
+                            <p style="color: #94a3b8; margin-top: 0.5rem;">${err.message}</p>
+                            <a href="#/personality" onclick="window.location.reload()" style="display: inline-block; margin-top: 1rem; padding: 0.6rem 1.2rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 600;">Muat Ulang Halaman</a>
+                        </div>
+                    `;
+                }
+            });
         }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    destroy() {
+        this.currentView = 'hub';
     }
 }
 

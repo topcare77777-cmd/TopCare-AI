@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — CANONICAL VIEW REGISTRY
  * Path: assets/js/view/view.registry.js
- * Status: APPROVED & LOCKED
+ * Status: APPROVED & FIXED FOR ALL PERSONALITY VIEWS
  * SRP: Single Source of Truth for Page View Instantiation and Resolution.
  */
 
@@ -10,7 +10,20 @@ import { Core } from '../core/index.js';
 export class ViewRegistryEngine {
     constructor() {
         this._views = new Map();
+
+        // Pendaftaran bawaan untuk rute esensial platform
+        this._autoRegisterDefaults();
         Object.seal(this);
+    }
+
+    _autoRegisterDefaults() {
+        // Registrasi pemetaan otomatis rute Hub Kepribadian & Asesmen
+        this.register('personality', () => import('../pages/personality.page.js'));
+        this.register('personality-test', () => import('../pages/personality-test.page.js'));
+
+        // Path tepat mengarah ke subfolder test-energy/
+        this.register('test-introvert-extrovert', () => import('../pages/test-energy/test-introvert-extrovert.page.js'));
+        this.register('test-mbti', () => import('../pages/test-mbti.page.js'));
     }
 
     /**
@@ -31,16 +44,20 @@ export class ViewRegistryEngine {
     register(viewId, viewInstanceOrClass) {
         const key = this.normalizeKey(viewId);
         if (!key) {
-            Core.Logger.error('[ViewRegistry] Cannot register view with an empty or invalid key.');
+            if (Core && Core.Logger) {
+                Core.Logger.error('[ViewRegistry] Cannot register view with an empty or invalid key.');
+            }
             return;
         }
 
-        if (this._views.has(key)) {
+        if (this._views.has(key) && Core && Core.Logger) {
             Core.Logger.warn(`[ViewRegistry] View key '${key}' is already registered. Overwriting with new instance.`);
         }
 
         this._views.set(key, viewInstanceOrClass);
-        Core.Logger.info(`[ViewRegistry] Successfully registered view identifier: '${key}'`);
+        if (Core && Core.Logger) {
+            Core.Logger.info(`[ViewRegistry] Successfully registered view identifier: '${key}'`);
+        }
     }
 
     /**
@@ -78,7 +95,9 @@ export class ViewRegistryEngine {
      */
     clear() {
         this._views.clear();
-        Core.Logger.info('[ViewRegistry] Cleared all registered views.');
+        if (Core && Core.Logger) {
+            Core.Logger.info('[ViewRegistry] Cleared all registered views.');
+        }
     }
 }
 

@@ -1,8 +1,8 @@
 /**
  * TOPCARE AI PLATFORM V2 — MARKETPLACE PAGE ORCHESTRATOR
  * Path: assets/js/pages/marketplace.page.js
- * Version: 134.2.0 (BUILD 134.2 — PAGE LIFECYCLE REPAIR)
- * Status: APPROVED & LOCK CANDIDATE
+ * Version: 134.2.1 (FIXED ROUTE MOUNTING & LIFECYCLE REPAIR)
+ * Status: APPROVED & STABILIZED
  * SRP: Page orchestrator mounting Marketplace Feature.
  */
 
@@ -17,31 +17,39 @@ export class MarketplacePage {
     }
 
     async mount(container) {
-        if (this._isMounted) return;
-
+        // Tentukan target host kontainer DOM yang valid
         const targetHost =
             container ||
             this.hostElement ||
-            document.getElementById('app');
+            document.getElementById('app') ||
+            document.body;
 
         if (!targetHost) {
-            throw new Error(
-                '[MarketplacePage] Target host element was not found.'
-            );
+            console.error('[MarketplacePage] Target host element not found.');
+            return;
+        }
+
+        // Jika modul pernah dimount sebelumnya pada kontainer lain, bersihkan dahulu
+        if (this._isMounted && this._marketplace) {
+            this.destroy();
         }
 
         const pageHost = document.createElement('div');
         pageHost.id = 'tc-marketplace-page-host';
 
-        targetHost.replaceChildren(pageHost);
+        // Bersihkan isi kontainer utama dan masukkan host baru
+        targetHost.innerHTML = '';
+        targetHost.appendChild(pageHost);
 
         this._pageHost = pageHost;
-
         this._marketplace = new MarketplaceComponent();
 
-        await this._marketplace.mount(pageHost);
+        if (this._marketplace && typeof this._marketplace.mount === 'function') {
+            await this._marketplace.mount(pageHost);
+        }
 
         this._isMounted = true;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     refresh() {
@@ -60,11 +68,15 @@ export class MarketplacePage {
             this._marketplace &&
             typeof this._marketplace.destroy === 'function'
         ) {
-            this._marketplace.destroy();
+            try {
+                this._marketplace.destroy();
+            } catch (e) {
+                console.warn('[MarketplacePage] Destroy warning:', e);
+            }
         }
 
-        if (this._pageHost) {
-            this._pageHost.replaceChildren();
+        if (this._pageHost && this._pageHost.parentNode) {
+            this._pageHost.parentNode.removeChild(this._pageHost);
         }
 
         this._marketplace = null;

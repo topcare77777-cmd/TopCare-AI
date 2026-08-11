@@ -147,11 +147,17 @@
     backdrop-filter: blur(16px);
 }
 
+/* Mengurangi ukuran gambar visual otak AI di sebelah kanan sedikit saja */
 .tc-visual-img {
-    max-width: 180px;
+    max-width: 155px !important; /* Sebelumnya 180px, kita kecilkan proporsional */
     height: auto;
     display: block;
     margin: 0 auto;
+}
+
+/* Menyesuaikan wadah visualnya agar lebih pas */
+.tc-visual-center-box {
+    padding: 2rem 1.5rem !important; /* Sedikit dipadatkan agar pas */
 }
 
 .tc-floating-badge {
@@ -611,17 +617,22 @@
 /* OPTIMASI RESPONSIF & PERFORMA UNTUK HP (max-width: 768px) */
 @media (max-width: 768px) {
     .tc-hero-section {
-        padding: 2rem 1.25rem 3rem 1.25rem;
+        padding: 0.75rem 1.25rem 2rem 1.25rem !important;
     }
 
     .tc-hero-title {
-        font-size: 2rem;
-        margin-bottom: 0.75rem;
+        font-size: 1.85rem !important;
+        margin-bottom: 0.5rem !important;
+        line-height: 1.2 !important;
+    }
+
+    .tc-hero-badge {
+        margin-bottom: 0.75rem !important;
     }
 
     .tc-hero-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
+        font-size: 0.9rem !important;
+        margin-bottom: 1.25rem !important;
     }
 
     .tc-hero-actions {
@@ -637,19 +648,16 @@
         padding: 0.85rem 1rem;
     }
 
-    /* FIX MOBILE VISUAL BOX (GAMBAR 2) */
     .tc-visual-center-box {
         padding: 1.25rem 0.75rem;
-        margin: 1.5rem auto 0 auto;
+        margin: 1.25rem auto 0 auto;
         max-width: 290px;
-        /* Batasi maksimal lebar kotak */
         backdrop-filter: none !important;
         background: rgba(17, 24, 39, 0.95) !important;
     }
 
     .tc-visual-img {
         max-width: 120px;
-        /* Kecilkan gambar otak */
     }
 
     .tc-floating-badge {
@@ -667,7 +675,6 @@
         font-size: 0.55rem;
     }
 
-    /* Rapatkan lencana agar tidak terpotong layar HP */
     .badge-top-left {
         top: -8px;
         left: -8px;
@@ -689,16 +696,16 @@
     }
 
     .tc-section {
-        padding: 2.5rem 1.25rem;
+        padding: 2rem 1.25rem;
     }
 
     .tc-section-header h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1.5rem;
+        font-size: 1.4rem;
+        margin-bottom: 1.25rem;
     }
 
     .tc-stats-strip {
-        padding: 1.5rem 1.25rem;
+        padding: 1.25rem;
     }
 
     .tc-stat-item {
@@ -708,7 +715,7 @@
     }
 
     .tc-main-footer {
-        padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+        padding: 2rem 1.25rem 1.5rem 1.25rem;
     }
 }
 

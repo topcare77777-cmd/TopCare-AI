@@ -2,7 +2,7 @@
  * TOPCARE AI PLATFORM V2 — ROUTE LOADER
  * Path: assets/js/router/route.loader.js
  * Version: 131.1.0 (BUILD 131 — MANIFEST-FIRST METADATA)
- * Status: PENDING LOCK
+ * Status: APPROVED & STABILIZED
  */
 
 import { FeatureManifestRegistry } from '../features/feature.manifest.registry.js';

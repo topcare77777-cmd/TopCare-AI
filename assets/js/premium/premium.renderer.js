@@ -1,27 +1,20 @@
 /**
  * TOPCARE AI PLATFORM V2 — PREMIUM CENTER RENDERER
  * Path: assets/js/premium/premium.renderer.js
- * Status: APPROVED & LOCKED (BUILD 137.3 — PREMIUM DOWNLOAD CENTER INTEGRATION)
- * SRP: Pure UI View Generator for Premium Center with Integrated Resource & Download Hub.
+ * Status: APPROVED & CLEANED (BACKGROUND IMAGE REMOVED)
+ * SRP: Pure UI View Generator for Premium Center without background images.
  */
 
-import AssetsRegistry from '../core/registries/assets.registry.js';
 import { PREMIUM_DATA } from './premium.data.js';
 
 export const PremiumRenderer = {
     renderPage() {
         const d = PREMIUM_DATA;
-        const bgImg = AssetsRegistry.images.brand.premiumBg || 'assets/images/icons/premium-bg.webp';
 
         return `
             <div class="tc-premium-container">
-                <!-- HERO SECTION WITH BACKGROUND IMAGE & GLOW -->
+                <!-- HERO SECTION (PURE TEXT & GLOW - NO BACKGROUND IMAGE) -->
                 <section class="tc-premium-hero">
-                    <div class="tc-premium-bg-wrapper">
-                        <img src="${bgImg}" alt="TopCare Premium Background" class="tc-premium-bg-img" loading="lazy">
-                        <div class="tc-premium-overlay"></div>
-                    </div>
-
                     <div class="tc-premium-hero-content">
                         <span class="tc-premium-badge">${d.hero.badge}</span>
                         <h1 class="tc-premium-title">${d.hero.title}</h1>
@@ -29,7 +22,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 2: PREMIUM RESOURCE & DOWNLOAD CENTER (INTEGRATED ENTRY POINT) -->
+                <!-- SECTION 2: PREMIUM RESOURCE & DOWNLOAD CENTER -->
                 <section class="tc-premium-section tc-premium-download-entry">
                     <div class="tc-section-header text-center">
                         <h2>📦 Premium Resource & Download Center</h2>
@@ -65,7 +58,7 @@ export const PremiumRenderer = {
                         </div>
 
                         <div class="tc-download-hub-action">
-                            <a href="#/download-center" class="tc-btn tc-btn-primary tc-btn-lg">
+                            <a href="#/download-center" class="tc-btn-download-hub">
                                 🚀 Buka Download Center
                             </a>
                         </div>
@@ -111,7 +104,7 @@ export const PremiumRenderer = {
                     </div>
                 </section>
 
-                <!-- SECTION 5: PREMIUM PLANS (CATALOG & FUTURE ROADMAP) -->
+                <!-- SECTION 5: PREMIUM PLANS -->
                 <section class="tc-premium-section">
                     <div class="tc-section-header text-center">
                         <h2>Rencana Paket Layanan</h2>

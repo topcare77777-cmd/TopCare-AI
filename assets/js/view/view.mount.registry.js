@@ -1,5 +1,6 @@
 /**
  * file: assets/js/view/view.mount.registry.js
+ * Status: APPROVED & LOCKED
  */
 
 import { ViewMountBase } from './view.mount.base.js';
@@ -18,3 +19,5 @@ export const ViewMountRegistry = Object.freeze({
         return engine.isStarted();
     }
 });
+
+export default ViewMountRegistry;

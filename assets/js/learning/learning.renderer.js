@@ -1,8 +1,8 @@
 /**
  * TOPCARE AI PLATFORM V2 — LEARNING HUB RENDERER
  * Path: assets/js/learning/learning.renderer.js
- * Status: APPROVED & LOCKED (BUILD 128.4 — BACKGROUND IMAGE LAYOUT)
- * SRP: Pure UI Component templates generator with background image positioning.
+ * Status: APPROVED & CLEANED (NO BACKGROUND IMAGE)
+ * SRP: Pure UI Component templates generator without background image layer.
  */
 
 import AssetsRegistry from '../core/registries/assets.registry.js';
@@ -15,15 +15,6 @@ export const LearningRenderer = {
     renderHubSelection() {
         return `
             <div class="tc-learning-container">
-                <!-- BACKGROUND PREVIEW IMAGE LAYER -->
-                <div class="tc-learning-bg-preview">
-                    <img src="${AssetsRegistry.images.learning.center}" 
-                         alt="Learning Center Background" 
-                         class="tc-image-bg-effect" 
-                         loading="lazy" 
-                         decoding="async">
-                </div>
-
                 <header class="tc-learning-hero">
                     <div class="tc-learning-hero-glow"></div>
                     <span class="tc-learning-badge">Pusat Belajar TopCare AI</span>

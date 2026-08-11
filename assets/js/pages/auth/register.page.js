@@ -1,22 +1,25 @@
 /**
  * TOPCARE AI PLATFORM V2 — REGISTER PAGE CONTROLLER
  * Path: assets/js/pages/auth/register.page.js
- * Status: APPROVED & LOCKED (BUILD 129.0)
- * SRP: Isolated User Registration Controller with Simplified Password Validation (Min 8 Chars)
+ * Status: APPROVED & FIXED (ROUTER REDIRECT RESOLVED)
+ * SRP: Isolated User Registration Controller
  */
 
 import { AuthService } from '../../auth/auth.service.js';
 import { NavigationIntentService } from '../../runtime/navigation.intent.service.js';
-import { Router } from '../../router/index.js';
+import { Router } from '../../router/router.service.js';
 import { Core } from '../../core/index.js';
 
 export class RegisterPage {
     constructor(container) {
-        this.container = container || document.getElementById('app-host') || document.body;
+        this.container = container || document.getElementById('app') || document.body;
         this.isMounted = false;
     }
 
-    async mount() {
+    async mount(container) {
+        if (container) {
+            this.container = container;
+        }
         this.render();
         this.bindEvents();
         this.isMounted = true;
@@ -33,7 +36,7 @@ export class RegisterPage {
                 <form id="register-form" style="display: flex; flex-direction: column; gap: 16px;" autocomplete="off">
                     <div>
                         <label style="display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #CBD5E1;">Nama Lengkap</label>
-                        <input type="text" id="reg-fullname" placeholder="Dr. John Doe" style="width: 100%; padding: 10px 14px; background: #0F172A; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; box-sizing: border-box;" required />
+                        <input type="text" id="reg-fullname" placeholder="Masukkan nama Anda" style="width: 100%; padding: 10px 14px; background: #0F172A; border: 1px solid #334155; border-radius: 8px; color: white; font-size: 14px; box-sizing: border-box;" required />
                     </div>
 
                     <div>
@@ -78,7 +81,6 @@ export class RegisterPage {
 
             errorEl.style.display = 'none';
 
-            // Email Syntax Check
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(email)) {
                 errorEl.textContent = 'Format email tidak valid.';
@@ -86,7 +88,6 @@ export class RegisterPage {
                 return;
             }
 
-            // Simplified Password Check (Min 8 Chars)
             if (password.length < 8) {
                 errorEl.textContent = 'Kata sandi minimal terdiri dari 8 karakter.';
                 errorEl.style.display = 'block';
@@ -95,7 +96,7 @@ export class RegisterPage {
 
             try {
                 let result = null;
-                if (AuthService && typeof AuthService.register === 'function') {
+                if (typeof AuthService !== 'undefined' && AuthService && typeof AuthService.register === 'function') {
                     result = await AuthService.register({ name: fullName, email, password });
                 } else {
                     localStorage.setItem('topcare_user', JSON.stringify({
@@ -108,17 +109,24 @@ export class RegisterPage {
                 }
 
                 if (result && (result.success || result.status === 201)) {
-                    const pendingIntent = NavigationIntentService.restoreIntent();
-                    const targetRoute = pendingIntent && pendingIntent.route ? pendingIntent.route : '/coach-selection';
+                    if (Core && Core.Logger) {
+                        Core.Logger.info(`[RegisterPage] Registration successful. Redirecting to personality hub.`);
+                    }
 
-                    Core.Logger.info(`[RegisterPage] Registration successful. Redirecting to: ${targetRoute}`);
-                    Router.navigate(targetRoute);
+                    // Pengalihan aman yang kompatibel dengan seluruh SPA Router
+                    if (Router && typeof Router.dispatch === 'function') {
+                        Router.dispatch('/personality');
+                    } else {
+                        window.location.hash = '#/personality';
+                    }
                 } else {
                     errorEl.textContent = result?.message || 'Gagal mendaftar. Silakan periksa kembali data Anda.';
                     errorEl.style.display = 'block';
                 }
             } catch (err) {
-                Core.Logger.error(`[RegisterPage] Exception during registration: ${err.message}`);
+                if (Core && Core.Logger) {
+                    Core.Logger.error(`[RegisterPage] Exception during registration: ${err.message}`);
+                }
                 errorEl.textContent = 'Terjadi kesalahan sistem saat mendaftar.';
                 errorEl.style.display = 'block';
             }

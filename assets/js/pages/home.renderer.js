@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — HOME DOMAIN RENDERER
  * Path: assets/js/pages/home.renderer.js
- * Status: APPROVED & UPDATED (INTERACTIVE FLOATING BADGES NAVIGATION)
+ * Status: APPROVED & FULLY CONNECTED (ALL FLOATING BADGES & ACTION BUTTONS LINKED)
  * SRP: Pure UI Component templates generator with Safe Array Handlers & Fail-safe Imports.
  */
 
@@ -33,8 +33,8 @@ export const HomeRenderer = {
                             <h1 class="tc-hero-title">${d.hero?.title || 'Bangun Potensi Dirimu Bersama TopCare AI'}</h1>
                             <p class="tc-hero-subtitle">${d.hero?.subtitle || 'Platform AI untuk belajar, mengenal diri, dan membangun masa depan.'}</p>
                             <div class="tc-hero-actions">
-                                <a href="#/register" class="tc-btn-hero-primary">Mulai Gratis Sekarang →</a>
-                                <a href="#/personality" class="tc-btn-hero-secondary">Tes Kepribadian</a>
+                                <a href="#/register" data-route="/register" class="tc-btn-hero-primary">Mulai Gratis Sekarang →</a>
+                                <a href="#/personality" data-route="/personality" class="tc-btn-hero-secondary">Tes Kepribadian</a>
                             </div>
                             <div class="tc-hero-members">
                                 <div class="tc-member-avatars">
@@ -55,25 +55,25 @@ export const HomeRenderer = {
                                 <img src="${mainImg}" alt="AI Brain Visual" class="tc-visual-img" width="400" height="400" fetchpriority="high" loading="eager" onerror="this.onerror=null; this.src='assets/images/logos/logo-utama.webp';">
                                 
                                 <!-- 1. AI Assistant -> Coach AI Chat -->
-                                <a href="#/coach" class="tc-floating-badge badge-top-left" style="text-decoration: none; cursor: pointer;">
+                                <a href="#/coach" data-route="/coach" class="tc-floating-badge badge-top-left" style="text-decoration: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center;">
                                     <span>🤖 AI Assistant</span>
-                                    <small>24/7</small>
+                                    <small>24/7 Interactive</small>
                                 </a>
 
                                 <!-- 2. Personality -> Hub Tes Kepribadian -->
-                                <a href="#/personality" class="tc-floating-badge badge-top-right" style="text-decoration: none; cursor: pointer;">
+                                <a href="#/personality" data-route="/personality" class="tc-floating-badge badge-top-right" style="text-decoration: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center;">
                                     <span>🧠 Personality</span>
-                                    <small>4 Tipe</small>
+                                    <small>4 Tipe & Jung</small>
                                 </a>
 
                                 <!-- 3. Marketplace -> Halaman Marketplace -->
-                                <a href="#/marketplace" class="tc-floating-badge badge-bottom-left" style="text-decoration: none; cursor: pointer;">
+                                <a href="#/marketplace" data-route="/marketplace" class="tc-floating-badge badge-bottom-left" style="text-decoration: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center;">
                                     <span>🛒 Marketplace</span>
                                     <small>Prompt & Asset</small>
                                 </a>
 
                                 <!-- 4. Premium -> Halaman Premium VIP -->
-                                <a href="#/premium" class="tc-floating-badge badge-bottom-right" style="text-decoration: none; cursor: pointer;">
+                                <a href="#/premium" data-route="/premium" class="tc-floating-badge badge-bottom-right" style="text-decoration: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center;">
                                     <span>👑 Premium</span>
                                     <small>Akses VIP</small>
                                 </a>
@@ -129,7 +129,7 @@ export const HomeRenderer = {
                 <section class="tc-section tc-articles-section">
                     <div class="tc-section-header flex-between">
                         <h2>Artikel Terbaru</h2>
-                        <a href="#/artikel" class="tc-link-more">Lihat Semua Artikel →</a>
+                        <a href="#/artikel" data-route="/artikel" class="tc-link-more">Lihat Semua Artikel →</a>
                     </div>
                     <div class="tc-articles-grid-wrapper">
                         <!-- ARTICLES LIST -->
@@ -162,7 +162,7 @@ export const HomeRenderer = {
                                 <li>✓ AI Assistant priority</li>
                                 <li>✓ Sertifikat digital</li>
                             </ul>
-                            <a href="#/premium" class="tc-btn-promo">Mulai Premium</a>
+                            <a href="#/premium" data-route="/premium" class="tc-btn-promo">Mulai Premium</a>
                         </div>
                     </div>
                 </section>
@@ -173,7 +173,7 @@ export const HomeRenderer = {
                         <h2>Siap Mengembangkan Potensi Terbaikmu?</h2>
                         <p>Bergabunglah dengan ribuan member TopCare AI dan mulai perjalanan transformasimu hari ini.</p>
                     </div>
-                    <a href="#/register" class="tc-btn-cta-banner">Mulai Gratis Sekarang →</a>
+                    <a href="#/register" data-route="/register" class="tc-btn-cta-banner">Mulai Gratis Sekarang →</a>
                 </section>
 
                 <!-- FOOTER -->
@@ -195,31 +195,31 @@ export const HomeRenderer = {
                         </div>
                         <div class="tc-footer-col">
                             <h4>Platform</h4>
-                            <a href="#/learning">Belajar AI</a>
-                            <a href="#/personality">Personality Test</a>
-                            <a href="#/ebook">Ebook & Library</a>
-                            <a href="#/prompt">Prompt Marketplace</a>
+                            <a href="#/learning" data-route="/learning">Belajar AI</a>
+                            <a href="#/personality" data-route="/personality">Personality Test</a>
+                            <a href="#/creator" data-route="/creator">Ebook & Library</a>
+                            <a href="#/marketplace" data-route="/marketplace">Prompt Marketplace</a>
                         </div>
                         <div class="tc-footer-col">
                             <h4>Komunitas</h4>
-                            <a href="#/community">Community Hub</a>
-                            <a href="#/creator">Creator Platform</a>
-                            <a href="#/community">Event & Webinar</a>
-                            <a href="#/community">Forum Diskusi</a>
+                            <a href="#/community" data-route="/community">Community Hub</a>
+                            <a href="#/creator" data-route="/creator">Creator Platform</a>
+                            <a href="#/community" data-route="/community">Event & Webinar</a>
+                            <a href="#/community" data-route="/community">Forum Diskusi</a>
                         </div>
                         <div class="tc-footer-col">
                             <h4>Perusahaan</h4>
-                            <a href="#/about">Tentang Kami</a>
-                            <a href="#/about">Visi & Misi</a>
-                            <a href="#/about">Karir</a>
-                            <a href="#/about">Kontak</a>
+                            <a href="#/about" data-route="/about">Tentang Kami</a>
+                            <a href="#/about" data-route="/about">Visi & Misi</a>
+                            <a href="#/about" data-route="/about">Karir</a>
+                            <a href="#/about" data-route="/about">Kontak</a>
                         </div>
                         <div class="tc-footer-col">
                             <h4>Bantuan</h4>
-                            <a href="#/faq">FAQ</a>
-                            <a href="#/faq">Panduan</a>
-                            <a href="#/about">Kebijakan Privasi</a>
-                            <a href="#/about">Syarat & Ketentuan</a>
+                            <a href="#/faq" data-route="/faq">FAQ</a>
+                            <a href="#/faq" data-route="/faq">Panduan</a>
+                            <a href="#/about" data-route="/about">Kebijakan Privasi</a>
+                            <a href="#/about" data-route="/about">Syarat & Ketentuan</a>
                         </div>
                         <div class="tc-footer-col col-newsletter">
                             <h4>Newsletter</h4>

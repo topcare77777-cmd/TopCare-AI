@@ -101,6 +101,16 @@
                     menuBtn.setAttribute('aria-expanded', !isExpanded);
                 });
 
+                // Auto-close menu drawer when a link is clicked
+                const navLinks = mainNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        menuBtn.classList.remove('is-active');
+                        mainNav.classList.remove('is-open');
+                        menuBtn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
                 document.addEventListener('click', (e) => {
                     if (mainNav.classList.contains('is-open') && !mainNav.contains(e.target) && !menuBtn.contains(e.target)) {
                         menuBtn.classList.remove('is-active');
