@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — CORE PLATFORM ROUTER ENGINE
  * Path: assets/js/core/router/app-router.js
- * Status: APPROVED & REPAIRED (SAFE CONTAINER INJECTION FOR PAGE CONSTRUCTORS)
+ * Status: APPROVED & REPAIRED (SAFE CONTAINER INJECTION & UNIFIED NAVIGATION)
  */
 
 import { ROUTES_REGISTRY } from './routes.registry.js';
@@ -40,6 +40,20 @@ export class AppRouterEngine {
 
         const normalizedPath = path.startsWith('#') ? path : `#/${path.replace(/^\//, '')}`;
         this._routes.set(normalizedPath, routeDefinition);
+    }
+
+    /**
+     * Navigasi Programmatis (Single Source of Truth)
+     * Menggantikan fungsi Router.navigate() pada arsitektur router lama.
+     */
+    navigate(path) {
+        if (!path) return;
+        const targetHash = path.startsWith('#') ? path : `#/${path.replace(/^\//, '')}`;
+
+        // Memperbarui hash akan secara otomatis memicu _handleRouteTransition via event listener
+        if (window.location.hash !== targetHash) {
+            window.location.hash = targetHash;
+        }
     }
 
     async _handleRouteTransition(navigationType = 'hashchange') {
@@ -88,7 +102,7 @@ export class AppRouterEngine {
                     module.HomePage ||
                     module;
 
-                // FIX 3: Injeksi aman this._mainContainer ke constructor untuk CoachPage & MarketplacePage
+                // Injeksi aman this._mainContainer ke constructor untuk Page Controllers
                 if (typeof ExportedClass === 'function') {
                     try {
                         component = new ExportedClass(this._mainContainer);

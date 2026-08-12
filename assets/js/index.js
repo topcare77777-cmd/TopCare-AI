@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — APPLICATION ENTRYPOINT
  * Path: assets/js/index.js
- * Version: 145.0.0 (BUILD 145.0 — SYNTAX ERROR FIXED & CLEAN BOOTSTRAP)
+ * Version: 145.0.1 (BUILD NEXT — FIXED MARKETPLACE ROUTE)
  * Status: APPROVED & ACTIVE
  */
 
@@ -14,9 +14,9 @@ import { appRouter } from './core/router/app-router.js';
  * Factory penangan modul rute secara aman
  */
 function createSafeRouteFactory(importFn) {
-    return function() {
+    return function () {
         return {
-            mount: async function(container) {
+            mount: async function (container) {
                 const targetContainer = container || document.getElementById('app') || document.body;
                 try {
                     const module = await importFn();
@@ -54,74 +54,74 @@ function registerAllRoutes() {
     appRouter.registerRoute('#/home', {
         title: 'Beranda — TopCare AI Platform',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/home.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/home.page.js'); })
     });
 
     appRouter.registerRoute('#/learning', {
         title: 'Pusat Pembelajaran — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/learning.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/learning.page.js'); })
     });
 
     appRouter.registerRoute('#/coach', {
         title: 'Diskusi Coach AI — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/coach.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/coach.page.js'); })
     });
 
     appRouter.registerRoute('#/creator', {
         title: 'Creator Hub — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/creator.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/creator.page.js'); })
     });
 
     appRouter.registerRoute('#/community', {
         title: 'Komunitas Global — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/community.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/community.page.js'); })
     });
 
     appRouter.registerRoute('#/marketplace', {
         title: 'Marketplace Prompt & Asset — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/home.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/marketplace.page.js'); })
     });
 
     appRouter.registerRoute('#/premium', {
         title: 'Premium Center — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/premium.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/premium.page.js'); })
     });
 
     appRouter.registerRoute('#/about', {
         title: 'Tentang Kami — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/about.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/about.page.js'); })
     });
 
     // DOMAIN PERSONALITY & TES ENERGI JUNG
     appRouter.registerRoute('#/personality', {
         title: 'Pilih Tes Kepribadian — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/personality.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/personality.page.js'); })
     });
 
     appRouter.registerRoute('#/personality-test', {
         title: 'Tes 4 Temperamen Utama — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/personality-test.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/personality-test.page.js'); })
     });
 
     appRouter.registerRoute('#/test-introvert-extrovert', {
         title: 'Tes Energi Introvert vs Ekstrovert — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/test-energy/test-introvert-extrovert.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/test-energy/test-introvert-extrovert.page.js'); })
     });
 
     appRouter.registerRoute('#/test-mbti', {
         title: 'Tes Tipe MBTI — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./pages/test-mbti.page.js'); })
+        factory: createSafeRouteFactory(function () { return import('./pages/test-mbti.page.js'); })
     });
 }
 
@@ -135,7 +135,7 @@ function initSubsystems() {
 
     const langBtn = document.getElementById('lang-toggle-btn');
     if (langBtn) {
-        langBtn.addEventListener('click', function() {
+        langBtn.addEventListener('click', function () {
             if (typeof LanguageService.toggleLanguage === 'function') {
                 LanguageService.toggleLanguage();
             }
@@ -154,7 +154,7 @@ function initSubsystems() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async function () {
     try {
         initSubsystems();
 

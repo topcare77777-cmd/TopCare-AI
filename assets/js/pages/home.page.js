@@ -1,52 +1,69 @@
 /**
- * TOPCARE AI PLATFORM V2 — HOME PAGE CONTROLLER
+ * TOPCARE AI PLATFORM V2
  * Path: assets/js/pages/home.page.js
- * Status: APPROVED & FIXED (RESOLVED ReferenceError appMount)
+ * Status: APPROVED & FIXED (Removed Invalid Constructor Call)
  */
 
-import HomeRenderer from './home.renderer.js';
-import { Router } from '../router/router.service.js';
+import { appRouter } from '../core/router/app-router.js';
+import * as HomeRendererModule from './home.renderer.js';
 
 export class HomePage {
-    constructor() {
-        this.container = null;
+    constructor(container) {
+        this.container = container || document.getElementById('app') || document.body;
+        
+        // Resolve HomeRenderer safely as an Object, DO NOT use 'new'
+        this.renderer = HomeRendererModule.HomeRenderer || HomeRendererModule.default || HomeRendererModule;
     }
+    
+    async mount(target) {
+        const container = target || this.container;
+        
+        // Call the render method directly from the resolved object
+        if (this.renderer && typeof this.renderer.render === 'function') {
+            container.innerHTML = this.renderer.render();
+        } else if (this.renderer && typeof this.renderer.renderPage === 'function') {
+            container.innerHTML = this.renderer.renderPage();
+        } else {
+            console.error('[HomePage] HomeRenderer object does not expose a render method:', this.renderer);
+        }
 
-    async mount() {
-        const appMount = document.getElementById('app');
-        if (!appMount) return;
-
-        // Render HTML template dari renderer
-        appMount.innerHTML = HomeRenderer.renderPage();
-        this.container = appMount.querySelector('.tc-home-wrapper');
-
-        // Pasang Event Listener Khusus untuk Kartu Hero Interaktif
-        this._bindHeroNavigation(appMount);
+        this.bindEvents();
     }
-
-    _bindHeroNavigation(appContainer) {
-        if (!appContainer) return;
-
-        appContainer.addEventListener('click', (e) => {
-            const link = e.target.closest('a[href^="#/"]');
-            if (link) {
-                const targetRoute = link.getAttribute('href').replace('#', '');
-                
-                // Panggil Router platform jika tersedia
-                if (Router && typeof Router.dispatch === 'function') {
-                    e.preventDefault();
-                    Router.dispatch(targetRoute);
-                    window.location.hash = '#' + targetRoute;
+    
+    bindEvents() {
+        const loginBtn = document.getElementById('btn-login');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', () => {
+                if (appRouter && typeof appRouter.navigate === 'function') {
+                    appRouter.navigate('/login');
                 }
-            }
-        });
+            });
+        }
+        
+        const registerBtn = document.getElementById('btn-register');
+        if (registerBtn) {
+            registerBtn.addEventListener('click', () => {
+                if (appRouter && typeof appRouter.navigate === 'function') {
+                    appRouter.navigate('/register');
+                }
+            });
+        }
+        
+        const ctaBtn = document.getElementById('btn-hero-cta');
+        if (ctaBtn) {
+            ctaBtn.addEventListener('click', () => {
+                if (appRouter && typeof appRouter.navigate === 'function') {
+                    appRouter.navigate('/register');
+                }
+            });
+        }
     }
-
-    unmount() {
+    
+    destroy() {
         if (this.container) {
-            this.container = null;
+            this.container.innerHTML = '';
         }
     }
 }
 
-export default new HomePage();
+export default HomePage;

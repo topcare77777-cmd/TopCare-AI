@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V2 — CONVERSATIONAL COACHING ENGINE
  * Path: assets/js/coach/conversation/coach-conversation-engine.js
- * Version: 148.0.0 (HOTFIX BUILD — _getSafePersonality & Question-First Architecture)
+ * Version: 152.0.0 (HOTFIX — DUPLICATE SOURCE REMOVAL)
  * Status: APPROVED & FULL REPLACEMENT
  * SRP: Current-intent-first, stateful, multi-signal orchestrator for TopCare AI Coach.
  */
@@ -33,10 +33,12 @@ export class CoachConversationEngine {
             this.personalizationRules = null;
         }
 
+        // Internal memory state untuk context follow-up ringan
         this.internalMemory = {
             turns: [],
             extractedSkills: new Set(),
-            activeTopic: null
+            activeTopic: null,
+            activeSubtopic: null
         };
     }
 
@@ -52,22 +54,33 @@ export class CoachConversationEngine {
 
         // 2. GREETING GATE (PRIORITY 0)
         if (this._isGreeting(normalizedInput)) {
-            const resp = "Halo! Senang kamu datang. Ada yang ingin kamu ceritakan atau diskusikan hari ini?";
+            let resp = "Halo! Senang kamu datang. Ada yang ingin kamu ceritakan atau diskusikan hari ini?";
+            if (normalizedInput.includes('kabar')) {
+                resp = "Kabar baik! Ada yang ingin kamu diskusikan hari ini?";
+            }
             this._updateMemory('OPENING', 'GREETING', 'NEUTRAL', 'GENERAL', rawText, resp);
             return resp;
         }
 
-        // 3. SHORT-TERM MEMORY & CONTINUITY
+        // 3. SHORT-TERM MEMORY
         const recentTurns = (this.memoryEngine && typeof this.memoryEngine.getRecentTurns === 'function')
             ? (this.memoryEngine.getRecentTurns(5) || [])
             : this.internalMemory.turns.slice(-5);
 
         // 4. SIGNAL EXTRACTION
-        const signals = this._extractSignals(normalizedInput);
+        const signals = this._extractSignals(normalizedInput, rawText);
 
         // 5. CONTEXT CONTINUITY INJECTION (Enrichment Only)
         if (!signals.domain && this.internalMemory.activeTopic) {
             signals.domain = this.internalMemory.activeTopic;
+        }
+        if (!signals.subtopic && this.internalMemory.activeSubtopic) {
+            signals.subtopic = this.internalMemory.activeSubtopic;
+        }
+
+        // Follow-up hanya aktif jika ada activeTopic / activeSubtopic sebelumnya
+        if (signals.isFollowUp && !this.internalMemory.activeTopic && !this.internalMemory.activeSubtopic) {
+            signals.isFollowUp = false;
         }
 
         // 6. INTENT CLASSIFICATION
@@ -88,6 +101,8 @@ export class CoachConversationEngine {
 
         // 11. STATE & MEMORY UPDATE
         if (signals.domain) this.internalMemory.activeTopic = signals.domain;
+        if (signals.subtopic) this.internalMemory.activeSubtopic = signals.subtopic;
+
         this._updateMemory(nextStage, intent, signals.primaryEmotion, signals.domain, rawText, response);
 
         return response;
@@ -100,15 +115,13 @@ export class CoachConversationEngine {
         this.internalMemory.turns = [];
         this.internalMemory.extractedSkills.clear();
         this.internalMemory.activeTopic = null;
+        this.internalMemory.activeSubtopic = null;
     }
 
     // =========================================================================
     // INTERNAL PIPELINE
     // =========================================================================
 
-    /**
-     * Resolves personality data defensively to prevent runtime errors.
-     */
     _getSafePersonality() {
         try {
             return localStorage.getItem('user_personality') || null;
@@ -129,11 +142,11 @@ export class CoachConversationEngine {
     }
 
     _isGreeting(text) {
-        const greetings = ['halo', 'hai', 'hello', 'hi', 'selamat pagi', 'selamat siang', 'selamat sore', 'selamat malam', 'pagi', 'siang', 'sore', 'malam'];
+        const greetings = ['halo', 'hai', 'hello', 'hi', 'selamat pagi', 'selamat siang', 'selamat sore', 'selamat malam', 'pagi', 'siang', 'sore', 'malam', 'apa kabar', 'bagaimana kabarnya', 'bagaimana kabar', 'gimana kabarnya', 'gimana kabar'];
         return greetings.some(g => text === g || text.startsWith(g + ' ') || text === g + ' coach' || text === g + ' guys');
     }
 
-    _extractSignals(norm) {
+    _extractSignals(norm, raw) {
         const sig = {
             isExplicitQuestion: false,
             isClarification: false,
@@ -142,7 +155,10 @@ export class CoachConversationEngine {
             isDigitalProduct: false,
             isContextSetup: false,
             isCurrentMarket: false,
+            isFollowUp: false,
+            isCapitalQuestion: false,
             domain: null,
+            subtopic: null,
             lifeEvents: [],
             emotions: [],
             primaryEmotion: 'NEUTRAL',
@@ -150,17 +166,34 @@ export class CoachConversationEngine {
         };
 
         // EXPLICIT QUESTION DETECTION
-        const qPatterns = [/\bapa\b/, /\bbagaimana\b/, /\bkenapa\b/, /\bmengapa\b/, /\bkapan\b/, /\bapakah\b/, /\bbisa\b/, /\bboleh\b/, /\bcocok\b/, /kira kira/, /menurut(mu| kamu)/, /caranya/, /cara /];
-        if (norm.includes('?') || qPatterns.some(p => p.test(norm))) sig.isExplicitQuestion = true;
+        const qPatterns = [/\bapa\b/, /\bbagaimana\b/, /\bkenapa\b/, /\bmengapa\b/, /\bkapan\b/, /\bapakah\b/, /\bbisa\b/, /\bboleh\b/, /\bcocok\b/, /kira kira/, /menurut(mu| kamu)/, /caranya/, /cara /, /\bberapa\b/];
+        if (raw.includes('?') || qPatterns.some(p => p.test(norm))) sig.isExplicitQuestion = true;
 
-        // CLARIFICATION
-        if (norm.match(/maksud(nya| kamu|mu) apa/) || norm.match(/apa maksud(nya|mu)/) || norm.match(/kurang paham/) || norm.match(/jelaskan lagi/)) {
+        // SHORT CLARIFICATION (STRICT BOUNDARY / EXACT MATCH)
+        const clarifRegex = /^(apa itu|itu apa|maksudnya|maksudnya apa|apa maksudnya|maksud kamu apa|maksud kamu)$/;
+        if (clarifRegex.test(norm)) {
             sig.isClarification = true;
+        }
+
+        // INTERNET BUSINESS DETECTION
+        if (norm.match(/bisnis internet|bisnis online|usaha online|bisnis di internet|kerja online|usaha internet|online business|internet business|dunia internet|kalau online/)) {
+            sig.domain = 'BUSINESS';
+            sig.subtopic = 'INTERNET_BUSINESS';
+        }
+
+        // CAPITAL FOLLOW-UP DETECTION
+        if (norm.match(/modalnya berapa|modal minimal|modalnya minimal|butuh modal|membutuhkan modal|minimal modal|modal awal|mulainya dari berapa|modal berapa|butuh berapa modal/)) {
+            sig.isCapitalQuestion = true;
+        }
+
+        // FOLLOW-UP DETECTION
+        if (norm.match(/bisnis tersebut|bisnis itu|yang tadi|tadi apa saja|apa saja bisnis tersebut|kalau di dunia internet|kalau online|modalnya|butuh modal|membutuhkan modal|berapa modal/)) {
+            sig.isFollowUp = true;
         }
 
         // EXPLICIT SETUP & SHARING
         if (norm.match(/mau tanya tentang( peluang)? (bisnis|usaha|kerja)/) || norm.match(/tanya tentang (bisnis|usaha)/)) sig.isContextSetup = true;
-        if (norm.match(/mau sharing/) || norm.match(/ingin cerita/) || norm.match(/mau cerita/) || norm.match(/cuma mau cerita/)) sig.isSharing = true;
+        if (norm.match(/mau sharing|ingin sharing|cuma mau sharing|sharing sharing|mau cerita|ingin cerita|cuma mau cerita|sharing masalah|sharing tentang|sharing soal/)) sig.isSharing = true;
 
         // CURRENT MARKET
         if (norm.match(/\b(kondisi sekarang|saat ini|trend|zaman sekarang)\b/)) sig.isCurrentMarket = true;
@@ -170,9 +203,11 @@ export class CoachConversationEngine {
         if (norm.match(/ebook|prompt|template|produk digital/)) sig.isDigitalProduct = true;
 
         // DOMAIN DETECTION
-        if (norm.match(/\b(bisnis|usaha|jualan|produk digital|peluang bisnis)\b/)) sig.domain = 'BUSINESS';
-        else if (norm.match(/\b(kerja|pekerjaan|karier|karir|freelance|remote|uang|skillku|keterampilan)\b/) || norm.includes('dari rumah')) {
-            sig.domain = 'CAREER';
+        if (!sig.domain) {
+            if (norm.match(/\b(bisnis|usaha|jualan|produk digital|peluang bisnis|masalah bisnis|soal bisnis|tentang bisnis|masalah usaha|soal usaha)\b/)) sig.domain = 'BUSINESS';
+            else if (norm.match(/\b(kerja|pekerjaan|karier|karir|freelance|remote|uang|skillku|keterampilan)\b/) || norm.includes('dari rumah')) {
+                sig.domain = 'CAREER';
+            }
         }
 
         // LIFE EVENTS
@@ -201,15 +236,24 @@ export class CoachConversationEngine {
         if (sig.isClarification) return 'CLARIFICATION_REQUEST';
         if (norm.includes('terima kasih') || norm.includes('makasih')) return 'THANKS';
 
-        // EXPLICIT QUESTION HIGHEST PRIORITY
+        // SHARING PRIORITY OVERRIDE
+        if (sig.isSharing) return 'SHARING';
+
+        // CAPITAL QUESTION PRIORITY
+        if (sig.isCapitalQuestion && sig.domain === 'BUSINESS') return 'BUSINESS_CAPITAL_FOLLOWUP';
+
+        // INTERNET BUSINESS FOLLOW UP
+        if (sig.isFollowUp && sig.subtopic === 'INTERNET_BUSINESS') return 'BUSINESS_INTERNET_FOLLOWUP';
+
+        // EXPLICIT QUESTION
         if (sig.isExplicitQuestion || norm.includes('ada cara lain')) {
-            if (sig.domain === 'BUSINESS') return 'BUSINESS_OPPORTUNITY_QUERY';
             if (sig.isDigitalProduct && sig.isMonetization) return 'DIGITAL_PRODUCT_MONETIZATION';
             if (sig.isMonetization) return 'MONETIZATION_QUERY';
+            if (sig.domain === 'BUSINESS') return 'BUSINESS_OPPORTUNITY_QUERY';
+            if (norm.match(/bisa tidak|apa bisa/)) return 'FEASIBILITY_QUESTION';
             if (norm.match(/mulai dari mana|harus bagaimana|bagaimana cara|cara mengatasi|biar bisa|langkah pertama|saran lain/)) return 'GUIDANCE_REQUEST';
             if (sig.domain === 'CAREER') return 'CAREER_QUESTION';
             if (sig.isPersonalityExplicit) return 'PERSONALITY_QUERY';
-            if (norm.match(/bisa tidak|apa bisa/)) return 'FEASIBILITY_QUESTION';
             return 'GENERAL_QUESTION';
         }
 
@@ -218,16 +262,13 @@ export class CoachConversationEngine {
         if (sig.emotions.length > 0) return 'EMOTIONAL_DISCLOSURE';
         if (sig.isPersonalityExplicit) return 'PERSONALITY_STATEMENT';
 
-        // SHARING GATE
-        if (sig.isSharing) return 'SHARING';
-
         return 'UNKNOWN';
     }
 
     _evolveStage(intent, sig) {
         if (intent === 'SHARING') return 'LISTENING';
         if (sig.emotions.length > 0 || sig.lifeEvents.length > 0) return 'VALIDATION';
-        if (sig.isExplicitQuestion || intent === 'GUIDANCE_REQUEST') return 'GUIDANCE';
+        if (sig.isExplicitQuestion || intent === 'GUIDANCE_REQUEST' || intent === 'BUSINESS_INTERNET_FOLLOWUP' || intent === 'BUSINESS_CAPITAL_FOLLOWUP') return 'GUIDANCE';
         return 'EXPLORATION';
     }
 
@@ -240,6 +281,9 @@ export class CoachConversationEngine {
         if (intent === 'CLARIFICATION_REQUEST') return 'CLARIFY_PREVIOUS';
         if (intent === 'CONTEXTUAL_QUESTION_SETUP') return 'LISTEN_READY';
         if (intent === 'SHARING' && !sig.isExplicitQuestion) return 'LISTEN';
+
+        if (intent === 'BUSINESS_CAPITAL_FOLLOWUP') return 'ANSWER_GUIDE';
+        if (intent === 'BUSINESS_INTERNET_FOLLOWUP') return 'ANSWER_GUIDE';
 
         if (sig.isExplicitQuestion || intent === 'GUIDANCE_REQUEST' || intent.includes('QUESTION')) {
             if (sig.emotions.length > 0 || sig.lifeEvents.length > 0) return 'VALIDATE_GUIDE';
@@ -259,12 +303,18 @@ export class CoachConversationEngine {
     _composeResponse(norm, sig, strategy, intent, userPersonality, isPersonalityRelevant) {
         const skillsText = Array.from(this.internalMemory.extractedSkills).join(' dan ');
 
-        // 1. CLARIFY & SETUP
         if (strategy === 'CLARIFY_PREVIOUS') return "Maksudku, dari obrolan kita, kamu bisa mulai melangkah ke depan tanpa harus menunggu semuanya sempurna. Ada banyak hal dari dirimu yang sudah bisa dimanfaatkan.";
         if (strategy === 'LISTEN_READY') return "Tentu, silakan tanya. Bagian bisnis atau peluang apa yang ingin kamu diskusikan?";
         if (strategy === 'LISTEN') return "Boleh. Ceritakan saja, aku dengarkan.";
 
-        // 2. BUSINESS / CURRENT MARKET (STATIC)
+        if (intent === 'BUSINESS_CAPITAL_FOLLOWUP') {
+            return "Modal minimalnya sangat tergantung model bisnis yang kamu pilih. Kalau jasa digital, modal awal bisa relatif kecil jika laptop dan internet sudah tersedia. Kalau produk digital seperti ebook atau template, biaya awal juga bisa rendah. Sedangkan reseller atau toko online biasanya membutuhkan modal lebih besar untuk stok dan operasional. Kalau kamu mau, kita bisa hitung contoh bisnis dengan modal Rp500 ribu, Rp1 juta, dan Rp5 juta.";
+        }
+
+        if (intent === 'BUSINESS_INTERNET_FOLLOWUP') {
+            return "Kalau yang kamu maksud bisnis di internet, pilihannya cukup banyak. Misalnya jasa digital seperti pembuatan website dan desain, freelance, affiliate marketing, menjual produk digital seperti ebook atau template, kursus online, content creator, toko online, reseller atau dropship, sampai layanan B2B digital.";
+        }
+
         if (intent === 'BUSINESS_OPPORTUNITY_QUERY') {
             let resp = "Tidak ada satu bisnis yang pasti paling bagus untuk semua orang. ";
             if (sig.isCurrentMarket) {
@@ -276,7 +326,6 @@ export class CoachConversationEngine {
             return resp;
         }
 
-        // 3. MONETIZATION & DIGITAL PRODUCT
         if (intent === 'DIGITAL_PRODUCT_MONETIZATION') {
             return "Ya, sangat bisa. Produk digital seperti ebook atau prompt memiliki pasar yang jelas. Kamu bisa memulainya dengan membagikan keahlian yang sudah kamu kuasai, lalu menawarkannya melalui platform digital.";
         }
@@ -284,7 +333,6 @@ export class CoachConversationEngine {
             return `Ya, bisa. ${skillsText ? `Menggunakan skill ${skillsText}, kamu` : 'Dengan keahlianmu, kamu'} bisa mendapatkan penghasilan dari pekerjaan seperti administrasi remote, pengolahan data, virtual assistant, atau pekerjaan freelance sederhana. Supaya lebih mudah mendapatkan klien, mulailah dengan membuat 2–3 portofolio.`;
         }
 
-        // 4. EMOTIONAL & LIFE EVENTS (VALIDATE_GUIDE / VALIDATE)
         if (strategy === 'VALIDATE_GUIDE') {
             if (sig.lifeEvents.includes('JOB_LOSS')) {
                 return "Kena PHK memang bisa membuat seseorang kehilangan arah. Wajar kalau sekarang kamu bingung. Kita tidak perlu menyelesaikan semuanya sekaligus. Dari pengalaman yang kamu sudah punya, kita bisa mulai mencari beberapa pilihan yang realistis.";
@@ -295,7 +343,6 @@ export class CoachConversationEngine {
             return "Aku paham perasaanmu. Rasa cemas dan ketakutan itu wajar. Kita bisa menghadapinya perlahan dengan mulai dari hal-hal yang masih ada di bawah kendalimu hari ini.";
         }
 
-        // 5. CAREER ANSWERS
         if (strategy === 'ANSWER_GUIDE' || intent === 'CAREER_QUESTION') {
             if (norm.match(/bekerja dari rumah saja|malas bekerja di luar/)) {
                 return "Sangat bisa. Saat ini peluang kerja jarak jauh (remote work) atau proyek freelance dari rumah makin luas. Memilih bekerja dari rumah bukan berarti membatasi diri, melainkan menyesuaikan lingkungan kerja agar lebih nyaman.";
@@ -303,14 +350,12 @@ export class CoachConversationEngine {
             return "Pekerjaan yang bisa dilakukan dari rumah sangat beragam, seperti admin online, desainer, penulis, atau asisten virtual. Hal terpenting adalah menyesuaikannya dengan keahlian yang paling membuatmu nyaman bekerja.";
         }
 
-        // 6. VALIDATION ONLY
         if (strategy === 'VALIDATE') {
             if (sig.primaryEmotion === 'SOCIAL_FEAR') return "Aku paham. Takut dinilai atau merasa malu memang bisa membuat kepercayaan diri menurun. Kamu tidak harus memaksakan diri di situasi besar; mulailah dari langkah kecil yang terasa aman.";
             if (sig.primaryEmotion === 'SADNESS') return "Aku mengerti. Merasa sedih dan lelah secara emosional adalah reaksi manusiawi ketika kita menghadapi tekanan. Berikan dirimu waktu untuk merasakan emosi tersebut tanpa harus memaksakan diri.";
             return "Aku memahami situasi yang kamu hadapi. Rasa tidak nyaman itu wajar dirasakan dalam kondisi seperti ini.";
         }
 
-        // 7. PERSONALITY INSIGHT
         if (strategy === 'INSIGHT_GUIDE' || strategy === 'INSIGHT') {
             if (sig.domain === 'CAREER' && isPersonalityRelevant) {
                 const pType = userPersonality ? userPersonality : 'tipe kepribadianmu';
@@ -321,7 +366,12 @@ export class CoachConversationEngine {
 
         if (strategy === 'GUIDE') return "Untuk memulainya, kamu tidak perlu memikirkan keseluruhan proses hingga akhir. Tentukan satu langkah paling sederhana yang bisa kamu lakukan hari ini.";
 
-        if (strategy === 'ANSWER') return "Itu pertanyaan yang menarik. Kita bisa mulai dengan mengidentifikasi sumber daya dan keahlian yang kamu miliki saat ini untuk melihat langkah apa yang paling realistis.";
+        if (strategy === 'ANSWER') {
+            if (sig.domain === 'CAREER' || sig.domain === 'BUSINESS') {
+                return "Itu pertanyaan yang menarik. Kita bisa mulai dengan mengidentifikasi sumber daya dan keahlian yang kamu miliki saat ini untuk melihat langkah apa yang paling realistis.";
+            }
+            return "Itu pertanyaan yang menarik. Boleh beri tahu aku sedikit konteksnya agar aku bisa menjawab dengan lebih tepat?";
+        }
 
         // CONVERSATIONAL_OPENER (UNKNOWN FALLBACK)
         return "Baik, aku ikut memahami arah pembicaraanmu. Kalau kamu mau, kita bisa membahasnya lebih spesifik.";

@@ -1,29 +1,16 @@
 /**
- * TOPCARE AI PLATFORM V2 — ASSESSMENT EVENT LISTENER
+ * TOPCARE AI PLATFORM V2
  * Path: assets/js/coach/listeners/assessment.listener.js
- * Status: APPROVED & LOCKED (BUILD 129.0)
- * SRP: Loose-coupling event listener bridge for Assessment Runtime events.
+ * Status: MIGRATED TO AUTHORITATIVE APP-ROUTER
  */
-
-import CoachMemory from '../coach.memory.js';
-import { Router } from '../../router/index.js';
+import { appRouter } from '../../core/router/app-router.js';
 
 export class AssessmentEventListener {
     static init() {
-        window.removeEventListener('tc:assessment:completed', this._handleAssessmentCompleted);
-        window.addEventListener('tc:assessment:completed', this._handleAssessmentCompleted);
-    }
-
-    static _handleAssessmentCompleted(event) {
-        const resultDTO = event.detail;
-        if (!resultDTO) return;
-
-        // Synchronize to CoachMemory without coupling Personality Controller to Coach Domain
-        CoachMemory.saveAssessmentResult(resultDTO);
-
-        // Transition via Enterprise Router Service
-        Router.navigate('/coach');
+        window.addEventListener('assessment:completed', (e) => {
+            console.log('[Assessment] Completed', e.detail);
+            appRouter.navigate('/coach');
+        });
     }
 }
-
 export default AssessmentEventListener;

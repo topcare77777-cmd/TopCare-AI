@@ -1,19 +1,33 @@
 /**
- * TOPCARE AI PLATFORM V2 — RUNTIME ROUTER ADAPTER
+ * TOPCARE AI PLATFORM V2 — RUNTIME ROUTER SERVICE ADAPTER
  * Path: assets/js/runtime/runtime.router.service.js
- * Status: APPROVED & ADAPTED TO CORE ROUTER SERVICE
+ * Status: MIGRATED TO AUTHORITATIVE APP-ROUTER
+ * SRP: Safe migration adapter mapping legacy router calls to the core appRouter.
  */
 
-import { Router } from '../router/router.service.js';
+import { appRouter } from '../core/router/app-router.js';
 
-export const RuntimeRouter = Object.freeze({
-    initialize() {
-        Router.start();
-        return true;
+export const RuntimeRouterService = {
+    /**
+     * Programmatic navigation mapping
+     */
+    navigate: (path) => {
+        appRouter.navigate(path);
     },
-    isInitialized() {
-        return !!window.__TC_ROUTER_INSTANCE__;
-    }
-});
 
-export default RuntimeRouter;
+    /**
+     * Dispatch mapped safely to navigate to utilize native hashchange transitions
+     */
+    dispatch: (path) => {
+        appRouter.navigate(path);
+    },
+
+    /**
+     * Dynamic route registration mapped to core router
+     */
+    register: (path, definition) => {
+        appRouter.registerRoute(path, definition);
+    }
+};
+
+export default RuntimeRouterService;
