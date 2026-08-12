@@ -15,7 +15,7 @@
  * -----------------------------------------------------------------
  */
 
-import MemoryRepository from './memory.repository.js';
+import CoachSessionHydrator from './coach.session.hydrator.js';
 import CoachRuntime from '../coach.runtime.js';
 
 /**
@@ -94,7 +94,7 @@ const MemoryPersistenceCoordinator = (() => {
      */
     async function restore() {
         try {
-            const success = await MemoryRepository.restoreSession();
+            const success = await CoachSessionHydrator.restoreSession();
             state.lastRestoreAt = new Date().toISOString();
 
             if (success) {
@@ -119,7 +119,7 @@ const MemoryPersistenceCoordinator = (() => {
         state.pendingSave = false;
 
         try {
-            const success = await MemoryRepository.persistSession();
+            const success = await CoachSessionHydrator.persistSession();
 
             if (success) {
                 state.retryCount = 0;
@@ -179,7 +179,7 @@ const MemoryPersistenceCoordinator = (() => {
         state.pendingSave = false;
         state.retryCount = 0;
 
-        const success = await MemoryRepository.clearSession();
+        const success = await CoachSessionHydrator.clearSession();
         if (success) {
             emit(PERSISTENCE_EVENTS.CLEAR_SUCCESS);
         }

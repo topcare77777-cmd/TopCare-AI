@@ -1,11 +1,11 @@
 /**
- * TOPCARE AI PLATFORM V2 — COACH RUNTIME MEMORY
- * Path: assets/js/coach/coach.memory.js
+ * TOPCARE AI PLATFORM V2 — COACH ASSESSMENT MEMORY
+ * Path: assets/js/coach/coach.assessment.memory.js
  * Status: APPROVED & LOCKED (BUILD 130 — CROSS-STORAGE BRIDGE FIX)
  * SRP: Session memory for Personality Assessment DTO & Companion State.
  */
 
-class CoachMemoryStore {
+class CoachAssessmentMemoryStore {
     constructor() {
         this.memoryKey = 'tc_v2_personality_assessment_result'; // Kunci V2 (Session)
         this.legacyKey = 'topcare-personality-test-v2';         // Kunci V1 Asli (Local)
@@ -48,7 +48,7 @@ class CoachMemoryStore {
             // 3. Jika benar-benar kosong di kedua tempat
             return this.getDefaults();
         } catch (e) {
-            console.warn("[CoachMemory] Gagal membaca memori, menggunakan default.", e);
+            console.warn("[CoachAssessmentMemory] Gagal membaca memori, menggunakan default.", e);
             return this.getDefaults();
         }
     }
@@ -89,7 +89,7 @@ class CoachMemoryStore {
         try {
             sessionStorage.setItem(this.memoryKey, JSON.stringify(this._state));
         } catch (e) {
-            console.warn('[CoachMemory] Saved in runtime memory only.');
+            console.warn('[CoachAssessmentMemory] Saved in runtime memory only.');
         }
     }
 
@@ -102,5 +102,5 @@ class CoachMemoryStore {
     }
 }
 
-export const CoachMemory = new CoachMemoryStore();
-export default CoachMemory;
+export const CoachAssessmentMemory = new CoachAssessmentMemoryStore();
+export default CoachAssessmentMemory;

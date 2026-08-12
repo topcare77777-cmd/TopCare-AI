@@ -1,13 +1,13 @@
 /**
  * TOPCARE AI PLATFORM V2
- * Path: assets/js/coach/coach.runtime.js
- * Status: MIGRATED TO AUTHORITATIVE APP-ROUTER
+ * Path: assets/js/coach/coach.navigator.js
+ * Status: MIGRATED TO AUTHORITATIVE APP-ROUTER (SAFE RENAME)
  */
 import { appRouter } from '../core/router/app-router.js';
 
-export class CoachRuntime {
+export class CoachNavigator {
     static init() {
-        console.log('[CoachRuntime] Initialized');
+        console.log('[CoachNavigator] Initialized');
     }
     static navigateToCoach() {
         appRouter.navigate('/coach');
@@ -16,4 +16,4 @@ export class CoachRuntime {
         appRouter.navigate('/coach-selection');
     }
 }
-export default CoachRuntime;
+export default CoachNavigator;

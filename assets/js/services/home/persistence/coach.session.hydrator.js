@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------
  * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
  * -----------------------------------------------------------------
- * Layer        : Layer 5 - Service (Coach Memory Repository)
+ * Layer        : Layer 5 - Service (Coach Session Hydrator)
  * Status       : ACTIVE
  * Version      : 1.0.0
  * Architecture : Development Constitution v1.1
@@ -27,10 +27,10 @@ const REPOSITORY_CONFIG = Object.freeze({
 });
 
 /**
- * Coach Memory Repository Singleton Service.
+ * Coach Session Hydrator Singleton Service.
  * Orchestrates persistence synchronization for runtime memory states.
  */
-const MemoryRepository = (() => {
+const CoachSessionHydrator = (() => {
 
     /**
      * Validates and sanitizes a loaded raw snapshot object.
@@ -50,13 +50,13 @@ const MemoryRepository = (() => {
 
         // Basic structural validation check
         if (!raw.identity || !raw.conversation || !raw.preferences) {
-            console.warn('[MemoryRepository] Snapshot validation failed: Missing required core keys.');
+            console.warn('[CoachSessionHydrator] Snapshot validation failed: Missing required core keys.');
             return null;
         }
 
         // Future migration hook can be placed here based on schemaVersion
         if (schemaVersion !== REPOSITORY_CONFIG.SCHEMA_VERSION) {
-            console.info(`[MemoryRepository] Migrating snapshot schema from ${schemaVersion} to ${REPOSITORY_CONFIG.SCHEMA_VERSION}`);
+            console.info(`[CoachSessionHydrator] Migrating snapshot schema from ${schemaVersion} to ${REPOSITORY_CONFIG.SCHEMA_VERSION}`);
         }
 
         return {
@@ -86,7 +86,7 @@ const MemoryRepository = (() => {
 
             const validSnapshot = validateAndMigrateSnapshot(rawSnapshot);
             if (!validSnapshot) {
-                console.warn('[MemoryRepository] Stored snapshot was invalid; clearing corrupted record.');
+                console.warn('[CoachSessionHydrator] Stored snapshot was invalid; clearing corrupted record.');
                 await MemoryStorage.remove();
                 return false;
             }
@@ -100,7 +100,7 @@ const MemoryRepository = (() => {
 
             return true;
         } catch (err) {
-            console.error('[MemoryRepository] Exception during session restoration:', err);
+            console.error('[CoachSessionHydrator] Exception during session restoration:', err);
             return false;
         }
     }
@@ -128,7 +128,7 @@ const MemoryRepository = (() => {
             const success = await MemoryStorage.save(snapshot);
             return success;
         } catch (err) {
-            console.error('[MemoryRepository] Exception during session persistence:', err);
+            console.error('[CoachSessionHydrator] Exception during session persistence:', err);
             return false;
         }
     }
@@ -143,7 +143,7 @@ const MemoryRepository = (() => {
             const success = await MemoryStorage.remove();
             return success;
         } catch (err) {
-            console.error('[MemoryRepository] Exception during session clearance:', err);
+            console.error('[CoachSessionHydrator] Exception during session clearance:', err);
             return false;
         }
     }
@@ -155,4 +155,4 @@ const MemoryRepository = (() => {
     });
 })();
 
-export default MemoryRepository;
+export default CoachSessionHydrator;
