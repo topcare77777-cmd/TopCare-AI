@@ -1,7 +1,8 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH PAGE SPA VIEW CONTROLLER
  * Path: assets/js/pages/coach.page.js
- * Status: APPROVED & FULLY CONNECTED TO CONVERSATION & VOICE ENGINE
+ * Version: 139.0.0 (BUILD 139 — AI COACH CONVERSATION & UI REFINEMENT)
+ * Status: APPROVED & LOCKED
  * SRP: SPA View Entry Point for Coach Discussion Hub.
  */
 
@@ -20,7 +21,6 @@ export class CoachPage {
     }
 
     async mount(container) {
-        // Dukung passing container dinamis dari Router
         if (container) {
             this.container = typeof container === 'string'
                 ? document.querySelector(container)
@@ -36,7 +36,6 @@ export class CoachPage {
             return;
         }
 
-        // Ambil pembaruan kepribadian pengguna
         this.userPersonality = localStorage.getItem('user_personality') || 'Plegmatis';
 
         this.render();
@@ -45,7 +44,8 @@ export class CoachPage {
     }
 
     render() {
-        const initialGreeting = `Halo! Saya Coach TopCare AI Anda. Berdasarkan karakter ${this.userPersonality} Anda, ada yang bisa saya bantu hari ini?`;
+        // RULE 1: Sapaan awal bersih, hangat, dan natural tanpa klausa template berlebihan
+        const initialGreeting = "Halo! Saya Coach TopCare AI. Ada yang sedang ingin kamu diskusikan atau pelajari hari ini?";
 
         this.container.innerHTML = `
             <div class="tc-coach-page-wrapper" style="max-width: 900px; margin: 0 auto; padding: clamp(1rem, 3vh, 2.5rem) 1rem; color: #f8fafc;">
@@ -114,7 +114,6 @@ export class CoachPage {
         const sendBtn = document.getElementById('coach-send-btn');
         const micBtn = document.getElementById('coach-mic-btn');
 
-        // Inisialisasi daftar suara di dropdown
         if (this.voiceEngine && typeof this.voiceEngine._initVoice === 'function') {
             this.voiceEngine._initVoice();
         }
@@ -197,6 +196,9 @@ export class CoachPage {
     destroy() {
         if (this.voiceEngine && typeof this.voiceEngine.stop === 'function') {
             this.voiceEngine.stop();
+        }
+        if (this.conversationEngine && typeof this.conversationEngine.clearHistory === 'function') {
+            this.conversationEngine.clearHistory();
         }
         if (this.container) {
             this.container.innerHTML = '';

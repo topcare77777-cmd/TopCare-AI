@@ -1,179 +1,341 @@
 /**
- * TOPCARE AI PLATFORM V2 — CONVERSATION ENGINE
+ * TOPCARE AI PLATFORM V2 — CONVERSATIONAL COACHING ENGINE
  * Path: assets/js/coach/conversation/coach-conversation-engine.js
- * Status: APPROVED & SMART INTENT DETECTION (RELATIONSHIP & DYNAMIC TYPO HANDLER)
+ * Version: 148.0.0 (HOTFIX BUILD — _getSafePersonality & Question-First Architecture)
+ * Status: APPROVED & FULL REPLACEMENT
+ * SRP: Current-intent-first, stateful, multi-signal orchestrator for TopCare AI Coach.
  */
+
+import * as MemoryModule from '../memory/coach-memory-engine.js';
+import * as PersonalizationRulesModule from '../personalization/coach-personalization-rules.js';
 
 export class CoachConversationEngine {
     constructor() {
-        this.personalityType = localStorage.getItem('user_personality') || 'Melankolis';
-        this.lastFallbackIndex = -1;
+        // Safe Memory Resolver
+        const TargetMemory = MemoryModule.CoachMemoryEngine || MemoryModule.coachMemoryEngine || MemoryModule.default;
+        if (typeof TargetMemory === 'function') {
+            try { this.memoryEngine = new TargetMemory(); } catch (e) { this.memoryEngine = TargetMemory; }
+        } else if (TargetMemory && typeof TargetMemory === 'object') {
+            this.memoryEngine = TargetMemory;
+        } else {
+            this.memoryEngine = { getRecentTurns: () => [], getCurrentStage: () => 'OPENING', setStage: () => { }, addTurn: () => { }, clear: () => { } };
+        }
+
+        // Safe Personalization Rules Resolver
+        const TargetRules = PersonalizationRulesModule.CoachPersonalizationRules ||
+            PersonalizationRulesModule.CoachPersonalizationRulesEngine ||
+            PersonalizationRulesModule.default;
+        if (typeof TargetRules === 'function') {
+            try { this.personalizationRules = new TargetRules(); } catch (e) { this.personalizationRules = TargetRules; }
+        } else if (TargetRules && typeof TargetRules === 'object') {
+            this.personalizationRules = TargetRules;
+        } else {
+            this.personalizationRules = null;
+        }
+
+        this.internalMemory = {
+            turns: [],
+            extractedSkills: new Set(),
+            activeTopic: null
+        };
     }
 
+    /**
+     * Public API consumed by coach.page.js
+     */
     processInput(userInput) {
-        const safeInput = String(userInput || '');
-        const query = safeInput.toLowerCase().trim();
+        const rawText = String(userInput || '').trim();
+        if (!rawText) return "Halo! Ada yang bisa aku bantu hari ini?";
 
-        this.personalityType = localStorage.getItem('user_personality') || 'Melankolis';
-        const pType = this.personalityType;
+        // 1. NORMALIZE & STT TOLERANCE
+        const normalizedInput = this._normalize(rawText);
 
-        if (!query || query === '[object mouseevent]' || query === '[object event]') {
-            return `Silakan ketikkan pertanyaan Anda, saya siap memandu Anda sebagai pendamping berkarakter ${pType}.`;
+        // 2. GREETING GATE (PRIORITY 0)
+        if (this._isGreeting(normalizedInput)) {
+            const resp = "Halo! Senang kamu datang. Ada yang ingin kamu ceritakan atau diskusikan hari ini?";
+            this._updateMemory('OPENING', 'GREETING', 'NEUTRAL', 'GENERAL', rawText, resp);
+            return resp;
         }
 
-        const containsAny = (words) => words.some(word => query.includes(word));
+        // 3. SHORT-TERM MEMORY & CONTINUITY
+        const recentTurns = (this.memoryEngine && typeof this.memoryEngine.getRecentTurns === 'function')
+            ? (this.memoryEngine.getRecentTurns(5) || [])
+            : this.internalMemory.turns.slice(-5);
 
-        // ==========================================
-        // DETEKSI TYPO NAMA TEMPERAMEN (SANGAT FLEKSIBEL)
-        // ==========================================
-        const isKoleris = containsAny(['koleris', 'colleris', 'choleris', 'collery', 'kolery', 'kolerik', 'coleris', 'kolaris', 'colaris']);
-        const isSanguinis = containsAny(['sanguinis', 'sangwinis', 'sanguin', 'sangwin', 'sanguines', 'sangguinis']);
-        const isMelankolis = containsAny(['melankolis', 'melankoli', 'melancolis', 'melankolik', 'meloncolis', 'melancholic', 'melangcolis']);
-        const isPlegmatis = containsAny(['plegmatis', 'pelekmatis', 'pelek mati', 'plegma', 'flegmatis', 'phlegmatic', 'plekmatis', 'pregmatis', 'pregis', 'prekmatis']);
+        // 4. SIGNAL EXTRACTION
+        const signals = this._extractSignals(normalizedInput);
 
-        // ==========================================
-        // 1. SAPAAN & KABAR
-        // ==========================================
-        if (containsAny(['halo', 'hai', 'pagi', 'siang', 'sore', 'malam', 'hei', 'kabar', 'hi', 'salam'])) {
-            return `Halo! Kabar saya sangat baik. Sebagai pendamping dengan pendekatan ${pType}, saya siap membantu Anda belajar AI dan mengembangkan potensi diri hari ini. Apa yang ingin Anda diskusikan?`;
+        // 5. CONTEXT CONTINUITY INJECTION (Enrichment Only)
+        if (!signals.domain && this.internalMemory.activeTopic) {
+            signals.domain = this.internalMemory.activeTopic;
         }
 
-        // ==========================================
-        // 2. TERIMA KASIH / PENUTUP
-        // ==========================================
-        if (containsAny(['terima kasih', 'makasih', 'thanks', 'oke', 'baiklah', 'sip', 'mantap', 'siap', 'okey', 'bagus'])) {
-            return `Sama-sama! Jika ada hal lain yang ingin Anda eksplorasi, baik itu tentang materi AI maupun pengembangan karakter ${pType} Anda, jangan ragu untuk bertanya.`;
+        // 6. INTENT CLASSIFICATION
+        const intent = this._classifyIntent(normalizedInput, signals);
+
+        // 7. STAGE EVOLUTION
+        const nextStage = this._evolveStage(intent, signals);
+
+        // 8. PERSONALITY RELEVANCE GATE
+        const userPersonality = this._getSafePersonality();
+        const isPersonalityRelevant = this._evaluatePersonalityRelevance(normalizedInput, signals, intent);
+
+        // 9. RESPONSE STRATEGY SELECTION
+        const strategy = this._selectStrategy(intent, signals);
+
+        // 10. NATURAL RESPONSE COMPOSITION
+        const response = this._composeResponse(normalizedInput, signals, strategy, intent, userPersonality, isPersonalityRelevant);
+
+        // 11. STATE & MEMORY UPDATE
+        if (signals.domain) this.internalMemory.activeTopic = signals.domain;
+        this._updateMemory(nextStage, intent, signals.primaryEmotion, signals.domain, rawText, response);
+
+        return response;
+    }
+
+    clearHistory() {
+        if (this.memoryEngine && typeof this.memoryEngine.clear === 'function') {
+            try { this.memoryEngine.clear(); } catch (e) { }
+        }
+        this.internalMemory.turns = [];
+        this.internalMemory.extractedSkills.clear();
+        this.internalMemory.activeTopic = null;
+    }
+
+    // =========================================================================
+    // INTERNAL PIPELINE
+    // =========================================================================
+
+    /**
+     * Resolves personality data defensively to prevent runtime errors.
+     */
+    _getSafePersonality() {
+        try {
+            return localStorage.getItem('user_personality') || null;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    _normalize(text) {
+        let n = text.toLowerCase().replace(/[.!?,]/g, ' ').replace(/\s+/g, ' ').trim();
+        n = n.replace(/\b(skirku|skilku|skil ku|skill ku)\b/g, 'skillku');
+        n = n.replace(/\b(prom e)\b/g, 'prompt');
+        n = n.replace(/\b(e book|e-book)\b/g, 'ebook');
+        n = n.replace(/\b(gimana)\b/g, 'bagaimana');
+        n = n.replace(/\b(ga|gak|nggak|ngga|ndak)\b/g, 'tidak');
+        n = n.replace(/\b(duit|cuan|pendapatan)\b/g, 'uang');
+        return n;
+    }
+
+    _isGreeting(text) {
+        const greetings = ['halo', 'hai', 'hello', 'hi', 'selamat pagi', 'selamat siang', 'selamat sore', 'selamat malam', 'pagi', 'siang', 'sore', 'malam'];
+        return greetings.some(g => text === g || text.startsWith(g + ' ') || text === g + ' coach' || text === g + ' guys');
+    }
+
+    _extractSignals(norm) {
+        const sig = {
+            isExplicitQuestion: false,
+            isClarification: false,
+            isSharing: false,
+            isMonetization: false,
+            isDigitalProduct: false,
+            isContextSetup: false,
+            isCurrentMarket: false,
+            domain: null,
+            lifeEvents: [],
+            emotions: [],
+            primaryEmotion: 'NEUTRAL',
+            isPersonalityExplicit: false
+        };
+
+        // EXPLICIT QUESTION DETECTION
+        const qPatterns = [/\bapa\b/, /\bbagaimana\b/, /\bkenapa\b/, /\bmengapa\b/, /\bkapan\b/, /\bapakah\b/, /\bbisa\b/, /\bboleh\b/, /\bcocok\b/, /kira kira/, /menurut(mu| kamu)/, /caranya/, /cara /];
+        if (norm.includes('?') || qPatterns.some(p => p.test(norm))) sig.isExplicitQuestion = true;
+
+        // CLARIFICATION
+        if (norm.match(/maksud(nya| kamu|mu) apa/) || norm.match(/apa maksud(nya|mu)/) || norm.match(/kurang paham/) || norm.match(/jelaskan lagi/)) {
+            sig.isClarification = true;
         }
 
-        // ==========================================
-        // 3. CURHAT / EMOSI (MALAS, BOSAN, CAPEK)
-        // ==========================================
-        if (containsAny(['malas', 'males', 'bosan', 'jenuh', 'capek', 'lelah', 'mager', 'enggan', 'pusing'])) {
-            return `Merasa ${query.includes('malas') || query.includes('males') ? 'malas' : 'jenuh'} itu sangat wajar kok! Sebagai seorang ${pType}, Anda tidak perlu memaksakan diri maraton belajar sekaligus. Coba mulai dari hal terkecil dulu, misalnya membaca 1 paragraf atau mencoba 1 prompt AI santai selama 3 menit. Mau coba yang ringan-ringan dulu?`;
+        // EXPLICIT SETUP & SHARING
+        if (norm.match(/mau tanya tentang( peluang)? (bisnis|usaha|kerja)/) || norm.match(/tanya tentang (bisnis|usaha)/)) sig.isContextSetup = true;
+        if (norm.match(/mau sharing/) || norm.match(/ingin cerita/) || norm.match(/mau cerita/) || norm.match(/cuma mau cerita/)) sig.isSharing = true;
+
+        // CURRENT MARKET
+        if (norm.match(/\b(kondisi sekarang|saat ini|trend|zaman sekarang)\b/)) sig.isCurrentMarket = true;
+
+        // MONETIZATION & DIGITAL PRODUCT
+        if (norm.match(/menghasilkan uang|cari uang|dapat uang|monetisasi|dijual|menjual|jual|laku/)) sig.isMonetization = true;
+        if (norm.match(/ebook|prompt|template|produk digital/)) sig.isDigitalProduct = true;
+
+        // DOMAIN DETECTION
+        if (norm.match(/\b(bisnis|usaha|jualan|produk digital|peluang bisnis)\b/)) sig.domain = 'BUSINESS';
+        else if (norm.match(/\b(kerja|pekerjaan|karier|karir|freelance|remote|uang|skillku|keterampilan)\b/) || norm.includes('dari rumah')) {
+            sig.domain = 'CAREER';
         }
 
-        // ==========================================
-        // 4. HUBUNGAN / DINAMIKA RELASI ANTARA DUA KARAKTER (PRIORITAS KHUSUS)
-        // ==========================================
-        if (containsAny(['hubungan', 'relasi', 'dinamika', 'pasangan', 'interaksi antara', 'antara'])) {
-            if (isPlegmatis && isSanguinis) {
-                return `Dinamika Plegmatis & Sanguinis: Plegmatis yang tenang dan damai menjadi penyeimbang alami bagi Sanguinis yang antusias dan ekspresif. Sanguinis membawa keceriaan dan ide-ide baru, sementara Plegmatis memberikan rasa aman dan pendengar yang setia.`;
-            }
-            if (isPlegmatis && isKoleris) {
-                return `Dinamika Plegmatis & Koleris: Pasangan kombinasi klasik "Pemimpin & Pengikut yang Setia". Koleris bertindak sebagai pengambil keputusan yang tegas dan cepat, sementara Plegmatis menjadi pelaksana yang tenang, sabar, dan jarang berkonflik. Koleris perlu menjaga agar tidak terlalu mendominasi.`;
-            }
-            if (isPlegmatis && isMelankolis) {
-                return `Dinamika Plegmatis & Melankolis: Hubungan yang sangat tenang, rapi, dan teratur. Melankolis memberikan detail dan standar tinggi, sementara Plegmatis memberikan kenyamanan dan kedamaian tanpa tekanan.`;
-            }
-            if (isKoleris && isSanguinis) {
-                return `Dinamika Koleris & Sanguinis: Hubungan yang sangat berenergi tinggi dan ekstrovert! Koleris fokus pada eksekusi target, sedangkan Sanguinis fokus pada jaringan sosial dan kreativitas.`;
-            }
-            if (isKoleris && isMelankolis) {
-                return `Dinamika Koleris & Melankolis: Kombinasi berorientasi kerja yang luar biasa. Koleris menentukan arah besar (visioner), dan Melankolis memastikan semua detail perencanaan sempurna tanpa cela.`;
-            }
-            if (isSanguinis && isMelankolis) {
-                return `Dinamika Sanguinis & Melankolis: Pasangan yang saling melengkapi pertentangan. Sanguinis membawa warna dan kegembiraan, sedangkan Melankolis menjaga keteraturan dan kerapian data/fakta.`;
-            }
+        // LIFE EVENTS
+        if (norm.match(/\b(phk|kehilangan pekerjaan|kehilangan kerja|dipecat|penganggur(an)?|belum dapat kerja)\b/)) sig.lifeEvents.push('JOB_LOSS');
+
+        // EMOTIONS
+        if (norm.match(/\b(malu|takut|cemas|khawatir|bingung|lelah|capek|frustrasi|kecewa|sedih|tertekan|minder)\b/) || norm.includes('kurang percaya diri') || norm.includes('tidak percaya diri') || norm.includes('kehilangan arah')) {
+            sig.emotions.push('DISTRESS');
+            if (norm.match(/malu|takut diejek|takut dinilai/)) sig.primaryEmotion = 'SOCIAL_FEAR';
+            else if (norm.includes('sedih')) sig.primaryEmotion = 'SADNESS';
+            else if (norm.includes('bingung') || norm.includes('kehilangan arah')) sig.primaryEmotion = 'CONFUSION';
+            else sig.primaryEmotion = 'GENERAL_DISTRESS';
         }
 
-        // ==========================================
-        // 5. CARA BERKOMUNIKASI / INTERAKSI INDIVIDUAL
-        // ==========================================
-        if (containsAny(['berkomunikasi', 'komunikasi', 'ngobrol', 'bicara', 'menghadapi', 'interaksi']) || (containsAny(['bagaimana', 'gimana', 'kalo', 'kalau']) && (isKoleris || isSanguinis || isMelankolis || isPlegmatis))) {
-            if (isKoleris) {
-                return `Untuk berkomunikasi dengan tipe Koleris: Bicara langsung ke inti poin (to the point), fokus pada solusi dan hasil nyata, hargai efisiensi waktu mereka, serta hindari penjelasan yang bertele-tele.`;
-            }
-            if (isSanguinis) {
-                return `Untuk berkomunikasi dengan tipe Sanguinis: Gunakan nada yang ramah dan antusias, berikan pujian yang tulus, biarkan mereka mengekspresikan ide kreatifnya, dan buat suasana ngobrol tetap santai dan menyenangkan.`;
-            }
-            if (isMelankolis) {
-                return `Untuk berkomunikasi dengan tipe Melankolis: Berikan data dan fakta yang akurat, bicara secara terstruktur dan terencana, berikan waktu bagi mereka untuk berpikir mendalam, dan hargai standar kualitas mereka.`;
-            }
-            if (isPlegmatis) {
-                return `Untuk berkomunikasi dengan tipe Plegmatis: Bicara dengan tenang dan bersahabat, hindari sikap menghakimi atau mendesak secara mendadak, dengarkan pendapat mereka, dan ciptakan suasana aman.`;
-            }
+        // PERSONALITY
+        if (norm.match(/\b(introvert|ekstrovert|ambivert|melankolis|sanguinis|koleris|plegmatis|kepribadian|mbti)\b/)) sig.isPersonalityExplicit = true;
+
+        // SKILL CAPTURE
+        if (norm.match(/microsoft office|excel|word|powerpoint/)) this.internalMemory.extractedSkills.add('Microsoft Office');
+        if (norm.match(/web|html|javascript|website/)) this.internalMemory.extractedSkills.add('Pembuatan Web');
+
+        return sig;
+    }
+
+    _classifyIntent(norm, sig) {
+        if (sig.isClarification) return 'CLARIFICATION_REQUEST';
+        if (norm.includes('terima kasih') || norm.includes('makasih')) return 'THANKS';
+
+        // EXPLICIT QUESTION HIGHEST PRIORITY
+        if (sig.isExplicitQuestion || norm.includes('ada cara lain')) {
+            if (sig.domain === 'BUSINESS') return 'BUSINESS_OPPORTUNITY_QUERY';
+            if (sig.isDigitalProduct && sig.isMonetization) return 'DIGITAL_PRODUCT_MONETIZATION';
+            if (sig.isMonetization) return 'MONETIZATION_QUERY';
+            if (norm.match(/mulai dari mana|harus bagaimana|bagaimana cara|cara mengatasi|biar bisa|langkah pertama|saran lain/)) return 'GUIDANCE_REQUEST';
+            if (sig.domain === 'CAREER') return 'CAREER_QUESTION';
+            if (sig.isPersonalityExplicit) return 'PERSONALITY_QUERY';
+            if (norm.match(/bisa tidak|apa bisa/)) return 'FEASIBILITY_QUESTION';
+            return 'GENERAL_QUESTION';
         }
 
-        // ==========================================
-        // 6. TUTORIAL / BIKIN KONTEN / PROMPT
-        // ==========================================
-        if (containsAny(['buat konten', 'bikin konten', 'pembuatan konten', 'konten ai', 'prompt ai', 'membuat konten'])) {
-            return `Untuk membuat konten menggunakan AI secara efektif, langkah praktisnya adalah:\n1. Tentukan ide & target audiens Anda.\n2. Gunakan Prompt AI di menu Creator untuk membuat draf skrip atau ide visual.\n3. Manfaatkan tools AI Generatif untuk menghasilkan teks atau gambar pendukung.\n\nSebagai tipe ${pType}, pendekatan bertahap dan konsisten akan membuat proses kreasi terasa sangat menyenangkan. Mau coba gunakan koleksi Prompt AI di menu Creator kita?`;
+        if (sig.isContextSetup) return 'CONTEXTUAL_QUESTION_SETUP';
+        if (sig.lifeEvents.length > 0) return 'LIFE_EVENT';
+        if (sig.emotions.length > 0) return 'EMOTIONAL_DISCLOSURE';
+        if (sig.isPersonalityExplicit) return 'PERSONALITY_STATEMENT';
+
+        // SHARING GATE
+        if (sig.isSharing) return 'SHARING';
+
+        return 'UNKNOWN';
+    }
+
+    _evolveStage(intent, sig) {
+        if (intent === 'SHARING') return 'LISTENING';
+        if (sig.emotions.length > 0 || sig.lifeEvents.length > 0) return 'VALIDATION';
+        if (sig.isExplicitQuestion || intent === 'GUIDANCE_REQUEST') return 'GUIDANCE';
+        return 'EXPLORATION';
+    }
+
+    _evaluatePersonalityRelevance(norm, sig, intent) {
+        if (sig.isPersonalityExplicit) return true;
+        return false;
+    }
+
+    _selectStrategy(intent, sig) {
+        if (intent === 'CLARIFICATION_REQUEST') return 'CLARIFY_PREVIOUS';
+        if (intent === 'CONTEXTUAL_QUESTION_SETUP') return 'LISTEN_READY';
+        if (intent === 'SHARING' && !sig.isExplicitQuestion) return 'LISTEN';
+
+        if (sig.isExplicitQuestion || intent === 'GUIDANCE_REQUEST' || intent.includes('QUESTION')) {
+            if (sig.emotions.length > 0 || sig.lifeEvents.length > 0) return 'VALIDATE_GUIDE';
+            if (intent === 'BUSINESS_OPPORTUNITY_QUERY') return 'ANSWER_GUIDE';
+            if (intent === 'DIGITAL_PRODUCT_MONETIZATION' || intent === 'MONETIZATION_QUERY' || intent === 'CAREER_QUESTION' || intent === 'FEASIBILITY_QUESTION') return 'ANSWER_GUIDE';
+            if (intent === 'GUIDANCE_REQUEST') return 'GUIDE';
+            if (intent === 'PERSONALITY_QUERY') return 'INSIGHT_GUIDE';
+            return 'ANSWER';
         }
 
-        // ==========================================
-        // 7. REKOMENDASI KARIR / PROFESI / PERAN YANG COCOK
-        // ==========================================
-        if (containsAny(['cocok', 'profesi', 'karir', 'pekerjaan', 'kerjaan', 'bidang', 'peran', 'jadi apa'])) {
-            const careerGuide = {
-                'Koleris': 'Sebagai Koleris (Tipe Pemimpin & Eksekutor), Anda cocok menjadi Project Manager, AI Solutions Architect, Tech Entrepreneur, atau Lead Prompt Engineer yang berorientasi pada target dan hasil nyata.',
-                'Sanguinis': 'Sebagai Sanguinis (Tipe Kreatif & Komunikator), Anda sangat cocok menjadi AI Content Creator, Creative Director, Digital Marketer, atau UI/UX Experience Designer yang memanfaatkan AI Generatif.',
-                'Melankolis': 'Sebagai Melankolis (Tipe Analitis & Teliti), Anda sangat cocok menjadi Data Analyst, AI Ethics Specialist, Systems Auditor, atau Technical Researcher yang membutuhkan ketelitian tinggi.',
-                'Plegmatis': 'Sebagai Plegmatis (Tipe Pendamai & Stabil), Anda sangat cocok menjadi AI Customer Success Specialist, HR Talent Specialist, Education Facilitator, atau Quality Assurance (QA) Analyst yang menjaga konsistensi alur kerja.'
-            };
-            return careerGuide[pType] || `Sebagai tipe ${pType}, Anda sangat cocok di bidang yang membutuhkan stabilitas, kerjasama tim, serta perencanaan yang matang seperti AI Support Specialist atau Quality Control.`;
-        }
+        if (intent === 'LIFE_EVENT' || intent === 'EMOTIONAL_DISCLOSURE') return 'VALIDATE';
+        if (intent === 'PERSONALITY_STATEMENT') return 'INSIGHT';
 
-        // ==========================================
-        // 8. DISKUSI TEMPERAMEN / KEPRIBADIAN UMUM
-        // ==========================================
-        if (isKoleris || isSanguinis || isMelankolis || isPlegmatis || containsAny(['kepribadian', 'sifat', 'karakter', 'temperamen'])) {
-            if (isKoleris) {
-                return `Koleris adalah tipe kepribadian yang berjiwa pemimpin, tegas, sangat berorientasi pada target, dan suka tantangan. Mereka cocok memanfaatkan AI untuk otomatisasi dan efisiensi kerja cepat.`;
+        return 'CONVERSATIONAL_OPENER';
+    }
+
+    _composeResponse(norm, sig, strategy, intent, userPersonality, isPersonalityRelevant) {
+        const skillsText = Array.from(this.internalMemory.extractedSkills).join(' dan ');
+
+        // 1. CLARIFY & SETUP
+        if (strategy === 'CLARIFY_PREVIOUS') return "Maksudku, dari obrolan kita, kamu bisa mulai melangkah ke depan tanpa harus menunggu semuanya sempurna. Ada banyak hal dari dirimu yang sudah bisa dimanfaatkan.";
+        if (strategy === 'LISTEN_READY') return "Tentu, silakan tanya. Bagian bisnis atau peluang apa yang ingin kamu diskusikan?";
+        if (strategy === 'LISTEN') return "Boleh. Ceritakan saja, aku dengarkan.";
+
+        // 2. BUSINESS / CURRENT MARKET (STATIC)
+        if (intent === 'BUSINESS_OPPORTUNITY_QUERY') {
+            let resp = "Tidak ada satu bisnis yang pasti paling bagus untuk semua orang. ";
+            if (sig.isCurrentMarket) {
+                resp += "Namun untuk kondisi saat ini, dengan pendekatan modal rendah, bisnis jasa digital, penjualan produk digital, atau menjadi reseller dengan niche tertentu layak dipertimbangkan. ";
+            } else {
+                resp += "Bisnis jasa digital, kreator konten, atau penyedia layanan B2B bisa menjadi titik awal yang baik jika modal terbatas. ";
             }
-            if (isSanguinis) {
-                return `Sanguinis adalah tipe yang sangat antusias, kreatif, ramah, dan penuh energi. Mereka paling cocok memanfaatkan AI Generatif untuk membuat konten visual, ide-ide out-of-the-box, dan eksperimen kreatif.`;
+            if (skillsText) resp += `Apalagi kamu sudah punya keahlian ${skillsText}, itu bisa dimanfaatkan sebagai modal awal.`;
+            return resp;
+        }
+
+        // 3. MONETIZATION & DIGITAL PRODUCT
+        if (intent === 'DIGITAL_PRODUCT_MONETIZATION') {
+            return "Ya, sangat bisa. Produk digital seperti ebook atau prompt memiliki pasar yang jelas. Kamu bisa memulainya dengan membagikan keahlian yang sudah kamu kuasai, lalu menawarkannya melalui platform digital.";
+        }
+        if (intent === 'MONETIZATION_QUERY') {
+            return `Ya, bisa. ${skillsText ? `Menggunakan skill ${skillsText}, kamu` : 'Dengan keahlianmu, kamu'} bisa mendapatkan penghasilan dari pekerjaan seperti administrasi remote, pengolahan data, virtual assistant, atau pekerjaan freelance sederhana. Supaya lebih mudah mendapatkan klien, mulailah dengan membuat 2–3 portofolio.`;
+        }
+
+        // 4. EMOTIONAL & LIFE EVENTS (VALIDATE_GUIDE / VALIDATE)
+        if (strategy === 'VALIDATE_GUIDE') {
+            if (sig.lifeEvents.includes('JOB_LOSS')) {
+                return "Kena PHK memang bisa membuat seseorang kehilangan arah. Wajar kalau sekarang kamu bingung. Kita tidak perlu menyelesaikan semuanya sekaligus. Dari pengalaman yang kamu sudah punya, kita bisa mulai mencari beberapa pilihan yang realistis.";
             }
-            if (isMelankolis) {
-                return `Melankolis adalah tipe yang tekun, analitis, sistematis, dan memiliki standar kualitas tinggi. Mereka sangat unggul dalam riset data mendalam dan analisis etika AI.`;
+            if (sig.emotions.includes('DISTRESS') && sig.isPersonalityExplicit) {
+                return "Berkomunikasi dengan banyak orang memang bisa terasa menguras energi. Kamu tidak harus memaksakan diri menjadi sangat aktif. Mulailah dari interaksi dalam kelompok kecil, siapkan topik sebelum berbicara, dan beri dirimu waktu jeda untuk memulihkan energi setelahnya.";
             }
-            if (isPlegmatis) {
-                return `Plegmatis adalah tipe yang tenang, damai, setia, dan pengamat yang baik. Mereka menyukai alur belajar AI yang bertahap, santai, dan tidak tergesa-gesa.`;
+            return "Aku paham perasaanmu. Rasa cemas dan ketakutan itu wajar. Kita bisa menghadapinya perlahan dengan mulai dari hal-hal yang masih ada di bawah kendalimu hari ini.";
+        }
+
+        // 5. CAREER ANSWERS
+        if (strategy === 'ANSWER_GUIDE' || intent === 'CAREER_QUESTION') {
+            if (norm.match(/bekerja dari rumah saja|malas bekerja di luar/)) {
+                return "Sangat bisa. Saat ini peluang kerja jarak jauh (remote work) atau proyek freelance dari rumah makin luas. Memilih bekerja dari rumah bukan berarti membatasi diri, melainkan menyesuaikan lingkungan kerja agar lebih nyaman.";
             }
-
-            return `Setiap karakter (Koleris, Sanguinis, Melankolis, Plegmatis) memiliki keunggulan unik dalam mempelajari AI. Karakter Anda sendiri saat ini adalah ${pType}. Mau bahas keunggulan karakter yang mana lebih detail?`;
+            return "Pekerjaan yang bisa dilakukan dari rumah sangat beragam, seperti admin online, desainer, penulis, atau asisten virtual. Hal terpenting adalah menyesuaikannya dengan keahlian yang paling membuatmu nyaman bekerja.";
         }
 
-        // ==========================================
-        // 9. DETEKSI KEBINGUNGAN / MINTA PENJELASAN UMUM
-        // ==========================================
-        if (containsAny(['maksud', 'jelas', 'contoh', 'kenapa', 'arti', 'apa itu', 'bingung', 'paham', 'ngerti', 'detail'])) {
-            return `Baik, saya jelaskan lebih spesifik. Intinya adalah bagaimana menghubungkan teknologi AI ini dengan kebiasaan ${pType} Anda sehari-hari agar terasa mudah dan langsung berdampak nyata. Mau saya beri contoh penerapannya?`;
+        // 6. VALIDATION ONLY
+        if (strategy === 'VALIDATE') {
+            if (sig.primaryEmotion === 'SOCIAL_FEAR') return "Aku paham. Takut dinilai atau merasa malu memang bisa membuat kepercayaan diri menurun. Kamu tidak harus memaksakan diri di situasi besar; mulailah dari langkah kecil yang terasa aman.";
+            if (sig.primaryEmotion === 'SADNESS') return "Aku mengerti. Merasa sedih dan lelah secara emosional adalah reaksi manusiawi ketika kita menghadapi tekanan. Berikan dirimu waktu untuk merasakan emosi tersebut tanpa harus memaksakan diri.";
+            return "Aku memahami situasi yang kamu hadapi. Rasa tidak nyaman itu wajar dirasakan dalam kondisi seperti ini.";
         }
 
-        // ==========================================
-        // 10. MINTA BANTUAN / BERTANYA
-        // ==========================================
-        if (containsAny(['bantu', 'tolong', 'panduan', 'tanya'])) {
-            return `Tentu saja, saya siap membantu! Sebagai pendamping berkarakter ${pType}, saya bisa bantu jelaskan materi AI atau diskusi soal strategi belajarmu. Topik spesifik apa yang ingin kita bahas?`;
+        // 7. PERSONALITY INSIGHT
+        if (strategy === 'INSIGHT_GUIDE' || strategy === 'INSIGHT') {
+            if (sig.domain === 'CAREER' && isPersonalityRelevant) {
+                const pType = userPersonality ? userPersonality : 'tipe kepribadianmu';
+                return `Kalau kamu merasa lebih nyaman dengan interaksi yang tidak terlalu intens, beberapa pekerjaan seperti analis data, penulis, atau admin mungkin terasa lebih sesuai untuk ${pType}. Namun ingat, kepribadian hanyalah salah satu faktor pendukung.`;
+            }
+            return "Memahami tipe kepribadian memang membantu kita menyadari cara kita merespons situasi. Hal terpenting adalah menemukan ritme yang pas agar kamu tidak mudah merasa kelelahan.";
         }
 
-        // ==========================================
-        // 11. DISKUSI MODUL / BELAJAR
-        // ==========================================
-        if (containsAny(['belajar', 'modul', 'kursus', 'materi', 'akademi', 'academy', 'ai', 'topcare'])) {
-            return `Untuk tipe ${pType}, saya menyarankan mulai dari modul 'Dasar Artificial Intelligence' di menu Belajar, lalu lanjut coba-coba Prompt Engineering di menu Creator sesuai ritme santai Anda.`;
+        if (strategy === 'GUIDE') return "Untuk memulainya, kamu tidak perlu memikirkan keseluruhan proses hingga akhir. Tentukan satu langkah paling sederhana yang bisa kamu lakukan hari ini.";
+
+        if (strategy === 'ANSWER') return "Itu pertanyaan yang menarik. Kita bisa mulai dengan mengidentifikasi sumber daya dan keahlian yang kamu miliki saat ini untuk melihat langkah apa yang paling realistis.";
+
+        // CONVERSATIONAL_OPENER (UNKNOWN FALLBACK)
+        return "Baik, aku ikut memahami arah pembicaraanmu. Kalau kamu mau, kita bisa membahasnya lebih spesifik.";
+    }
+
+    _updateMemory(stage, intent, emotion, domain, rawText, response) {
+        const turnData = { user: rawText, assistant: response, intent, emotion, stage, domain, timestamp: Date.now() };
+        this.internalMemory.turns.push(turnData);
+        if (this.memoryEngine && typeof this.memoryEngine.addTurn === 'function') {
+            try { this.memoryEngine.addTurn(turnData); } catch (e) { }
         }
-
-        // ==========================================
-        // 12. ANTI-LOOPING FALLBACK DINAMIS
-        // ==========================================
-        const dynamicFallbacks = [
-            `Topik yang menarik tentang "${safeInput}". Bagaimana kalau kita hubungkan ini dengan cara belajar AI yang paling cocok untuk tipe ${pType}?`,
-            `Saya mengerti sudut pandang Anda. Sebagai seorang ${pType}, menurut Anda apa langkah kecil yang paling nyaman dilakukan sekarang?`,
-            `Wah, pertanyaan bagus! Mari kita bedah santai. Dari sudut pandang ${pType}, aspek mana yang paling membuat Anda penasaran?`,
-            `Setiap orang punya ritme belajar sendiri. Sebagai tipe ${pType}, pendekatan bertahap biasanya jauh lebih efektif untuk Anda.`
-        ];
-
-        let randomIndex;
-        let attempts = 0;
-        do {
-            randomIndex = Math.floor(Math.random() * dynamicFallbacks.length);
-            attempts++;
-        } while (randomIndex === this.lastFallbackIndex && attempts < 10);
-
-        this.lastFallbackIndex = randomIndex;
-        return dynamicFallbacks[randomIndex];
+        if (this.memoryEngine && typeof this.memoryEngine.setStage === 'function') {
+            try { this.memoryEngine.setStage(stage); } catch (e) { }
+        }
     }
 }
 

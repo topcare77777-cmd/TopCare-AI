@@ -66,7 +66,7 @@ function registerAllRoutes() {
     appRouter.registerRoute('#/coach', {
         title: 'Diskusi Coach AI — TopCare AI',
         requiresAuth: false,
-        factory: createSafeRouteFactory(function() { return import('./coach/coach.renderer.js'); })
+        factory: createSafeRouteFactory(function() { return import('./pages/coach.page.js'); })
     });
 
     appRouter.registerRoute('#/creator', {
