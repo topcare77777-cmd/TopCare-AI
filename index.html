@@ -15,8 +15,34 @@
     <link rel="stylesheet" href="assets/css/app.css">
     <link rel="stylesheet" href="assets/css/components/navbar/navbar.css">
     <link rel="stylesheet" href="assets/css/components/image-utilities.css">
-    <link rel="stylesheet" href="assets/css/pages/community.css">
-    <link rel="stylesheet" href="assets/css/pages/premium.css">
+    <script>
+        // Route-only styles: keep non-active feature CSS out of the initial render path.
+        (function () {
+            const routeStyles = {
+                community: 'assets/css/pages/community.css',
+                premium: 'assets/css/pages/premium.css'
+            };
+
+            function updateRouteStyles() {
+                const route = (window.location.hash || '#/home').replace(/^#\//, '').split('/')[0];
+                Object.entries(routeStyles).forEach(([name, href]) => {
+                    const id = `tc-route-style-${name}`;
+                    const existing = document.getElementById(id);
+                    if (name === route && !existing) {
+                        const link = document.createElement('link');
+                        link.id = id;
+                        link.rel = 'stylesheet';
+                        link.href = href;
+                        document.head.appendChild(link);
+                    }
+                    if (name !== route && existing) existing.remove();
+                });
+            }
+
+            updateRouteStyles();
+            window.addEventListener('hashchange', updateRouteStyles);
+        }());
+    </script>
 </head>
 
 <body class="app-shell">
@@ -71,22 +97,8 @@
     <!-- SINGLE DYNAMIC MOUNT POINT -->
     <main id="app" class="app-view-viewport" role="main"></main>
 
-    <!-- VAKSIN ANTI-CACHE & LIGHTWEIGHT INITIALIZER -->
+    <!-- Lightweight mobile navigation initializer -->
     <script>
-        // Unregister SW Async tanpa memblokir thread render utama HP
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.getRegistrations().then((registrations) => {
-                    for (let registration of registrations) {
-                        registration.unregister();
-                    }
-                });
-                if (window.caches) {
-                    caches.keys().then((keys) => Promise.all(keys.map((key) => caches.delete(key))));
-                }
-            });
-        }
-
         // Fast Mobile Menu Navigation Handler
         document.addEventListener('DOMContentLoaded', () => {
             const menuBtn = document.getElementById('mobile-menu-btn');
