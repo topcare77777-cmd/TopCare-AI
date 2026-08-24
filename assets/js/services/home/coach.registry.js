@@ -8,7 +8,7 @@
  * Architecture : Development Constitution v1.1
  * Owner        : Coach Intelligence Team
  * Created      : Sprint 51A.2
- *
+ * 
  * Description  : Centralized registry catalog containing available coach personas,
  *                specializations, and metadata profiles. Acts as the Single Source
  *                of Truth for runtime factories without managing active execution instances.
@@ -59,21 +59,6 @@ const COACH_CATALOG = Object.freeze({
         defaultTone: 'informative',
         description: 'Expert mentor delivering high-tier specialized professional coaching and strategic foresight.'
     })
-    // Di dalam CoachRegistry Metadata Object (assets/js/services/home/coach.registry.js):
-{
-        coachId: 'coach-kael',
-        displayName: 'Coach Kael',
-        specialization: 'Human Temperament & Personality Coaching',
-        supportedTemperaments: Object.freeze(['Koleris', 'Sanguinis', 'Melankolis', 'Plegmatis']),
-        supportedGoals: Object.freeze(['Personal Growth', 'Career Focus', 'Emotional Balance', 'Communication Mastery']),
-        supportedLanguages: Object.freeze(['id-ID', 'en-US']),
-        capabilities: Object.freeze({
-            adaptiveStrategy: true,
-            offlineCapable: true,
-            streamingCapable: true
-        }),
-        priority: 1
-    }
 });
 
 /**
@@ -91,7 +76,7 @@ const CoachRegistry = (() => {
     /**
      * Retrieves the profile definition for a given coach identifier.
      * Falls back to default coach if not found.
-     *
+     * 
      * @param {string} coachId - Unique coach identifier.
      * @returns {Object} Immutable coach definition profile.
      */
@@ -102,7 +87,7 @@ const CoachRegistry = (() => {
 
     /**
      * Checks whether a specific coach identifier exists in the registry catalog.
-     *
+     * 
      * @param {string} coachId - Unique coach identifier to verify.
      * @returns {boolean} True if registered, false otherwise.
      */
@@ -113,7 +98,7 @@ const CoachRegistry = (() => {
 
     /**
      * Returns an array of all available coach profiles in the catalog.
-     *
+     * 
      * @returns {Array<Object>} List of immutable coach profile objects.
      */
     function list() {
@@ -122,7 +107,7 @@ const CoachRegistry = (() => {
 
     /**
      * Returns the default fallback coach identifier.
-     *
+     * 
      * @returns {string} Default coach ID.
      */
     function getDefaultId() {
@@ -131,7 +116,7 @@ const CoachRegistry = (() => {
 
     /**
      * Returns metadata status of the registry service.
-     *
+     * 
      * @returns {Object} Immutable status snapshot.
      */
     function getStatus() {
@@ -139,19 +124,8 @@ const CoachRegistry = (() => {
             version: REGISTRY_SCHEMA_VERSION,
             totalCoaches: Object.keys(COACH_CATALOG).length,
             defaultCoachId: DEFAULT_COACH_ID
-
-            // Di dalam CoachRegistry Metadata Object:
-
-                coachId: 'coach-kael',
-            displayName: 'Coach Kael',
-            specialization: 'Human Temperament & Personality Coaching',
-            supportedTemperaments: ['Koleris', 'Sanguinis', 'Melankolis', 'Plegmatis'],
-            language: 'id-ID',
-            style: 'Adaptive Temperament Alignment',
-            version: '2.0.0',
-            priority: 1
-        }
         });
+    }
 
     return Object.freeze({
         get,

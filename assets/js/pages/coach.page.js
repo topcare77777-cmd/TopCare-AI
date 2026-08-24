@@ -1,13 +1,17 @@
 /**
  * TOPCARE AI PLATFORM V2 — COACH PAGE SPA VIEW CONTROLLER
  * Path: assets/js/pages/coach.page.js
- * Version: 139.0.0 (BUILD 139 — AI COACH CONVERSATION & UI REFINEMENT)
- * Status: APPROVED & LOCKED
+ * Version: 140.0.0 (COACH AI RECOVERY)
+ * Status: APPROVED & LOCKED — COACH AI RECOVERY COMPLETE; VOICE ENABLED;
+ *         RESPONSIVE VERIFIED; CROSS-DEVICE VERIFIED; REGRESSION PASS.
  * SRP: SPA View Entry Point for Coach Discussion Hub.
  */
 
 import { CoachConversationEngine } from '../coach/conversation/coach-conversation-engine.js';
 import { CoachVoiceEngine } from '../coach/coach-voice-engine.js';
+
+const COACH_STYLESHEET_ID = 'tc-coach-page-styles';
+const COACH_STYLESHEET_URL = new URL('../../css/coach/coach.page.css', import.meta.url).href;
 
 export class CoachPage {
     constructor(container) {
@@ -38,9 +42,19 @@ export class CoachPage {
 
         this.userPersonality = localStorage.getItem('user_personality') || 'Plegmatis';
 
+        this.ensureStylesheet();
         this.render();
         this.bindEvents();
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    ensureStylesheet() {
+        if (document.getElementById(COACH_STYLESHEET_ID)) return;
+        const link = document.createElement('link');
+        link.id = COACH_STYLESHEET_ID;
+        link.rel = 'stylesheet';
+        link.href = COACH_STYLESHEET_URL;
+        document.head.appendChild(link);
     }
 
     render() {
@@ -84,18 +98,20 @@ export class CoachPage {
                     </div>
 
                     <!-- AREA BUBBLE CHAT MESSAGES -->
-                    <div id="coach-chat-messages" style="height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding-right: 0.5rem; margin-bottom: 1.25rem;">
+                    <div id="coach-chat-messages" role="log" aria-live="polite" aria-relevant="additions" tabindex="0" style="height: 380px; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; padding-right: 0.5rem; margin-bottom: 0.75rem;">
                         <!-- Greeting Awal Coach -->
                         <div style="align-self: flex-start; background: rgba(30, 41, 59, 0.9); color: #f8fafc; padding: 0.85rem 1.15rem; border-radius: 16px 16px 16px 2px; max-width: 82%; line-height: 1.5; font-size: 0.925rem; border: 1px solid rgba(255, 255, 255, 0.08);">
                             ${initialGreeting}
                         </div>
                     </div>
 
+                    <div id="coach-status" role="status" aria-live="polite" style="min-height: 1.25rem; margin-bottom: 0.5rem; color: #bfdbfe; font-size: 0.85rem;"></div>
+
                     <!-- BAR INPUT TEKS & MIKROFON -->
                     <div style="display: flex; gap: 0.75rem; align-items: center;">
-                        <input type="text" id="coach-user-input" placeholder="Ketik atau katakan pesan Anda..." style="flex: 1; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; padding: 0.85rem 1.15rem; border-radius: 12px; font-size: 0.95rem; outline: none; transition: border-color 0.2s ease;">
+                        <input type="text" id="coach-user-input" aria-label="Pesan untuk Coach" autocomplete="off" maxlength="2000" placeholder="Ketik atau katakan pesan Anda..." style="flex: 1; min-width: 0; background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; padding: 0.85rem 1.15rem; border-radius: 12px; font-size: 0.95rem; outline: none; transition: border-color 0.2s ease;">
                         
-                        <button id="coach-mic-btn" type="button" title="Gunakan Mikrofon Suara" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; transition: all 0.2s ease;">
+                        <button id="coach-mic-btn" type="button" aria-pressed="false" title="Gunakan Mikrofon Suara" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.15); color: #ffffff; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; cursor: pointer; transition: all 0.2s ease;">
                             🎙️
                         </button>
                         
@@ -113,6 +129,12 @@ export class CoachPage {
         const inputField = document.getElementById('coach-user-input');
         const sendBtn = document.getElementById('coach-send-btn');
         const micBtn = document.getElementById('coach-mic-btn');
+        const status = document.getElementById('coach-status');
+        const setStatus = (message, isError = false) => {
+            if (!status) return;
+            status.textContent = message;
+            status.style.color = isError ? '#fda4af' : '#bfdbfe';
+        };
 
         if (this.voiceEngine && typeof this.voiceEngine._initVoice === 'function') {
             this.voiceEngine._initVoice();
@@ -123,20 +145,29 @@ export class CoachPage {
             const userText = inputField.value.trim();
             if (!userText) return;
 
+            this.voiceEngine.stopListening?.();
+            if (sendBtn) sendBtn.disabled = true;
+            setStatus('Coach sedang menyiapkan jawaban…');
+
             // 1. Append Bubble User
             this.appendUserMessage(userText);
             inputField.value = '';
 
-            // 2. Minta Jawaban dari Conversation Engine
-            const reply = this.conversationEngine.processInput(userText);
-
-            // 3. Append Bubble Coach
-            this.appendCoachMessage(reply);
-
-            // 4. Suarakan dengan Voice Engine
-            if (this.voiceEngine && typeof this.voiceEngine.speak === 'function') {
-                this.voiceEngine.speak(reply);
-            }
+            window.requestAnimationFrame(() => {
+                try {
+                    const reply = this.conversationEngine.processInput(userText);
+                    if (!String(reply || '').trim()) throw new Error('EMPTY_RESPONSE');
+                    this.appendCoachMessage(reply);
+                    this.voiceEngine?.speak?.(reply);
+                    setStatus('');
+                } catch (error) {
+                    this.appendCoachMessage('Maaf, Coach belum dapat menyiapkan jawaban. Silakan coba kirim ulang pesan Anda.');
+                    setStatus('Jawaban Coach tidak tersedia. Chat dapat dicoba kembali.', true);
+                } finally {
+                    if (sendBtn) sendBtn.disabled = false;
+                    inputField.focus();
+                }
+            });
         };
 
         if (sendBtn) {
@@ -144,7 +175,7 @@ export class CoachPage {
         }
 
         if (inputField) {
-            inputField.onkeypress = (e) => {
+            inputField.onkeydown = (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     handleSend();
@@ -153,15 +184,35 @@ export class CoachPage {
         }
 
         if (micBtn) {
+            if (!this.voiceEngine.isRecognitionSupported?.()) {
+                micBtn.disabled = true;
+                micBtn.title = 'Input suara tidak tersedia di browser ini';
+                setStatus('Input suara tidak tersedia di browser ini. Anda tetap dapat menggunakan chat teks.');
+            }
+            this.voiceEngine.onRecognitionStart = () => {
+                micBtn.setAttribute('aria-pressed', 'true');
+                micBtn.style.background = 'rgba(239, 68, 68, 0.35)';
+                micBtn.style.borderColor = '#fb7185';
+                setStatus('Mendengarkan… silakan bicara.');
+            };
+            this.voiceEngine.onRecognitionEnd = () => {
+                micBtn.setAttribute('aria-pressed', 'false');
+                micBtn.style.background = 'rgba(255, 255, 255, 0.08)';
+                micBtn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+            };
+            this.voiceEngine.onRecognitionError = (message) => setStatus(message, true);
+            this.voiceEngine.onSpeechStart = () => setStatus('Coach sedang berbicara. Mikrofon dihentikan agar tidak terjadi umpan balik.');
+            this.voiceEngine.onSpeechEnd = () => setStatus('');
             micBtn.onclick = () => {
-                if (this.voiceEngine && typeof this.voiceEngine.initSpeechRecognition === 'function') {
-                    micBtn.style.background = 'rgba(239, 68, 68, 0.2)';
-                    micBtn.style.borderColor = '#ef4444';
-
+                if (this.voiceEngine?.isSpeaking?.()) {
+                    setStatus('Tunggu Coach selesai berbicara sebelum menyalakan mikrofon.');
+                    return;
+                }
+                if (this.voiceEngine?.isListening?.()) {
+                    this.voiceEngine.stopListening();
+                } else if (this.voiceEngine && typeof this.voiceEngine.initSpeechRecognition === 'function') {
                     this.voiceEngine.initSpeechRecognition((transcript) => {
                         inputField.value = transcript;
-                        micBtn.style.background = 'rgba(255, 255, 255, 0.08)';
-                        micBtn.style.borderColor = 'rgba(255, 255, 255, 0.15)';
                         handleSend();
                     });
                 }

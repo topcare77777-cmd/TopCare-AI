@@ -1,0 +1,37 @@
+/* Coach page only: every selector is scoped to the tc-coach namespace. */
+.tc-coach-page { box-sizing: border-box; width: min(100%, 60rem); margin: 0 auto; padding: clamp(1rem, 3vw, 2.5rem) max(1rem, env(safe-area-inset-right)) max(1.5rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); color: #f8fafc; }
+.tc-coach-page *, .tc-coach-page *::before, .tc-coach-page *::after { box-sizing: border-box; }
+.tc-coach-page__header { text-align: center; margin: 0 auto 1.5rem; max-width: 42rem; }
+.tc-coach-page__eyebrow { display: inline-flex; border: 1px solid rgba(167,139,250,.35); border-radius: 999px; padding: .35rem .8rem; color: #c4b5fd; background: rgba(139,92,246,.15); font-size: .8rem; font-weight: 700; }
+.tc-coach-page h1 { margin: .65rem 0 .35rem; color: #fff; font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.15; }
+.tc-coach-page__header p, .tc-coach-help { margin: 0; color: #a8b5ca; line-height: 1.55; }
+.tc-coach-chat { min-width: 0; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid rgba(255,255,255,.12); border-radius: 1.25rem; background: rgba(17,24,39,.9); box-shadow: 0 1.25rem 2.5rem rgba(0,0,0,.28); }
+.tc-coach-chat__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,.1); }
+.tc-coach-chat__identity, .tc-coach-voice-select, .tc-coach-composer__actions { display: flex; align-items: center; gap: .6rem; }
+.tc-coach-chat__identity { min-width: 0; font-size: clamp(.95rem, 2.4vw, 1.1rem); }.tc-coach-chat__identity strong { overflow-wrap: anywhere; }
+.tc-coach-voice-select { color: #cbd5e1; font-size: .85rem; white-space: nowrap; }.tc-coach-voice-select select { width: min(13rem, 38vw); padding: .55rem .65rem; border: 1px solid rgba(255,255,255,.18); border-radius: .55rem; color: #f8fafc; background: #1e293b; }
+.tc-coach-status { min-height: 0; margin-top: .75rem; color: #cbd5e1; font-size: .875rem; }.tc-coach-status--error { color: #fda4af; }.tc-coach-status--info { color: #bfdbfe; }
+.tc-coach-messages { display: flex; flex-direction: column; gap: .75rem; height: clamp(18rem, 50vh, 29rem); min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 1rem .25rem 1rem 0; margin: .5rem 0; scrollbar-gutter: stable; }
+.tc-coach-message { max-width: min(84%, 43rem); padding: .8rem 1rem; border: 1px solid rgba(255,255,255,.1); border-radius: 1rem; overflow-wrap: anywhere; line-height: 1.55; }.tc-coach-message--coach { align-self: flex-start; background: #1e293b; border-bottom-left-radius: .2rem; }.tc-coach-message--user { align-self: flex-end; color: #fff; background: #2563eb; border-color: #3b82f6; border-bottom-right-radius: .2rem; }.tc-coach-message--system { align-self: center; color: #fde68a; background: rgba(146,64,14,.24); }
+.tc-coach-thinking { display: flex; align-items: center; gap: .5rem; margin: .5rem 0; color: #c4b5fd; font-size: .875rem; }.tc-coach-thinking span { width: .6rem; height: .6rem; border-radius: 50%; background: currentColor; animation: tc-coach-pulse 1s ease-in-out infinite; }
+.tc-coach-composer { display: flex; align-items: flex-end; gap: .75rem; }.tc-coach-composer textarea { flex: 1; min-width: 0; max-height: 9rem; resize: none; padding: .8rem 1rem; border: 1px solid rgba(255,255,255,.18); border-radius: .8rem; color: #f8fafc; background: #1e293b; font: inherit; line-height: 1.4; }.tc-coach-composer textarea:focus, .tc-coach-voice-select select:focus, .tc-coach-button:focus-visible { outline: 3px solid rgba(96,165,250,.7); outline-offset: 2px; }
+.tc-coach-button { min-height: 2.9rem; border: 1px solid transparent; border-radius: .75rem; padding: .7rem .95rem; color: #fff; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }.tc-coach-button:disabled { opacity: .55; cursor: not-allowed; }.tc-coach-button--primary { background: #2563eb; }.tc-coach-button--secondary { border-color: rgba(255,255,255,.18); background: #334155; }.tc-coach-button--secondary.is-listening { border-color: #fb7185; background: #9f1239; animation: tc-coach-pulse 1s ease-in-out infinite; }
+.tc-coach-help { margin-top: .75rem; font-size: .78rem; }.tc-coach-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+@keyframes tc-coach-pulse { 50% { opacity: .58; } }
+@media (max-width: 35rem) { .tc-coach-page { padding-top: 1rem; }.tc-coach-chat { border-radius: 1rem; }.tc-coach-chat__toolbar { align-items: flex-start; flex-direction: column; }.tc-coach-voice-select { width: 100%; justify-content: space-between; }.tc-coach-voice-select select { width: 65%; }.tc-coach-messages { height: min(50vh, 25rem); }.tc-coach-composer { align-items: stretch; flex-direction: column; }.tc-coach-composer__actions { display: grid; grid-template-columns: minmax(4.5rem, .75fr) minmax(0, 1fr); }.tc-coach-button { min-height: 3.1rem; } }
+@media (min-width: 48rem) { .tc-coach-page { width: min(100%, 68rem); }.tc-coach-chat { padding: 1.5rem; }.tc-coach-messages { height: clamp(22rem, 52vh, 34rem); } }
+@media (prefers-reduced-motion: reduce) { .tc-coach-page *, .tc-coach-page *::before, .tc-coach-page *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; } }
+
+/* Compatibility layer for the existing Coach page markup; remains fully scoped. */
+.tc-coach-page-wrapper { box-sizing: border-box; width: min(100%, 60rem) !important; min-width: 0; }
+.tc-coach-page-wrapper *, .tc-coach-page-wrapper *::before, .tc-coach-page-wrapper *::after { box-sizing: border-box; }
+.tc-coach-page-wrapper #coach-chat-messages { overscroll-behavior: contain; scrollbar-gutter: stable; }
+.tc-coach-page-wrapper #coach-user-input:focus, .tc-coach-page-wrapper #coach-mic-btn:focus-visible, .tc-coach-page-wrapper #coach-send-btn:focus-visible, .tc-coach-page-wrapper #coach-voice-select:focus { outline: 3px solid rgba(96,165,250,.72); outline-offset: 2px; }
+@media (max-width: 35rem) {
+  .tc-coach-page-wrapper { padding: 1rem !important; }
+  .tc-coach-page-wrapper > div > div:nth-child(2) { padding: 1rem !important; border-radius: 1rem !important; }
+  .tc-coach-page-wrapper #coach-chat-messages { height: min(48vh, 23rem) !important; padding-right: .2rem !important; }
+  .tc-coach-page-wrapper #coach-user-input { min-width: 0; width: 100%; }
+  .tc-coach-page-wrapper #coach-mic-btn, .tc-coach-page-wrapper #coach-send-btn { min-height: 3.1rem; }
+  .tc-coach-page-wrapper #coach-send-btn { padding-inline: 1rem !important; }
+}

@@ -9,6 +9,14 @@ export class CoachVoiceEngine {
         this.synth = window.speechSynthesis || null;
         this.voice = null;
         this.voices = [];
+        this.recognition = null;
+        this.listening = false;
+        this.speaking = false;
+        this.onRecognitionStart = null;
+        this.onRecognitionEnd = null;
+        this.onRecognitionError = null;
+        this.onSpeechStart = null;
+        this.onSpeechEnd = null;
         this._initVoice();
     }
 
@@ -43,23 +51,69 @@ export class CoachVoiceEngine {
         }
     }
 
+    isRecognitionSupported() {
+        return Boolean(window.SpeechRecognition || window.webkitSpeechRecognition);
+    }
+
+    isListening() { return this.listening; }
+
+    isSpeaking() { return this.speaking || Boolean(this.synth && this.synth.speaking); }
+
     initSpeechRecognition(onResultCallback) {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (!SpeechRecognition) {
-            alert("Browser Anda belum mendukung fitur pengenal suara.");
-            return;
+            this.onRecognitionError?.('Input suara tidak tersedia di browser ini. Anda tetap dapat menggunakan chat teks.');
+            return false;
         }
 
-        const recognition = new SpeechRecognition();
+        if (this.isSpeaking()) {
+            this.onRecognitionError?.('Tunggu Coach selesai berbicara sebelum menggunakan mikrofon.');
+            return false;
+        }
+
+        this.stopListening();
+
+        const recognition = this.recognition = new SpeechRecognition();
         recognition.lang = 'id-ID';
         recognition.interimResults = false;
+        recognition.continuous = false;
+
+        recognition.onstart = () => {
+            this.listening = true;
+            this.onRecognitionStart?.();
+        };
 
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
             if (onResultCallback) onResultCallback(transcript);
         };
 
-        recognition.start();
+        recognition.onerror = (event) => {
+            const messages = {
+                'not-allowed': 'Izin mikrofon ditolak. Aktifkan izin mikrofon untuk memakai input suara.',
+                'no-speech': 'Suara tidak terdeteksi. Coba lagi atau gunakan chat teks.',
+                'audio-capture': 'Mikrofon tidak tersedia pada perangkat ini.',
+                network: 'Pengenal suara tidak dapat terhubung. Chat teks tetap dapat digunakan.'
+            };
+            this.onRecognitionError?.(messages[event.error] || 'Input suara berhenti. Silakan coba lagi.');
+        };
+        recognition.onend = () => {
+            this.listening = false;
+            if (this.recognition === recognition) this.recognition = null;
+            this.onRecognitionEnd?.();
+        };
+        try {
+            recognition.start();
+            return true;
+        } catch (error) {
+            this.onRecognitionError?.('Input suara belum siap. Silakan coba lagi.');
+            return false;
+        }
+    }
+
+    stopListening() {
+        if (!this.recognition) return;
+        try { this.recognition.abort(); } catch (error) { /* recognition is already stopped */ }
     }
 
     /**
@@ -67,6 +121,8 @@ export class CoachVoiceEngine {
      */
     speak(text) {
         if (!this.synth) return;
+
+        this.stopListening();
 
         // 1. Hentikan suara lama (Clear Queue)
         this.synth.cancel();
@@ -90,6 +146,15 @@ export class CoachVoiceEngine {
             utterance.voice = this.voice;
         }
 
+        utterance.onstart = () => {
+            this.speaking = true;
+            this.onSpeechStart?.();
+        };
+        utterance.onend = utterance.onerror = () => {
+            this.speaking = false;
+            this.onSpeechEnd?.();
+        };
+
         // 3. FIX: Beri jeda 150ms agar Chrome tidak menabrakkan synth.cancel() dengan synth.speak()
         setTimeout(() => {
             this.synth.speak(utterance);
@@ -97,9 +162,11 @@ export class CoachVoiceEngine {
     }
 
     stop() {
+        this.stopListening();
         if (this.synth) {
             this.synth.cancel();
         }
+        this.speaking = false;
     }
 }
 
