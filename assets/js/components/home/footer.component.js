@@ -1,96 +1,88 @@
 /**
- * -----------------------------------------------------------------
- * TOPCARE AI PLATFORM - ARCHITECTURE METADATA
- * -----------------------------------------------------------------
- * Layer        : Layer 4.5 - Component
- * Status       : ACTIVE
- * Version      : 2.3.0
- * Architecture : Development Constitution v1.1
- * Pattern      : Conductor Component
- * Migration    : SPRINT 46A.7
- * Revision     : 46A.7
- * Runtime      : V2 Runtime
- * Compatible   : TopCare AI Runtime 2.x
- *
- * Dependencies :
- *   - FooterWidget
- *
- * Forbidden :
- *   - Router
- *   - TopCareApp
- *   - ViewManager
- *
- * Component API :
- *   mount(container)
- *   update()
- *   destroy()
- *   cleanup()
- * -----------------------------------------------------------------
+ * TOPCARE AI PLATFORM V3 — HOME FOOTER COMPONENT
+ * Path: assets/js/components/home/footer.component.js
+ * Status: V3-FIX-06 LIFECYCLE DOM LISTENER INTEGRATED
  */
 
-import { FooterWidget } from '../../widgets/home/footer.widget.js';
+import { FooterRenderer } from '../../renderers/footer.renderer.js';
+import { DOMListenerUtil } from '../../core/utils/dom-listener.util.js';
 
-const FooterComponent = {
+export const FooterComponent = {
     container: null,
     isMounted: false,
+    domListeners: new DOMListenerUtil(),
 
+    /**
+     * Mount footer ke target container dan pasang reaktif listener
+     * @param {HTMLElement} container 
+     */
     async mount(container) {
         if (!container) return;
-
-        if (this.container !== container) {
-            this.container = container;
-        }
+        this.container = container;
 
         if (this.isMounted) {
-            return this.update();
+            return await this.update();
         }
 
         try {
-            await FooterWidget.render(this.container);
+            const footerHtml = await FooterRenderer.render();
+            this.container.innerHTML = footerHtml;
             this.isMounted = true;
+
+            // Daftarkan listener global via DOMListenerUtil (Anti-Memory Leak)
+            this.domListeners.add(window, 'tcr:platform-settings-updated', async () => {
+                await this.update();
+            });
         } catch (err) {
-            console.error("[FooterComponent] mount:", err);
+            console.error('[FooterComponent] Error mounting dynamic footer:', err);
         }
     },
 
+    /**
+     * Update/refresh data footer secara reaktif
+     */
     async update() {
         if (!this.isMounted || !this.container) return;
 
         try {
-            if (typeof FooterWidget.refresh === 'function') {
-                await FooterWidget.refresh();
-            } else {
-                await FooterWidget.render(this.container);
-            }
+            const footerHtml = await FooterRenderer.render();
+            this.container.innerHTML = footerHtml;
         } catch (err) {
-            console.error("[FooterComponent] update:", err);
+            console.error('[FooterComponent] Error updating footer:', err);
         }
     },
 
-    destroy() {
-        if (!this.container) return;
+    /**
+     * Render string HTML murni (Static helper)
+     */
+    async render() {
+        return await FooterRenderer.render();
+    },
 
-        if (typeof FooterWidget.destroy === 'function') {
-            try {
-                FooterWidget.destroy();
-            } catch (err) {
-                console.error("[FooterComponent] destroy:", err);
+    /**
+     * Membersihkan elemen DOM, melepas listener dari window, dan reset state
+     */
+    destroy() {
+        // Lepas seluruh listener (termasuk listener window 'tcr:platform-settings-updated')
+        this.domListeners.cleanup();
+
+        if (this.container) {
+            if (typeof this.container.replaceChildren === 'function') {
+                this.container.replaceChildren();
+            } else {
+                this.container.innerHTML = '';
             }
         }
 
-        if (typeof this.container.replaceChildren === 'function') {
-            this.container.replaceChildren();
-        } else {
-            this.container.innerHTML = '';
-        }
-
         this.isMounted = false;
         this.container = null;
     },
 
+    /**
+     * Reset internal memory state
+     */
     cleanup() {
-        this.isMounted = false;
-        this.container = null;
+        this.destroy();
     }
 };
 

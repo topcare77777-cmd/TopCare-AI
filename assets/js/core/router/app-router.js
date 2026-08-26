@@ -1,166 +1,153 @@
 /**
- * TOPCARE AI PLATFORM V2 — CORE PLATFORM ROUTER ENGINE
+ * TOPCARE AI PLATFORM V3 — ASYNC APPLICATION ROUTER
  * Path: assets/js/core/router/app-router.js
- * Status: APPROVED & REPAIRED (SAFE CONTAINER INJECTION & UNIFIED NAVIGATION)
+ * Status: V3-FIX-02 AUTHORITATIVE AUTH GUARD APPLIED (forceRefresh = true)
  */
 
-import { ROUTES_REGISTRY } from './routes.registry.js';
+import { PlatformService } from '../services/platform.service.js';
 
-export class AppRouterEngine {
+export class AppRouter {
     constructor() {
-        this._routes = new Map();
-        this._activeComponent = null;
-        this._currentRoute = null;
-        this._mainContainer = null;
-        this._isInitialized = false;
-
-        this._onHashChange = this._handleRouteTransition.bind(this);
-        Object.seal(this);
-    }
-
-    init(mainContainer) {
-        if (this._isInitialized) return;
-        if (!mainContainer) {
-            mainContainer = document.getElementById('app') || document.body;
-        }
-
-        this._mainContainer = mainContainer;
-        window.removeEventListener('hashchange', this._onHashChange);
-        window.addEventListener('hashchange', this._onHashChange);
-        this._isInitialized = true;
-
-        this._handleRouteTransition('initial');
+        this.routes = new Map();
+        this.container = null;
+        this.currentRoute = null;
+        this.currentPageInstance = null;
+        this.isNavigating = false;
     }
 
     /**
-     * Mendaftarkan Rute ke dalam Router Engine
+     * Inisialisasi router dan listener hashchange
      */
-    registerRoute(path, routeDefinition) {
-        if (!path || !routeDefinition) return;
+    init(container) {
+        this.container = container || document.getElementById('app') || document.body;
 
-        const normalizedPath = path.startsWith('#') ? path : `#/${path.replace(/^\//, '')}`;
-        this._routes.set(normalizedPath, routeDefinition);
+        window.addEventListener('hashchange', () => this.handleRouting());
+
+        // Handle routing initial load
+        if (!window.location.hash || window.location.hash === '' || window.location.hash === '#') {
+            window.location.hash = '#/home';
+        } else {
+            this.handleRouting();
+        }
     }
 
     /**
-     * Navigasi Programmatis (Single Source of Truth)
-     * Menggantikan fungsi Router.navigate() pada arsitektur router lama.
+     * Mendaftarkan rute baru
+     * @param {string} path - Hash rute (contoh: '#/dashboard')
+     * @param {Object} routeConfig - { title, requiresAuth, factory }
      */
-    navigate(path) {
-        if (!path) return;
-        const targetHash = path.startsWith('#') ? path : `#/${path.replace(/^\//, '')}`;
-
-        // Memperbarui hash akan secara otomatis memicu _handleRouteTransition via event listener
-        if (window.location.hash !== targetHash) {
-            window.location.hash = targetHash;
-        }
+    registerRoute(path, routeConfig) {
+        this.routes.set(path, routeConfig);
     }
 
-    async _handleRouteTransition(navigationType = 'hashchange') {
-        const targetHash = window.location.hash || '#/home';
+    /**
+     * Normalisasi string hash URL
+     */
+    #normalizePath(hash) {
+        if (!hash) return '#/home';
+        const cleanHash = hash.split('?')[0];
+        return cleanHash.endsWith('/') && cleanHash.length > 2
+            ? cleanHash.slice(0, -1)
+            : cleanHash;
+    }
 
-        if (targetHash === this._currentRoute && this._activeComponent) {
-            return;
-        }
+    /**
+     * Router core handler dengan Authoritative Async Supabase Guard
+     */
+    async handleRouting() {
+        if (this.isNavigating) return;
+        this.isNavigating = true;
 
-        // 1. Teardown komponen lama
-        if (this._activeComponent && typeof this._activeComponent.destroy === 'function') {
-            try {
-                this._activeComponent.destroy();
-            } catch (err) {
-                console.warn("[AppRouter] Component destroy error:", err);
+        const currentHash = this.#normalizePath(window.location.hash);
+        let routeConfig = this.routes.get(currentHash);
+
+        // Fallback jika route tidak ditemukan
+        if (!routeConfig) {
+            routeConfig = this.routes.get('#/home');
+            if (!routeConfig) {
+                this.isNavigating = false;
+                return;
             }
         }
 
-        this._activeComponent = null;
-
-        if (!this._mainContainer) {
-            this._mainContainer = document.getElementById('app') || document.body;
-        }
-
-        if (this._mainContainer) {
-            this._mainContainer.innerHTML = '';
-        }
-
-        // 2. Cari rute terdaftar atau dari ROUTES_REGISTRY
-        let route = this._routes.get(targetHash);
-        const routeKey = targetHash.replace(/^#\//, '').replace(/^#/, '') || 'home';
-
-        this._currentRoute = targetHash;
-
         try {
-            let component = null;
+            // 1. Verifikasi Authoritative Asinkron Langsung ke Supabase (forceRefresh: true)
+            let activeSession = null;
+            if (routeConfig.requiresAuth || currentHash === '#/login' || currentHash === '#/register') {
+                // Security Guard mem-bypass in-memory cache untuk memastikan token belum revoked/expired
+                activeSession = await PlatformService.getCurrentUserSession(true);
+            }
 
-            if (route && typeof route.factory === 'function') {
-                const result = route.factory();
-                component = typeof result.mount === 'function' ? result : await result;
-            } else if (ROUTES_REGISTRY[routeKey]) {
-                const module = await ROUTES_REGISTRY[routeKey]();
-                const ExportedClass = module.default ||
-                    module.MarketplacePage ||
-                    module.CoachPage ||
-                    module.HomePage ||
-                    module;
+            // 2. Guard: Rute Terproteksi (requiresAuth: true)
+            if (routeConfig.requiresAuth) {
+                if (!activeSession) {
+                    sessionStorage.setItem('tcr_redirect_target', currentHash);
+                    this.isNavigating = false;
+                    window.location.hash = '#/login';
+                    return;
+                }
 
-                // Injeksi aman this._mainContainer ke constructor untuk Page Controllers
-                if (typeof ExportedClass === 'function') {
-                    try {
-                        component = new ExportedClass(this._mainContainer);
-                    } catch (e) {
-                        component = new ExportedClass();
-                    }
-                } else {
-                    component = ExportedClass;
+                // Proteksi Khusus Super Admin
+                if (currentHash === '#/admin' && activeSession.role !== 'super_admin') {
+                    this.isNavigating = false;
+                    window.location.hash = '#/dashboard';
+                    return;
                 }
             }
 
-            // 3. Mounting ke DOM (Mendukung mount Async & Standalone Render)
-            if (component && typeof component.mount === 'function') {
-                await component.mount(this._mainContainer);
-                this._activeComponent = component;
-            } else if (component && typeof component.renderPage === 'function') {
-                this._mainContainer.innerHTML = component.renderPage();
-                this._activeComponent = component;
-            } else if (component && typeof component.renderCard === 'function') {
-                this._mainContainer.innerHTML = component.renderCard();
-                this._activeComponent = component;
-            } else if (component && typeof component.render === 'function') {
-                const html = await component.render();
-                if (html) this._mainContainer.innerHTML = html;
-                this._activeComponent = component;
+            // 3. Guard: Reverse Auth (User dengan sesi valid dicegah membuka halaman login/register)
+            if (activeSession && (currentHash === '#/login' || currentHash === '#/register')) {
+                this.isNavigating = false;
+                window.location.hash = activeSession.role === 'super_admin' ? '#/admin' : '#/dashboard';
+                return;
             }
 
-            document.title = (route && route.title) ? route.title : 'TopCare AI Platform';
+            // 4. Update Document Title
+            if (routeConfig.title) {
+                document.title = routeConfig.title;
+            }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // 5. Cleanup Lifecycle Halaman Sebelumnya
+            if (this.currentPageInstance && typeof this.currentPageInstance.destroy === 'function') {
+                try {
+                    this.currentPageInstance.destroy();
+                } catch (e) {
+                    console.warn('[Router] Error destroying previous page:', e);
+                }
+            }
+            this.currentPageInstance = null;
 
-        } catch (err) {
-            console.error(`[AppRouter] Error loading route [${targetHash}]:`, err);
-            this._renderErrorState(err);
+            // 6. Instansiasi dan Mount Halaman Baru (Zero UI Flash)
+            if (typeof routeConfig.factory === 'function') {
+                const pageModule = await routeConfig.factory();
+                this.currentPageInstance = pageModule;
+
+                if (pageModule && typeof pageModule.mount === 'function') {
+                    await pageModule.mount(this.container);
+                }
+            }
+
+            this.currentRoute = currentHash;
+            window.scrollTo(0, 0);
+
+        } catch (error) {
+            console.error('[Router Navigation Error]:', error);
+            if (this.container) {
+                this.container.innerHTML = `
+                    <div style="padding: 4rem 1.5rem; text-align: center; color: #f8fafc;">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #f87171;">⚠️ Terjadi Kendala Navigasi</h2>
+                        <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 1.5rem auto;">${error.message}</p>
+                        <a href="#/home" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600;">
+                            Kembali ke Beranda
+                        </a>
+                    </div>
+                `;
+            }
+        } finally {
+            this.isNavigating = false;
         }
-    }
-
-    _renderErrorState(err) {
-        if (!this._mainContainer) return;
-
-        this._mainContainer.innerHTML = `
-            <div style="padding: 4rem 1.5rem; text-align: center; color: #f87171;">
-                <h2>⚠️ Gagal Memuat Halaman</h2>
-                <p style="color: #94a3b8; margin: 1rem 0;">${err.message}</p>
-                <a href="#/home" onclick="window.location.reload()" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600;">
-                    ← Kembali ke Beranda
-                </a>
-            </div>
-        `;
-    }
-
-    destroy() {
-        if (!this._isInitialized) return;
-        window.removeEventListener('hashchange', this._onHashChange);
-        this._mainContainer = null;
-        this._isInitialized = false;
     }
 }
 
-export const appRouter = new AppRouterEngine();
+export const appRouter = new AppRouter();
 export default appRouter;
