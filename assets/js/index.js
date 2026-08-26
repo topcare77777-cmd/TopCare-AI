@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — MAIN ENTRY POINT
  * Path: assets/js/index.js
- * Status: V3-FIX-07.3 ROUTE FACTORY RESILIENCE APPLIED
+ * Status: PHASE 2.2.2 LOGIN CONSOLIDATION COMPLETE
  */
 
 import { appRouter } from './core/router/app-router.js';
@@ -151,7 +151,7 @@ appRouter.registerRoute('#/test-energy', {
 });
 
 // ==========================================
-// 4. RUTE AUTENTIKASI
+// 4. RUTE AUTENTIKASI (CANONICAL + ALIAS REDIRECTS)
 // ==========================================
 
 appRouter.registerRoute('#/login', {
@@ -160,6 +160,25 @@ appRouter.registerRoute('#/login', {
     factory: async () => {
         const mod = await import('./pages/login.page.js');
         return resolvePageModule(mod);
+    }
+});
+
+// Legacy Alias Redirects (Mengarahkan ke #/login tanpa membuat UI kedua)
+appRouter.registerRoute('#/signin', {
+    title: 'Masuk — TopCare AI',
+    requiresAuth: false,
+    factory: async () => {
+        window.location.hash = '#/login';
+        return null;
+    }
+});
+
+appRouter.registerRoute('#/auth/login', {
+    title: 'Masuk — TopCare AI',
+    requiresAuth: false,
+    factory: async () => {
+        window.location.hash = '#/login';
+        return null;
     }
 });
 
