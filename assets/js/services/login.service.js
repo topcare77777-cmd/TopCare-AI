@@ -7,22 +7,13 @@
  * @status Production Ready
  */
 
-import { userRepository } from '../repository/user.repository.js';
+import { UserRepository } from '../core/repositories/user.repository.js';
 import { tokenEngine } from '../engine/token.engine.js';
 import { sessionEngine } from '../engine/session.engine.js';
 
 export class LoginService {
-    /**
-     * Creates an instance of LoginService.
-     */
-    constructor() {}
+    constructor() { }
 
-    /**
-     * Validates local credential syntax before network transmission.
-     * @private
-     * @param {Object} credentials - Credential payload.
-     * @returns {Object} Validation result { isValid, message }.
-     */
     #validatePayload(credentials) {
         if (!credentials || typeof credentials !== 'object') {
             return { isValid: false, message: 'Invalid credentials payload provided.' };
@@ -47,11 +38,6 @@ export class LoginService {
         return { isValid: true, message: '' };
     }
 
-    /**
-     * Executes the login authentication workflow.
-     * @param {Object} credentials - Object containing email, password, and optional rememberMe boolean.
-     * @returns {Promise<Object>} Standardized result envelope { success, status, message, data, errors }.
-     */
     async authenticate(credentials) {
         const validation = this.#validatePayload(credentials);
         if (!validation.isValid) {
@@ -65,18 +51,23 @@ export class LoginService {
         }
 
         const rememberMe = Boolean(credentials.rememberMe);
-        const response = await userRepository.loginApi({
-            email: credentials.email.trim(),
-            password: credentials.password
-        });
+        const { data, error } = await UserRepository.signIn(
+            credentials.email.trim(),
+            credentials.password
+        );
 
-        if (!response.success || !response.data) {
-            return response;
+        if (error || !data) {
+            return {
+                success: false,
+                status: 401,
+                message: error?.message || 'Authentication failed.',
+                data: null,
+                errors: { credentials: [error?.message || 'Invalid credentials.'] }
+            };
         }
 
-        const responseData = response.data;
-        const token = responseData.token || responseData.accessToken || responseData.bearer;
-        const user = responseData.user || responseData.profile || responseData;
+        const token = data.session?.access_token;
+        const user = data.user;
 
         if (token) {
             tokenEngine.setToken(token);
@@ -88,15 +79,20 @@ export class LoginService {
 
         return {
             success: true,
-            status: response.status,
-            message: response.message || 'Authentication successful.',
+            status: 200,
+            message: 'Authentication successful.',
             data: {
-                user: sessionEngine.getSessionData(),
-                token: tokenEngine.getToken()
+                user: sessionEngine.getSessionData() || user,
+                token: tokenEngine.getToken() || token
             },
             errors: null
         };
     }
+
+    async login(email, password) {
+        return await this.authenticate({ email, password });
+    }
 }
 
 export const loginService = new LoginService();
+export default loginService;

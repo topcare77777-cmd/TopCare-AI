@@ -1,11 +1,35 @@
 /**
  * TOPCARE AI PLATFORM V3 — USER REPOSITORY
  * Path: assets/js/core/repositories/user.repository.js
+ * Status: V3-FIX-07.1 AUTHENTICATION CONTRACT COMPLETE
  */
 
 import { supabase } from '../../config/supabase.config.js';
 
 export class UserRepository {
+    /**
+     * Login via Supabase Auth
+     */
+    static async signIn(email, password) {
+        return await supabase.auth.signInWithPassword({
+            email,
+            password
+        });
+    }
+
+    /**
+     * Registrasi pengguna baru via Supabase Auth
+     */
+    static async signUp(email, password, metadata = {}) {
+        return await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+                data: metadata
+            }
+        });
+    }
+
     /**
      * Mengambil session user yang sedang aktif dari Supabase Auth
      */
@@ -34,10 +58,7 @@ export class UserRepository {
     }
 
     /**
-     * Mengambil daftar profil pengguna dengan pagination/limit contract
-     * @param {Object} options 
-     * @param {number} options.page 
-     * @param {number} options.limit 
+     * Mengambil daftar profil pengguna dengan pagination
      */
     static async getProfilesPaginated({ page = 1, limit = 50 } = {}) {
         const from = (page - 1) * limit;
@@ -79,13 +100,12 @@ export class UserRepository {
     }
 
     /**
-     * Sign out auth session & bersihkan hanya auth/session storage token
+     * Sign out auth session & bersihkan token storage spesifik
      */
     static async signOut() {
         try {
             await supabase.auth.signOut();
         } finally {
-            // Hapus HANYA key session Supabase / App Token spesifik tanpa menghapus cache & preferensi user
             const authPrefixes = ['sb-', 'supabase.auth', 'topcare_session', 'topcare_auth'];
             for (let i = localStorage.length - 1; i >= 0; i--) {
                 const key = localStorage.key(i);
@@ -94,6 +114,7 @@ export class UserRepository {
                 }
             }
             sessionStorage.removeItem('tcr_active_session');
+            sessionStorage.removeItem('tcr_redirect_target');
         }
     }
 }

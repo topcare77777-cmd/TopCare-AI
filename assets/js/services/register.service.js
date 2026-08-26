@@ -8,64 +8,30 @@
  * @status Production Ready
  */
 
-import { userRepository } from '../repository/user.repository.js';
+import { UserRepository } from '../core/repositories/user.repository.js';
 import { tokenEngine } from '../engine/token.engine.js';
 import { sessionEngine } from '../engine/session.engine.js';
 
 export class RegisterService {
-    /**
-     * Creates an instance of RegisterService.
-     */
-    constructor() {}
+    constructor() { }
 
-    /**
-     * Normalizes the user's email address by trimming and lowering case.
-     * @private
-     * @param {string} email - Raw email input.
-     * @returns {string} Normalized email string.
-     */
     #normalizeEmail(email) {
         if (!email || typeof email !== 'string') return '';
         return email.trim().toLowerCase();
     }
 
-    /**
-     * Validates enterprise password complexity policy.
-     * Minimum 12 characters, containing uppercase, lowercase, number, and special character.
-     * @private
-     * @param {string} password - Plain text password string.
-     * @returns {Object} Result object { isValid: boolean, message: string }.
-     */
     #validatePasswordStrength(password) {
         if (!password || typeof password !== 'string') {
             return { isValid: false, message: 'Password is required.' };
         }
 
-        if (password.length < 12) {
-            return { isValid: false, message: 'Password must be at least 12 characters long.' };
-        }
-
-        const hasUppercase = /[A-Z]/.test(password);
-        const hasLowercase = /[a-z]/.test(password);
-        const hasNumber = /[0-9]/.test(password);
-        const hasSpecial = /[^A-Za-z0-9]/.test(password);
-
-        if (!hasUppercase || !hasLowercase || !hasNumber || !hasSpecial) {
-            return {
-                isValid: false,
-                message: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
-            };
+        if (password.length < 6) {
+            return { isValid: false, message: 'Password must be at least 6 characters long.' };
         }
 
         return { isValid: true, message: '' };
     }
 
-    /**
-     * Sanitizes the registration payload, removing sensitive unencrypted fields prior to repository call.
-     * @private
-     * @param {Object} payload - Raw registration payload.
-     * @returns {Object} Sanitized payload copy.
-     */
     #sanitizePayload(payload) {
         const sanitized = { ...payload };
         delete sanitized.password;
@@ -73,12 +39,6 @@ export class RegisterService {
         return sanitized;
     }
 
-    /**
-     * Validates the complete registration payload for syntax, schema, and consistency rules.
-     * @private
-     * @param {Object} payload - Registration payload.
-     * @returns {Object} Validation result { isValid: boolean, message: string, errors: Object|null }.
-     */
     #validatePayload(payload) {
         if (!payload || typeof payload !== 'object') {
             return { isValid: false, message: 'Invalid registration payload provided.', errors: { payload: ['Payload must be a valid object.'] } };
@@ -108,7 +68,7 @@ export class RegisterService {
             errors.password = [passwordCheck.message];
         }
 
-        if (password !== confirmPassword) {
+        if (confirmPassword && password !== confirmPassword) {
             errors.confirmPassword = ['Password and confirmation password do not match.'];
         }
 
@@ -123,16 +83,6 @@ export class RegisterService {
         return { isValid: true, message: '', errors: null };
     }
 
-    /**
-     * Builds a standardized response envelope.
-     * @private
-     * @param {boolean} success - Operation success flag.
-     * @param {number} status - HTTP status code.
-     * @param {string} message - Response message.
-     * @param {Object|null} data - Response payload data.
-     * @param {Object|null} errors - Response error details.
-     * @returns {Object} Standardized envelope.
-     */
     #buildResponse(success, status, message, data = null, errors = null) {
         return {
             success,
@@ -143,11 +93,6 @@ export class RegisterService {
         };
     }
 
-    /**
-     * Executes the complete user registration workflow.
-     * @param {Object} payload - Registration data containing name, email, password, confirmPassword, and optional role/rememberMe.
-     * @returns {Promise<Object>} Standardized response envelope.
-     */
     async registerUser(payload) {
         const validation = this.#validatePayload(payload);
         if (!validation.isValid) {
@@ -155,31 +100,29 @@ export class RegisterService {
         }
 
         const normalizedEmail = this.#normalizeEmail(payload.email);
-        const registrationData = {
-            ...payload,
-            email: normalizedEmail
+        const metadata = {
+            full_name: payload.name ? payload.name.trim() : ''
         };
 
-        const repositoryPayload = this.#sanitizePayload(registrationData);
-        // Include password explicitly for repository execution (never logged or exposed)
-        repositoryPayload.password = payload.password;
-
         try {
-            const response = await userRepository.registerApi(repositoryPayload);
+            const { data, error } = await UserRepository.signUp(
+                normalizedEmail,
+                payload.password,
+                metadata
+            );
 
-            if (!response.success || !response.data) {
+            if (error || !data) {
                 return this.#buildResponse(
                     false,
-                    response.status || 400,
-                    response.message || 'Registration failed.',
+                    400,
+                    error?.message || 'Registration failed.',
                     null,
-                    response.errors || { general: [response.message || 'Registration failed.'] }
+                    { general: [error?.message || 'Registration failed.'] }
                 );
             }
 
-            const responseData = response.data;
-            const token = responseData.token || responseData.accessToken || responseData.bearer;
-            const user = responseData.user || responseData.profile || responseData;
+            const token = data.session?.access_token;
+            const user = data.user;
 
             if (token) {
                 tokenEngine.setToken(token);
@@ -192,11 +135,11 @@ export class RegisterService {
 
             return this.#buildResponse(
                 true,
-                response.status || 201,
-                response.message || 'Registration successful.',
+                201,
+                'Registration successful.',
                 {
                     user: sessionEngine.getSessionData() || user,
-                    token: tokenEngine.getToken()
+                    token: tokenEngine.getToken() || token
                 },
                 null
             );
@@ -211,6 +154,16 @@ export class RegisterService {
             );
         }
     }
+
+    async register(email, password, metadata = {}) {
+        return await this.registerUser({
+            name: metadata.full_name || email.split('@')[0],
+            email,
+            password,
+            confirmPassword: password
+        });
+    }
 }
 
 export const registerService = new RegisterService();
+export default registerService;
