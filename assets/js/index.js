@@ -1,8 +1,7 @@
 /**
- * TOPCARE AI PLATFORM V2 — APPLICATION ENTRYPOINT
+ * TOPCARE AI PLATFORM V3 — APPLICATION ENTRYPOINT
  * Path: assets/js/index.js
- * Version: 145.0.1 (BUILD NEXT — FIXED MARKETPLACE ROUTE)
- * Status: APPROVED & ACTIVE
+ * Status: APPROVED & ACTIVE (Auth & Supabase Enabled)
  */
 
 import { ApplicationEntry } from './runtime/application.entry.service.js';
@@ -20,7 +19,7 @@ function createSafeRouteFactory(importFn) {
                 const targetContainer = container || document.getElementById('app') || document.body;
                 try {
                     const module = await importFn();
-                    const ExportedClass = module.default || module.TestIntrovertExtrovertPage || module;
+                    const ExportedClass = module.default || module.LoginPage || module.RegisterPage || module;
                     const page = typeof ExportedClass === 'function' ? new ExportedClass() : ExportedClass;
 
                     if (page && typeof page.mount === 'function') {
@@ -32,10 +31,10 @@ function createSafeRouteFactory(importFn) {
                     console.error('[Route Factory Error]:', err);
                     targetContainer.innerHTML = `
                         <div style="padding: 4rem 1.5rem; text-align: center; color: #f8fafc;">
-                            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #f87171;">⚠️ Gagal Memuat Modul</h2>
+                            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; color: #f87171;">⚠️ Gagal Memuat Halaman</h2>
                             <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 1.5rem auto;">${err.message}</p>
-                            <a href="#/personality" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600;">
-                                ← Kembali ke Hub Kepribadian
+                            <a href="#/home" style="display: inline-block; padding: 0.75rem 1.5rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600;">
+                                ← Kembali ke Beranda
                             </a>
                         </div>
                     `;
@@ -51,6 +50,7 @@ function createSafeRouteFactory(importFn) {
 function registerAllRoutes() {
     if (!appRouter) return;
 
+    // Rute Navigasi Publik
     appRouter.registerRoute('#/home', {
         title: 'Beranda — TopCare AI Platform',
         requiresAuth: false,
@@ -99,7 +99,20 @@ function registerAllRoutes() {
         factory: createSafeRouteFactory(function () { return import('./pages/about.page.js'); })
     });
 
-    // DOMAIN PERSONALITY & TES ENERGI JUNG
+    // Rute Autentikasi
+    appRouter.registerRoute('#/login', {
+        title: 'Masuk — TopCare AI',
+        requiresAuth: false,
+        factory: createSafeRouteFactory(function () { return import('./pages/auth/login.page.js'); })
+    });
+
+    appRouter.registerRoute('#/register', {
+        title: 'Mulai Gratis — TopCare AI',
+        requiresAuth: false,
+        factory: createSafeRouteFactory(function () { return import('./pages/auth/register.page.js'); })
+    });
+
+    // Domain Personality & Tes
     appRouter.registerRoute('#/personality', {
         title: 'Pilih Tes Kepribadian — TopCare AI',
         requiresAuth: false,
