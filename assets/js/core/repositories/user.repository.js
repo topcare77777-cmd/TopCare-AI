@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — USER REPOSITORY
  * Path: assets/js/core/repositories/user.repository.js
- * Status: V3-FIX-07.1 AUTHENTICATION CONTRACT COMPLETE
+ * Status: V3-FIX-07.2 PROFILES SCHEMA HOTFIX APPLIED
  */
 
 import { supabase } from '../../config/supabase.config.js';
@@ -40,13 +40,13 @@ export class UserRepository {
     }
 
     /**
-     * Mengambil data profil user berdasarkan ID
+     * Mengambil data profil user berdasarkan ID (Hanya kolom yang tersedia di schema)
      */
     static async getProfileById(userId) {
         if (!userId) return null;
         const { data, error } = await supabase
             .from('profiles')
-            .select('id, full_name, email, role, created_at, updated_at')
+            .select('id, full_name, email, role, created_at')
             .eq('id', userId)
             .single();
 
