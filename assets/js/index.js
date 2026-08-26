@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — APPLICATION ENTRYPOINT
  * Path: assets/js/index.js
- * Status: APPROVED & ACTIVE (Auth & Supabase Enabled)
+ * Status: PRODUCTION (Auth, Member Dashboard & Super Admin Panel Enabled)
  */
 
 import { ApplicationEntry } from './runtime/application.entry.service.js';
@@ -9,9 +9,6 @@ import { LanguageService } from './core/language.service.js';
 import { AssessmentEventListener } from './coach/listeners/assessment.listener.js';
 import { appRouter } from './core/router/app-router.js';
 
-/**
- * Factory penangan modul rute secara aman
- */
 function createSafeRouteFactory(importFn) {
     return function () {
         return {
@@ -19,7 +16,7 @@ function createSafeRouteFactory(importFn) {
                 const targetContainer = container || document.getElementById('app') || document.body;
                 try {
                     const module = await importFn();
-                    const ExportedClass = module.default || module.LoginPage || module.RegisterPage || module;
+                    const ExportedClass = module.default || module.DashboardPage || module.AdminPage || module;
                     const page = typeof ExportedClass === 'function' ? new ExportedClass() : ExportedClass;
 
                     if (page && typeof page.mount === 'function') {
@@ -44,13 +41,10 @@ function createSafeRouteFactory(importFn) {
     };
 }
 
-/**
- * Pendaftaran seluruh rute aplikasi
- */
 function registerAllRoutes() {
     if (!appRouter) return;
 
-    // Rute Navigasi Publik
+    // Rute Publik
     appRouter.registerRoute('#/home', {
         title: 'Beranda — TopCare AI Platform',
         requiresAuth: false,
@@ -112,7 +106,20 @@ function registerAllRoutes() {
         factory: createSafeRouteFactory(function () { return import('./pages/auth/register.page.js'); })
     });
 
-    // Domain Personality & Tes
+    // Rute Terproteksi (Dashboard & Admin)
+    appRouter.registerRoute('#/dashboard', {
+        title: 'Member Dashboard — TopCare AI',
+        requiresAuth: true,
+        factory: createSafeRouteFactory(function () { return import('./pages/dashboard.page.js'); })
+    });
+
+    appRouter.registerRoute('#/admin', {
+        title: 'Super Admin Panel — TopCare AI',
+        requiresAuth: true,
+        factory: createSafeRouteFactory(function () { return import('./pages/admin.page.js'); })
+    });
+
+    // Domain Kepribadian
     appRouter.registerRoute('#/personality', {
         title: 'Pilih Tes Kepribadian — TopCare AI',
         requiresAuth: false,
@@ -138,9 +145,6 @@ function registerAllRoutes() {
     });
 }
 
-/**
- * Inisialisasi Subsistem
- */
 function initSubsystems() {
     if (LanguageService && typeof LanguageService.applyLanguage === 'function') {
         LanguageService.applyLanguage();
