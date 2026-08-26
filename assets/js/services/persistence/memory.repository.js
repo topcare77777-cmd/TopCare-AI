@@ -1,13 +1,12 @@
 /**
  * TOPCARE AI PLATFORM V2 — MEMORY REPOSITORY & REPOSITORY FACADE
- * Path: assets/js/services/persistence/memory.repository.js & repository.facade.js
- * Status: ACTIVE (SPRINT I - LOCKED GOLDEN BASELINE)
+ * Path: assets/js/services/persistence/memory.repository.js
+ * Status: ACTIVE (REPAIRED - ORPHAN DEPENDENCY REMOVED)
  * Role: Single Entry Point for Application Layer Persistence Operations
  */
 
 import { StorageProviderInterface, MemoryStorageProvider } from './storage.provider.interface.js';
 import { RepositoryTransactionContext } from './transaction.context.js';
-import { PersistenceStrategy } from './persistence.strategy.js';
 import { PersistenceHealthEvaluator, PersistenceMetricsProvider } from './persistence.health.evaluator.js';
 import TimeProvider from '../../core/time/time.provider.js';
 import { deepFreezeDTO } from '../../core/utils/dto.js';
@@ -29,11 +28,21 @@ export class MemoryRepository {
         this.readsCount += 1;
         const key = `mem_rec_${memoryId}`;
 
-        const result = await PersistenceStrategy.executeReadThrough(key, this.cache, this.provider);
-        if (result.fromCache) this.cacheHits += 1;
+        // I-07 Inline Read-Through Cache Logic
+        const cached = this.cache.get(key);
+        if (cached !== undefined) {
+            this.cacheHits += 1;
+            this._emitTelemetry('READ', { memoryId, fromCache: true });
+            return cached;
+        }
 
-        this._emitTelemetry('READ', { memoryId, fromCache: result.fromCache });
-        return result.data;
+        const data = await this.provider.getItem(key);
+        if (data !== null && data !== undefined) {
+            this.cache.set(key, data);
+        }
+
+        this._emitTelemetry('READ', { memoryId, fromCache: false });
+        return data;
     }
 
     async saveMemoryRecord(memoryRecordDTO) {
