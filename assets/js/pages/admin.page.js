@@ -31,7 +31,7 @@ export class AdminPage {
             return;
         }
 
-        // Ambil Data Pengguna
+        // Ambil Data Pengguna Beserta Email
         const { data: usersList } = await supabase
             .from('profiles')
             .select('*')
@@ -117,7 +117,7 @@ export class AdminPage {
                     </form>
                 </div>
 
-                <!-- TAB 2: DAFTAR PENGGUNA TERDAFTAR -->
+                <!-- TAB 2: DAFTAR PENGGUNA TERDAFTAR (DILENGKAPI KOLOM EMAIL) -->
                 <div id="tab-content-users" style="display: none;">
                     <div style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 1.5rem; overflow-x: auto;">
                         <h3 style="font-size: 1.2rem; font-weight: 600; margin-bottom: 1rem; color: #38bdf8;">Daftar Pengguna Terdaftar</h3>
@@ -126,6 +126,7 @@ export class AdminPage {
                                 <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.15); color: #94a3b8;">
                                     <th style="padding: 0.75rem 1rem;">User ID</th>
                                     <th style="padding: 0.75rem 1rem;">Nama Lengkap</th>
+                                    <th style="padding: 0.75rem 1rem;">Alamat Email</th>
                                     <th style="padding: 0.75rem 1rem;">Role</th>
                                     <th style="padding: 0.75rem 1rem;">Tanggal Daftar</th>
                                 </tr>
@@ -135,6 +136,7 @@ export class AdminPage {
                                     <tr style="border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
                                         <td style="padding: 0.75rem 1rem; font-family: monospace; color: #94a3b8;">${u.id.substring(0, 8)}...</td>
                                         <td style="padding: 0.75rem 1rem; font-weight: 500;">${u.full_name || '-'}</td>
+                                        <td style="padding: 0.75rem 1rem; color: #38bdf8; font-family: monospace;">${u.email || '-'}</td>
                                         <td style="padding: 0.75rem 1rem;">
                                             <span style="padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; background: ${u.role === 'super_admin' ? '#7c3aed' : '#2563eb'}; color: #fff; text-transform: uppercase;">
                                                 ${u.role}
