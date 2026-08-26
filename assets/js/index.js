@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — MAIN ENTRY POINT
  * Path: assets/js/index.js
- * Status: PHASE 2.2.2 LOGIN CONSOLIDATION COMPLETE
+ * Status: PHASE 2.4.4 TARGETED ROUTE CONSOLIDATION APPLIED
  */
 
 import { appRouter } from './core/router/app-router.js';
@@ -163,7 +163,6 @@ appRouter.registerRoute('#/login', {
     }
 });
 
-// Legacy Alias Redirects (Mengarahkan ke #/login tanpa membuat UI kedua)
 appRouter.registerRoute('#/signin', {
     title: 'Masuk — TopCare AI',
     requiresAuth: false,
@@ -228,6 +227,16 @@ appRouter.registerRoute('#/download-center', {
     factory: async () => {
         const mod = await import('./pages/download-center.page.js');
         return resolvePageModule(mod);
+    }
+});
+
+// Legacy Alias Redirect untuk Pusat Unduhan
+appRouter.registerRoute('#/downloads', {
+    title: 'Pusat Unduhan & Lisensi — TopCare AI',
+    requiresAuth: true,
+    factory: async () => {
+        window.location.hash = '#/download-center';
+        return null;
     }
 });
 

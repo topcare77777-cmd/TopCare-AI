@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — PREMIUM CENTER PAGE
  * Path: assets/js/pages/premium.page.js
- * Status: V3-FIX-05 SECURED DYNAMIC CSS RESOLUTION
+ * Status: PHASE 2.4.4 TARGETED DOWNLOAD CENTER CONNECTIVITY
  */
 
 import { StyleResolverUtil } from '../core/utils/style-resolver.util.js';
@@ -59,7 +59,7 @@ export class PremiumPage {
                                 <li>✓ Seluruh fitur Starter Member</li>
                                 <li>✓ Akses Creator Hub & Prompt Pro</li>
                                 <li>✓ AI Smart Coach Workspace</li>
-                                <li>✓ Download Center & Lisensi Aset</li>
+                                <li><a href="#/download-center" style="color: #38bdf8; text-decoration: none; font-weight: 600;">✓ Download Center & Lisensi Aset →</a></li>
                             </ul>
                             <a href="#/contact" style="display: block; text-align: center; padding: 0.75rem; background: #2563eb; color: #fff; text-decoration: none; border-radius: 8px; font-weight: 700;">Konsultasi Pro →</a>
                         </div>

@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — MEMBER DASHBOARD
  * Path: assets/js/pages/dashboard.page.js
- * Status: V3-FIX-06 LIFECYCLE CLEANUP INTEGRATED
+ * Status: PHASE 2.4.4 DOWNLOAD CENTER ENTRY INTEGRATED
  */
 
 import { PlatformService } from '../core/services/platform.service.js';
@@ -15,6 +15,7 @@ export class DashboardPage {
     }
 
     async mount(target) {
+        this.domListeners.cleanup();
         const container = target || this.container;
         const session = await PlatformService.getCurrentUserSession();
 
@@ -55,6 +56,11 @@ export class DashboardPage {
                         <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #34d399;">🌐 Komunitas AI</h3>
                         <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">Berdiskusi langsung dengan kreator dan praktisi AI global.</p>
                         <a href="#/community" style="display: inline-block; color: #34d399; text-decoration: none; font-weight: 600;">Gabung Diskusi →</a>
+                    </div>
+                    <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.5rem;">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: #38bdf8;">📥 Pusat Unduhan</h3>
+                        <p style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1rem;">Akses lisensi dan unduh seluruh paket aset digital eksklusif Anda.</p>
+                        <a href="#/download-center" style="display: inline-block; color: #38bdf8; text-decoration: none; font-weight: 600;">Buka Unduhan →</a>
                     </div>
                 </div>
             </section>
