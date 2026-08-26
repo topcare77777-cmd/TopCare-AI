@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — HOME PAGE
  * Path: assets/js/pages/home.page.js
- * Status: PHASE 2.3 REAL DATA & LIFECYCLE CONNECTED
+ * Status: PHASE 2.7.0 AUTH STATE & REAL METRIC ADAPTER
  */
 
 import { PlatformService } from '../core/services/platform.service.js';
@@ -20,6 +20,15 @@ export class HomePage {
         const container = target || this.container;
 
         let userCount = 0;
+        let isAuthenticated = false;
+
+        try {
+            const session = await PlatformService.getCurrentUserSession();
+            isAuthenticated = !!session;
+        } catch {
+            isAuthenticated = false;
+        }
+
         try {
             const { total } = await PlatformService.getRegisteredUsersList({ page: 1, limit: 1 });
             userCount = total || 0;
@@ -28,16 +37,15 @@ export class HomePage {
         }
 
         if (this.renderer && typeof this.renderer.renderPage === 'function') {
-            container.innerHTML = await this.renderer.renderPage(userCount);
+            container.innerHTML = await this.renderer.renderPage(userCount, isAuthenticated);
         } else if (this.renderer && typeof this.renderer.render === 'function') {
-            container.innerHTML = await this.renderer.render(userCount);
+            container.innerHTML = await this.renderer.render(userCount, isAuthenticated);
         }
 
         this.bindEvents();
     }
 
     bindEvents() {
-        // Reaktif listener jika ada pembaruan platform settings via event bus
         this.domListeners.add(window, 'tcr:platform-settings-updated', async () => {
             await this.mount();
         });

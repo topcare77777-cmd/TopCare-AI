@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — HOME DOMAIN RENDERER
  * Path: assets/js/pages/home.renderer.js
- * Status: PHASE 2.3 CONNECTIVITY & CANONICAL FOOTER APPLIED
+ * Status: PHASE 2.7.1 AUTH INTENT & ZERO-IMAGE SSOT APPLIED
  */
 
 import AssetsRegistry from '../config/assets.registry.js';
@@ -9,10 +9,10 @@ import { HOME_DATA } from './home.data.js';
 import { FooterRenderer } from '../renderers/footer.renderer.js';
 
 export const HomeRenderer = {
-    async renderPage(userCount = 0) {
+    async renderPage(userCount = 0, isAuthenticated = false) {
         const d = HOME_DATA || {};
 
-        // Ambil ilustrasi utama dengan fallback aman
+        // Ambil ilustrasi visual hero utama
         const mainImg = (AssetsRegistry && AssetsRegistry.images && AssetsRegistry.images.home && AssetsRegistry.images.home.heroIllustration)
             ? AssetsRegistry.images.home.heroIllustration
             : 'assets/images/features/topcareai_home.webp';
@@ -20,10 +20,15 @@ export const HomeRenderer = {
         const features = Array.isArray(d.features) ? d.features : [];
         const articles = Array.isArray(d.articles) ? d.articles : [];
 
-        // Hitung atau tampilkan member count riil jika tersedia
+        // Hitung atau tampilkan member count riil
         const displayMemberCount = userCount > 0 ? `${userCount} Member Terdaftar` : 'Komunitas AI Berkembang';
 
-        // Render Footer V3 secara dinamis dari PlatformService
+        // Tautan dinamis tombol CTA utama
+        const registerRoute = isAuthenticated ? '#/dashboard' : '#/register';
+        const registerDataRoute = isAuthenticated ? '/dashboard' : '/register';
+        const registerLabel = isAuthenticated ? 'Buka Dashboard →' : 'Mulai Gratis Sekarang →';
+
+        // Render Footer V3 secara dinamis
         const dynamicFooterHtml = await FooterRenderer.render();
 
         return `
@@ -37,7 +42,7 @@ export const HomeRenderer = {
                             <h1 class="tc-hero-title">${d.hero?.title || 'Bangun Potensi Dirimu Bersama TopCare AI'}</h1>
                             <p class="tc-hero-subtitle">${d.hero?.subtitle || 'Platform AI untuk belajar, mengenal diri, dan membangun masa depan.'}</p>
                             <div class="tc-hero-actions">
-                                <a href="#/register" data-route="/register" class="tc-btn-hero-primary">Mulai Gratis Sekarang →</a>
+                                <a href="${registerRoute}" data-route="${registerDataRoute}" class="tc-btn-hero-primary">${registerLabel}</a>
                                 <a href="#/personality" data-route="/personality" class="tc-btn-hero-secondary">Tes Kepribadian</a>
                             </div>
                             <div class="tc-hero-members">
@@ -150,20 +155,20 @@ export const HomeRenderer = {
                         <a href="#/learning" data-route="/learning" class="tc-link-more">Lihat Pembelajaran →</a>
                     </div>
                     <div class="tc-articles-grid-wrapper">
-                        <!-- ARTICLES LIST -->
+                        <!-- ARTICLES LIST (Zero 404 Image Overhead) -->
                         <div class="tc-articles-list">
                             ${articles.map(a => `
-                                <article class="tc-article-card">
-                                    <div class="tc-article-thumb-box" style="position: relative; overflow: hidden; height: 160px; border-radius: 12px; margin-bottom: 1rem;">
-                                        <img src="${a.image || 'assets/images/articles/article-ai.webp'}" alt="${a.title}" width="340" height="160" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.onerror=null; this.src='assets/images/features/feature-learning.webp';">
-                                        <span class="tc-article-badge" style="position: absolute; top: 12px; left: 12px; z-index: 2;">${a.category}</span>
-                                    </div>
-                                    <div class="tc-article-body">
-                                        <h3>${a.title}</h3>
-                                        <p>${a.desc}</p>
-                                        <div class="tc-article-meta" style="margin-top: 0.75rem; font-size: 0.8rem; color: #64748b;">
-                                            <span>${a.date}</span> • <span>${a.readTime}</span>
+                                <article class="tc-article-card" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between;">
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                            <span style="font-size: 0.75rem; font-weight: 700; color: #38bdf8; background: rgba(56, 189, 248, 0.15); padding: 0.2rem 0.5rem; border-radius: 4px;">${a.category}</span>
+                                            <span style="font-size: 0.8rem; color: #64748b;">${a.readTime}</span>
                                         </div>
+                                        <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: #f8fafc;">${a.title}</h3>
+                                        <p style="color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 1rem;">${a.desc}</p>
+                                    </div>
+                                    <div style="font-size: 0.8rem; color: #64748b; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem;">
+                                        Dipublikasikan: ${a.date}
                                     </div>
                                 </article>
                             `).join('')}
@@ -191,7 +196,7 @@ export const HomeRenderer = {
                         <h2>Siap Mengembangkan Potensi Terbaikmu?</h2>
                         <p>Bergabunglah dengan komunitas TopCare AI dan mulai perjalanan transformasimu hari ini.</p>
                     </div>
-                    <a href="#/register" data-route="/register" class="tc-btn-cta-banner">Mulai Gratis Sekarang →</a>
+                    <a href="${registerRoute}" data-route="${registerDataRoute}" class="tc-btn-cta-banner">${registerLabel}</a>
                 </section>
 
                 <!-- CANONICAL V3 DYNAMIC FOOTER -->
