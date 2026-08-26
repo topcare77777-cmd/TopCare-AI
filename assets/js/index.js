@@ -1,10 +1,16 @@
 /**
  * TOPCARE AI PLATFORM V3 — MAIN ENTRY POINT
  * Path: assets/js/index.js
- * Status: V3-FIX-04 ROUTE RESTORATION COMPLETE
+ * Status: V3-FIX-07.3 ROUTE FACTORY RESILIENCE APPLIED
  */
 
 import { appRouter } from './core/router/app-router.js';
+
+// Helper universal untuk instansiasi class constructor maupun singleton instance
+const resolvePageModule = (mod) => {
+    const Exported = mod.default || Object.values(mod)[0] || mod;
+    return typeof Exported === 'function' ? new Exported() : Exported;
+};
 
 // ==========================================
 // 1. RUTE PUBLIK UTAMA
@@ -14,8 +20,8 @@ appRouter.registerRoute('#/home', {
     title: 'TopCare AI — Platform Belajar, Mengenal Diri & Berkarya',
     requiresAuth: false,
     factory: async () => {
-        const { HomePage } = await import('./pages/home.page.js');
-        return new HomePage();
+        const mod = await import('./pages/home.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -23,8 +29,8 @@ appRouter.registerRoute('#/about', {
     title: 'Tentang Kami — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { AboutPage } = await import('./pages/about.page.js');
-        return new AboutPage();
+        const mod = await import('./pages/about.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -32,8 +38,8 @@ appRouter.registerRoute('#/learning', {
     title: 'Belajar AI — Modul Interaktif TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { LearningPage } = await import('./pages/learning.page.js');
-        return new LearningPage();
+        const mod = await import('./pages/learning.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -41,8 +47,8 @@ appRouter.registerRoute('#/personality', {
     title: 'Tes Kepribadian — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { PersonalityPage } = await import('./pages/personality.page.js');
-        return new PersonalityPage();
+        const mod = await import('./pages/personality.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -50,8 +56,8 @@ appRouter.registerRoute('#/community', {
     title: 'Komunitas AI — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { CommunityPage } = await import('./pages/community.page.js');
-        return new CommunityPage();
+        const mod = await import('./pages/community.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -59,8 +65,8 @@ appRouter.registerRoute('#/creator', {
     title: 'Creator Hub — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { CreatorPage } = await import('./pages/creator.page.js');
-        return new CreatorPage();
+        const mod = await import('./pages/creator.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -68,8 +74,8 @@ appRouter.registerRoute('#/marketplace', {
     title: 'Prompt Marketplace — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { MarketplacePage } = await import('./pages/marketplace.page.js');
-        return new MarketplacePage();
+        const mod = await import('./pages/marketplace.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -77,8 +83,8 @@ appRouter.registerRoute('#/premium', {
     title: 'Langganan Premium — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { PremiumPage } = await import('./pages/premium.page.js');
-        return new PremiumPage();
+        const mod = await import('./pages/premium.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -90,8 +96,8 @@ appRouter.registerRoute('#/privacy', {
     title: 'Kebijakan Privasi — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { PrivacyPage } = await import('./pages/privacy.page.js');
-        return new PrivacyPage();
+        const mod = await import('./pages/privacy.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -99,8 +105,8 @@ appRouter.registerRoute('#/terms', {
     title: 'Syarat & Ketentuan — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { TermsPage } = await import('./pages/terms.page.js');
-        return new TermsPage();
+        const mod = await import('./pages/terms.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -108,8 +114,8 @@ appRouter.registerRoute('#/faq', {
     title: 'Pusat Bantuan & FAQ — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { FaqPage } = await import('./pages/faq.page.js');
-        return new FaqPage();
+        const mod = await import('./pages/faq.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -117,8 +123,8 @@ appRouter.registerRoute('#/contact', {
     title: 'Hubungi Kami — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { ContactPage } = await import('./pages/contact.page.js');
-        return new ContactPage();
+        const mod = await import('./pages/contact.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -130,8 +136,8 @@ appRouter.registerRoute('#/test-mbti', {
     title: 'Tes MBTI & Kepribadian — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { TestMbtiPage } = await import('./pages/mbti/test-mbti.page.js');
-        return new TestMbtiPage();
+        const mod = await import('./pages/mbti/test-mbti.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -139,8 +145,8 @@ appRouter.registerRoute('#/test-energy', {
     title: 'Tes Tipe Energi (Introvert/Extrovert) — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { TestIntrovertExtrovertPage } = await import('./pages/test-energy/test-introvert-extrovert.page.js');
-        return new TestIntrovertExtrovertPage();
+        const mod = await import('./pages/test-energy/test-introvert-extrovert.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -152,8 +158,8 @@ appRouter.registerRoute('#/login', {
     title: 'Masuk — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { LoginPage } = await import('./pages/login.page.js');
-        return new LoginPage();
+        const mod = await import('./pages/login.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -161,8 +167,8 @@ appRouter.registerRoute('#/register', {
     title: 'Daftar Akun — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { RegisterPage } = await import('./pages/register.page.js');
-        return new RegisterPage();
+        const mod = await import('./pages/register.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -170,8 +176,8 @@ appRouter.registerRoute('#/forgot-password', {
     title: 'Atur Ulang Kata Sandi — TopCare AI',
     requiresAuth: false,
     factory: async () => {
-        const { ForgotPasswordPage } = await import('./pages/auth/forgot-password.page.js');
-        return new ForgotPasswordPage();
+        const mod = await import('./pages/auth/forgot-password.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -183,8 +189,8 @@ appRouter.registerRoute('#/dashboard', {
     title: 'Member Dashboard — TopCare AI',
     requiresAuth: true,
     factory: async () => {
-        const { DashboardPage } = await import('./pages/dashboard.page.js');
-        return new DashboardPage();
+        const mod = await import('./pages/dashboard.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -192,8 +198,8 @@ appRouter.registerRoute('#/admin', {
     title: 'Super Admin Panel — TopCare AI',
     requiresAuth: true,
     factory: async () => {
-        const { AdminPage } = await import('./pages/admin.page.js');
-        return new AdminPage();
+        const mod = await import('./pages/admin.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -201,8 +207,8 @@ appRouter.registerRoute('#/download-center', {
     title: 'Pusat Unduhan & Lisensi — TopCare AI',
     requiresAuth: true,
     factory: async () => {
-        const { DownloadCenterPage } = await import('./pages/download-center.page.js');
-        return new DownloadCenterPage();
+        const mod = await import('./pages/download-center.page.js');
+        return resolvePageModule(mod);
     }
 });
 
@@ -210,8 +216,8 @@ appRouter.registerRoute('#/coach', {
     title: 'AI Smart Coach Workspace — TopCare AI',
     requiresAuth: true,
     factory: async () => {
-        const { CoachPage } = await import('./pages/coach.page.js');
-        return new CoachPage();
+        const mod = await import('./pages/coach.page.js');
+        return resolvePageModule(mod);
     }
 });
 

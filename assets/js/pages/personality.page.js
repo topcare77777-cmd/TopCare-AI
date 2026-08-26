@@ -1,14 +1,14 @@
 /**
- * TOPCARE AI PLATFORM V2 — PERSONALITY ASSESSMENT HUB
+ * TOPCARE AI PLATFORM V3 — PERSONALITY ASSESSMENT HUB
  * Path: assets/js/pages/personality.page.js
- * Status: APPROVED & FIXED (STABLE BOOTSTRAP TRIGGER & RESET ON MOUNT)
+ * Status: V3-FIX-07.3 UNIVERSAL FACTORY COMPATIBLE
  */
 
 import { PersonalityBootstrap } from '../personality/personality.bootstrap.js';
 
-export class PersonalityHubPage {
+export class PersonalityPage {
     constructor() {
-        this.currentView = 'hub'; // 'hub' atau 'real_test'
+        this.currentView = 'hub';
     }
 
     renderHub() {
@@ -37,12 +37,12 @@ export class PersonalityHubPage {
                             <h3 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem;">Tes Energi Introvert vs Ekstrovert</h3>
                             <p style="color: #94a3b8; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">Pelajari bagaimana Anda mengisi ulang energi mental dan interaksi sosial Anda.</p>
                         </div>
-                        <a href="#/test-introvert-extrovert" style="display: inline-block; text-align: center; padding: 0.75rem; background: rgba(255, 255, 255, 0.08); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 10px; font-weight: 600; text-decoration: none;">
+                        <a href="#/test-energy" style="display: inline-block; text-align: center; padding: 0.75rem; background: rgba(255, 255, 255, 0.08); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); border-radius: 10px; font-weight: 600; text-decoration: none;">
                             Mulai Tes Energi →
                         </a>
                     </div>
 
-                    <!-- MENU 2: 4 TEMPERAMEN KEPRIBADIAN (LEGACY BOOTSTRAP ENGINE) -->
+                    <!-- MENU 2: 4 TEMPERAMEN KEPRIBADIAN -->
                     <div class="tc-hub-card" style="background: rgba(30, 41, 59, 0.9); border: 1px solid #3b82f6; border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);">
                         <span style="position: absolute; top: -10px; right: 20px; background: #2563eb; color: #fff; font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 700;">Rekomendasi Utama</span>
                         <div>
@@ -76,11 +76,9 @@ export class PersonalityHubPage {
         const app = container || document.getElementById('app');
         if (!app) return;
 
-        // SELALU RESET STATE KE 'HUB' KETIKA HALAMAN DI-MOUNT ULANG
         this.currentView = 'hub';
         app.innerHTML = this.renderHub();
 
-        // Bind event tombol Menu ke-2
         const btnStart = document.getElementById('btn-start-real-test');
         if (btnStart) {
             btnStart.addEventListener('click', async (e) => {
@@ -113,4 +111,5 @@ export class PersonalityHubPage {
     }
 }
 
-export default new PersonalityHubPage();
+export const PersonalityHubPage = PersonalityPage;
+export default PersonalityPage;

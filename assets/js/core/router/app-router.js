@@ -1,7 +1,7 @@
 /**
  * TOPCARE AI PLATFORM V3 — ASYNC APPLICATION ROUTER
  * Path: assets/js/core/router/app-router.js
- * Status: V3-FIX-02 AUTHORITATIVE AUTH GUARD APPLIED (forceRefresh = true)
+ * Status: V3-FIX-07.3 RESILIENT FACTORY INSTANTIATION
  */
 
 import { PlatformService } from '../services/platform.service.js';
@@ -15,15 +15,10 @@ export class AppRouter {
         this.isNavigating = false;
     }
 
-    /**
-     * Inisialisasi router dan listener hashchange
-     */
     init(container) {
         this.container = container || document.getElementById('app') || document.body;
-
         window.addEventListener('hashchange', () => this.handleRouting());
 
-        // Handle routing initial load
         if (!window.location.hash || window.location.hash === '' || window.location.hash === '#') {
             window.location.hash = '#/home';
         } else {
@@ -31,18 +26,10 @@ export class AppRouter {
         }
     }
 
-    /**
-     * Mendaftarkan rute baru
-     * @param {string} path - Hash rute (contoh: '#/dashboard')
-     * @param {Object} routeConfig - { title, requiresAuth, factory }
-     */
     registerRoute(path, routeConfig) {
         this.routes.set(path, routeConfig);
     }
 
-    /**
-     * Normalisasi string hash URL
-     */
     #normalizePath(hash) {
         if (!hash) return '#/home';
         const cleanHash = hash.split('?')[0];
@@ -51,9 +38,6 @@ export class AppRouter {
             : cleanHash;
     }
 
-    /**
-     * Router core handler dengan Authoritative Async Supabase Guard
-     */
     async handleRouting() {
         if (this.isNavigating) return;
         this.isNavigating = true;
@@ -61,7 +45,6 @@ export class AppRouter {
         const currentHash = this.#normalizePath(window.location.hash);
         let routeConfig = this.routes.get(currentHash);
 
-        // Fallback jika route tidak ditemukan
         if (!routeConfig) {
             routeConfig = this.routes.get('#/home');
             if (!routeConfig) {
@@ -71,14 +54,11 @@ export class AppRouter {
         }
 
         try {
-            // 1. Verifikasi Authoritative Asinkron Langsung ke Supabase (forceRefresh: true)
             let activeSession = null;
             if (routeConfig.requiresAuth || currentHash === '#/login' || currentHash === '#/register') {
-                // Security Guard mem-bypass in-memory cache untuk memastikan token belum revoked/expired
                 activeSession = await PlatformService.getCurrentUserSession(true);
             }
 
-            // 2. Guard: Rute Terproteksi (requiresAuth: true)
             if (routeConfig.requiresAuth) {
                 if (!activeSession) {
                     sessionStorage.setItem('tcr_redirect_target', currentHash);
@@ -87,7 +67,6 @@ export class AppRouter {
                     return;
                 }
 
-                // Proteksi Khusus Super Admin
                 if (currentHash === '#/admin' && activeSession.role !== 'super_admin') {
                     this.isNavigating = false;
                     window.location.hash = '#/dashboard';
@@ -95,19 +74,16 @@ export class AppRouter {
                 }
             }
 
-            // 3. Guard: Reverse Auth (User dengan sesi valid dicegah membuka halaman login/register)
             if (activeSession && (currentHash === '#/login' || currentHash === '#/register')) {
                 this.isNavigating = false;
                 window.location.hash = activeSession.role === 'super_admin' ? '#/admin' : '#/dashboard';
                 return;
             }
 
-            // 4. Update Document Title
             if (routeConfig.title) {
                 document.title = routeConfig.title;
             }
 
-            // 5. Cleanup Lifecycle Halaman Sebelumnya
             if (this.currentPageInstance && typeof this.currentPageInstance.destroy === 'function') {
                 try {
                     this.currentPageInstance.destroy();
@@ -117,13 +93,28 @@ export class AppRouter {
             }
             this.currentPageInstance = null;
 
-            // 6. Instansiasi dan Mount Halaman Baru (Zero UI Flash)
             if (typeof routeConfig.factory === 'function') {
-                const pageModule = await routeConfig.factory();
-                this.currentPageInstance = pageModule;
+                const module = await routeConfig.factory();
 
-                if (pageModule && typeof pageModule.mount === 'function') {
-                    await pageModule.mount(this.container);
+                // Resilient instantiation
+                const Exported = module?.default || module?.PersonalityPage || module?.PersonalityHubPage || module;
+                let pageInstance;
+                if (typeof Exported === 'function') {
+                    try {
+                        pageInstance = new Exported();
+                    } catch (e) {
+                        pageInstance = Exported();
+                    }
+                } else {
+                    pageInstance = Exported;
+                }
+
+                this.currentPageInstance = pageInstance;
+
+                if (pageInstance && typeof pageInstance.mount === 'function') {
+                    await pageInstance.mount(this.container);
+                } else if (pageInstance && typeof pageInstance.render === 'function') {
+                    this.container.innerHTML = pageInstance.render();
                 }
             }
 
